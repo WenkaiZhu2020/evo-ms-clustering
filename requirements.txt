@@ -1,0 +1,7 @@
+pandas
+numpy
+networkx
+python-igraph
+leidenalg
+PyYAML
+pytest

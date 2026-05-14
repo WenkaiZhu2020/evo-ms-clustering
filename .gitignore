@@ -1,0 +1,36 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Logs and runtime output
+*.log
+logs/
+
+# Large raw Java subject systems
+data/raw_projects/*
+!data/raw_projects/.gitkeep
+!data/raw_projects/README.md
+
+# Keep placeholder files tracked
+!.gitkeep

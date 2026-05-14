@@ -1,0 +1,22 @@
+experiment_name: 00_pre_experiment
+description: Compare raw class dependency graph and SSA-inspired enriched class graph.
+subjects:
+  - jpetstore
+  - acmeair
+raw_graph:
+  enabled: true
+  include_type_dependencies: true
+  include_call_dependencies: true
+  weight_formula: type_weight + call_weight
+enriched_graph:
+  enabled: true
+  include_raw_dependencies: true
+  include_flow_dependencies: true
+  weight_formula: type_weight + call_weight + flow_weight
+flow_evidence_weights:
+  return_value_flow: 3
+  parameter_passing_flow: 3
+  shared_domain_object: 1
+leiden:
+  resolution: null
+output_directory: results

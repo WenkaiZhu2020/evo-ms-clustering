@@ -1,0 +1,9 @@
+experiment_name: 01_stage1_leiden_baseline
+description: Run Leiden community detection on the enriched class graph.
+subjects:
+  - jpetstore
+  - acmeair
+input_graph_type: enriched
+algorithm: Leiden
+resolution: null
+output_directory: results

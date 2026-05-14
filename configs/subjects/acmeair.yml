@@ -1,0 +1,8 @@
+subject: acmeair
+language: java
+source_path: data/raw_projects/acmeair
+extracted_output_path: data/extracted/acmeair
+graph_output_path: data/graphs
+result_output_path: results/acmeair
+include_packages: []
+exclude_packages: []

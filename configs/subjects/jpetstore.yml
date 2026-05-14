@@ -1,0 +1,8 @@
+subject: jpetstore
+language: java
+source_path: data/raw_projects/jpetstore
+extracted_output_path: data/extracted/jpetstore
+graph_output_path: data/graphs
+result_output_path: results/jpetstore
+include_packages: []
+exclude_packages: []
