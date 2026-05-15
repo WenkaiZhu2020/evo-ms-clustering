@@ -1,11 +1,10 @@
-"""Calculate edge weights for raw and enriched class dependency graphs."""
+"""Calculate edge weights for G_raw and G_ssa class dependency graphs."""
 
 DEFAULT_EVIDENCE_WEIGHTS: dict[str, float] = {
-    "dependency": 1.0,
+    "type": 1.0,
     "call": 1.0,
-    "inheritance": 1.5,
-    "field_access": 0.75,
-    "flow": 1.25,
+    "return_value_flow": 3.0,
+    "argument_passing_flow": 3.0,
 }
 
 

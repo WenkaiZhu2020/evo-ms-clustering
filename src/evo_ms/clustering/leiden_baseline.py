@@ -1,4 +1,4 @@
-"""Run the Stage 1 Leiden community detection baseline on enriched graphs."""
+"""Run the Stage 1 Leiden community detection baseline on G_ssa."""
 
 from collections.abc import Hashable
 
