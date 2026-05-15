@@ -1,4 +1,4 @@
-"""Read class dependency exports produced by external dependency analyzers."""
+"""Legacy optional adapter for Depends-style dependency exports."""
 
 from pathlib import Path
 
@@ -6,9 +6,10 @@ from pathlib import Path
 def read_depends_edges(path: str | Path):
     """Load a Depends-style edge table from CSV.
 
-    The exact schema will be finalized after the subject extraction pipeline is chosen.
+    Soot is the planned main extractor for Stage 1. This reader remains optional
+    for older dependency export experiments.
     """
     import pandas as pd
 
-    # TODO: Validate required columns once the Depends export format is fixed.
+    # TODO: Keep only if older dependency exports are needed for comparison.
     return pd.read_csv(path)

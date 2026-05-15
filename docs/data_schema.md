@@ -9,25 +9,38 @@ The early pipeline expects CSV files with the following schemas.
 - `package`
 - `file_path`
 
-## `raw_edges.csv`
+## `structural_dependencies.csv`
 
 - `source`
 - `target`
-- `type_weight`
-- `call_weight`
+- `dependency_type`
+- `weight`
+
+Allowed `dependency_type` values:
+
+- `type`
+- `call`
+
+## `ssa_flow_edges.csv`
+
+- `source`
+- `target`
+- `flow_type`
+- `weight`
+- `evidence`
+
+Allowed `flow_type` values:
+
+- `return_value_flow`
+- `argument_passing_flow`
+
+## `graph_edges.csv`
+
+- `source`
+- `target`
 - `raw_weight`
-
-## `enriched_edges.csv`
-
-- `source`
-- `target`
-- `type_weight`
-- `call_weight`
-- `return_flow_weight`
-- `parameter_flow_weight`
-- `shared_domain_weight`
-- `flow_weight`
-- `enriched_weight`
+- `ssa_flow_weight`
+- `G_ssa_weight`
 
 ## `leiden_clusters.csv`
 

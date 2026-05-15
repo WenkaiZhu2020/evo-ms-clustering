@@ -9,7 +9,7 @@ from evo_ms.graph.weight_calculator import calculate_edge_weight, normalize_weig
 
 
 def test_calculate_edge_weight_uses_default_weights() -> None:
-    assert calculate_edge_weight(["dependency", "inheritance"]) == 2.5
+    assert calculate_edge_weight(["type", "argument_passing_flow"]) == 4.0
 
 
 def test_normalize_weight_rejects_non_positive_maximum() -> None:

@@ -1,4 +1,4 @@
-"""Compute basic graph-level metrics for raw and enriched graph comparison."""
+"""Compute basic graph-level metrics for G_raw and G_ssa comparison."""
 
 
 def graph_size_metrics(graph) -> dict[str, int]:

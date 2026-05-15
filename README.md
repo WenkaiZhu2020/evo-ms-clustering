@@ -14,17 +14,17 @@ The current `stage1-baseline` branch supports only the early pipeline:
 Java project
 -> dependency extraction
 -> raw class graph
--> SSA-inspired flow enrichment
--> enriched class graph
+-> Soot/Shimple-derived SSA flow extraction
+-> G_ssa class graph
 -> pre-experiment comparison
 -> Leiden community detection baseline
 ```
 
 ## Current Stages
 
-`00` Pre-experiment validates whether SSA-inspired data-flow enrichment improves the class dependency graph.
+`00` Pre-experiment validates whether Soot-based scoped SSA flow evidence improves the class dependency graph by comparing `G_raw` and `G_ssa`.
 
-`01` Stage 1 Leiden baseline runs Leiden community detection on the enriched graph to produce a structural baseline.
+`01` Stage 1 Leiden baseline runs Leiden community detection on `G_ssa` to produce a structural baseline.
 
 ## Later Dissertation Stages
 
