@@ -27,6 +27,9 @@ ENV/
 *.log
 logs/
 
+# Java and Maven build output
+target/
+
 # Large raw Java subject systems
 data/raw_projects/*
 !data/raw_projects/.gitkeep

@@ -1,5 +1,11 @@
 subject: jpetstore
 language: java
+project_root: data/raw_projects/jpetstore
+build_tool: maven
+compile_command: ./mvnw clean package -DskipTests
+classes_dir: target/classes
+app_packages:
+  - org.mybatis.jpetstore
 source_path: data/raw_projects/jpetstore
 extracted_output_path: data/extracted/jpetstore
 graph_output_path: data/graphs
