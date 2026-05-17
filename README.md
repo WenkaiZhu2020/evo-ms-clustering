@@ -28,9 +28,9 @@ Java project
 
 ## Later Dissertation Stages
 
-Stage 2 will add structure-only NSGA-II in a later branch.
+Stage 2 is planned as structure-only NSGA-II in a later branch.
 
-Stage 3 will add LLM-derived semantic embeddings with NSGA-II in a later branch.
+Stage 3 is planned as LLM-derived semantic embeddings with NSGA-II in a later branch.
 
 ## Installation
 
@@ -51,4 +51,5 @@ bash scripts/run_stage1_acmeair.sh
 
 ## Data
 
-Do not commit large raw Java projects. Place local subject systems under `data/raw_projects/`.
+Large raw Java projects are local research inputs and are excluded from version control.
+Place local subject systems under `data/raw_projects/`.

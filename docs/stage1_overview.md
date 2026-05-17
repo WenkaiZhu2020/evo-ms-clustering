@@ -11,4 +11,4 @@ The pre-experiment compares two class dependency graphs:
 
 Stage 1 uses only `G_ssa`. It runs Leiden community detection on the SSA-enhanced graph and reports a structural graph clustering baseline.
 
-Stage 1 is not about NSGA-II. It is not about LLM semantic embeddings.
+Multi-objective search and semantic enrichment are later dissertation work outside the current Stage 1 implementation.
