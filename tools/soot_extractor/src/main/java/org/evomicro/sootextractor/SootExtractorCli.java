@@ -102,6 +102,8 @@ public final class SootExtractorCli {
   static ExtractionResult extractStructuralDependencies(
       Path classesDir, String classpath, List<String> applicationClasses, Set<String> applicationClassSet) {
     G.reset();
+
+    // Keep Soot tolerant of missing framework classes in small subject builds.
     Options.v().set_allow_phantom_refs(true);
     Options.v().set_ignore_resolution_errors(true);
     Options.v().set_no_bodies_for_excluded(true);
@@ -146,6 +148,8 @@ public final class SootExtractorCli {
   private static void extractTypeDependencies(
       SootClass sootClass, Set<String> applicationClassSet, Set<StructuralDependency> dependencies) {
     String source = sootClass.getName();
+
+    // Type evidence comes from declarations, not local variables.
     if (sootClass.hasSuperclass()) {
       addTypeDependency(
           source,
@@ -242,6 +246,7 @@ public final class SootExtractorCli {
           continue;
         }
         try {
+          // Calls are class-level edges: caller class to callee declaring class.
           InvokeExpr invokeExpr = stmt.getInvokeExpr();
           SootMethod targetMethod = invokeExpr.getMethod();
           String targetClass = targetMethod.getDeclaringClass().getName();
@@ -293,6 +298,8 @@ public final class SootExtractorCli {
 
       ShimpleLocalDefs localDefs = new ShimpleLocalDefs(shimpleBody);
       ShimpleLocalUses localUses = new ShimpleLocalUses(shimpleBody);
+
+      // Stage 1 keeps only two SSA patterns that map cleanly to class pairs.
       extractReturnValueFlows(method, shimpleBody, localUses, applicationClassSet, flowEdges);
       extractArgumentPassingFlows(method, shimpleBody, localDefs, applicationClassSet, flowEdges);
     }
@@ -317,6 +324,7 @@ public final class SootExtractorCli {
         continue;
       }
 
+      // A call result used as an argument to another app call becomes B -> C.
       for (UnitValueBoxPair use : localUses.getUsesOf(definedLocal)) {
         Unit useUnit = use.getUnit();
         if (!(useUnit instanceof Stmt useStmt) || !useStmt.containsInvokeExpr()) {
@@ -355,6 +363,7 @@ public final class SootExtractorCli {
         continue;
       }
       for (Value argument : invokeExpr.getArgs()) {
+        // Prefer the argument's definition; fall back to its declared app type.
         String sourceClass = sourceClassForArgument(argument, unit, localDefs, applicationClassSet);
         if (sourceClass == null) {
           System.err.println(
@@ -556,6 +565,7 @@ public final class SootExtractorCli {
     if (value == null) {
       return "";
     }
+    // Minimal CSV escaping for statements and method signatures.
     boolean quote = value.contains(",") || value.contains("\"") || value.contains("\n") || value.contains("\r");
     String escaped = value.replace("\"", "\"\"");
     return quote ? "\"" + escaped + "\"" : escaped;

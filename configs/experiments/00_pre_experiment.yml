@@ -2,7 +2,6 @@ experiment_name: 00_pre_experiment
 description: Compare G_raw and G_ssa class dependency graphs.
 subjects:
   - jpetstore
-  - acmeair
 raw_graph:
   graph_name: G_raw
   enabled: true

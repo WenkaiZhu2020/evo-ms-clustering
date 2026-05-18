@@ -44,10 +44,10 @@ pip install -r requirements.txt
 
 ```bash
 bash scripts/run_pre_jpetstore.sh
-bash scripts/run_pre_acmeair.sh
 bash scripts/run_stage1_jpetstore.sh
-bash scripts/run_stage1_acmeair.sh
 ```
+
+PiggyMetrics is the next planned subject after its local project paths and package filters are defined.
 
 ## Data
 

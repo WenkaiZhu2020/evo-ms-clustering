@@ -1,10 +1,3 @@
-"""Load and validate normalized Stage 1 Soot extraction outputs.
-
-The Java Soot extractor writes normalized CSV files under
-``data/extracted/<subject>/``. This module is the Python-side boundary for
-loading those files before graph construction, clustering, and metrics.
-"""
-
 from pathlib import Path
 from typing import Any
 
@@ -34,7 +27,7 @@ ALLOWED_SSA_FLOW_TYPES = frozenset({"return_value_flow", "argument_passing_flow"
 
 
 def load_class_nodes_csv(path: str | Path) -> pd.DataFrame:
-    """Load ``class_nodes.csv`` with the expected Stage 1 schema."""
+    """Read `class_nodes.csv` and keep the schema order stable."""
     frame = _read_required_columns(path, CLASS_NODES_COLUMNS)
     frame["class_id"] = _as_text(frame["class_id"])
     _validate_no_missing(frame, ["class_id", "class_name"], path)
@@ -45,7 +38,7 @@ def load_structural_dependencies_csv(
     path: str | Path,
     class_nodes: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Load ``structural_dependencies.csv`` and validate class-level edges."""
+    """Read structural edges after checking node ids and dependency types."""
     frame = _read_required_columns(path, STRUCTURAL_DEPENDENCY_COLUMNS)
     frame["source"] = _as_text(frame["source"])
     frame["target"] = _as_text(frame["target"])
@@ -57,7 +50,7 @@ def load_structural_dependencies_csv(
 
 
 def load_ssa_flow_edges_csv(path: str | Path, class_nodes: pd.DataFrame) -> pd.DataFrame:
-    """Load ``ssa_flow_edges.csv`` and validate scoped SSA flow edge rows."""
+    """Read SSA flow edges after checking node ids and flow types."""
     frame = _read_required_columns(path, SSA_FLOW_COLUMNS)
     frame["source"] = _as_text(frame["source"])
     frame["target"] = _as_text(frame["target"])
@@ -69,7 +62,6 @@ def load_ssa_flow_edges_csv(path: str | Path, class_nodes: pd.DataFrame) -> pd.D
 
 
 def load_extracted_subject(extracted_dir: str | Path) -> dict[str, pd.DataFrame]:
-    """Load all normalized CSV files for one extracted subject directory."""
     root = Path(extracted_dir)
     class_nodes = load_class_nodes_csv(root / "class_nodes.csv")
     structural_dependencies = load_structural_dependencies_csv(
@@ -145,8 +137,6 @@ def _validate_edge_endpoints(
 
 
 def extract_dependencies(project_dir: str | Path, output_dir: str | Path) -> dict[str, Any]:
-    """Placeholder extraction entry point for a Java subject system."""
-    # TODO: Invoke the Soot extractor and return normalized output metadata.
     return {
         "project_dir": str(project_dir),
         "output_dir": str(output_dir),

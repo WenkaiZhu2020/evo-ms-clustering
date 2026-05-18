@@ -1,5 +1,3 @@
-"""Tests for G_raw and G_ssa graph builders."""
-
 from pathlib import Path
 import sys
 
@@ -211,7 +209,6 @@ def test_validate_ssa_flow_type_rejects_removed_flow_types() -> None:
 
 
 def class_nodes_frame(*class_ids: str) -> pd.DataFrame:
-    """Return a minimal class_nodes fixture."""
     return pd.DataFrame(
         [
             {
@@ -226,7 +223,6 @@ def class_nodes_frame(*class_ids: str) -> pd.DataFrame:
 
 
 def structural_frame(*rows: tuple[str, str, str, float]) -> pd.DataFrame:
-    """Return a minimal structural_dependencies fixture."""
     return pd.DataFrame(
         [
             {
@@ -243,12 +239,10 @@ def structural_frame(*rows: tuple[str, str, str, float]) -> pd.DataFrame:
 
 
 def empty_raw_edges_frame() -> pd.DataFrame:
-    """Return an empty raw_edges fixture."""
     return pd.DataFrame(columns=["source", "target", "type_weight", "call_weight", "raw_weight"])
 
 
 def ssa_flow_frame(*rows: tuple[str, str, str, float]) -> pd.DataFrame:
-    """Return a minimal ssa_flow_edges fixture."""
     return pd.DataFrame(
         [
             {

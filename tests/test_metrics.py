@@ -1,5 +1,3 @@
-"""Tests for early graph and partition metric helpers."""
-
 from pathlib import Path
 import sys
 

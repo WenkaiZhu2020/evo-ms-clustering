@@ -1,5 +1,3 @@
-"""Tests for normalized Soot extraction CSV loading."""
-
 from pathlib import Path
 import sys
 
@@ -112,7 +110,6 @@ def test_load_extracted_subject_rejects_unknown_class_endpoints(tmp_path: Path) 
 
 
 def write_valid_extraction(root: Path) -> None:
-    """Write a minimal valid normalized extraction fixture."""
     (root / "class_nodes.csv").write_text(
         "class_id,class_name,package,class_file_path\n"
         "A,com.example.A,com.example,target/classes/com/example/A.class\n"

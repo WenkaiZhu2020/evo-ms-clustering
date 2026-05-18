@@ -1,5 +1,3 @@
-"""Build G_ssa class graphs from raw edges and scoped SSA flow evidence."""
-
 from collections.abc import Iterable
 
 import pandas as pd
@@ -28,7 +26,7 @@ def build_ssa_edges(
     raw_edges: pd.DataFrame,
     ssa_flow_edges: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Combine raw structural edges with aggregated SSA flow edge weights."""
+    """Merge raw structural weights with SSA flow weights."""
     _validate_required_columns(class_nodes, ["class_id"], "class_nodes")
     _validate_required_columns(
         raw_edges,
@@ -45,6 +43,7 @@ def build_ssa_edges(
     _validate_node_references(class_nodes, raw, "raw_edges")
 
     flow_weights = aggregate_ssa_flow_weights(class_nodes, ssa_flow_edges)
+    # Outer join keeps SSA-only edges instead of dropping them.
     combined = raw.merge(flow_weights, on=["source", "target"], how="outer")
     if combined.empty:
         return pd.DataFrame(columns=SSA_EDGE_COLUMNS)
@@ -79,7 +78,7 @@ def build_g_ssa_graph(
     raw_edges: pd.DataFrame,
     ssa_flow_edges: pd.DataFrame,
 ):
-    """Create a weighted G_ssa graph from raw and SSA edge records."""
+    """Build the weighted NetworkX view used by later clustering."""
     import networkx as nx
 
     graph = nx.Graph()
@@ -106,7 +105,6 @@ def build_g_ssa_graph(
 
 
 def build_ssa_graph(evidence_edges: Iterable[EvidenceEdge]):
-    """Create an undirected G_ssa graph from typed evidence edges."""
     import networkx as nx
 
     graph = nx.Graph()

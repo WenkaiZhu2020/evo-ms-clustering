@@ -1,5 +1,3 @@
-"""Calculate Stage 1 edge weights for G_raw and G_ssa class graphs."""
-
 from collections.abc import Mapping
 import math
 
@@ -12,7 +10,6 @@ DEFAULT_EVIDENCE_WEIGHTS: dict[str, float] = {
 
 
 def calculate_raw_weight(type_weight: object = 0.0, call_weight: object = 0.0) -> float:
-    """Return the structural G_raw edge weight."""
     return _validated_weight(type_weight, "type_weight") + _validated_weight(
         call_weight,
         "call_weight",
@@ -23,7 +20,6 @@ def calculate_ssa_flow_weight(
     return_flow_weight: object = 0.0,
     argument_flow_weight: object = 0.0,
 ) -> float:
-    """Return the class-level Soot/Shimple-derived SSA flow weight."""
     return _validated_weight(return_flow_weight, "return_flow_weight") + _validated_weight(
         argument_flow_weight,
         "argument_flow_weight",
@@ -36,7 +32,6 @@ def calculate_g_ssa_weight(
     return_flow_weight: object = 0.0,
     argument_flow_weight: object = 0.0,
 ) -> float:
-    """Return the total G_ssa edge weight."""
     return calculate_raw_weight(type_weight, call_weight) + calculate_ssa_flow_weight(
         return_flow_weight,
         argument_flow_weight,
@@ -44,12 +39,7 @@ def calculate_g_ssa_weight(
 
 
 def calculate_stage1_edge_weights(weights: Mapping[str, object]) -> dict[str, float]:
-    """Calculate all Stage 1 edge weight columns from component weights.
-
-    Missing component weights are treated as zero. The current Stage 1 design
-    uses only structural type/call evidence and return/argument SSA flow
-    evidence; no shared-domain component is required.
-    """
+    """Return raw, SSA-flow, and total G_ssa weights."""
     raw_weight = calculate_raw_weight(
         weights.get("type_weight", 0.0),
         weights.get("call_weight", 0.0),
@@ -69,7 +59,6 @@ def calculate_edge_weight(
     evidence_types: list[str] | tuple[str, ...],
     weights: dict[str, float] | None = None,
 ) -> float:
-    """Return the additive edge weight for a collection of evidence types."""
     active_weights = weights or DEFAULT_EVIDENCE_WEIGHTS
     total = 0.0
     for evidence_type in evidence_types:
@@ -81,14 +70,12 @@ def calculate_edge_weight(
 
 
 def normalize_weight(weight: float, maximum: float) -> float:
-    """Normalize a positive weight by a positive maximum value."""
     if maximum <= 0:
         raise ValueError("maximum must be positive")
     return float(weight / maximum)
 
 
 def _validated_weight(value: object, name: str) -> float:
-    """Return a numeric non-negative weight, treating missing values as zero."""
     if value is None:
         return 0.0
     if isinstance(value, str) and value.strip() == "":

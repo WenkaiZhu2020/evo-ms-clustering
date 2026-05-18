@@ -1,5 +1,3 @@
-"""Tests for the Stage 1 Leiden baseline placeholder."""
-
 from pathlib import Path
 import sys
 

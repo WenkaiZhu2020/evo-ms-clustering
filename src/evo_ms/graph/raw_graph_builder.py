@@ -1,5 +1,3 @@
-"""Build G_raw class dependency graphs from structural dependencies."""
-
 from collections.abc import Iterable
 import warnings
 
@@ -16,7 +14,7 @@ def build_raw_edges(
     class_nodes: pd.DataFrame,
     structural_dependencies: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Aggregate structural dependencies into raw class-level edge weights."""
+    """Collapse structural dependency rows into one weighted edge per class pair."""
     _validate_required_columns(class_nodes, ["class_id"], "class_nodes")
     _validate_required_columns(
         structural_dependencies,
@@ -50,6 +48,7 @@ def build_raw_edges(
     if dependencies.empty:
         return pd.DataFrame(columns=RAW_EDGE_COLUMNS)
 
+    # Pivot keeps type and call evidence separate until raw_weight is computed.
     grouped = (
         dependencies.groupby(["source", "target", "dependency_type"], as_index=False)["weight"]
         .sum()
@@ -78,12 +77,6 @@ def build_raw_graph(
     edges_or_class_nodes: Iterable[tuple[str, str]] | pd.DataFrame,
     structural_dependencies: pd.DataFrame | None = None,
 ):
-    """Create a directed G_raw graph.
-
-    Passing only source-target tuples keeps compatibility with the initial
-    placeholder API. Passing ``class_nodes`` plus ``structural_dependencies``
-    builds weighted Stage 1 raw graph edges.
-    """
     import networkx as nx
 
     graph = nx.DiGraph()

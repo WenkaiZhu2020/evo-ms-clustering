@@ -2,7 +2,6 @@ experiment_name: 01_stage1_leiden_baseline
 description: Run Leiden community detection on G_ssa.
 subjects:
   - jpetstore
-  - acmeair
 input_graph_type: G_ssa
 algorithm: Leiden
 resolution: null
