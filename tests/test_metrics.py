@@ -6,7 +6,10 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from evo_ms.evaluation.partition_metrics import calculate_partition_metrics, partition_size_metrics
+from evo_ms.evaluation.partition_metrics import calculate_partition_metrics
+from evo_ms.evaluation.partition_metrics import calculate_ssa_impact_tables
+from evo_ms.evaluation.partition_metrics import calculate_stage1_smoke_metrics
+from evo_ms.evaluation.partition_metrics import partition_size_metrics
 
 
 def test_partition_size_metrics_reports_average_size() -> None:
@@ -56,6 +59,19 @@ def test_calculate_partition_metrics_reports_internal_external_edge_ratio() -> N
     )
 
     assert metrics.loc[0, "internal_external_edge_ratio"] == 2.0
+
+
+def test_calculate_partition_metrics_reports_internal_edge_weight_ratio() -> None:
+    metrics = calculate_partition_metrics(
+        class_nodes_frame("A", "B", "C"),
+        ssa_edges_frame(("A", "B", 4.0), ("B", "C", 2.0)),
+        clusters_frame(("A", 0), ("B", 0), ("C", 1)),
+        subject="jpetstore",
+        algorithm="leiden",
+        graph_type="ssa",
+    )
+
+    assert metrics.loc[0, "internal_edge_weight_ratio"] == pytest.approx(4.0 / 6.0)
 
 
 def test_calculate_partition_metrics_handles_zero_external_edges() -> None:
@@ -154,6 +170,99 @@ def test_calculate_partition_metrics_rejects_invalid_graph_type() -> None:
         )
 
 
+def test_calculate_stage1_smoke_metrics_reports_requested_metrics() -> None:
+    metrics = calculate_stage1_smoke_metrics(
+        class_nodes_frame("A", "B", "C", "D"),
+        raw_edges_frame(("A", "B", 2.0), ("B", "C", 2.0)),
+        full_ssa_edges_frame(
+            ("A", "B", 2.0, 0.0),
+            ("B", "C", 2.0, 0.0),
+            ("C", "D", 3.0, 3.0),
+        ),
+        clusters_frame(("A", 0), ("B", 0), ("C", 1), ("D", 2)),
+        clusters_frame(("A", 0), ("B", 0), ("C", 0), ("D", 1)),
+        subject="jpetstore",
+        ssa_flow_edges=pd.DataFrame({"source": ["C"], "target": ["D"]}),
+    )
+
+    row = metrics.iloc[0]
+    assert row["raw_edge_count"] == 2
+    assert row["g_ssa_edge_count"] == 3
+    assert row["new_ssa_edge_count"] == 1
+    assert row["new_ssa_edge_ratio"] == pytest.approx(1.0 / 3.0)
+    assert row["ssa_flow_evidence_count"] == 1
+    assert row["ssa_weight_share"] == pytest.approx(3.0 / 7.0)
+    assert row["cross_raw_cluster_ssa_edge_ratio"] == pytest.approx(2.0 / 3.0)
+    assert row["raw_cluster_count"] == 3
+    assert row["ssa_cluster_count"] == 2
+    assert row["cluster_count_delta"] == -1
+    assert row["max_cluster_ratio"] == pytest.approx(3.0 / 4.0)
+    assert row["singleton_ratio"] == pytest.approx(1.0 / 4.0)
+    assert row["cluster_size_distribution"] == '{"1": 1, "3": 1}'
+    assert -1.0 <= row["ari_raw_vs_ssa"] <= 1.0
+    assert 0.0 <= row["nmi_raw_vs_ssa"] <= 1.0
+    assert row["raw_internal_edge_weight_ratio"] == pytest.approx(2.0 / 4.0)
+    assert row["ssa_internal_edge_weight_ratio"] == pytest.approx(4.0 / 7.0)
+
+
+def test_calculate_stage1_smoke_metrics_counts_reverse_edges_as_one_pair() -> None:
+    metrics = calculate_stage1_smoke_metrics(
+        class_nodes_frame("A", "B", "C"),
+        raw_edges_frame(("A", "B", 1.0), ("B", "A", 2.0)),
+        full_ssa_edges_frame(
+            ("A", "B", 1.0, 0.0),
+            ("B", "A", 2.0, 0.0),
+            ("A", "C", 3.0, 3.0),
+        ),
+        clusters_frame(("A", 0), ("B", 0), ("C", 1)),
+        clusters_frame(("A", 0), ("B", 0), ("C", 1)),
+        subject="jpetstore",
+    )
+
+    row = metrics.iloc[0]
+    assert row["raw_edge_count"] == 1
+    assert row["g_ssa_edge_count"] == 2
+    assert row["new_ssa_edge_count"] == 1
+    assert row["new_ssa_edge_ratio"] == 0.5
+
+
+def test_calculate_ssa_impact_tables_reports_new_and_increased_edges() -> None:
+    tables = calculate_ssa_impact_tables(
+        raw_edges_frame(("A", "B", 1.0)),
+        full_ssa_edges_frame(("B", "A", 4.0, 3.0), ("A", "C", 6.0, 6.0)),
+        clusters_frame(("A", 0), ("B", 0), ("C", 1)),
+        clusters_frame(("A", 0), ("B", 1), ("C", 1)),
+        ssa_flow_edges=flow_edges_frame(
+            ("B", "A", "return_value_flow", 3.0),
+            ("A", "C", "argument_passing_flow", 3.0),
+            ("C", "A", "argument_passing_flow", 3.0),
+        ),
+    )
+
+    new_edges = tables["top_new_ssa_edges"]
+    increased_edges = tables["top_weight_increased_edges"]
+    moved_classes = tables["top_moved_classes"]
+
+    assert new_edges.loc[0, ["source", "target"]].to_dict() == {"source": "A", "target": "C"}
+    assert new_edges.loc[0, "raw_weight"] == 0.0
+    assert new_edges.loc[0, "g_ssa_weight"] == 6.0
+    assert "argument_passing_flow:2 rows/6.0 weight" in new_edges.loc[0, "flow_type_summary"]
+    assert increased_edges.loc[0, "weight_increase"] == 6.0
+    assert set(moved_classes["class_id"]) == {"A", "B", "C"}
+    assert list(moved_classes.columns) == [
+        "class_id",
+        "class_name",
+        "raw_cluster_id",
+        "ssa_cluster_id",
+        "raw_cluster_size",
+        "ssa_cluster_size",
+        "lost_same_cluster_neighbors",
+        "gained_same_cluster_neighbors",
+        "membership_jaccard",
+    ]
+    assert moved_classes.loc[0, "membership_jaccard"] == 0.0
+
+
 def class_nodes_frame(*class_ids: str) -> pd.DataFrame:
     return pd.DataFrame({"class_id": list(class_ids)})
 
@@ -173,6 +282,38 @@ def ssa_edges_frame(*rows: tuple[str, str, float]) -> pd.DataFrame:
             "source": [row[0] for row in rows],
             "target": [row[1] for row in rows],
             "g_ssa_weight": [row[2] for row in rows],
+        }
+    )
+
+
+def raw_edges_frame(*rows: tuple[str, str, float]) -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "source": [row[0] for row in rows],
+            "target": [row[1] for row in rows],
+            "raw_weight": [row[2] for row in rows],
+        }
+    )
+
+
+def full_ssa_edges_frame(*rows: tuple[str, str, float, float]) -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "source": [row[0] for row in rows],
+            "target": [row[1] for row in rows],
+            "g_ssa_weight": [row[2] for row in rows],
+            "ssa_flow_weight": [row[3] for row in rows],
+        }
+    )
+
+
+def flow_edges_frame(*rows: tuple[str, str, str, float]) -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "source": [row[0] for row in rows],
+            "target": [row[1] for row in rows],
+            "flow_type": [row[2] for row in rows],
+            "weight": [row[3] for row in rows],
         }
     )
 

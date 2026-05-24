@@ -1,0 +1,21 @@
+source,target,raw_weight,g_ssa_weight,ssa_flow_weight,weight_increase,flow_type_summary
+org.mybatis.jpetstore.domain.Account,org.mybatis.jpetstore.mapper.AccountMapper,8.0,26.0,18.0,18.0,argument_passing_flow:6 rows/18.0 weight
+org.mybatis.jpetstore.domain.Account,org.mybatis.jpetstore.service.AccountService,7.0,25.0,18.0,18.0,argument_passing_flow:4 rows/12.0 weight; return_value_flow:2 rows/6.0 weight
+org.mybatis.jpetstore.domain.Account,org.mybatis.jpetstore.service.CatalogService,0.0,18.0,18.0,18.0,argument_passing_flow:3 rows/9.0 weight; return_value_flow:3 rows/9.0 weight
+org.mybatis.jpetstore.domain.LineItem,org.mybatis.jpetstore.mapper.ItemMapper,0.0,18.0,18.0,18.0,argument_passing_flow:3 rows/9.0 weight; return_value_flow:3 rows/9.0 weight
+org.mybatis.jpetstore.domain.Order,org.mybatis.jpetstore.service.OrderService,15.0,30.0,15.0,15.0,argument_passing_flow:3 rows/9.0 weight; return_value_flow:2 rows/6.0 weight
+org.mybatis.jpetstore.domain.LineItem,org.mybatis.jpetstore.domain.Order,3.0,12.0,9.0,9.0,argument_passing_flow:2 rows/6.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.service.AccountService,org.mybatis.jpetstore.web.actions.AccountActionBean,11.0,17.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.Cart,org.mybatis.jpetstore.domain.Item,8.0,14.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.Order,org.mybatis.jpetstore.mapper.OrderMapper,3.0,9.0,6.0,6.0,argument_passing_flow:2 rows/6.0 weight
+org.mybatis.jpetstore.domain.Sequence,org.mybatis.jpetstore.mapper.SequenceMapper,3.0,9.0,6.0,6.0,argument_passing_flow:2 rows/6.0 weight
+org.mybatis.jpetstore.domain.Item,org.mybatis.jpetstore.mapper.ItemMapper,1.0,7.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.Account,org.mybatis.jpetstore.service.OrderService,0.0,6.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.Cart,org.mybatis.jpetstore.service.CatalogService,0.0,6.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.Order,org.mybatis.jpetstore.mapper.LineItemMapper,0.0,6.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.Order,org.mybatis.jpetstore.web.actions.AccountActionBean,0.0,6.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.Order,org.mybatis.jpetstore.web.actions.CartActionBean,0.0,6.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.CartItem,org.mybatis.jpetstore.domain.LineItem,9.0,12.0,3.0,3.0,argument_passing_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.CartItem,org.mybatis.jpetstore.domain.Item,3.0,6.0,3.0,3.0,argument_passing_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.CartItem,org.mybatis.jpetstore.domain.Order,1.0,4.0,3.0,3.0,argument_passing_flow:1 rows/3.0 weight
+org.mybatis.jpetstore.domain.LineItem,org.mybatis.jpetstore.mapper.LineItemMapper,1.0,4.0,3.0,3.0,argument_passing_flow:1 rows/3.0 weight
