@@ -1,0 +1,6 @@
+source,target,dependency_type,weight,evidence_kind,evidence_location
+A,B,type,1,field_type_reference,demo.A.fieldB
+A,C,call,2,method_call,demo.A.callC
+B,C,type,1,method_parameter_type_reference,demo.B.method
+C,D,call,2,method_call,demo.C.callD
+D,E,type,1,method_return_type_reference,demo.D.method

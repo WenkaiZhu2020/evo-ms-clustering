@@ -1,0 +1,3 @@
+source,target,flow_type,weight,evidence_method,evidence_statement
+B,D,return_value_flow,3,demo.A.method,r1 used in call to D
+C,E,argument_passing_flow,3,demo.C.method,arg passed to E

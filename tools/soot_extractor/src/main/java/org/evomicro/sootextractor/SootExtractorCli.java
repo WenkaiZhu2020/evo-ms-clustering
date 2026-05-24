@@ -64,6 +64,7 @@ public final class SootExtractorCli {
     Path classesDir = Path.of(options.get("--classes-dir"));
     Path outDir = Path.of(options.get("--out-dir"));
     List<String> appPackages = parseAppPackages(options.get("--app-packages"));
+    List<String> excludePackages = parseAppPackages(options.getOrDefault("--exclude-packages", ""));
 
     if (!Files.isDirectory(classesDir)) {
       System.err.println("ERROR: --classes-dir does not exist or is not a directory: " + classesDir);
@@ -75,7 +76,7 @@ public final class SootExtractorCli {
     }
 
     try {
-      List<String> applicationClasses = discoverApplicationClasses(classesDir, appPackages);
+      List<String> applicationClasses = discoverApplicationClasses(classesDir, appPackages, excludePackages);
       Set<String> applicationClassSet = new LinkedHashSet<>(applicationClasses);
       ExtractionResult result =
           extractStructuralDependencies(classesDir, options.get("--classpath"), applicationClasses, applicationClassSet);
@@ -88,6 +89,7 @@ public final class SootExtractorCli {
       System.out.println("classes_dir=" + classesDir);
       System.out.println("classpath=" + options.get("--classpath"));
       System.out.println("app_packages=" + String.join(",", appPackages));
+      System.out.println("exclude_packages=" + String.join(",", excludePackages));
       System.out.println("application_classes_detected=" + result.classNodes().size());
       System.out.println("structural_dependencies_extracted=" + result.structuralDependencies().size());
       System.out.println("ssa_flow_edges_extracted=" + result.ssaFlowEdges().size());
@@ -482,11 +484,16 @@ public final class SootExtractorCli {
   }
 
   static List<String> discoverApplicationClasses(Path classesDir, List<String> appPackages) throws IOException {
+    return discoverApplicationClasses(classesDir, appPackages, List.of());
+  }
+
+  static List<String> discoverApplicationClasses(Path classesDir, List<String> appPackages, List<String> excludePackages)
+      throws IOException {
     try (Stream<Path> files = Files.walk(classesDir)) {
       return files
           .filter(path -> Files.isRegularFile(path) && path.toString().endsWith(".class"))
           .map(path -> classNameFromFile(classesDir, path))
-          .filter(className -> isApplicationClass(className, appPackages))
+          .filter(className -> isApplicationClass(className, appPackages, excludePackages))
           .sorted()
           .toList();
     }
@@ -499,8 +506,14 @@ public final class SootExtractorCli {
   }
 
   static boolean isApplicationClass(String className, List<String> appPackages) {
+    return isApplicationClass(className, appPackages, List.of());
+  }
+
+  static boolean isApplicationClass(String className, List<String> appPackages, List<String> excludePackages) {
     return appPackages.stream()
-        .anyMatch(packageName -> className.equals(packageName) || className.startsWith(packageName + "."));
+        .anyMatch(packageName -> className.equals(packageName) || className.startsWith(packageName + "."))
+        && excludePackages.stream()
+            .noneMatch(packageName -> className.equals(packageName) || className.startsWith(packageName + "."));
   }
 
   static void writeHeader(Path path, List<String> columns) throws IOException {
@@ -575,7 +588,7 @@ public final class SootExtractorCli {
     System.err.println(
         "Usage: java org.evomicro.sootextractor.SootExtractorCli "
             + "--subject <name> --classes-dir <dir> --classpath <classpath> "
-            + "--app-packages <pkg[,pkg...]> --out-dir <dir>");
+            + "--app-packages <pkg[,pkg...]> [--exclude-packages <pkg[,pkg...]>] --out-dir <dir>");
   }
 
   record ClassNode(String classId, String className, String packageName, String classFilePath) {}

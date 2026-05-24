@@ -2,8 +2,7 @@ from collections.abc import Iterable
 
 import pandas as pd
 
-from evo_ms.evidence.flow_evidence import ALLOWED_SSA_FLOW_TYPES
-from evo_ms.evidence.ssa_flow_evidence import aggregate_ssa_flow_weights
+from evo_ms.evidence.ssa_flow_evidence import ALLOWED_SSA_FLOW_TYPES, aggregate_ssa_flow_weights
 from evo_ms.graph.weight_calculator import calculate_edge_weight
 from evo_ms.graph.weight_calculator import calculate_stage1_edge_weights
 
@@ -115,7 +114,7 @@ def build_ssa_graph(evidence_edges: Iterable[EvidenceEdge]):
         if graph.has_edge(source, target):
             graph[source][target]["raw_weight"] += raw_weight
             graph[source][target]["ssa_flow_weight"] += ssa_flow_weight
-            graph[source][target]["G_ssa_weight"] += weight
+            graph[source][target]["g_ssa_weight"] += weight
             graph[source][target]["evidence"].append(evidence_type)
         else:
             graph.add_edge(
@@ -123,7 +122,7 @@ def build_ssa_graph(evidence_edges: Iterable[EvidenceEdge]):
                 target,
                 raw_weight=raw_weight,
                 ssa_flow_weight=ssa_flow_weight,
-                G_ssa_weight=weight,
+                g_ssa_weight=weight,
                 evidence=[evidence_type],
             )
     return graph

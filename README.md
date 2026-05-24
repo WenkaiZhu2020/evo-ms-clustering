@@ -1,36 +1,48 @@
-# Evolutionary Software Clustering for Microservice Identification in Monolith-to-Microservices Migration:
-# A Multi-Objective Search Approach Guided by LLM-Derived Semantic Embeddings
+# Evolutionary Software Clustering for Microservice Identification
 
-This repository supports dissertation research on software clustering for identifying candidate microservices from Java monolithic systems.
+This repository supports a master's dissertation experiment on class-level software clustering for monolith-to-microservices migration.
 
-The current `stage1-baseline` branch supports only the early pipeline:
-
-- `00` Pre-experiment
-- `01` Stage 1 Leiden baseline
-
-## Current Pipeline
+The current implementation is limited to the Stage 1 structural pipeline:
 
 ```text
-Java project
--> dependency extraction
--> raw class graph
--> Soot/Shimple-derived SSA flow extraction
--> G_ssa class graph
--> pre-experiment comparison
--> Leiden community detection baseline
+Soot/Shimple extraction
+-> normalized CSVs in data/extracted/<subject>/
+-> G_raw and G_ssa construction
+-> Leiden clustering
+-> evaluation tables in results/<subject>/<stage>/
 ```
 
-## Current Stages
+`G_raw` uses type and call dependency evidence with `raw_weight`.
 
-`00` Pre-experiment validates whether Soot-based scoped SSA flow evidence improves the class dependency graph by comparing `G_raw` and `G_ssa`.
+`G_ssa` adds Soot/Shimple-derived return_value flow and argument_passing flow evidence with `g_ssa_weight`.
 
-`01` Stage 1 Leiden baseline runs Leiden community detection on `G_ssa` to produce a structural baseline.
+## Subjects
 
-## Later Dissertation Stages
+Primary experimental subject:
 
-Stage 2 is planned as structure-only NSGA-II in a later branch.
+- `cargotracker`
 
-Stage 3 is planned as LLM-derived semantic embeddings with NSGA-II in a later branch.
+Pipeline/debug sanity-check subject:
+
+- `jpetstore`
+
+DayTrader is not part of the repository. PiggyMetrics is not used as an input subject.
+
+## Repository Layout
+
+```text
+configs/      Experiment and subject configuration.
+data/         Input data only: raw Java projects, normalized extracted CSVs, and references.
+docs/stage1/ Stable Stage 1 technical documentation.
+docs/reports  Human-written experiment reports and benchmark evidence.
+docs/archive/ Historical/deprecated notes only.
+experiments/ Runnable experiment entrypoints.
+results/      Generated experiment outputs.
+scripts/      Thin command wrappers for current subjects.
+src/          Python package implementation.
+tests/        Python tests and fixtures.
+tools/        Java/Soot extractor.
+```
 
 ## Installation
 
@@ -40,16 +52,60 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Placeholder Runs
+The Java extractor is a Maven project under `tools/soot_extractor/`. Use Java 17:
 
 ```bash
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+```
+
+## Evidence Status
+
+Current committed evidence is intended to include:
+
+- normalized extraction CSVs under `data/extracted/<subject>/`
+- core pre-experiment outputs under `results/<subject>/00_pre_experiment/`
+- Stage 1 Leiden baseline outputs under `results/<subject>/01_stage1_leiden_baseline/` when present
+
+Old SSA weight-sweep outputs have been removed. The weight sweep is not finalized and will be redesigned and rerun.
+
+## JPetStore Run Order
+
+Build or place the JPetStore classes under:
+
+```text
+data/raw_projects/jpetstore/target/classes
+```
+
+Then run:
+
+```bash
+bash scripts/extract_soot_jpetstore.sh
 bash scripts/run_pre_jpetstore.sh
 bash scripts/run_stage1_jpetstore.sh
 ```
 
-PiggyMetrics is the next planned subject after its local project paths and package filters are defined.
+The Stage 1 Leiden runner depends on the pre-experiment output:
 
-## Data
+```text
+results/<subject>/00_pre_experiment/graph/ssa_edges.csv
+```
 
-Large raw Java projects are local research inputs and are excluded from version control.
-Place local subject systems under `data/raw_projects/`.
+## Validation
+
+Run Python tests with:
+
+```bash
+.venv/bin/python -m pytest
+```
+
+Run the Java/Soot extractor tests with:
+
+```bash
+mvn -f tools/soot_extractor/pom.xml test
+```
+
+The Maven project is configured to use a Java 17 toolchain for compilation and tests.
+
+## Data Policy
+
+Raw Java subject systems stay under `data/raw_projects/<subject>/` and are local research inputs. The CargoTracker raw checkout must be prepared locally because raw projects are ignored by Git. Normalized extractor outputs live under `data/extracted/<subject>/`. Generated experiment outputs live only under `results/<subject>/<stage>/`.

@@ -91,6 +91,39 @@ final class SootExtractorCliTest {
     assertTrue(Files.notExists(outDir));
   }
 
+  @Test
+  void excludesApplicationClassesByPackagePrefix() throws IOException {
+    Path classesDir = compileFixture();
+
+    Path outDir = tempDir.resolve("filtered-out");
+    int exitCode =
+        SootExtractorCli.run(
+            new String[] {
+              "--subject",
+              "fixture",
+              "--classes-dir",
+              classesDir.toString(),
+              "--classpath",
+              classesDir.toString(),
+              "--app-packages",
+              "com.example",
+              "--exclude-packages",
+              "com.example.noise",
+              "--out-dir",
+              outDir.toString()
+            });
+
+    assertEquals(0, exitCode);
+    List<String> classNodes = Files.readAllLines(outDir.resolve("class_nodes.csv"));
+    assertTrue(classNodes.stream().noneMatch(line -> line.contains("com.example.noise")));
+
+    List<String> dependencies = Files.readAllLines(outDir.resolve("structural_dependencies.csv"));
+    assertTrue(dependencies.stream().noneMatch(line -> line.contains("com.example.noise")));
+
+    List<String> ssaFlows = Files.readAllLines(outDir.resolve("ssa_flow_edges.csv"));
+    assertTrue(ssaFlows.stream().noneMatch(line -> line.contains("com.example.noise")));
+  }
+
   private Path compileFixture() throws IOException {
     Path sourceRoot = tempDir.resolve("src");
     Path packageDir = sourceRoot.resolve("com/example");
@@ -99,6 +132,9 @@ final class SootExtractorCliTest {
     writeSource(packageDir.resolve("Base.java"), "package com.example; public class Base {}");
     writeSource(packageDir.resolve("B.java"), "package com.example; public class B { public B produce() { return this; } }");
     writeSource(packageDir.resolve("C.java"), "package com.example; public class C { public void consume(B value) {} }");
+    Path noiseDir = packageDir.resolve("noise");
+    Files.createDirectories(noiseDir);
+    writeSource(noiseDir.resolve("Primitive.java"), "package com.example.noise; public class Primitive {}");
     writeSource(
         packageDir.resolve("A.java"),
         """
@@ -124,12 +160,15 @@ final class SootExtractorCliTest {
             null,
             null,
             null,
+            "--release",
+            "17",
             "-d",
             classesDir.toString(),
             packageDir.resolve("I.java").toString(),
             packageDir.resolve("Base.java").toString(),
             packageDir.resolve("B.java").toString(),
             packageDir.resolve("C.java").toString(),
+            noiseDir.resolve("Primitive.java").toString(),
             packageDir.resolve("A.java").toString());
     assertEquals(0, exitCode);
     return classesDir;

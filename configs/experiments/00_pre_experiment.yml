@@ -13,10 +13,11 @@ ssa_graph:
   enabled: true
   include_raw_dependencies: true
   include_ssa_flow_dependencies: true
-  weight_formula: G_ssa_weight = raw_weight + ssa_flow_weight
+  weight_formula: g_ssa_weight = raw_weight + ssa_flow_weight
 ssa_flow_evidence_weights:
   return_value_flow: 3
   argument_passing_flow: 3
 leiden:
-  resolution: null
-output_directory: results
+  resolution: 1.0
+  seed: 42
+output_root: results
