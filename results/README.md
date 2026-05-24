@@ -1,6 +1,6 @@
 # Results
 
-This directory contains generated Stage 1 experiment outputs only.
+This directory contains generated outputs from the Stage 1 experiments.
 
 Outputs are organized as:
 
@@ -8,7 +8,7 @@ Outputs are organized as:
 results/<subject>/<stage>/
 ```
 
-Current committed evidence should be limited to core pre-experiment outputs and Stage 1 Leiden baseline outputs. CSV and JSON files here are experiment evidence, not source inputs.
+CSV and JSON files in this directory are generated experiment outputs. Source inputs are kept under `data/`.
 
 Pre-experiment directories use:
 
@@ -22,5 +22,3 @@ Stage 1 Leiden baseline directories use:
 - `clustering/` for `stage1_clusters.csv`.
 - `metrics/` for `stage1_metrics.csv`.
 - `summaries/` for `stage1_cluster_summary.csv`.
-
-Old SSA weight-sweep outputs have been removed. The weight sweep is not finalized and will be redesigned and rerun before any new sweep evidence is committed.

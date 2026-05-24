@@ -1,3 +1,3 @@
 # Archive
 
-No deprecated route notes are currently retained here. Use this folder only for historical documents that should be preserved but are not active Stage 1 guidance.
+This directory is reserved for historical documents that should remain available but are no longer active Stage 1 guidance.

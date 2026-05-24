@@ -1,6 +1,6 @@
 # Pre-experiment
 
-Compares `G_raw` with `G_ssa` for configured subjects.
+This experiment builds the raw structural graph (`G_raw`) and the SSA-augmented graph (`G_ssa`) for each configured subject, then compares their clustering and graph-level characteristics.
 
 Inputs:
 
