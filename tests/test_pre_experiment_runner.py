@@ -41,18 +41,50 @@ def test_run_pre_experiment_writes_expected_outputs_to_temp_results(tmp_path: Pa
         "leiden_ssa_partition_metrics.csv",
     ]
     assert sorted(path.name for path in (output_dir / "comparison").iterdir()) == [
+        "metrics_summary.csv",
         "pre_experiment_summary.csv",
+        "top_moved_classes.csv",
+        "top_new_ssa_edges.csv",
+        "top_weight_increased_edges.csv",
     ]
 
     raw_edges = pd.read_csv(output_dir / "graph" / "raw_edges.csv")
     ssa_edges = pd.read_csv(output_dir / "graph" / "ssa_edges.csv")
     raw_clusters = pd.read_csv(output_dir / "clustering" / "leiden_raw_clusters.csv")
     summary = pd.read_csv(output_dir / "comparison" / "pre_experiment_summary.csv")
+    metrics_summary = pd.read_csv(output_dir / "comparison" / "metrics_summary.csv")
+    new_edges = pd.read_csv(output_dir / "comparison" / "top_new_ssa_edges.csv")
+    increased_edges = pd.read_csv(output_dir / "comparison" / "top_weight_increased_edges.csv")
+    moved_classes = pd.read_csv(output_dir / "comparison" / "top_moved_classes.csv")
+    summary_values = summary.set_index("metric")
 
     assert list(raw_edges.columns) == ["source", "target", "type_weight", "call_weight", "raw_weight"]
     assert "g_ssa_weight" in ssa_edges.columns
     assert set(raw_clusters["class_id"]) == {"A", "B", "C"}
     assert {"edge_count", "cluster_count", "modularity"}.issubset(set(summary["metric"]))
+    assert metrics_summary.loc[0, "raw_edge_count"] == len(raw_edges)
+    assert metrics_summary.loc[0, "g_ssa_edge_count"] == len(ssa_edges)
+    assert summary_values.loc["edge_count", "raw"] == metrics_summary.loc[0, "raw_edge_count"]
+    assert summary_values.loc["edge_count", "ssa"] == metrics_summary.loc[0, "g_ssa_edge_count"]
+    assert summary_values.loc["density", "raw"] == pytest.approx(2.0 / 3.0)
+    assert summary_values.loc["density", "ssa"] == pytest.approx(1.0)
+    assert {"ari_raw_vs_ssa", "nmi_raw_vs_ssa", "ssa_weighted_modularity"}.issubset(
+        metrics_summary.columns,
+    )
+    assert list(new_edges.columns) == [
+        "source",
+        "target",
+        "raw_weight",
+        "ssa_flow_weight",
+        "g_ssa_weight",
+        "flow_type_summary",
+    ]
+    assert "weight_increase" in increased_edges.columns
+    assert {
+        "lost_same_cluster_neighbors",
+        "gained_same_cluster_neighbors",
+        "membership_jaccard",
+    }.issubset(moved_classes.columns)
 
 
 def test_run_pre_experiment_uses_config_subjects(tmp_path: Path) -> None:

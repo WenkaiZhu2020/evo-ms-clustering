@@ -13,6 +13,8 @@ if str(SRC) not in sys.path:
 
 from evo_ms.clustering.leiden_baseline import run_leiden_baseline
 from evo_ms.evaluation.partition_metrics import calculate_partition_metrics
+from evo_ms.evaluation.partition_metrics import calculate_ssa_impact_tables
+from evo_ms.evaluation.partition_metrics import calculate_stage1_smoke_metrics
 from evo_ms.extraction.dependency_extractor import load_extracted_subject
 from evo_ms.graph.raw_graph_builder import build_raw_edges, build_raw_graph
 from evo_ms.graph.ssa_graph_builder import build_g_ssa_graph, build_ssa_edges
@@ -126,6 +128,35 @@ def run_subject(
         comparison_dir / "pre_experiment_summary.csv",
         index=False,
     )
+    calculate_stage1_smoke_metrics(
+        class_nodes,
+        raw_edges,
+        ssa_edges,
+        raw_clusters,
+        ssa_clusters,
+        subject=subject,
+        algorithm="leiden",
+        ssa_flow_edges=ssa_flow_edges,
+    ).to_csv(comparison_dir / "metrics_summary.csv", index=False)
+    impact_tables = calculate_ssa_impact_tables(
+        raw_edges,
+        ssa_edges,
+        raw_clusters,
+        ssa_clusters,
+        ssa_flow_edges=ssa_flow_edges,
+    )
+    impact_tables["top_new_ssa_edges"].to_csv(
+        comparison_dir / "top_new_ssa_edges.csv",
+        index=False,
+    )
+    impact_tables["top_weight_increased_edges"].to_csv(
+        comparison_dir / "top_weight_increased_edges.csv",
+        index=False,
+    )
+    impact_tables["top_moved_classes"].to_csv(
+        comparison_dir / "top_moved_classes.csv",
+        index=False,
+    )
 
     logger.info("Wrote pre-experiment outputs to %s", output_dir)
     return output_dir
@@ -161,9 +192,10 @@ def _leiden_resolution(config: dict) -> float:
 def _graph_metrics(subject: str, graph_type: str, graph) -> pd.DataFrame:
     import networkx as nx
 
+    metric_graph = graph.to_undirected() if graph.is_directed() else graph
     node_count = graph.number_of_nodes()
-    edge_count = graph.number_of_edges()
-    degree_sum = sum(dict(graph.degree()).values())
+    edge_count = metric_graph.number_of_edges()
+    degree_sum = sum(dict(metric_graph.degree()).values())
     return pd.DataFrame(
         [
             {
@@ -171,7 +203,7 @@ def _graph_metrics(subject: str, graph_type: str, graph) -> pd.DataFrame:
                 "graph_type": graph_type,
                 "node_count": node_count,
                 "edge_count": edge_count,
-                "density": float(nx.density(graph)),
+                "density": float(nx.density(metric_graph)),
                 "average_degree": 0.0 if node_count == 0 else float(degree_sum / node_count),
             }
         ]
