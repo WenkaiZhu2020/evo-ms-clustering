@@ -1,9 +1,9 @@
 # Data
 
-This directory is for Stage 1 input data only. Generated experiment outputs do not belong here.
+This directory contains the input data used by the Stage 1 clustering pipeline.
 
 - `raw_projects/`: local Java subject checkouts used to compile classes for extraction.
-- `extracted/`: normalized Soot/Shimple CSVs used by the Python Stage 1 pipeline.
-- `references/`: optional reference or ground-truth material, when available.
+- `extracted/`: normalized Soot/Shimple CSVs produced by the extractor and consumed by the Python pipeline.
+- `references/`: optional reference or ground-truth material.
 
-Generated experiment outputs live under `results/<subject>/<stage>/`.
+Experiment outputs are written under `results/<subject>/<stage>/`.

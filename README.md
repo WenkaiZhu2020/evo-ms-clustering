@@ -58,16 +58,6 @@ The Java extractor is a Maven project under `tools/soot_extractor/`. Use Java 17
 export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 ```
 
-## Evidence Status
-
-Current committed evidence is intended to include:
-
-- normalized extraction CSVs under `data/extracted/<subject>/`
-- core pre-experiment outputs under `results/<subject>/00_pre_experiment/`
-- Stage 1 Leiden baseline outputs under `results/<subject>/01_stage1_leiden_baseline/` when present
-
-Old SSA weight-sweep outputs have been removed. The weight sweep is not finalized and will be redesigned and rerun.
-
 ## JPetStore Run Order
 
 Build or place the JPetStore classes under:
