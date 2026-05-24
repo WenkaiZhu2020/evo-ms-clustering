@@ -1,0 +1,15 @@
+subject: cargotracker
+language: java
+project_root: data/raw_projects/cargotracker
+build_tool: maven
+compile_command: ./mvnw -DskipTests package
+classes_dir: target/classes
+app_packages:
+  - org.eclipse.cargotracker
+  - org.eclipse.pathfinder
+source_path: data/raw_projects/cargotracker
+extracted_output_path: data/extracted/cargotracker
+result_output_path: results/cargotracker
+include_packages: []
+exclude_packages: []
+# The raw CargoTracker checkout is local and ignored by Git; prepare it under project_root before extraction.

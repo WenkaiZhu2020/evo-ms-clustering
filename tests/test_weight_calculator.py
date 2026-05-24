@@ -1,5 +1,3 @@
-"""Tests for early edge weight calculation helpers."""
-
 from pathlib import Path
 import sys
 

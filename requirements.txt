@@ -1,7 +1,7 @@
 pandas
 numpy
 networkx
-python-igraph
+igraph
 leidenalg
 PyYAML
 pytest

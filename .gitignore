@@ -28,12 +28,19 @@ ENV/
 logs/
 
 # Java and Maven build output
-target/
+tools/soot_extractor/target/
 
 # Large raw Java subject systems
 data/raw_projects/*
 !data/raw_projects/.gitkeep
 !data/raw_projects/README.md
+data/raw_projects/*/.git/
+data/raw_projects/**/target/
+data/raw_projects/**/.gradle/
+data/raw_projects/**/build/
+data/raw_projects/**/.idea/
+data/raw_projects/**/.classpath
+data/raw_projects/**/.project
 
 # Keep placeholder files tracked
 !.gitkeep

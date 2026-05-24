@@ -1,5 +1,3 @@
-"""Aggregate Soot/Shimple-derived SSA flow evidence for G_ssa construction."""
-
 import pandas as pd
 
 ALLOWED_SSA_FLOW_TYPES = frozenset({"return_value_flow", "argument_passing_flow"})
@@ -16,7 +14,6 @@ SSA_FLOW_AGGREGATE_COLUMNS = [
 
 
 def validate_ssa_flow_type(flow_type: str) -> str:
-    """Validate a scoped SSA flow type."""
     if flow_type not in ALLOWED_SSA_FLOW_TYPES:
         allowed = ", ".join(sorted(ALLOWED_SSA_FLOW_TYPES))
         raise ValueError(f"unsupported SSA flow type: {flow_type}; expected one of: {allowed}")
@@ -27,7 +24,7 @@ def aggregate_ssa_flow_weights(
     class_nodes: pd.DataFrame,
     ssa_flow_edges: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Aggregate normalized SSA flow records by source and target class."""
+    """Sum return-value and argument-passing flow by class pair."""
     _validate_required_columns(class_nodes, ["class_id"], "class_nodes")
     _validate_required_columns(
         ssa_flow_edges,
@@ -48,6 +45,7 @@ def aggregate_ssa_flow_weights(
     if flows.empty:
         return pd.DataFrame(columns=SSA_FLOW_AGGREGATE_COLUMNS)
 
+    # One column per accepted flow type makes the graph builder simpler.
     grouped = (
         flows.groupby(["source", "target", "flow_type"], as_index=False)["weight"]
         .sum()

@@ -2,7 +2,6 @@ experiment_name: 00_pre_experiment
 description: Compare G_raw and G_ssa class dependency graphs.
 subjects:
   - jpetstore
-  - acmeair
 raw_graph:
   graph_name: G_raw
   enabled: true
@@ -14,10 +13,11 @@ ssa_graph:
   enabled: true
   include_raw_dependencies: true
   include_ssa_flow_dependencies: true
-  weight_formula: G_ssa_weight = raw_weight + ssa_flow_weight
+  weight_formula: g_ssa_weight = raw_weight + ssa_flow_weight
 ssa_flow_evidence_weights:
   return_value_flow: 3
   argument_passing_flow: 3
 leiden:
-  resolution: null
-output_directory: results
+  resolution: 1.0
+  seed: 42
+output_root: results

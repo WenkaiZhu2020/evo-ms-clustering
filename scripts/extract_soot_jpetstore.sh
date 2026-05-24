@@ -7,6 +7,11 @@ MAVEN_BIN="${MAVEN:-mvn}"
 TOOL_DIR="tools/soot_extractor"
 TOOL_MAIN="org.evomicro.sootextractor.SootExtractorCli"
 
+if [[ -z "${JAVA_HOME:-}" ]] && command -v /usr/libexec/java_home >/dev/null 2>&1; then
+  JAVA_HOME="$(/usr/libexec/java_home -v 17)"
+  export JAVA_HOME
+fi
+
 "$MAVEN_BIN" -q -f "$TOOL_DIR/pom.xml" -DskipTests compile exec:java \
   -Dexec.mainClass="$TOOL_MAIN" \
   -Dexec.args="--subject jpetstore --classes-dir data/raw_projects/jpetstore/target/classes --classpath data/raw_projects/jpetstore/target/classes --app-packages org.mybatis.jpetstore --out-dir data/extracted/jpetstore"

@@ -64,6 +64,7 @@ public final class SootExtractorCli {
     Path classesDir = Path.of(options.get("--classes-dir"));
     Path outDir = Path.of(options.get("--out-dir"));
     List<String> appPackages = parseAppPackages(options.get("--app-packages"));
+    List<String> excludePackages = parseAppPackages(options.getOrDefault("--exclude-packages", ""));
 
     if (!Files.isDirectory(classesDir)) {
       System.err.println("ERROR: --classes-dir does not exist or is not a directory: " + classesDir);
@@ -75,7 +76,7 @@ public final class SootExtractorCli {
     }
 
     try {
-      List<String> applicationClasses = discoverApplicationClasses(classesDir, appPackages);
+      List<String> applicationClasses = discoverApplicationClasses(classesDir, appPackages, excludePackages);
       Set<String> applicationClassSet = new LinkedHashSet<>(applicationClasses);
       ExtractionResult result =
           extractStructuralDependencies(classesDir, options.get("--classpath"), applicationClasses, applicationClassSet);
@@ -88,6 +89,7 @@ public final class SootExtractorCli {
       System.out.println("classes_dir=" + classesDir);
       System.out.println("classpath=" + options.get("--classpath"));
       System.out.println("app_packages=" + String.join(",", appPackages));
+      System.out.println("exclude_packages=" + String.join(",", excludePackages));
       System.out.println("application_classes_detected=" + result.classNodes().size());
       System.out.println("structural_dependencies_extracted=" + result.structuralDependencies().size());
       System.out.println("ssa_flow_edges_extracted=" + result.ssaFlowEdges().size());
@@ -102,6 +104,8 @@ public final class SootExtractorCli {
   static ExtractionResult extractStructuralDependencies(
       Path classesDir, String classpath, List<String> applicationClasses, Set<String> applicationClassSet) {
     G.reset();
+
+    // Keep Soot tolerant of missing framework classes in small subject builds.
     Options.v().set_allow_phantom_refs(true);
     Options.v().set_ignore_resolution_errors(true);
     Options.v().set_no_bodies_for_excluded(true);
@@ -146,6 +150,8 @@ public final class SootExtractorCli {
   private static void extractTypeDependencies(
       SootClass sootClass, Set<String> applicationClassSet, Set<StructuralDependency> dependencies) {
     String source = sootClass.getName();
+
+    // Type evidence comes from declarations, not local variables.
     if (sootClass.hasSuperclass()) {
       addTypeDependency(
           source,
@@ -242,6 +248,7 @@ public final class SootExtractorCli {
           continue;
         }
         try {
+          // Calls are class-level edges: caller class to callee declaring class.
           InvokeExpr invokeExpr = stmt.getInvokeExpr();
           SootMethod targetMethod = invokeExpr.getMethod();
           String targetClass = targetMethod.getDeclaringClass().getName();
@@ -293,6 +300,8 @@ public final class SootExtractorCli {
 
       ShimpleLocalDefs localDefs = new ShimpleLocalDefs(shimpleBody);
       ShimpleLocalUses localUses = new ShimpleLocalUses(shimpleBody);
+
+      // Stage 1 keeps only two SSA patterns that map cleanly to class pairs.
       extractReturnValueFlows(method, shimpleBody, localUses, applicationClassSet, flowEdges);
       extractArgumentPassingFlows(method, shimpleBody, localDefs, applicationClassSet, flowEdges);
     }
@@ -317,6 +326,7 @@ public final class SootExtractorCli {
         continue;
       }
 
+      // A call result used as an argument to another app call becomes B -> C.
       for (UnitValueBoxPair use : localUses.getUsesOf(definedLocal)) {
         Unit useUnit = use.getUnit();
         if (!(useUnit instanceof Stmt useStmt) || !useStmt.containsInvokeExpr()) {
@@ -355,6 +365,7 @@ public final class SootExtractorCli {
         continue;
       }
       for (Value argument : invokeExpr.getArgs()) {
+        // Prefer the argument's definition; fall back to its declared app type.
         String sourceClass = sourceClassForArgument(argument, unit, localDefs, applicationClassSet);
         if (sourceClass == null) {
           System.err.println(
@@ -473,11 +484,16 @@ public final class SootExtractorCli {
   }
 
   static List<String> discoverApplicationClasses(Path classesDir, List<String> appPackages) throws IOException {
+    return discoverApplicationClasses(classesDir, appPackages, List.of());
+  }
+
+  static List<String> discoverApplicationClasses(Path classesDir, List<String> appPackages, List<String> excludePackages)
+      throws IOException {
     try (Stream<Path> files = Files.walk(classesDir)) {
       return files
           .filter(path -> Files.isRegularFile(path) && path.toString().endsWith(".class"))
           .map(path -> classNameFromFile(classesDir, path))
-          .filter(className -> isApplicationClass(className, appPackages))
+          .filter(className -> isApplicationClass(className, appPackages, excludePackages))
           .sorted()
           .toList();
     }
@@ -490,8 +506,14 @@ public final class SootExtractorCli {
   }
 
   static boolean isApplicationClass(String className, List<String> appPackages) {
+    return isApplicationClass(className, appPackages, List.of());
+  }
+
+  static boolean isApplicationClass(String className, List<String> appPackages, List<String> excludePackages) {
     return appPackages.stream()
-        .anyMatch(packageName -> className.equals(packageName) || className.startsWith(packageName + "."));
+        .anyMatch(packageName -> className.equals(packageName) || className.startsWith(packageName + "."))
+        && excludePackages.stream()
+            .noneMatch(packageName -> className.equals(packageName) || className.startsWith(packageName + "."));
   }
 
   static void writeHeader(Path path, List<String> columns) throws IOException {
@@ -556,6 +578,7 @@ public final class SootExtractorCli {
     if (value == null) {
       return "";
     }
+    // Minimal CSV escaping for statements and method signatures.
     boolean quote = value.contains(",") || value.contains("\"") || value.contains("\n") || value.contains("\r");
     String escaped = value.replace("\"", "\"\"");
     return quote ? "\"" + escaped + "\"" : escaped;
@@ -565,7 +588,7 @@ public final class SootExtractorCli {
     System.err.println(
         "Usage: java org.evomicro.sootextractor.SootExtractorCli "
             + "--subject <name> --classes-dir <dir> --classpath <classpath> "
-            + "--app-packages <pkg[,pkg...]> --out-dir <dir>");
+            + "--app-packages <pkg[,pkg...]> [--exclude-packages <pkg[,pkg...]>] --out-dir <dir>");
   }
 
   record ClassNode(String classId, String className, String packageName, String classFilePath) {}

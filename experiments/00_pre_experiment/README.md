@@ -1,5 +1,17 @@
 # Pre-experiment
 
-Compares `G_raw` with `G_ssa`.
+Compares `G_raw` with `G_ssa` for configured subjects.
 
-Current status: scaffold only. The extraction and graph-building workflow will use normalized structural dependencies and Soot/Shimple-derived SSA flow edges after the data schema is validated.
+Inputs:
+
+- `configs/experiments/00_pre_experiment.yml`
+- `configs/subjects/<subject>.yml`
+- `data/extracted/<subject>/class_nodes.csv`
+- `data/extracted/<subject>/structural_dependencies.csv`
+- `data/extracted/<subject>/ssa_flow_edges.csv`
+
+Outputs are written to `results/<subject>/00_pre_experiment/`:
+
+- `graph/`: raw and SSA edge tables plus graph metrics.
+- `clustering/`: Leiden cluster assignments and partition metrics.
+- `comparison/`: raw-vs-SSA comparison summaries.
