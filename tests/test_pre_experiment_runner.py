@@ -96,6 +96,23 @@ def test_run_pre_experiment_uses_config_subjects(tmp_path: Path) -> None:
     assert output_dirs == [tmp_path / "results" / "jpetstore" / "00_pre_experiment"]
 
 
+def test_run_pre_experiment_accepts_ssa_lambda_override(tmp_path: Path) -> None:
+    require_leiden()
+    write_fixture_repo(tmp_path)
+
+    output_dirs = pre_experiment_runner.run_pre_experiment(
+        root=tmp_path,
+        subject="jpetstore",
+        ssa_lambda=0.0,
+    )
+
+    ssa_edges = pd.read_csv(output_dirs[0] / "graph" / "ssa_edges.csv")
+    metrics_summary = pd.read_csv(output_dirs[0] / "comparison" / "metrics_summary.csv")
+    assert len(ssa_edges) == 2
+    assert metrics_summary.loc[0, "g_ssa_edge_count"] == 2
+    assert metrics_summary.loc[0, "new_ssa_edge_count"] == 0
+
+
 def test_run_pre_experiment_reports_missing_extracted_inputs(tmp_path: Path) -> None:
     write_minimal_config(tmp_path)
 

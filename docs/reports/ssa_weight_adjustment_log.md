@@ -1,14 +1,16 @@
 # SSA Weight Adjustment Log
 
-This document will record the design and results of SSA weight adjustment experiments.
+This document records where SSA weight and sensitivity evidence is stored for Stage 1.
 
-## Current status
+## Current Evidence
 
-The previous weight-sweep outputs have been removed because the SSA weight design will be re-organized and re-run.
+- DayTrader calibration outputs are under `results/daytrader/00_pre_experiment/calibration/`.
+- Xerces-J sensitivity outputs are under `results/xerces-j/stage1/`.
+- Cross-case interpretation is summarized in `reports/stage1_cross_case_summary.md`.
 
-## Planned record format
+## Recorded Fields
 
-For each run, record:
+Current sweep outputs record:
 
 - subject
 - graph input
@@ -21,8 +23,6 @@ For each run, record:
 - main metric observations
 - interpretation
 
-## Notes to complete
+## Interpretation Boundary
 
-- Define the next SSA weight sweep range.
-- Re-run the sweep with the cleaned Stage 1 structure.
-- Record only finalized results here.
+SSA weight is treated as a sensitivity parameter, not as proof that `G_ssa` is always better than `G_raw`. DayTrader is the calibration case because it has a reference mapping. Xerces-J is used as a larger technical transfer check.

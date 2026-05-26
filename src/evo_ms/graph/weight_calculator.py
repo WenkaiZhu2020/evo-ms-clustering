@@ -19,10 +19,14 @@ def calculate_raw_weight(type_weight: object = 0.0, call_weight: object = 0.0) -
 def calculate_ssa_flow_weight(
     return_flow_weight: object = 0.0,
     argument_flow_weight: object = 0.0,
+    ssa_lambda: object = 1.0,
 ) -> float:
-    return _validated_weight(return_flow_weight, "return_flow_weight") + _validated_weight(
-        argument_flow_weight,
-        "argument_flow_weight",
+    return _validated_weight(ssa_lambda, "ssa_lambda") * (
+        _validated_weight(return_flow_weight, "return_flow_weight")
+        + _validated_weight(
+            argument_flow_weight,
+            "argument_flow_weight",
+        )
     )
 
 
@@ -31,14 +35,19 @@ def calculate_g_ssa_weight(
     call_weight: object = 0.0,
     return_flow_weight: object = 0.0,
     argument_flow_weight: object = 0.0,
+    ssa_lambda: object = 1.0,
 ) -> float:
     return calculate_raw_weight(type_weight, call_weight) + calculate_ssa_flow_weight(
         return_flow_weight,
         argument_flow_weight,
+        ssa_lambda,
     )
 
 
-def calculate_stage1_edge_weights(weights: Mapping[str, object]) -> dict[str, float]:
+def calculate_stage1_edge_weights(
+    weights: Mapping[str, object],
+    ssa_lambda: object = 1.0,
+) -> dict[str, float]:
     """Return raw, SSA-flow, and total G_ssa weights."""
     raw_weight = calculate_raw_weight(
         weights.get("type_weight", 0.0),
@@ -47,6 +56,7 @@ def calculate_stage1_edge_weights(weights: Mapping[str, object]) -> dict[str, fl
     ssa_flow_weight = calculate_ssa_flow_weight(
         weights.get("return_flow_weight", 0.0),
         weights.get("argument_flow_weight", 0.0),
+        ssa_lambda,
     )
     return {
         "raw_weight": raw_weight,

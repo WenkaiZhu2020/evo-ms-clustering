@@ -26,13 +26,16 @@ def run_pre_experiment(
     root: Path = ROOT,
     subject: str | None = None,
     config_path: Path | None = None,
+    resolution: float | None = None,
+    ssa_lambda: float | None = None,
 ) -> list[Path]:
     config = load_yaml(config_path or root / "configs" / "experiments" / "00_pre_experiment.yml")
     subjects = [subject] if subject else list(config.get("subjects", []))
     if not subjects:
         raise ValueError("pre-experiment config has no subjects")
 
-    resolution = _leiden_resolution(config)
+    resolution = _leiden_resolution(config) if resolution is None else float(resolution)
+    ssa_lambda = _ssa_lambda(config) if ssa_lambda is None else float(ssa_lambda)
     seed = int(config.get("leiden", {}).get("seed", 42))
     output_root = root / config.get("output_root", config.get("output_directory", "results"))
 
@@ -44,6 +47,7 @@ def run_pre_experiment(
                 subject=subject_name,
                 output_root=output_root,
                 resolution=resolution,
+                ssa_lambda=ssa_lambda,
                 seed=seed,
             )
         )
@@ -55,6 +59,7 @@ def run_subject(
     subject: str,
     output_root: Path,
     resolution: float,
+    ssa_lambda: float,
     seed: int,
 ) -> Path:
     logger = get_logger(__name__)
@@ -70,7 +75,7 @@ def run_subject(
 
     logger.info("Building G_raw and G_ssa edges for %s", subject)
     raw_edges = build_raw_edges(class_nodes, structural_dependencies)
-    ssa_edges = build_ssa_edges(class_nodes, raw_edges, ssa_flow_edges)
+    ssa_edges = build_ssa_edges(class_nodes, raw_edges, ssa_flow_edges, ssa_lambda=ssa_lambda)
 
     logger.info("Running Leiden on G_raw for %s", subject)
     raw_clusters = run_leiden_baseline(
@@ -91,7 +96,11 @@ def run_subject(
     )
 
     raw_metrics = _graph_metrics(subject, "raw", build_raw_graph(class_nodes, structural_dependencies))
-    ssa_metrics = _graph_metrics(subject, "ssa", build_g_ssa_graph(class_nodes, raw_edges, ssa_flow_edges))
+    ssa_metrics = _graph_metrics(
+        subject,
+        "ssa",
+        build_g_ssa_graph(class_nodes, raw_edges, ssa_flow_edges, ssa_lambda=ssa_lambda),
+    )
     raw_partition_metrics = calculate_partition_metrics(
         class_nodes,
         raw_edges,
@@ -189,6 +198,11 @@ def _leiden_resolution(config: dict) -> float:
     return 1.0 if value is None else float(value)
 
 
+def _ssa_lambda(config: dict) -> float:
+    value = config.get("ssa_graph", {}).get("ssa_lambda", 1.0)
+    return 1.0 if value is None else float(value)
+
+
 def _graph_metrics(subject: str, graph_type: str, graph) -> pd.DataFrame:
     import networkx as nx
 
@@ -242,10 +256,16 @@ def _metric_values(graph_metrics: pd.DataFrame, partition_metrics: pd.DataFrame)
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--subject")
+    parser.add_argument("--resolution", type=float)
+    parser.add_argument("--ssa-lambda", type=float)
     args = parser.parse_args()
 
     try:
-        run_pre_experiment(subject=args.subject)
+        run_pre_experiment(
+            subject=args.subject,
+            resolution=args.resolution,
+            ssa_lambda=args.ssa_lambda,
+        )
     except ImportError as exc:
         print(f"ERROR: missing dependency for Leiden: {exc}", file=sys.stderr)
         return 1

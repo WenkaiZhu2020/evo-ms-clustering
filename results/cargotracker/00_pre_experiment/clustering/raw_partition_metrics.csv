@@ -1,2 +1,0 @@
-subject,algorithm,graph_type,cluster_count,modularity,average_cluster_size,max_cluster_size,min_cluster_size,internal_external_edge_ratio
-cargotracker,leiden,raw,21,0.47225855709966846,5.380952380952381,19,1,1.6724137931034482

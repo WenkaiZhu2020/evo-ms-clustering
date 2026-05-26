@@ -27,6 +27,14 @@ def test_calculate_ssa_flow_weight_adds_return_and_argument_weights() -> None:
     assert calculate_ssa_flow_weight(return_flow_weight=3, argument_flow_weight=6) == 9.0
 
 
+def test_calculate_ssa_flow_weight_applies_lambda() -> None:
+    assert calculate_ssa_flow_weight(
+        return_flow_weight=3,
+        argument_flow_weight=6,
+        ssa_lambda=0.5,
+    ) == 4.5
+
+
 def test_calculate_g_ssa_weight_adds_raw_and_ssa_flow_weights() -> None:
     assert (
         calculate_g_ssa_weight(
@@ -72,6 +80,22 @@ def test_calculate_stage1_edge_weights_does_not_require_shared_domain_weight() -
 
     assert "shared_domain_weight" not in weights
     assert weights["g_ssa_weight"] == 9.0
+
+
+def test_calculate_stage1_edge_weights_applies_lambda_to_ssa_only() -> None:
+    weights = calculate_stage1_edge_weights(
+        {
+            "type_weight": 1,
+            "call_weight": 2,
+            "return_flow_weight": 3,
+            "argument_flow_weight": 3,
+        },
+        ssa_lambda=2,
+    )
+
+    assert weights["raw_weight"] == 3.0
+    assert weights["ssa_flow_weight"] == 12.0
+    assert weights["g_ssa_weight"] == 15.0
 
 
 def test_normalize_weight_rejects_non_positive_maximum() -> None:

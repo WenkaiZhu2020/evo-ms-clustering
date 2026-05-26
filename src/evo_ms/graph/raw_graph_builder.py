@@ -48,6 +48,8 @@ def build_raw_edges(
     if dependencies.empty:
         return pd.DataFrame(columns=RAW_EDGE_COLUMNS)
 
+    dependencies = _with_undirected_endpoints(dependencies)
+
     # Pivot keeps type and call evidence separate until raw_weight is computed.
     grouped = (
         dependencies.groupby(["source", "target", "dependency_type"], as_index=False)["weight"]
@@ -105,6 +107,16 @@ def build_raw_graph(
             raw_weight=float(row["raw_weight"]),
         )
     return graph
+
+
+def _with_undirected_endpoints(edges: pd.DataFrame) -> pd.DataFrame:
+    edges = edges.copy()
+    source = edges["source"].astype(str)
+    target = edges["target"].astype(str)
+    source_first = source <= target
+    edges["source"] = source.where(source_first, target)
+    edges["target"] = target.where(source_first, source)
+    return edges
 
 
 def _validate_required_columns(frame: pd.DataFrame, columns: list[str], name: str) -> None:

@@ -18,15 +18,11 @@ Soot/Shimple extraction
 
 ## Subjects
 
-Primary experimental subject:
+- `jpetstore`: small smoke-test subject for validating the extraction and graph pipeline.
+- `daytrader`: calibration subject with a reference-service mapping and SSA weight/resolution sweep outputs.
+- `xerces-j`: larger technical remodularization benchmark for transfer and scalability checks.
 
-- `cargotracker`
-
-Pipeline/debug sanity-check subject:
-
-- `jpetstore`
-
-DayTrader is not part of the repository. PiggyMetrics is not used as an input subject.
+PiggyMetrics is not used as an input subject.
 
 ## Repository Layout
 
@@ -58,20 +54,31 @@ The Java extractor is a Maven project under `tools/soot_extractor/`. Use Java 17
 export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 ```
 
-## JPetStore Run Order
+## Run Order
 
-Build or place the JPetStore classes under:
+Each subject has a thin script wrapper under `scripts/`. Raw Java source and build output stay under `data/raw_projects/<subject>/`.
+
+JPetStore expects compiled classes under:
 
 ```text
 data/raw_projects/jpetstore/target/classes
 ```
 
-Then run:
+Core runs:
 
 ```bash
 bash scripts/extract_soot_jpetstore.sh
 bash scripts/run_pre_jpetstore.sh
 bash scripts/run_stage1_jpetstore.sh
+
+bash scripts/extract_soot_daytrader.sh
+bash scripts/run_pre_daytrader.sh
+bash scripts/run_stage1_daytrader.sh
+bash scripts/run_daytrader_weight_sweep.sh
+
+bash scripts/extract_soot_xerces_j.sh
+bash scripts/run_pre_xerces_j.sh
+bash scripts/run_stage1_xerces_j.sh
 ```
 
 The Stage 1 Leiden runner depends on the pre-experiment output:
@@ -98,4 +105,4 @@ The Maven project is configured to use a Java 17 toolchain for compilation and t
 
 ## Data Policy
 
-Raw Java subject systems stay under `data/raw_projects/<subject>/` and are local research inputs. The CargoTracker raw checkout must be prepared locally because raw projects are ignored by Git. Normalized extractor outputs live under `data/extracted/<subject>/`. Generated experiment outputs live only under `results/<subject>/<stage>/`.
+Raw Java subject systems stay under `data/raw_projects/<subject>/` and are local research inputs. Raw projects are ignored by Git. Normalized extractor outputs live under `data/extracted/<subject>/`. Generated experiment outputs live only under `results/<subject>/<stage>/`.

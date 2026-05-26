@@ -1,0 +1,2 @@
+subject,graph_type,node_count,edge_count,density,average_degree
+xerces-j,ssa,814,4148,0.012535850174226558,10.191646191646191

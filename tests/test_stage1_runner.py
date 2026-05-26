@@ -52,6 +52,20 @@ def test_run_stage1_leiden_uses_config_subjects(tmp_path: Path) -> None:
     assert output_dirs == [tmp_path / "results" / "jpetstore" / "01_stage1_leiden_baseline"]
 
 
+def test_run_stage1_leiden_accepts_resolution_override(tmp_path: Path) -> None:
+    require_leiden()
+    write_fixture_repo(tmp_path)
+
+    output_dirs = stage1_runner.run_stage1_leiden(
+        root=tmp_path,
+        subject="jpetstore",
+        resolution=1.25,
+    )
+
+    assert output_dirs == [tmp_path / "results" / "jpetstore" / "01_stage1_leiden_baseline"]
+    assert (output_dirs[0] / "clustering" / "stage1_clusters.csv").exists()
+
+
 def test_run_stage1_leiden_reports_missing_pre_experiment_output(tmp_path: Path) -> None:
     write_minimal_config(tmp_path)
     extracted = tmp_path / "data" / "extracted" / "jpetstore"
