@@ -1,0 +1,9 @@
+source,target,raw_weight,ssa_flow_weight,g_ssa_weight,flow_type_summary
+com.ibm.websphere.samples.daytrader.entities.OrderDataBean,com.ibm.websphere.samples.daytrader.web.jsf.OrderData,0.0,36.0,36.0,argument_passing_flow:6 rows/18.0 weight; return_value_flow:6 rows/18.0 weight
+com.ibm.websphere.samples.daytrader.entities.HoldingDataBean,com.ibm.websphere.samples.daytrader.web.jsf.HoldingData,0.0,30.0,30.0,argument_passing_flow:5 rows/15.0 weight; return_value_flow:5 rows/15.0 weight
+com.ibm.websphere.samples.daytrader.entities.QuoteDataBean,com.ibm.websphere.samples.daytrader.web.jsf.QuoteData,0.0,18.0,18.0,argument_passing_flow:3 rows/9.0 weight; return_value_flow:3 rows/9.0 weight
+com.ibm.websphere.samples.daytrader.TradeAction,com.ibm.websphere.samples.daytrader.web.jsf.HoldingData,0.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+com.ibm.websphere.samples.daytrader.TradeAction,com.ibm.websphere.samples.daytrader.web.jsf.QuoteData,0.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+com.ibm.websphere.samples.daytrader.TradeServices,com.ibm.websphere.samples.daytrader.util.Log,0.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+com.ibm.websphere.samples.daytrader.direct.KeySequenceDirect,com.ibm.websphere.samples.daytrader.entities.AccountDataBean,0.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight
+com.ibm.websphere.samples.daytrader.entities.QuoteDataBean,com.ibm.websphere.samples.daytrader.web.jsf.HoldingData,0.0,6.0,6.0,argument_passing_flow:1 rows/3.0 weight; return_value_flow:1 rows/3.0 weight

@@ -59,6 +59,26 @@ def test_build_raw_edges_combines_type_and_call_edges_between_same_classes() -> 
     assert raw_edges.loc[0, "raw_weight"] == 5.0
 
 
+def test_build_raw_edges_combines_reverse_direction_as_one_undirected_pair() -> None:
+    raw_edges = build_raw_edges(
+        class_nodes_frame("A", "B"),
+        structural_frame(
+            ("B", "A", "type", 1.0),
+            ("A", "B", "call", 2.0),
+        ),
+    )
+
+    assert raw_edges.to_dict("records") == [
+        {
+            "source": "A",
+            "target": "B",
+            "type_weight": 1.0,
+            "call_weight": 2.0,
+            "raw_weight": 3.0,
+        }
+    ]
+
+
 def test_build_raw_edges_rejects_invalid_node_reference() -> None:
     with pytest.raises(ValueError, match="not present in class_nodes.csv"):
         build_raw_edges(
@@ -152,6 +172,63 @@ def test_build_ssa_edges_combines_raw_and_ssa_flow_edges() -> None:
     assert ssa_edges.loc[0, "call_weight"] == 2.0
     assert ssa_edges.loc[0, "ssa_flow_weight"] == 6.0
     assert ssa_edges.loc[0, "g_ssa_weight"] == 9.0
+
+
+def test_build_ssa_edges_combines_reverse_direction_as_one_undirected_pair() -> None:
+    ssa_edges = build_ssa_edges(
+        class_nodes_frame("A", "B"),
+        build_raw_edges(
+            class_nodes_frame("A", "B"),
+            structural_frame(("B", "A", "type", 1.0)),
+        ),
+        ssa_flow_frame(
+            ("A", "B", "return_value_flow", 3.0),
+            ("B", "A", "argument_passing_flow", 3.0),
+        ),
+    )
+
+    assert ssa_edges.to_dict("records") == [
+        {
+            "source": "A",
+            "target": "B",
+            "type_weight": 1.0,
+            "call_weight": 0.0,
+            "return_flow_weight": 3.0,
+            "argument_flow_weight": 3.0,
+            "ssa_flow_weight": 6.0,
+            "g_ssa_weight": 7.0,
+        }
+    ]
+
+
+def test_build_ssa_edges_applies_lambda_to_ssa_contribution_only() -> None:
+    raw_edges = build_raw_edges(
+        class_nodes_frame("A", "B"),
+        structural_frame(("A", "B", "type", 1.0), ("A", "B", "call", 2.0)),
+    )
+
+    ssa_edges = build_ssa_edges(
+        class_nodes_frame("A", "B"),
+        raw_edges,
+        ssa_flow_frame(("A", "B", "return_value_flow", 3.0)),
+        ssa_lambda=2.0,
+    )
+
+    assert ssa_edges.loc[0, "type_weight"] == 1.0
+    assert ssa_edges.loc[0, "call_weight"] == 2.0
+    assert ssa_edges.loc[0, "ssa_flow_weight"] == 6.0
+    assert ssa_edges.loc[0, "g_ssa_weight"] == 9.0
+
+
+def test_build_ssa_edges_lambda_zero_drops_flow_only_edges() -> None:
+    ssa_edges = build_ssa_edges(
+        class_nodes_frame("A", "B"),
+        empty_raw_edges_frame(),
+        ssa_flow_frame(("A", "B", "return_value_flow", 3.0)),
+        ssa_lambda=0.0,
+    )
+
+    assert ssa_edges.empty
 
 
 def test_build_ssa_edges_includes_ssa_flow_only_edge() -> None:

@@ -1,0 +1,21 @@
+source,target,raw_weight,ssa_flow_weight,g_ssa_weight,flow_type_summary
+org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl,org.apache.xerces.util.SymbolHash,0.0,279.0,279.0,argument_passing_flow:93 rows/279.0 weight
+org.apache.xerces.util.SAXMessageFormatter,org.apache.xerces.xni.parser.XMLParserConfiguration,0.0,198.0,198.0,argument_passing_flow:33 rows/99.0 weight; return_value_flow:33 rows/99.0 weight
+org.apache.xerces.jaxp.validation.JAXPValidationMessageFormatter,org.apache.xerces.jaxp.validation.XMLSchemaValidatorComponentManager,0.0,114.0,114.0,argument_passing_flow:19 rows/57.0 weight; return_value_flow:19 rows/57.0 weight
+org.apache.xerces.jaxp.validation.XMLSchemaValidatorComponentManager,org.apache.xerces.util.SAXMessageFormatter,0.0,108.0,108.0,argument_passing_flow:18 rows/54.0 weight; return_value_flow:18 rows/54.0 weight
+org.apache.xerces.util.ParserConfigurationSettings,org.apache.xerces.xni.parser.XMLComponent,0.0,90.0,90.0,argument_passing_flow:15 rows/45.0 weight; return_value_flow:15 rows/45.0 weight
+org.apache.xerces.dom.DOMMessageFormatter,org.apache.xerces.dom.RangeExceptionImpl,0.0,66.0,66.0,argument_passing_flow:11 rows/33.0 weight; return_value_flow:11 rows/33.0 weight
+org.apache.xerces.impl.xs.XMLSchemaLoader,org.apache.xerces.util.SAXMessageFormatter,0.0,66.0,66.0,argument_passing_flow:11 rows/33.0 weight; return_value_flow:11 rows/33.0 weight
+org.apache.xerces.util.XMLResourceIdentifierImpl,org.apache.xerces.xni.parser.XMLInputSource,0.0,66.0,66.0,argument_passing_flow:11 rows/33.0 weight; return_value_flow:11 rows/33.0 weight
+org.apache.xerces.impl.XMLErrorReporter,org.apache.xerces.impl.msg.XMLMessageFormatter,0.0,60.0,60.0,argument_passing_flow:20 rows/60.0 weight
+org.apache.xerces.impl.xs.XSAnnotationImpl,org.apache.xerces.impl.xs.util.XSObjectListImpl,0.0,57.0,57.0,argument_passing_flow:19 rows/57.0 weight
+org.apache.xerces.impl.XMLErrorReporter,org.apache.xerces.impl.xs.traversers.XSDAbstractTraverser,0.0,54.0,54.0,argument_passing_flow:9 rows/27.0 weight; return_value_flow:9 rows/27.0 weight
+org.apache.xerces.impl.xs.XMLSchemaLoader,org.apache.xerces.jaxp.validation.JAXPValidationMessageFormatter,0.0,54.0,54.0,argument_passing_flow:9 rows/27.0 weight; return_value_flow:9 rows/27.0 weight
+org.apache.xerces.util.NamespaceSupport,org.apache.xerces.util.SymbolTable,0.0,54.0,54.0,argument_passing_flow:9 rows/27.0 weight; return_value_flow:9 rows/27.0 weight
+org.apache.xerces.dom.AttrImpl,org.apache.xerces.dom.NamedNodeMapImpl,0.0,48.0,48.0,argument_passing_flow:8 rows/24.0 weight; return_value_flow:8 rows/24.0 weight
+org.apache.xerces.util.XMLAttributesImpl,org.apache.xerces.xni.NamespaceContext,0.0,48.0,48.0,argument_passing_flow:8 rows/24.0 weight; return_value_flow:8 rows/24.0 weight
+org.apache.xerces.dom.DeferredDocumentImpl,org.apache.xerces.xni.XMLString,0.0,42.0,42.0,argument_passing_flow:7 rows/21.0 weight; return_value_flow:7 rows/21.0 weight
+org.apache.xerces.impl.XMLErrorReporter,org.apache.xerces.impl.io.MalformedByteSequenceException,0.0,42.0,42.0,argument_passing_flow:7 rows/21.0 weight; return_value_flow:7 rows/21.0 weight
+org.apache.xerces.impl.xpath.regex.Match,org.apache.xerces.impl.xpath.regex.Op,0.0,42.0,42.0,argument_passing_flow:7 rows/21.0 weight; return_value_flow:7 rows/21.0 weight
+org.apache.xerces.dom.AttrImpl,org.apache.xerces.xs.ItemPSVI,0.0,36.0,36.0,argument_passing_flow:6 rows/18.0 weight; return_value_flow:6 rows/18.0 weight
+org.apache.xerces.dom.CoreDocumentImpl,org.apache.xerces.xni.XMLLocator,0.0,36.0,36.0,argument_passing_flow:6 rows/18.0 weight; return_value_flow:6 rows/18.0 weight

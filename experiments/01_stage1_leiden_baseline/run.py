@@ -23,13 +23,14 @@ def run_stage1_leiden(
     root: Path = ROOT,
     subject: str | None = None,
     config_path: Path | None = None,
+    resolution: float | None = None,
 ) -> list[Path]:
     config = load_yaml(config_path or root / "configs" / "experiments" / "01_stage1_leiden.yml")
     subjects = [subject] if subject else list(config.get("subjects", []))
     if not subjects:
         raise ValueError("Stage 1 Leiden config has no subjects")
 
-    resolution = 1.0 if config.get("resolution") is None else float(config.get("resolution", 1.0))
+    resolution = _resolution(config) if resolution is None else float(resolution)
     seed = int(config.get("seed", 42))
     output_root = root / config.get("output_root", config.get("output_directory", "results"))
 
@@ -108,13 +109,19 @@ def _load_subject_config(root: Path, subject: str) -> dict:
     return load_yaml(path)
 
 
+def _resolution(config: dict) -> float:
+    value = config.get("resolution", 1.0)
+    return 1.0 if value is None else float(value)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--subject")
+    parser.add_argument("--resolution", type=float)
     args = parser.parse_args()
 
     try:
-        run_stage1_leiden(subject=args.subject)
+        run_stage1_leiden(subject=args.subject, resolution=args.resolution)
     except ImportError as exc:
         print(f"ERROR: missing dependency for Leiden: {exc}", file=sys.stderr)
         return 1

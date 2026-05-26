@@ -126,6 +126,19 @@ Pre-experiment graph metric files are written under `graph/` and named `raw_grap
 - `average_cluster_size`
 - `max_cluster_size`
 - `min_cluster_size`
+- `max_cluster_ratio`
+- `singleton_ratio`
 - `internal_external_edge_ratio`
+- `internal_edge_weight_ratio`
 
 Pre-experiment partition metric files are written under `clustering/` and named `leiden_raw_partition_metrics.csv` and `leiden_ssa_partition_metrics.csv`. Stage 1 baseline partition metrics are written to `metrics/stage1_metrics.csv`.
+
+### Raw-vs-SSA comparison files
+
+`comparison/metrics_summary.csv` records one row per subject run. Current columns include:
+
+- input scale: `class_count`, `raw_edge_count`, `g_ssa_edge_count`, `ssa_flow_evidence_count`
+- SSA impact: `new_ssa_edge_count`, `new_ssa_edge_ratio`, `ssa_weight_share`, `cross_raw_cluster_ssa_edge_ratio`
+- partition change: `raw_cluster_count`, `ssa_cluster_count`, `cluster_count_delta`, `ari_raw_vs_ssa`, `nmi_raw_vs_ssa`
+- balance: `raw_max_cluster_ratio`, `ssa_max_cluster_ratio`, `raw_singleton_ratio`, `ssa_singleton_ratio`
+- structure: `raw_weighted_modularity`, `ssa_weighted_modularity`, `raw_internal_edge_weight_ratio`, `ssa_internal_edge_weight_ratio`

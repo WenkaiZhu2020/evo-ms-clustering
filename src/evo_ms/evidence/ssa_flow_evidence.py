@@ -45,6 +45,8 @@ def aggregate_ssa_flow_weights(
     if flows.empty:
         return pd.DataFrame(columns=SSA_FLOW_AGGREGATE_COLUMNS)
 
+    flows = _with_undirected_endpoints(flows)
+
     # One column per accepted flow type makes the graph builder simpler.
     grouped = (
         flows.groupby(["source", "target", "flow_type"], as_index=False)["weight"]
@@ -63,6 +65,16 @@ def aggregate_ssa_flow_weights(
     return grouped.loc[:, SSA_FLOW_AGGREGATE_COLUMNS].sort_values(
         ["source", "target"],
     ).reset_index(drop=True)
+
+
+def _with_undirected_endpoints(edges: pd.DataFrame) -> pd.DataFrame:
+    edges = edges.copy()
+    source = edges["source"].astype(str)
+    target = edges["target"].astype(str)
+    source_first = source <= target
+    edges["source"] = source.where(source_first, target)
+    edges["target"] = target.where(source_first, source)
+    return edges
 
 
 def _validate_required_columns(frame: pd.DataFrame, columns: list[str], name: str) -> None:

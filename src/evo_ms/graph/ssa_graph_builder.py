@@ -24,6 +24,7 @@ def build_ssa_edges(
     class_nodes: pd.DataFrame,
     raw_edges: pd.DataFrame,
     ssa_flow_edges: pd.DataFrame,
+    ssa_lambda: float = 1.0,
 ) -> pd.DataFrame:
     """Merge raw structural weights with SSA flow weights."""
     _validate_required_columns(class_nodes, ["class_id"], "class_nodes")
@@ -40,6 +41,7 @@ def build_ssa_edges(
     raw["call_weight"] = pd.to_numeric(raw["call_weight"], errors="coerce")
     _validate_component_weights(raw, ["type_weight", "call_weight"], "raw_edges")
     _validate_node_references(class_nodes, raw, "raw_edges")
+    raw = _aggregate_undirected_raw_edges(raw)
 
     flow_weights = aggregate_ssa_flow_weights(class_nodes, ssa_flow_edges)
     # Outer join keeps SSA-only edges instead of dropping them.
@@ -59,13 +61,15 @@ def build_ssa_edges(
                 "call_weight": row["call_weight"],
                 "return_flow_weight": row["return_flow_weight"],
                 "argument_flow_weight": row["argument_flow_weight"],
-            }
+            },
+            ssa_lambda=ssa_lambda,
         ),
         axis=1,
         result_type="expand",
     )
     combined["ssa_flow_weight"] = weights["ssa_flow_weight"]
     combined["g_ssa_weight"] = weights["g_ssa_weight"]
+    combined = combined.loc[combined["g_ssa_weight"] > 0].copy()
 
     return combined.loc[:, SSA_EDGE_COLUMNS].sort_values(["source", "target"]).reset_index(
         drop=True,
@@ -76,6 +80,7 @@ def build_g_ssa_graph(
     class_nodes: pd.DataFrame,
     raw_edges: pd.DataFrame,
     ssa_flow_edges: pd.DataFrame,
+    ssa_lambda: float = 1.0,
 ):
     """Build the weighted NetworkX view used by later clustering."""
     import networkx as nx
@@ -89,7 +94,7 @@ def build_g_ssa_graph(
             class_file_path=row.get("class_file_path"),
         )
 
-    for row in build_ssa_edges(class_nodes, raw_edges, ssa_flow_edges).to_dict("records"):
+    for row in build_ssa_edges(class_nodes, raw_edges, ssa_flow_edges, ssa_lambda=ssa_lambda).to_dict("records"):
         graph.add_edge(
             row["source"],
             row["target"],
@@ -126,6 +131,22 @@ def build_ssa_graph(evidence_edges: Iterable[EvidenceEdge]):
                 evidence=[evidence_type],
             )
     return graph
+
+
+def _aggregate_undirected_raw_edges(raw_edges: pd.DataFrame) -> pd.DataFrame:
+    if raw_edges.empty:
+        return raw_edges
+    raw = raw_edges.copy()
+    source = raw["source"].astype(str)
+    target = raw["target"].astype(str)
+    source_first = source <= target
+    raw["source"] = source.where(source_first, target)
+    raw["target"] = target.where(source_first, source)
+    return (
+        raw.groupby(["source", "target"], as_index=False)[["type_weight", "call_weight"]]
+        .sum()
+        .loc[:, ["source", "target", "type_weight", "call_weight"]]
+    )
 
 
 def _validate_required_columns(frame: pd.DataFrame, columns: list[str], name: str) -> None:

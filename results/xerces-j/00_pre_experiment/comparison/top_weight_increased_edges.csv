@@ -1,0 +1,21 @@
+source,target,raw_weight,g_ssa_weight,ssa_flow_weight,weight_increase,flow_type_summary
+org.apache.xerces.impl.xs.traversers.XSAttributeChecker,org.apache.xerces.impl.xs.traversers.XSDocumentInfo,10.0,472.0,462.0,462.0,argument_passing_flow:154 rows/462.0 weight
+org.apache.xerces.impl.xs.traversers.Container,org.apache.xerces.impl.xs.traversers.OneAttr,3.0,408.0,405.0,405.0,argument_passing_flow:135 rows/405.0 weight
+org.apache.xerces.impl.xs.traversers.XSDAbstractTraverser,org.apache.xerces.util.DOMUtil,50.0,452.0,402.0,402.0,argument_passing_flow:67 rows/201.0 weight; return_value_flow:67 rows/201.0 weight
+org.apache.xerces.impl.xs.traversers.XSAttributeChecker,org.apache.xerces.impl.xs.traversers.XSDAbstractTraverser,28.0,334.0,306.0,306.0,argument_passing_flow:55 rows/165.0 weight; return_value_flow:47 rows/141.0 weight
+org.apache.xerces.xni.Augmentations,org.apache.xerces.xni.XMLDocumentHandler,16.0,319.0,303.0,303.0,argument_passing_flow:101 rows/303.0 weight
+org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl,org.apache.xerces.util.SymbolHash,0.0,279.0,279.0,279.0,argument_passing_flow:93 rows/279.0 weight
+org.apache.xerces.xni.Augmentations,org.apache.xerces.xni.XMLDTDHandler,20.0,269.0,249.0,249.0,argument_passing_flow:83 rows/249.0 weight
+org.apache.xerces.impl.xs.SchemaGrammar,org.apache.xerces.impl.xs.traversers.XSDHandler,283.0,493.0,210.0,210.0,argument_passing_flow:44 rows/132.0 weight; return_value_flow:26 rows/78.0 weight
+org.apache.xerces.impl.xs.traversers.XSDAbstractTraverser,org.apache.xerces.impl.xs.traversers.XSDocumentInfo,12.0,222.0,210.0,210.0,argument_passing_flow:68 rows/204.0 weight; return_value_flow:2 rows/6.0 weight
+org.apache.xerces.util.SAXMessageFormatter,org.apache.xerces.xni.parser.XMLParserConfiguration,0.0,198.0,198.0,198.0,argument_passing_flow:33 rows/99.0 weight; return_value_flow:33 rows/99.0 weight
+org.apache.xerces.impl.dv.xs.AbstractDateTimeDV,org.apache.xerces.impl.dv.xs.AbstractDateTimeDV$DateTimeData,31.0,202.0,171.0,171.0,argument_passing_flow:57 rows/171.0 weight
+org.apache.xerces.impl.xpath.XPath$Scanner,org.apache.xerces.impl.xpath.XPath$Tokens,19.0,178.0,159.0,159.0,argument_passing_flow:53 rows/159.0 weight
+org.apache.xerces.impl.xs.traversers.XSDHandler,org.apache.xerces.impl.xs.traversers.XSDocumentInfo,45.0,201.0,156.0,156.0,argument_passing_flow:52 rows/156.0 weight
+org.apache.xerces.impl.dtd.models.CMNode,org.apache.xerces.impl.dtd.models.CMStateSet,12.0,162.0,150.0,150.0,argument_passing_flow:26 rows/78.0 weight; return_value_flow:24 rows/72.0 weight
+org.apache.xerces.impl.xpath.regex.Op,org.apache.xerces.impl.xpath.regex.RegularExpression,91.0,238.0,147.0,147.0,argument_passing_flow:37 rows/111.0 weight; return_value_flow:12 rows/36.0 weight
+org.apache.xerces.impl.xs.XSDDescription,org.apache.xerces.impl.xs.traversers.XSDHandler,108.0,252.0,144.0,144.0,argument_passing_flow:36 rows/108.0 weight; return_value_flow:12 rows/36.0 weight
+org.apache.xerces.dom.DOMMessageFormatter,org.apache.xerces.dom.DOMNormalizer,42.0,186.0,144.0,144.0,argument_passing_flow:24 rows/72.0 weight; return_value_flow:24 rows/72.0 weight
+org.apache.xerces.impl.dtd.DTDGrammar,org.apache.xerces.impl.dtd.XMLContentSpec,26.0,167.0,141.0,141.0,argument_passing_flow:47 rows/141.0 weight
+org.apache.xerces.impl.XMLEntityScanner,org.apache.xerces.impl.XMLScanner,155.0,293.0,138.0,138.0,argument_passing_flow:23 rows/69.0 weight; return_value_flow:23 rows/69.0 weight
+org.apache.xerces.xni.QName,org.apache.xerces.xni.XMLDocumentHandler,3.0,141.0,138.0,138.0,argument_passing_flow:46 rows/138.0 weight

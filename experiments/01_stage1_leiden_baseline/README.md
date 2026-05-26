@@ -1,6 +1,6 @@
 # Stage 1 Leiden Baseline
 
-This experiment runs Leiden community detection on the SSA-augmented graph (`G_ssa`) for each configured subject.
+This experiment runs Leiden community detection on the SSA-informed graph (`G_ssa`) for each configured subject.
 
 Inputs:
 

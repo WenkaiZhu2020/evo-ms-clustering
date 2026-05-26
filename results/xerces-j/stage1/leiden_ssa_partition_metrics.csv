@@ -1,0 +1,2 @@
+subject,algorithm,graph_type,cluster_count,modularity,average_cluster_size,max_cluster_size,min_cluster_size,max_cluster_ratio,singleton_ratio,internal_external_edge_ratio,internal_edge_weight_ratio
+xerces-j,leiden,ssa,30,0.6442682286279218,27.133333333333333,153,1,0.18796068796068796,0.013513513513513514,3.656592520954223,0.7852506966198792

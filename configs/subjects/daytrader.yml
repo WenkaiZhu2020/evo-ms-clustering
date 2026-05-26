@@ -1,0 +1,15 @@
+subject: daytrader
+language: java
+project_root: data/raw_projects/daytrader
+build_tool: maven
+compile_command: mvn -q -DskipTests package
+classes_dir: target/classes
+app_packages:
+  - com.ibm.websphere.samples.daytrader
+source_path: data/raw_projects/daytrader
+extracted_output_path: data/extracted/daytrader
+result_output_path: results/daytrader
+reference_mapping_path: data/references/daytrader_reference_services.csv
+include_packages: []
+exclude_packages: []
+# Raw source is cloned locally by scripts/prepare_daytrader.sh and ignored by Git.
