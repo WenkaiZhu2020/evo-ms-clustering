@@ -29,8 +29,8 @@ PiggyMetrics is not used as an input subject.
 ```text
 configs/      Experiment and subject configuration.
 data/         Input data only: raw Java projects, normalized extracted CSVs, and references.
-docs/stage1/ Stable Stage 1 technical documentation.
-docs/reports  Human-written experiment reports and benchmark evidence.
+docs/stage1/ Stage 1 technical documentation and reading guide.
+docs/reports/ Human-readable experiment reports and benchmark evidence.
 docs/archive/ Historical/deprecated notes only.
 experiments/ Runnable experiment entrypoints.
 results/      Generated experiment outputs.

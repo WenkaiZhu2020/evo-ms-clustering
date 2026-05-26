@@ -31,4 +31,4 @@ Normalized extraction CSVs live under `data/extracted/<subject>/`.
 
 Generated pre-experiment, Stage 1 baseline, calibration, and sensitivity outputs live under `results/<subject>/`.
 
-Cross-case human-readable summaries live under `reports/`.
+Cross-case human-readable summaries live under `docs/reports/`.

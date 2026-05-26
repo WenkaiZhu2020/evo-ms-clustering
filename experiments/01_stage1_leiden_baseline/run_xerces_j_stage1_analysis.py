@@ -325,7 +325,7 @@ def _partition_similarity(
 
 
 def _write_report(root: Path, output_dir: Path) -> None:
-    report_path = root / "reports" / "xerces-j_stage1_report.md"
+    report_path = root / "docs" / "reports" / "xerces-j_stage1_report.md"
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     graph = pd.read_csv(output_dir / "graph_summary.csv").iloc[0]

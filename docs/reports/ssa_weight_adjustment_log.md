@@ -6,7 +6,7 @@ This document records where SSA weight and sensitivity evidence is stored for St
 
 - DayTrader calibration outputs are under `results/daytrader/00_pre_experiment/calibration/`.
 - Xerces-J sensitivity outputs are under `results/xerces-j/stage1/`.
-- Cross-case interpretation is summarized in `reports/stage1_cross_case_summary.md`.
+- Cross-case interpretation is summarized in `docs/reports/stage1_cross_case_summary.md`.
 
 ## Recorded Fields
 
