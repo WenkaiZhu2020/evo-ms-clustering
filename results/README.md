@@ -1,25 +1,55 @@
 # Results
 
-This directory contains generated outputs from the Stage 1 experiments.
+This directory contains generated outputs from the current Stage 1 experiments. Source inputs are kept under `data/`.
 
-Outputs are organized as:
+## Main Layout
+
+Pre-experiment outputs are stored under:
 
 ```text
-results/<subject>/<stage>/
+results/<subject>/00_pre_experiment/
 ```
 
-CSV and JSON files in this directory are generated experiment outputs. Source inputs are kept under `data/`.
+Common subdirectories are:
 
-Pre-experiment directories use:
+- `graph/`: generated `G_raw` and `G_ssa` edge tables and graph summaries.
+- `clustering/`: Leiden cluster assignments and partition metrics.
+- `comparison/`: raw-vs-SSA comparison tables and impact analysis outputs.
 
-- `graph/` for generated `G_raw` and `G_ssa` edge tables and graph metrics.
-- `clustering/` for Leiden cluster assignments and partition metrics.
-- `comparison/` for raw-vs-SSA comparison tables.
+## Stage 1 Leiden Baseline Layout
 
-Stage 1 Leiden baseline directories use:
+Some older Stage 1 Leiden baseline folders use:
+
+```text
+results/<subject>/01_stage1_leiden_baseline/
+```
+
+Typical subdirectories are:
 
 - `clustering/` for `stage1_clusters.csv`.
 - `metrics/` for `stage1_metrics.csv`.
 - `summaries/` for `stage1_cluster_summary.csv`.
 
-Subject-specific sensitivity or calibration outputs are kept under the subject result tree, for example `results/daytrader/00_pre_experiment/calibration/` and `results/xerces-j/stage1/`.
+These folders are still generated outputs. They should be read together with the pre-experiment graph and comparison outputs.
+
+## Subject-Specific Outputs
+
+DayTrader calibration outputs are stored under:
+
+```text
+results/daytrader/00_pre_experiment/calibration/
+```
+
+This folder contains reference-mapping validation, weight sweep summaries, and ranked candidate settings.
+
+Xerces-J Stage 1 summary and sweep outputs are flat CSV files under:
+
+```text
+results/xerces-j/stage1/
+```
+
+This folder contains graph summary, Leiden comparison, resolution sweep, and SSA lambda sweep outputs.
+
+## Report Location
+
+Human-readable interpretation belongs under `docs/reports/`. Result folders should stay focused on generated CSV or JSON artifacts.

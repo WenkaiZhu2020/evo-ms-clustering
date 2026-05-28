@@ -6,15 +6,15 @@ Stage 1 answers one question: can the project extract Java evidence, build class
 
 ## Reading Order
 
-1. `stage1_overview.md`
+1. `01_stage1_overview.md`
    - High-level purpose, subject roles, and output layout.
-2. `soot_extraction.md`
+2. `02_soot_extraction.md`
    - Java/Soot extractor inputs, package scope, and normalized CSV outputs.
-3. `data_schema.md`
+3. `03_data_schema.md`
    - Exact CSV schemas for extracted inputs and generated outputs.
-4. `graph_construction.md`
+4. `04_graph_construction.md`
    - How `G_raw`, `G_ssa`, `raw_weight`, and `g_ssa_weight` are built.
-5. `metric_definitions.md`
+5. `05_metric_definitions.md`
    - What each graph, partition, comparison, and reference metric means.
 
 Cross-case interpretation and subject reports live in `docs/reports/`.

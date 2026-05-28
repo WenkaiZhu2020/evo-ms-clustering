@@ -15,6 +15,14 @@ ssa_flow_weight = return_flow_weight + argument_flow_weight
 g_ssa_weight = type_weight + call_weight + ssa_flow_weight
 ```
 
+For sensitivity analysis, the same graph construction can scale the SSA contribution:
+
+```text
+g_ssa_weight(lambda) = type_weight + call_weight + lambda * ssa_flow_weight
+```
+
+`lambda = 0` corresponds to the raw-structure baseline. Low lambda values treat SSA as a weak behavioural signal. Higher values test whether SSA flow evidence starts to dominate the graph and create over-aggregation or hub effects.
+
 The current scoped SSA flow evidence includes only:
 
 - `return_value_flow`
@@ -55,3 +63,7 @@ Flow type mapping:
 
 SSA-flow-only edges are retained with `type_weight = 0` and `call_weight = 0`.
 Shared-domain-object evidence is outside the Stage 1 graph construction schema.
+
+## Current Scope
+
+Stage 1 compares `G_raw` and `G_ssa` only. It does not add semantic embeddings, NSGA-II objectives, or new evidence types. Later stages can reuse these edge tables as controlled inputs or move SSA into a separate objective or penalty.

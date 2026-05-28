@@ -40,6 +40,18 @@ All three files contain extracted data when evidence is present. `ssa_flow_edges
 
 Phi-related flow is not emitted as graph evidence.
 
+## Subject Wrappers
+
+The current repository provides thin extraction wrappers for the active Stage 1 subjects:
+
+```bash
+bash scripts/extract_soot_jpetstore.sh
+bash scripts/extract_soot_daytrader.sh
+bash scripts/extract_soot_xerces_j.sh
+```
+
+These wrappers keep subject-specific source paths, compiled class directories, classpaths, package filters, and output directories out of the Java extractor itself.
+
 ## JPetStore Example
 
 ```bash
@@ -52,3 +64,9 @@ The JPetStore wrapper expects classes under:
 ```text
 data/raw_projects/jpetstore/target/classes
 ```
+
+## Xerces-J Note
+
+Xerces-J is the larger technical remodularization benchmark in Stage 1. Its extraction may require scoped preparation because the project includes tools, samples, tests, and external-looking packages that are not part of the intended application graph.
+
+The current Xerces-J wrapper uses the existing preparation and extraction scripts, with package scope centered on the Xerces/XML implementation packages recorded in the subject config and extraction notes. The goal is to extract normalized class-level evidence for `G_raw` and `G_ssa`, not to include every auxiliary source file in the upstream project.
