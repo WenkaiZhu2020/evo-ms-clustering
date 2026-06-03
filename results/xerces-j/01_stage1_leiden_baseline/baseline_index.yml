@@ -1,0 +1,13 @@
+subject: xerces-j
+generated_profiles:
+- profile_name: raw_reference_leiden
+  graph_type: raw
+  profile_directory: raw_reference_leiden
+- profile_name: ssa_selected_leiden
+  graph_type: ssa
+  profile_directory: ssa_selected_leiden
+comparison_purpose: raw_reference_leiden is the structural reference; ssa_selected_leiden
+  is retained for controlled SSA comparison.
+generated_at_utc: '2026-06-03T14:12:54Z'
+git_head: 92f6e169c3a18e9b65506b04bb23cceca33f30ad
+git_dirty: false
