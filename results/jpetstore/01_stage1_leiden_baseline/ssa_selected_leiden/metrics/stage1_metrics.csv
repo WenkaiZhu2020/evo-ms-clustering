@@ -1,0 +1,2 @@
+subject,algorithm,graph_type,cluster_count,modularity,average_cluster_size,max_cluster_size,min_cluster_size,max_cluster_ratio,singleton_ratio,internal_external_edge_ratio,internal_edge_weight_ratio
+jpetstore,leiden,ssa,5,0.3821030048389947,4.8,6,3,0.25,0.0,1.6091549295774648,0.6167341430499326

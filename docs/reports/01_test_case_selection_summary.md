@@ -1,24 +1,62 @@
+
 # Test Case Selection Summary
 
-This document records why the active Stage 1 subjects are used. Stage 1 is designed to test the extraction and graph-clustering evidence pipeline, not to prove final decomposition quality.
+Stage 1 uses three subject systems with different roles.
+
+The aim is not to claim final decomposition quality from one benchmark. Instead, the subject set is used to check the pipeline, calibrate the graph settings, and inspect behaviour at a larger scale.
 
 ## Active Subjects
 
-| subject | role | reason |
+| Subject | Role | Reason |
 | --- | --- | --- |
-| JPetStore | smoke test | Small enough to inspect manually. It checks that Soot extraction, normalized CSV loading, `G_raw` / `G_ssa` construction, Leiden, and metrics can run end to end. |
-| DayTrader | calibration and reference case | Provides a reference-service mapping, so it supports reference-based metrics and resolution / SSA-weight sensitivity analysis. |
-| Xerces-J | transfer and scalability case | Larger technical remodularization benchmark. It tests whether the Stage 1 pipeline remains usable beyond small business-style systems. |
+| JPetStore | pipeline-validation case | Small enough for manual inspection. It checks whether extraction, normalized CSV loading, graph construction, Leiden, and metrics run correctly from end to end. |
+| DayTrader | reference-based calibration case | Provides a usable reference mapping. It supports external metrics and the selection of reproducible Leiden profiles. |
+| Xerces-J | larger-scale sensitivity case | Contains a larger technical codebase. It is used to inspect whether the same workflow remains usable beyond small business-style systems. |
 
-## Subject Rationale
+## JPetStore
 
-JPetStore is used first because failures are easier to diagnose on a small graph. Its role is pipeline validation, not final calibration.
+JPetStore is used first because the graph is small and easy to inspect.
 
-DayTrader is the main calibration subject because it has a usable reference mapping. This makes it possible to compare Leiden partitions with external metrics such as MoJoFM and pairwise F1, while also checking internal structural metrics.
+Its main role is to verify:
 
-Xerces-J is included because it is larger and more technical. It does not provide a business microservice ground truth in this repository, but it is useful for testing graph scale, sensitivity behaviour, and transfer of the Stage 1 workflow.
+```text
+compiled classes
+-> Soot / Shimple extraction
+-> normalized CSV files
+-> G_raw and G_ssa
+-> Leiden clustering
+-> Stage 1 metrics
+````
 
-## Excluded or Non-Primary Subjects
+JPetStore is not used as the main calibration subject.
+
+## DayTrader
+
+DayTrader is the main calibration subject because a reference-service mapping is available.
+
+This allows the pipeline to report external metrics such as:
+
+* MoJoFM;
+* pairwise precision;
+* pairwise recall;
+* pairwise F1;
+* ARI;
+* NMI.
+
+DayTrader is also used to compare lambda and resolution settings before the formal Leiden profiles are frozen.
+
+## Xerces-J
+
+Xerces-J is included as the larger-scale subject.
+
+It is a technical remodularization case rather than a business microservice ground-truth case. Its purpose is to inspect:
+
+* graph scale;
+* cluster-size behaviour;
+* sensitivity to SSA contribution;
+* transfer of the Stage 1 workflow.
+
+## Inactive or Excluded Subjects
 
 CargoTracker is inactive in the current Stage 1 subject set.
 
@@ -26,4 +64,12 @@ PiggyMetrics is not used as an input subject because it is already a microservic
 
 ## Link to Later Stages
 
-The three-subject design separates smoke testing, reference-based calibration, and larger-scale transfer validation. This supports later Stage 2 and Stage 3 work by giving a clearer Leiden baseline and a measured view of how SSA evidence changes the graph.
+The three subjects provide separate evidence for:
+
+```text
+pipeline validation
+reference-based calibration
+larger-scale sensitivity
+```
+
+The frozen Leiden profiles can then be used as reference points for Stage 2 NSGA-II evaluation.

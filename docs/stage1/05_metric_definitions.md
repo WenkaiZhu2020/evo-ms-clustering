@@ -1,75 +1,91 @@
+
 # Metric Definitions
 
-This repository currently uses Stage 1 graph and clustering metrics only. The metrics describe extraction scale, graph impact, Leiden partition change, and sensitivity behaviour. They do not prove final microservice correctness.
+Stage 1 metrics describe graph scale, SSA impact, partition change, structural quality, and DayTrader calibration.
 
-## Scale and Feasibility Metrics
+They are used to compare graph settings and Leiden outputs. They do not prove final microservice correctness.
 
-These metrics check whether the pipeline works across small, medium, and large subjects.
+## Graph Scale
 
-- `class_count`: number of extracted application classes.
-- `raw_edge_count`: number of unique undirected class-pair edges in `G_raw` after aggregation.
-- `g_ssa_edge_count`: number of unique undirected class-pair edges in `G_ssa` after aggregation.
-- `ssa_flow_evidence_count`: number of raw SSA flow evidence rows, when recorded.
+| Metric | Meaning |
+| --- | --- |
+| `class_count` | number of extracted application classes |
+| `raw_edge_count` | number of unique undirected edges in `G_raw` |
+| `g_ssa_edge_count` | number of unique undirected edges in `G_ssa` |
+| `ssa_flow_evidence_count` | number of raw SSA flow evidence rows |
 
-## SSA Graph Impact Metrics
+## SSA Graph Impact
 
-These metrics check whether SSA adds graph evidence beyond raw type and call dependencies.
+| Metric | Meaning |
+| --- | --- |
+| `new_ssa_edge_count` | `G_ssa` edges that do not exist in `G_raw` |
+| `new_ssa_edge_ratio` | `new_ssa_edge_count / g_ssa_edge_count` |
+| `ssa_weight_share` | SSA flow contribution divided by total `g_ssa_weight` |
+| `cross_raw_cluster_ssa_edge_ratio` | SSA edges that cross raw Leiden clusters |
 
-- `new_ssa_edge_count`: unique undirected class-pair edges present in `G_ssa` but not in `G_raw`.
-- `new_ssa_edge_ratio`: `new_ssa_edge_count / g_ssa_edge_count`.
-- `ssa_weight_share`: total SSA flow contribution divided by total `g_ssa_weight`.
-- `cross_raw_cluster_ssa_edge_ratio`: share of SSA edges that connect classes in different raw Leiden clusters, when available.
+## Partition Change
 
-## Partition Change Metrics
+| Metric | Meaning |
+| --- | --- |
+| `raw_cluster_count` | number of Leiden clusters on `G_raw` |
+| `ssa_cluster_count` | number of Leiden clusters on `G_ssa` |
+| `cluster_count_delta` | `ssa_cluster_count - raw_cluster_count` |
+| `ari_raw_vs_ssa` | adjusted Rand index between raw and SSA partitions |
+| `nmi_raw_vs_ssa` | normalized mutual information between raw and SSA partitions |
+| `changed_partition_ratio` | share of classes whose same-cluster membership set changes |
 
-These metrics check whether SSA changes the actual Leiden clustering result.
+## Structural Quality
 
-- `raw_cluster_count`: number of Leiden clusters on `G_raw`.
-- `ssa_cluster_count`: number of Leiden clusters on `G_ssa`.
-- `cluster_count_delta`: `ssa_cluster_count - raw_cluster_count`.
-- `ARI raw-vs-SSA`: adjusted Rand index between raw and SSA partitions.
-- `NMI raw-vs-SSA`: normalized mutual information between raw and SSA partitions.
-- `changed_partition_ratio`: share of classes whose same-cluster membership set changes, when available.
+| Metric | Meaning |
+| --- | --- |
+| `weighted_modularity` | weighted Leiden modularity |
+| `internal_edge_weight_ratio` | internal edge weight divided by total edge weight |
+| `internal_external_edge_ratio` | internal edge weight divided by external edge weight |
 
-## Internal Structural Quality Metrics
+For `G_raw`, structural metrics use:
 
-These metrics describe whether clusters are compact and separated under the graph weights. They are internal structural metrics, not ground-truth correctness metrics.
+```text
+raw_weight
+````
 
-- `weighted_modularity`: weighted Leiden partition score using `raw_weight` for `G_raw` and `g_ssa_weight` for `G_ssa`.
-- `internal_edge_weight_ratio`: total intra-cluster edge weight divided by total edge weight.
-- `raw_internal_edge_weight_ratio`: internal edge weight ratio for `G_raw`.
-- `ssa_internal_edge_weight_ratio`: internal edge weight ratio for `G_ssa`.
-- Cross-cluster edge or weight ratios, when available, describe how much weighted evidence crosses cluster boundaries.
+For `G_ssa`, structural metrics use:
 
-## Granularity and Balance Metrics
+```text
+g_ssa_weight
+```
 
-These metrics detect over-fragmentation, oversized clusters, and possible hub aggregation.
+## Granularity and Balance
 
-- `cluster_count`: number of clusters in a run.
-- `cluster_size_distribution`: grouped distribution of cluster sizes.
-- `max_cluster_ratio`: largest cluster size divided by total class count.
-- `singleton_ratio`: singleton cluster count divided by total class count.
+| Metric                      | Meaning                                           |
+| --------------------------- | ------------------------------------------------- |
+| `cluster_count`             | number of clusters                                |
+| `cluster_size_distribution` | cluster sizes grouped by cluster                  |
+| `max_cluster_ratio`         | largest cluster size divided by total class count |
+| `singleton_ratio`           | singleton clusters divided by total class count   |
 
-## Reference-Based Metrics for DayTrader
+## DayTrader Reference Metrics
 
-DayTrader has a reference-service mapping, so it is used as the main calibration case.
+| Metric                     | Meaning                                               |
+| -------------------------- | ----------------------------------------------------- |
+| `mojofm_vs_reference`      | MoJoFM against the reference partition                |
+| `pairwise_precision`       | same-service precision                                |
+| `pairwise_recall`          | same-service recall                                   |
+| `pairwise_f1`              | same-service F1                                       |
+| `ari_vs_reference`         | ARI against the reference partition                   |
+| `nmi_vs_reference`         | NMI against the reference partition                   |
+| `reference_coverage_ratio` | mapped extracted classes divided by extracted classes |
 
-- `mojofm_vs_reference`: MoJoFM score against the reference mapping.
-- `pairwise_precision`: pairwise same-service precision against the reference.
-- `pairwise_recall`: pairwise same-service recall against the reference.
-- `pairwise_f1`: pairwise F1 against the reference.
-- `ari_vs_reference`: ARI against the reference partition.
-- `nmi_vs_reference`: NMI against the reference partition.
-- `reference_coverage_ratio`: share of extracted classes covered by the reference mapping.
+Reference metrics are calculated only on mapped classes.
 
-Reference metrics are computed only on the mapped class subset.
+## Use of Metrics
 
-## Sensitivity Metrics
+The metric groups serve different purposes:
 
-Sensitivity metrics check whether conclusions are stable under parameter changes.
-
-- Resolution sweep: varies Leiden resolution to test cluster granularity.
-- Lambda / SSA-weight sweep: varies SSA contribution in `g_ssa_weight(lambda)`.
-- The sweep outputs record cluster count, modularity, internal edge weight ratio, balance metrics where available, and raw-vs-SSA or reference comparison metrics.
-
-These sweeps are not used to claim that SSA is always better than raw structure. They help define safer fixed settings and stronger baselines for later Stage 2 and Stage 3 experiments.
+| Metric Group                | Main Use                                         |
+| --------------------------- | ------------------------------------------------ |
+| graph scale                 | check extraction size and graph enrichment       |
+| SSA graph impact            | measure how much SSA changes the graph           |
+| partition change            | compare raw and SSA Leiden outputs               |
+| structural quality          | inspect cohesion and separation inside the graph |
+| granularity and balance     | detect oversized clusters or fragmentation       |
+| DayTrader reference metrics | support calibration and profile selection        |

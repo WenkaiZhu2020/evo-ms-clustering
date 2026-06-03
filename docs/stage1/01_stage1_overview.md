@@ -1,60 +1,57 @@
+
 # Stage 1 Overview
 
-Stage 1 is the current implemented stage of this repository. It evaluates the extraction and graph-clustering evidence pipeline before later NSGA-II and semantic embedding stages.
+Stage 1 is the first implemented research stage. It evaluates class-level extraction, graph construction, raw-vs-SSA comparison, and Leiden baseline profiles.
 
-The stage does not claim that a produced partition is a final microservice design. It prepares a measured baseline, checks whether SSA evidence changes the graph, and records how sensitive Leiden clustering is to key parameters.
+It does not claim that the generated clusters are final microservice boundaries. Its role is to establish a reproducible structural baseline before the later NSGA-II and semantic stages.
 
-## Graphs
+## Experiment Layers
 
-The pre-experiment compares two class dependency graphs:
+| Layer | Role | Output |
+| --- | --- | --- |
+| Pre-experiment | diagnostics, calibration, and sensitivity analysis | `results/<subject>/00_pre_experiment/` |
+| Formal Stage 1 | frozen Leiden baseline profiles | `results/<subject>/01_stage1_leiden_baseline/` |
 
-- `G_raw`: a class-level graph built from structural type and call dependency evidence.
-- `G_ssa`: the same structural graph with scoped Soot/Shimple SSA flow evidence added.
+The Pre-experiment layer is used to inspect how graph settings affect the result. Its outputs may change across parameter runs.
 
-`G_raw` uses `raw_weight`, which is based on type and call evidence.
+The formal Stage 1 layer uses fixed profiles. These profiles are retained as reproducible comparison targets for later stages.
 
-`G_ssa` uses `g_ssa_weight`, which adds scoped `return_value_flow` and `argument_passing_flow` evidence. The current SSA scope is intentionally narrow. It is used as a controlled evidence channel, not as a general claim that all SSA relations improve decomposition.
+## Graph Settings
 
-## Subject Design
+| Graph | Evidence | Weight Column |
+| --- | --- | --- |
+| `G_raw` | type dependencies and method calls | `raw_weight` |
+| `G_ssa` | `G_raw` plus scoped return-value and argument-passing flows | `g_ssa_weight` |
 
-Stage 1 uses three active subjects:
+`G_raw` provides the basic structural representation.
 
-- JPetStore: small smoke-test subject. It verifies extraction, CSV loading, graph construction, Leiden execution, and basic metrics.
-- DayTrader: calibration and reference-based subject. It has a reference-service mapping, so it supports resolution and SSA-weight sensitivity checks with external metrics.
-- Xerces-J: larger technical remodularization benchmark. It checks whether the same pipeline scales beyond small business-style systems.
+`G_ssa` adds selected SSA-derived flow evidence. This evidence is treated as a controlled extension rather than an assumed improvement.
 
-CargoTracker is inactive in the current Stage 1 subject set. PiggyMetrics is not used as an input subject.
+## Subject Roles
 
-## Why Resolution Sweep Is Used
+| Subject | Role |
+| --- | --- |
+| JPetStore | small pipeline-validation case |
+| DayTrader | calibration case with reference mapping |
+| Xerces-J | larger-scale sensitivity case |
 
-Leiden resolution controls clustering granularity. A low resolution can merge many classes into large clusters, while a high resolution can split the graph into many smaller clusters.
+JPetStore is used to verify the complete pipeline. DayTrader supports reference-based calibration. Xerces-J is used to inspect scale and sensitivity under the same workflow.
 
-A single default resolution may hide whether a result is stable or only a parameter effect. Stage 1 therefore records how cluster count, modularity, internal edge weight ratio, and cluster-size balance change across resolution values.
+CargoTracker is inactive in the current subject set. PiggyMetrics is not used as an input subject.
 
-This also creates a fairer baseline for Stage 2. Later NSGA-II results should be compared against both default Leiden and tuned Leiden, not only against one default run.
+## Frozen Leiden Profiles
 
-## Why Lambda / SSA-Weight Sweep Is Used
+| Profile | Graph Type | Lambda | Resolution | Seed | Role |
+| --- | --- | ---: | ---: | ---: | --- |
+| `raw_reference_leiden` | raw | 0.0 | 1.0 | 42 | strongest admissible raw structural reference |
+| `ssa_selected_leiden` | ssa | 2.0 | 1.25 | 42 | strongest admissible non-zero SSA comparison profile |
 
-Lambda controls how strongly SSA flow evidence contributes to `G_ssa`:
+The raw profile remains the stronger structural reference in the current DayTrader calibration.
 
-```text
-g_ssa_weight(lambda) = type_weight + call_weight + lambda * ssa_flow_weight
-```
-
-`lambda = 0` is the raw-structure baseline. Low lambda values test SSA as a weak behavioural signal. Higher values test whether SSA begins to dominate graph boundaries.
-
-The sweep is not used to overfit each subject. It is used to find a safer range where SSA may add useful evidence without causing over-aggregation, hub effects, or lower structural compactness.
+The selected SSA profile is still retained because it provides a controlled non-zero setting for evaluating the effect of behavioural enrichment.
 
 ## Link to Later Stages
 
-Stage 2 should first compare structure-only NSGA-II against the Leiden baselines. This keeps the direct comparison clear because Leiden is also graph-structure based.
+Stage 2 should compare NSGA-II results against the frozen Leiden profiles rather than against mutable diagnostic runs.
 
-SSA can remain as a controlled graph input, or it can later become a separate objective or penalty term. Stage 3 can then add semantic embeddings as another independent evidence channel. The intended later comparison is therefore structure-only, structure plus SSA, and structure plus SSA plus semantics.
-
-## Evidence Layout
-
-Normalized extraction CSVs live under `data/extracted/<subject>/`.
-
-Generated pre-experiment, Stage 1 baseline, calibration, and sensitivity outputs live under `results/<subject>/`.
-
-Human-readable Stage 1 documentation and reports live under `docs/stage1/` and `docs/reports/`.
+Stage 3 can then introduce semantic evidence as an additional information channel.

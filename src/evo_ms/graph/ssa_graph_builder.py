@@ -1,13 +1,9 @@
-from collections.abc import Iterable
-
 import pandas as pd
 
-from evo_ms.evidence.ssa_flow_evidence import ALLOWED_SSA_FLOW_TYPES, aggregate_ssa_flow_weights
-from evo_ms.graph.weight_calculator import calculate_edge_weight
+from evo_ms.evidence.ssa_flow_evidence import aggregate_ssa_flow_weights
 from evo_ms.graph.weight_calculator import calculate_stage1_edge_weights
 
 
-EvidenceEdge = tuple[str, str, str]
 SSA_EDGE_COLUMNS = [
     "source",
     "target",
@@ -42,8 +38,9 @@ def build_ssa_edges(
     _validate_component_weights(raw, ["type_weight", "call_weight"], "raw_edges")
     _validate_node_references(class_nodes, raw, "raw_edges")
     raw = _aggregate_undirected_raw_edges(raw)
+    raw = _drop_self_loops(raw)
 
-    flow_weights = aggregate_ssa_flow_weights(class_nodes, ssa_flow_edges)
+    flow_weights = _drop_self_loops(aggregate_ssa_flow_weights(class_nodes, ssa_flow_edges))
     # Outer join keeps SSA-only edges instead of dropping them.
     combined = raw.merge(flow_weights, on=["source", "target"], how="outer")
     if combined.empty:
@@ -108,31 +105,6 @@ def build_g_ssa_graph(
     return graph
 
 
-def build_ssa_graph(evidence_edges: Iterable[EvidenceEdge]):
-    import networkx as nx
-
-    graph = nx.Graph()
-    for source, target, evidence_type in evidence_edges:
-        weight = calculate_edge_weight([evidence_type])
-        raw_weight = 0.0 if evidence_type in ALLOWED_SSA_FLOW_TYPES else weight
-        ssa_flow_weight = weight if evidence_type in ALLOWED_SSA_FLOW_TYPES else 0.0
-        if graph.has_edge(source, target):
-            graph[source][target]["raw_weight"] += raw_weight
-            graph[source][target]["ssa_flow_weight"] += ssa_flow_weight
-            graph[source][target]["g_ssa_weight"] += weight
-            graph[source][target]["evidence"].append(evidence_type)
-        else:
-            graph.add_edge(
-                source,
-                target,
-                raw_weight=raw_weight,
-                ssa_flow_weight=ssa_flow_weight,
-                g_ssa_weight=weight,
-                evidence=[evidence_type],
-            )
-    return graph
-
-
 def _aggregate_undirected_raw_edges(raw_edges: pd.DataFrame) -> pd.DataFrame:
     if raw_edges.empty:
         return raw_edges
@@ -147,6 +119,12 @@ def _aggregate_undirected_raw_edges(raw_edges: pd.DataFrame) -> pd.DataFrame:
         .sum()
         .loc[:, ["source", "target", "type_weight", "call_weight"]]
     )
+
+
+def _drop_self_loops(edges: pd.DataFrame) -> pd.DataFrame:
+    if edges.empty:
+        return edges
+    return edges.loc[edges["source"].astype(str) != edges["target"].astype(str)].copy()
 
 
 def _validate_required_columns(frame: pd.DataFrame, columns: list[str], name: str) -> None:

@@ -1,41 +1,28 @@
 # Data Schema
 
-The Stage 1 pipeline consumes normalized CSV files produced from Soot-based extraction. These files live under `data/extracted/<subject>/`.
+Stage 1 consumes normalized class-level CSVs under `data/extracted/<subject>/`.
 
-The normalized extraction schema is intentionally class-level. Every `source` and `target` value must refer to an application class listed in `class_nodes.csv`.
+## Extracted Inputs
 
-## `data/extracted/<subject>/class_nodes.csv`
+### `class_nodes.csv`
 
-Class inventory for the Java subject system.
+| Column | Meaning |
+| --- | --- |
+| `class_id` | class identifier used by graph construction |
+| `class_name` | fully qualified class name |
+| `package` | package name |
+| `class_file_path` | analyzed `.class` file path |
 
-Columns:
+### `structural_dependencies.csv`
 
-- `class_id`
-- `class_name`
-- `package`
-- `class_file_path`
-
-`class_id` is the stable identifier used by graph construction. `class_file_path` points to the compiled `.class` file used for Soot analysis.
-
-## `data/extracted/<subject>/structural_dependencies.csv`
-
-Structural class dependencies used to build `G_raw`.
-
-Columns:
-
-- `source`
-- `target`
-- `dependency_type`
-- `weight`
-- `evidence_kind`
-- `evidence_location`
-
-Allowed `dependency_type` values:
-
-- `type`
-- `call`
-
-`evidence_kind` records the kind of structural evidence observed. `evidence_location` records where the evidence was found, such as a class, method, or source/bytecode location when available.
+| Column | Meaning |
+| --- | --- |
+| `source` | source class id |
+| `target` | target class id |
+| `dependency_type` | `type` or `call` |
+| `weight` | embedded extracted row weight |
+| `evidence_kind` | structural evidence kind |
+| `evidence_location` | class, method, or statement location |
 
 Allowed `evidence_kind` values:
 
@@ -46,99 +33,61 @@ Allowed `evidence_kind` values:
 - `method_return_type_reference`
 - `method_call`
 
-## `data/extracted/<subject>/ssa_flow_edges.csv`
+### `ssa_flow_edges.csv`
 
-Soot/Shimple-derived SSA flow evidence used to extend `G_raw` into `G_ssa`.
+| Column | Meaning |
+| --- | --- |
+| `source` | source class id |
+| `target` | target class id |
+| `flow_type` | `return_value_flow` or `argument_passing_flow` |
+| `weight` | embedded extracted row weight |
+| `evidence_method` | method where evidence was observed |
+| `evidence_statement` | statement where evidence was observed |
 
-Columns:
+## Pre-Experiment Outputs
 
-- `source`
-- `target`
-- `flow_type`
-- `weight`
-- `evidence_method`
-- `evidence_statement`
+```text
+results/<subject>/00_pre_experiment/
+  graph/raw_edges.csv
+  graph/ssa_edges.csv
+  graph/raw_graph_metrics.csv
+  graph/ssa_graph_metrics.csv
+  clustering/leiden_raw_clusters.csv
+  clustering/leiden_ssa_clusters.csv
+  clustering/leiden_raw_partition_metrics.csv
+  clustering/leiden_ssa_partition_metrics.csv
+  comparison/metrics_summary.csv
+  comparison/pre_experiment_summary.csv
+  comparison/top_new_ssa_edges.csv
+  comparison/top_weight_increased_edges.csv
+  comparison/top_moved_classes.csv
+```
 
-Allowed `flow_type` values:
+DayTrader calibration outputs are under `results/daytrader/00_pre_experiment/calibration/`. Xerces-J sensitivity outputs are under `results/xerces-j/00_pre_experiment/sensitivity/`.
 
-- `return_value_flow`
-- `argument_passing_flow`
+## Formal Stage 1 Outputs
 
-SSA flow evidence must remain separate from structural dependencies. The current Stage 1 schema does not include shared domain object evidence.
+```text
+results/<subject>/01_stage1_leiden_baseline/
+  baseline_index.yml
+  raw_reference_leiden/
+    graph/stage1_edges.csv
+    clustering/stage1_clusters.csv
+    metrics/stage1_metrics.csv
+    summaries/stage1_cluster_summary.csv
+    baseline_metadata.yml
+  ssa_selected_leiden/
+    graph/stage1_edges.csv
+    clustering/stage1_clusters.csv
+    metrics/stage1_metrics.csv
+    summaries/stage1_cluster_summary.csv
+    baseline_metadata.yml
+```
 
-## Graph Inputs
+Cluster files use:
 
-`G_raw` is built from `structural_dependencies.csv`.
+```text
+class_id,class_name,cluster_id
+```
 
-`G_ssa` is built from `structural_dependencies.csv` plus `ssa_flow_edges.csv`.
-
-The final graph remains class-level. Method and statement fields are evidence metadata only; they do not change the graph node granularity.
-
-## Downstream Outputs
-
-Generated graph, clustering, and metric outputs live under `results/<subject>/<stage>/`. These files are not normalized Soot extraction inputs.
-
-### `graph/raw_edges.csv`
-
-- `source`
-- `target`
-- `type_weight`
-- `call_weight`
-- `raw_weight`
-
-### `graph/ssa_edges.csv`
-
-- `source`
-- `target`
-- `type_weight`
-- `call_weight`
-- `return_flow_weight`
-- `argument_flow_weight`
-- `ssa_flow_weight`
-- `g_ssa_weight`
-
-### Cluster assignment files
-
-- `class_id`
-- `class_name`
-- `cluster_id`
-
-Pre-experiment cluster files are written under `clustering/` and named `leiden_raw_clusters.csv` and `leiden_ssa_clusters.csv`. Stage 1 baseline cluster output is written to `clustering/stage1_clusters.csv`.
-
-### Graph metric files
-
-- `subject`
-- `graph_type`
-- `node_count`
-- `edge_count`
-- `density`
-- `average_degree`
-
-Pre-experiment graph metric files are written under `graph/` and named `raw_graph_metrics.csv` and `ssa_graph_metrics.csv`.
-
-### Partition metric files
-
-- `subject`
-- `algorithm`
-- `graph_type`
-- `cluster_count`
-- `modularity`
-- `average_cluster_size`
-- `max_cluster_size`
-- `min_cluster_size`
-- `max_cluster_ratio`
-- `singleton_ratio`
-- `internal_external_edge_ratio`
-- `internal_edge_weight_ratio`
-
-Pre-experiment partition metric files are written under `clustering/` and named `leiden_raw_partition_metrics.csv` and `leiden_ssa_partition_metrics.csv`. Stage 1 baseline partition metrics are written to `metrics/stage1_metrics.csv`.
-
-### Raw-vs-SSA comparison files
-
-`comparison/metrics_summary.csv` records one row per subject run. Current columns include:
-
-- input scale: `class_count`, `raw_edge_count`, `g_ssa_edge_count`, `ssa_flow_evidence_count`
-- SSA impact: `new_ssa_edge_count`, `new_ssa_edge_ratio`, `ssa_weight_share`, `cross_raw_cluster_ssa_edge_ratio`
-- partition change: `raw_cluster_count`, `ssa_cluster_count`, `cluster_count_delta`, `ari_raw_vs_ssa`, `nmi_raw_vs_ssa`
-- balance: `raw_max_cluster_ratio`, `ssa_max_cluster_ratio`, `raw_singleton_ratio`, `ssa_singleton_ratio`
-- structure: `raw_weighted_modularity`, `ssa_weighted_modularity`, `raw_internal_edge_weight_ratio`, `ssa_internal_edge_weight_ratio`
+Profile metadata records profile settings, extracted input hashes, and the SHA-256 hash of `graph/stage1_edges.csv`.

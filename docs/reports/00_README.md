@@ -1,17 +1,37 @@
-# Reports
 
-This folder contains readable experiment notes and Stage 1 summaries.
+# Stage 1 Reports
 
-Generated CSV evidence remains under `results/<subject>/`. Normalized extraction inputs remain under `data/extracted/<subject>/`.
+This folder stores the active Stage 1 research reports.
 
-## Current Reports
+Generated CSV results remain under:
 
-- `01_test_case_selection_summary.md`: rationale for the current subject set.
-- `02_stage1_cross_case_summary.md`: cross-subject Stage 1 summary for JPetStore, DayTrader, and Xerces-J.
-- `03_ssa_weight_adjustment_log.md`: pointer to current SSA weight and sensitivity evidence.
-- `04_repo_consistency_audit.md`: repository documentation consistency audit.
-- `05_xerces-j_stage1_report.md`: Stage 1 analysis report for Xerces-J.
+```text
+results/<subject>/
+````
 
-Additional subject notes:
+Technical implementation notes remain under:
 
-- `06_xerces-j_extraction_notes.md`: extraction scope and build notes for Xerces-J.
+```text
+docs/stage1/
+```
+
+## Reports
+
+| File                                | Purpose                                                      |
+| ----------------------------------- | ------------------------------------------------------------ |
+| `01_test_case_selection_summary.md` | explains the roles of the selected subject systems           |
+| `02_stage1_cross_case_summary.md`   | summarizes Stage 1 results across the three subjects         |
+| `03_ssa_calibration_notes.md`       | records DayTrader calibration and the frozen Leiden profiles |
+| `04_xerces-j_sensitivity_notes.md`  | records the larger-scale Xerces-J sensitivity findings       |
+
+## Scope
+
+These reports cover:
+
+* class-level extraction;
+* `G_raw` and `G_ssa` construction;
+* SSA impact analysis;
+* Leiden calibration;
+* formal Stage 1 baseline profiles.
+
+Stage 2 NSGA-II results should be documented separately.
