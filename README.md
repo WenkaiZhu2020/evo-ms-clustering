@@ -74,17 +74,18 @@ bash scripts/run_stage1_jpetstore.sh
 bash scripts/extract_soot_daytrader.sh
 bash scripts/run_pre_daytrader.sh
 bash scripts/run_stage1_daytrader.sh
-bash scripts/run_daytrader_weight_sweep.sh
+bash scripts/run_daytrader_calibration.sh
 
 bash scripts/extract_soot_xerces_j.sh
 bash scripts/run_pre_xerces_j.sh
-bash scripts/run_stage1_xerces_j.sh
+bash scripts/run_xerces_j_sensitivity.sh
+PYTHONPATH=src .venv/bin/python experiments/01_stage1_leiden_baseline/run.py --subject xerces-j
 ```
 
-The Stage 1 Leiden runner depends on the pre-experiment output:
+The Stage 1 Leiden runner independently reconstructs the fixed default SSA-informed baseline graph from:
 
 ```text
-results/<subject>/00_pre_experiment/graph/ssa_edges.csv
+data/extracted/<subject>/
 ```
 
 ## Validation

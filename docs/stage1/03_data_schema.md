@@ -97,6 +97,8 @@ Generated graph, clustering, and metric outputs live under `results/<subject>/<s
 - `ssa_flow_weight`
 - `g_ssa_weight`
 
+Stage 1 baseline stores the exact fixed graph used by Leiden as `graph/stage1_edges.csv`. It uses the same columns as `graph/ssa_edges.csv`.
+
 ### Cluster assignment files
 
 - `class_id`
@@ -132,6 +134,10 @@ Pre-experiment graph metric files are written under `graph/` and named `raw_grap
 - `internal_edge_weight_ratio`
 
 Pre-experiment partition metric files are written under `clustering/` and named `leiden_raw_partition_metrics.csv` and `leiden_ssa_partition_metrics.csv`. Stage 1 baseline partition metrics are written to `metrics/stage1_metrics.csv`.
+
+### Stage 1 baseline metadata
+
+`baseline_metadata.yml` records the fixed default SSA-informed Leiden baseline settings, the extracted input path, the saved edge table path, and the SHA-256 hash of `graph/stage1_edges.csv`.
 
 ### Raw-vs-SSA comparison files
 

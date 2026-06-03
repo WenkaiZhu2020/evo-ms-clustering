@@ -42,8 +42,9 @@ def build_ssa_edges(
     _validate_component_weights(raw, ["type_weight", "call_weight"], "raw_edges")
     _validate_node_references(class_nodes, raw, "raw_edges")
     raw = _aggregate_undirected_raw_edges(raw)
+    raw = _drop_self_loops(raw)
 
-    flow_weights = aggregate_ssa_flow_weights(class_nodes, ssa_flow_edges)
+    flow_weights = _drop_self_loops(aggregate_ssa_flow_weights(class_nodes, ssa_flow_edges))
     # Outer join keeps SSA-only edges instead of dropping them.
     combined = raw.merge(flow_weights, on=["source", "target"], how="outer")
     if combined.empty:
@@ -147,6 +148,12 @@ def _aggregate_undirected_raw_edges(raw_edges: pd.DataFrame) -> pd.DataFrame:
         .sum()
         .loc[:, ["source", "target", "type_weight", "call_weight"]]
     )
+
+
+def _drop_self_loops(edges: pd.DataFrame) -> pd.DataFrame:
+    if edges.empty:
+        return edges
+    return edges.loc[edges["source"].astype(str) != edges["target"].astype(str)].copy()
 
 
 def _validate_required_columns(frame: pd.DataFrame, columns: list[str], name: str) -> None:

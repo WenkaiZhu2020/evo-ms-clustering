@@ -1,8 +1,9 @@
 experiment_name: 01_stage1_leiden_baseline
-description: Run Leiden community detection on G_ssa.
+description: Run the default SSA-informed Leiden baseline for later comparison.
 subjects:
   - jpetstore
-input_graph_type: G_ssa
+graph_type: ssa
+ssa_lambda: 1.0
 algorithm: Leiden
 resolution: 1.0
 seed: 42

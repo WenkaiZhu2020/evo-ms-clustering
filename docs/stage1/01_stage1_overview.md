@@ -51,6 +51,8 @@ Stage 2 should first compare structure-only NSGA-II against the Leiden baselines
 
 SSA can remain as a controlled graph input, or it can later become a separate objective or penalty term. Stage 3 can then add semantic embeddings as another independent evidence channel. The intended later comparison is therefore structure-only, structure plus SSA, and structure plus SSA plus semantics.
 
+The Pre-experiment layer provides diagnostics, parameter sweeps, and evidence inspection. The Stage 1 Leiden baseline layer reconstructs one fixed SSA-informed graph directly from extracted CSVs and saves the edge table plus metadata for reproducible comparison.
+
 ## Evidence Layout
 
 Normalized extraction CSVs live under `data/extracted/<subject>/`.

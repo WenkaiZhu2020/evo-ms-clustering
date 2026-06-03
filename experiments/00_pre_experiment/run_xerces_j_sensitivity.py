@@ -32,15 +32,19 @@ DAYTRADER_RESOLUTIONS = [0.5, 0.75, 1.0, 1.25, 1.5]
 DAYTRADER_SSA_LAMBDAS = [0.0, 0.25, 0.5, 1.0, 2.0, 3.0, 4.0]
 
 
-def run_xerces_j_stage1_analysis(root: Path = ROOT) -> Path:
+def run_xerces_j_sensitivity(root: Path = ROOT) -> Path:
     logger = get_logger(__name__)
     subject = "xerces-j"
     subject_config = _load_subject_config(root, subject)
     pre_config = load_yaml(root / "configs" / "experiments" / "00_pre_experiment.yml")
 
     extracted_dir = root / subject_config.get("extracted_output_path", f"data/extracted/{subject}")
-    output_dir = root / subject_config.get("result_output_path", f"results/{subject}") / "stage1"
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = root / subject_config.get("result_output_path", f"results/{subject}") / "00_pre_experiment"
+    clustering_dir = output_dir / "clustering"
+    comparison_dir = output_dir / "comparison"
+    sensitivity_dir = output_dir / "sensitivity"
+    for directory in [clustering_dir, comparison_dir, sensitivity_dir]:
+        directory.mkdir(parents=True, exist_ok=True)
 
     default_resolution = float(pre_config.get("leiden", {}).get("resolution", 1.0))
     default_ssa_lambda = float(pre_config.get("ssa_graph", {}).get("ssa_lambda", 1.0))
@@ -99,17 +103,17 @@ def run_xerces_j_stage1_analysis(root: Path = ROOT) -> Path:
         ssa_flow_edges=ssa_flow_edges,
     )
 
-    raw_clusters.to_csv(output_dir / "leiden_raw_clusters.csv", index=False)
-    ssa_clusters.to_csv(output_dir / "leiden_ssa_clusters.csv", index=False)
-    raw_partition_metrics.to_csv(output_dir / "leiden_raw_partition_metrics.csv", index=False)
-    ssa_partition_metrics.to_csv(output_dir / "leiden_ssa_partition_metrics.csv", index=False)
-    graph_summary.to_csv(output_dir / "graph_summary.csv", index=False)
+    raw_clusters.to_csv(clustering_dir / "leiden_raw_clusters.csv", index=False)
+    ssa_clusters.to_csv(clustering_dir / "leiden_ssa_clusters.csv", index=False)
+    raw_partition_metrics.to_csv(clustering_dir / "leiden_raw_partition_metrics.csv", index=False)
+    ssa_partition_metrics.to_csv(clustering_dir / "leiden_ssa_partition_metrics.csv", index=False)
+    graph_summary.to_csv(comparison_dir / "graph_summary.csv", index=False)
     _leiden_comparison(raw_partition_metrics, ssa_partition_metrics).to_csv(
-        output_dir / "leiden_comparison.csv",
+        comparison_dir / "leiden_comparison.csv",
         index=False,
     )
     _cluster_size_summary(raw_clusters, ssa_clusters).to_csv(
-        output_dir / "cluster_size_summary.csv",
+        sensitivity_dir / "cluster_size_summary.csv",
         index=False,
     )
 
@@ -123,7 +127,7 @@ def run_xerces_j_stage1_analysis(root: Path = ROOT) -> Path:
         subject=subject,
         resolutions=DAYTRADER_RESOLUTIONS,
         seed=seed,
-    ).to_csv(output_dir / "resolution_sweep.csv", index=False)
+    ).to_csv(sensitivity_dir / "resolution_sweep.csv", index=False)
 
     logger.info("Running SSA lambda sweep for %s", subject)
     _ssa_lambda_sweep(
@@ -135,10 +139,10 @@ def run_xerces_j_stage1_analysis(root: Path = ROOT) -> Path:
         resolution=default_resolution,
         ssa_lambdas=DAYTRADER_SSA_LAMBDAS,
         seed=seed,
-    ).to_csv(output_dir / "ssa_lambda_sweep.csv", index=False)
+    ).to_csv(sensitivity_dir / "ssa_lambda_sweep.csv", index=False)
 
-    _write_report(root, output_dir)
-    logger.info("Wrote Xerces-J Stage 1 analysis to %s", output_dir)
+    _write_report(root, comparison_dir, sensitivity_dir)
+    logger.info("Wrote Xerces-J sensitivity outputs to %s", output_dir)
     return output_dir
 
 
@@ -324,14 +328,14 @@ def _partition_similarity(
     )
 
 
-def _write_report(root: Path, output_dir: Path) -> None:
+def _write_report(root: Path, comparison_dir: Path, sensitivity_dir: Path) -> None:
     report_path = root / "docs" / "reports" / "05_xerces-j_stage1_report.md"
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
-    graph = pd.read_csv(output_dir / "graph_summary.csv").iloc[0]
-    leiden = pd.read_csv(output_dir / "leiden_comparison.csv")
-    resolution = pd.read_csv(output_dir / "resolution_sweep.csv")
-    lambdas = pd.read_csv(output_dir / "ssa_lambda_sweep.csv")
+    graph = pd.read_csv(comparison_dir / "graph_summary.csv").iloc[0]
+    leiden = pd.read_csv(comparison_dir / "leiden_comparison.csv")
+    resolution = pd.read_csv(sensitivity_dir / "resolution_sweep.csv")
+    lambdas = pd.read_csv(sensitivity_dir / "ssa_lambda_sweep.csv")
     daytrader = _read_optional_csv(
         root / "results" / "daytrader" / "00_pre_experiment" / "comparison" / "metrics_summary.csv",
     )
@@ -340,7 +344,7 @@ def _write_report(root: Path, output_dir: Path) -> None:
     )
 
     lines = [
-        "# Xerces-J Stage 1 Analysis",
+        "# Xerces-J Sensitivity Analysis",
         "",
         "## Extraction Recap",
         "",
@@ -483,11 +487,12 @@ def _write_report(root: Path, output_dir: Path) -> None:
         "## Reproduction Commands",
         "",
         "```bash",
-        "bash scripts/run_stage1_xerces_j.sh",
+        "bash scripts/run_xerces_j_sensitivity.sh",
         "PYTHONPATH=src .venv/bin/python -m pytest",
         "```",
         "",
-        "Generated outputs are under `results/xerces-j/stage1/`.",
+        "Generated comparison outputs are under `results/xerces-j/00_pre_experiment/comparison/`.",
+        "Generated sensitivity outputs are under `results/xerces-j/00_pre_experiment/sensitivity/`.",
         "",
     ]
     report_path.write_text("\n".join(lines), encoding="utf-8")
@@ -567,10 +572,10 @@ def _format_float(value) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Run Xerces-J Stage 1 sensitivity analysis.")
     parser.parse_args()
     try:
-        run_xerces_j_stage1_analysis()
+        run_xerces_j_sensitivity()
     except ImportError as exc:
         print(f"ERROR: missing dependency for Leiden: {exc}", file=sys.stderr)
         return 1

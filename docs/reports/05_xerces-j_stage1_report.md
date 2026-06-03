@@ -1,4 +1,4 @@
-# Xerces-J Stage 1 Analysis
+# Xerces-J Sensitivity Analysis
 
 ## Extraction Recap
 
@@ -106,8 +106,9 @@ Xerces-J is useful later as a technical remodularization benchmark because it is
 ## Reproduction Commands
 
 ```bash
-bash scripts/run_stage1_xerces_j.sh
+bash scripts/run_xerces_j_sensitivity.sh
 PYTHONPATH=src .venv/bin/python -m pytest
 ```
 
-Generated outputs are under `results/xerces-j/stage1/`.
+Generated comparison outputs are under `results/xerces-j/00_pre_experiment/comparison/`.
+Generated sensitivity outputs are under `results/xerces-j/00_pre_experiment/sensitivity/`.

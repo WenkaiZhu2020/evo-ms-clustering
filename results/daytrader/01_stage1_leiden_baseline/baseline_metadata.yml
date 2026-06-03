@@ -1,0 +1,12 @@
+subject: daytrader
+role: frozen_leiden_baseline_for_later_comparison
+baseline_name: default_ssa_informed_leiden
+graph_type: ssa
+ssa_lambda: 1.0
+resolution: 1.0
+seed: 42
+source_extracted_data: data/extracted/daytrader/
+edge_table: graph/stage1_edges.csv
+edge_table_sha256: 77fc8f506efcfc49c383cd24b1aa56c01918aa1752764d81b82aa91abd156c25
+generated_at_utc: '2026-06-03T08:41:03Z'
+git_head: 798d5cabef8baa59ddbdfbac10f2de47af29f1c9

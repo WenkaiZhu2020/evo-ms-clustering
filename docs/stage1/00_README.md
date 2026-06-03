@@ -26,8 +26,8 @@ compiled Java classes
 -> Soot/Shimple extraction
 -> data/extracted/<subject>/*.csv
 -> G_raw and G_ssa edge construction
--> Leiden on G_raw and G_ssa for pre-experiment comparison
--> Leiden on G_ssa for Stage 1 baseline
+-> Pre-experiment diagnostics: Leiden on G_raw and G_ssa, SSA impact analysis, sensitivity/calibration outputs
+-> Stage 1 formal baseline: fixed SSA-informed Leiden run reconstructed from extracted CSVs
 -> sensitivity / calibration outputs where available
 ```
 
@@ -42,9 +42,11 @@ compiled Java classes
 - Extracted normalized inputs: `data/extracted/<subject>/`
 - Pre-experiment graph and comparison outputs: `results/<subject>/00_pre_experiment/`
 - Stage 1 Leiden baseline outputs: `results/<subject>/01_stage1_leiden_baseline/`
-- Xerces-J Stage 1 analysis outputs: `results/xerces-j/stage1/`
+- Xerces-J sensitivity outputs: `results/xerces-j/00_pre_experiment/sensitivity/`
 - Human-readable reports: `docs/reports/`
 
 ## Scope Boundary
 
 Stage 1 is a structural baseline. It does not implement NSGA-II, semantic embeddings, or Stage 2/Stage 3 optimization. Those later stages should compare against both default Leiden and tuned Leiden rather than treating the default run as the only baseline.
+
+The Pre-experiment layer is diagnostic and may be rerun with different parameters. The Stage 1 Leiden baseline layer is a fixed reproducible snapshot used as the later comparison target.

@@ -5,7 +5,7 @@ This document records how SSA weight sensitivity is handled in the current Stage
 ## Current Evidence
 
 - DayTrader calibration outputs are under `results/daytrader/00_pre_experiment/calibration/`.
-- Xerces-J Stage 1 sensitivity outputs are under `results/xerces-j/stage1/`.
+- Xerces-J Stage 1 sensitivity outputs are under `results/xerces-j/00_pre_experiment/sensitivity/`.
 - Cross-case interpretation is summarized in `docs/reports/02_stage1_cross_case_summary.md`.
 
 DayTrader has a reference mapping, so its sweep can include reference-based metrics such as MoJoFM and pairwise F1. Xerces-J has no business reference mapping in this repository, so its lambda sweep is used for transfer and scalability analysis with internal graph and partition metrics.

@@ -99,6 +99,27 @@ def test_build_raw_edges_removes_self_loops_with_warning() -> None:
     ]
 
 
+def test_build_raw_edges_row_count_matches_unique_undirected_pairs() -> None:
+    with pytest.warns(RuntimeWarning, match="removed 1 self-loop"):
+        raw_edges = build_raw_edges(
+            class_nodes_frame("A", "B", "C"),
+            structural_frame(
+                ("B", "A", "type", 1.0),
+                ("A", "B", "call", 2.0),
+                ("C", "A", "type", 1.0),
+                ("C", "C", "call", 4.0),
+            ),
+        )
+
+    assert len(raw_edges) == 2
+    assert raw_edges["source"].ne(raw_edges["target"]).all()
+    assert len(_undirected_pairs(raw_edges)) == len(raw_edges)
+    assert raw_edges[["source", "target"]].to_dict("records") == [
+        {"source": "A", "target": "B"},
+        {"source": "A", "target": "C"},
+    ]
+
+
 def test_build_raw_graph_uses_weighted_raw_edges() -> None:
     graph = build_raw_graph(
         class_nodes_frame("A", "B"),
@@ -199,6 +220,45 @@ def test_build_ssa_edges_combines_reverse_direction_as_one_undirected_pair() -> 
             "g_ssa_weight": 7.0,
         }
     ]
+
+
+def test_build_ssa_edges_drops_self_loops_and_keeps_unique_undirected_pairs() -> None:
+    class_nodes = class_nodes_frame("A", "B", "C", "D")
+    raw_edges = build_raw_edges(
+        class_nodes,
+        structural_frame(
+            ("B", "A", "type", 1.0),
+            ("A", "B", "call", 2.0),
+        ),
+    )
+
+    ssa_edges = build_ssa_edges(
+        class_nodes,
+        raw_edges,
+        ssa_flow_frame(
+            ("A", "B", "argument_passing_flow", 3.0),
+            ("C", "D", "return_value_flow", 3.0),
+            ("D", "C", "return_value_flow", 3.0),
+            ("B", "B", "argument_passing_flow", 3.0),
+        ),
+    )
+
+    assert len(ssa_edges) == 2
+    assert ssa_edges["source"].ne(ssa_edges["target"]).all()
+    assert len(_undirected_pairs(ssa_edges)) == len(ssa_edges)
+
+    by_pair = {
+        (row["source"], row["target"]): row
+        for row in ssa_edges.to_dict("records")
+    }
+    assert by_pair[("A", "B")]["type_weight"] == 1.0
+    assert by_pair[("A", "B")]["call_weight"] == 2.0
+    assert by_pair[("A", "B")]["argument_flow_weight"] == 3.0
+    assert by_pair[("A", "B")]["g_ssa_weight"] == 6.0
+    assert by_pair[("C", "D")]["type_weight"] == 0.0
+    assert by_pair[("C", "D")]["call_weight"] == 0.0
+    assert by_pair[("C", "D")]["return_flow_weight"] == 6.0
+    assert by_pair[("C", "D")]["g_ssa_weight"] == 6.0
 
 
 def test_build_ssa_edges_applies_lambda_to_ssa_contribution_only() -> None:
@@ -333,3 +393,10 @@ def ssa_flow_frame(*rows: tuple[str, str, str, float]) -> pd.DataFrame:
             for source, target, flow_type, weight in rows
         ]
     )
+
+
+def _undirected_pairs(edges: pd.DataFrame) -> set[tuple[str, str]]:
+    return {
+        tuple(sorted((str(row["source"]), str(row["target"]))))
+        for row in edges.to_dict("records")
+    }

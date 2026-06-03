@@ -10,8 +10,9 @@ Generated CSV evidence remains under `results/<subject>/`. Normalized extraction
 - `02_stage1_cross_case_summary.md`: cross-subject Stage 1 summary for JPetStore, DayTrader, and Xerces-J.
 - `03_ssa_weight_adjustment_log.md`: pointer to current SSA weight and sensitivity evidence.
 - `04_repo_consistency_audit.md`: repository documentation consistency audit.
-- `05_xerces-j_stage1_report.md`: Stage 1 analysis report for Xerces-J.
+- `05_xerces-j_stage1_report.md`: Xerces-J scale and sensitivity analysis report.
 
 Additional subject notes:
 
 - `06_xerces-j_extraction_notes.md`: extraction scope and build notes for Xerces-J.
+- `07_pre_stage1_normalization_verification.md`: verification report for the Pre-experiment / Stage 1 normalization.

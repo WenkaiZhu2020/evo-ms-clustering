@@ -28,7 +28,7 @@ SSA_LAMBDAS = [0.0, 0.25, 0.5, 1.0, 2.0, 3.0, 4.0]
 RESOLUTIONS = [0.5, 0.75, 1.0, 1.25, 1.5]
 
 
-def run_weight_sweep(
+def run_daytrader_calibration(
     root: Path = ROOT,
     subject: str = "daytrader",
     ssa_lambdas: list[float] | None = None,
@@ -230,12 +230,12 @@ def _top_ssa_degree_classes(class_nodes: pd.DataFrame, ssa_edges: pd.DataFrame) 
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Run DayTrader reference-based calibration.")
     parser.add_argument("--subject", default="daytrader")
     args = parser.parse_args()
 
     try:
-        run_weight_sweep(subject=args.subject)
+        run_daytrader_calibration(subject=args.subject)
     except ImportError as exc:
         print(f"ERROR: missing dependency for Leiden: {exc}", file=sys.stderr)
         return 1

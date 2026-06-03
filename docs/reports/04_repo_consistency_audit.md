@@ -28,8 +28,10 @@ Reports:
 - `docs/reports/03_ssa_weight_adjustment_log.md`
 - `docs/reports/04_repo_consistency_audit.md`
 - `docs/reports/05_xerces-j_stage1_report.md`
+- `docs/reports/06_xerces-j_extraction_notes.md`
+- `docs/reports/07_pre_stage1_normalization_verification.md`
 
-Subject-specific notes may continue after the main report sequence, for example `docs/reports/06_xerces-j_extraction_notes.md`.
+Subject-specific or maintenance notes may continue after the main report sequence when they follow the numbered filename convention.
 
 ## Current Consistency Findings
 
@@ -38,7 +40,7 @@ Subject-specific notes may continue after the main report sequence, for example 
 | Stage 1 story | consistent | Documentation describes `G_raw` and `G_ssa`, with JPetStore, DayTrader, and Xerces-J as active subjects. |
 | Graph naming | consistent | The canonical graph names are `G_raw` and `G_ssa`. |
 | Weight naming | consistent | The canonical weight columns are `raw_weight` and `g_ssa_weight`. |
-| Report location | consistent | Reports are under `docs/reports/`; root-level `reports/` is not part of the layout. |
+| Report location | consistent | Reports are under `docs/reports/`; root-level `reports/` is not used. |
 | Numbered filenames | consistent | Canonical Markdown filenames use numeric prefixes and underscores, with no spaces. |
 | Later-stage scope | consistent | Stage 1 prepares baselines and evidence design; it does not prove NSGA-II or semantic embeddings. |
 

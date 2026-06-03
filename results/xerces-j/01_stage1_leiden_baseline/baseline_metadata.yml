@@ -1,0 +1,12 @@
+subject: xerces-j
+role: frozen_leiden_baseline_for_later_comparison
+baseline_name: default_ssa_informed_leiden
+graph_type: ssa
+ssa_lambda: 1.0
+resolution: 1.0
+seed: 42
+source_extracted_data: data/extracted/xerces-j/
+edge_table: graph/stage1_edges.csv
+edge_table_sha256: fc725ffe3fc25013f7b7e96a491e3c246d05cb5d237afab2a4815f8b56febb7c
+generated_at_utc: '2026-06-03T08:41:04Z'
+git_head: 798d5cabef8baa59ddbdfbac10f2de47af29f1c9
