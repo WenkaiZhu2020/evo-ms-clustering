@@ -16,6 +16,8 @@ from evo_ms.evaluation.partition_metrics import calculate_partition_metrics
 from evo_ms.evaluation.partition_metrics import calculate_ssa_impact_tables
 from evo_ms.evaluation.partition_metrics import calculate_stage1_smoke_metrics
 from evo_ms.extraction.dependency_extractor import load_extracted_subject
+from evo_ms.extraction.evidence_weight_validation import expected_extracted_evidence_weights
+from evo_ms.extraction.evidence_weight_validation import validate_extracted_evidence_weights
 from evo_ms.graph.raw_graph_builder import build_raw_edges, build_raw_graph
 from evo_ms.graph.ssa_graph_builder import build_g_ssa_graph, build_ssa_edges
 from evo_ms.utils.config_loader import load_yaml
@@ -36,6 +38,7 @@ def run_pre_experiment(
 
     resolution = _leiden_resolution(config) if resolution is None else float(resolution)
     ssa_lambda = _ssa_lambda(config) if ssa_lambda is None else float(ssa_lambda)
+    expected_weights = expected_extracted_evidence_weights(config)
     seed = int(config.get("leiden", {}).get("seed", 42))
     output_root = root / config.get("output_root", config.get("output_directory", "results"))
 
@@ -48,6 +51,7 @@ def run_pre_experiment(
                 output_root=output_root,
                 resolution=resolution,
                 ssa_lambda=ssa_lambda,
+                expected_weights=expected_weights,
                 seed=seed,
             )
         )
@@ -60,6 +64,7 @@ def run_subject(
     output_root: Path,
     resolution: float,
     ssa_lambda: float,
+    expected_weights: dict[str, float],
     seed: int,
 ) -> Path:
     logger = get_logger(__name__)
@@ -72,6 +77,12 @@ def run_subject(
     class_nodes = extracted["class_nodes"]
     structural_dependencies = extracted["structural_dependencies"]
     ssa_flow_edges = extracted["ssa_flow_edges"]
+    validate_extracted_evidence_weights(
+        structural_dependencies,
+        ssa_flow_edges,
+        expected_weights,
+        subject=subject,
+    )
 
     logger.info("Building G_raw and G_ssa edges for %s", subject)
     raw_edges = build_raw_edges(class_nodes, structural_dependencies)

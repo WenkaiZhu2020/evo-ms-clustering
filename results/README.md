@@ -1,6 +1,6 @@
 # Results
 
-This directory contains generated outputs from the current Stage 1 experiments. Source inputs are kept under `data/`.
+This directory contains generated Stage 1 outputs. Source inputs are under `data/`.
 
 ## Main Layout
 
@@ -15,13 +15,13 @@ results/<subject>/00_pre_experiment/
   sensitivity/    # Xerces-J only
 ```
 
-Common subdirectories are:
+Subdirectories:
 
 - `graph/`: generated `G_raw` and `G_ssa` edge tables and graph summaries.
 - `clustering/`: Leiden cluster assignments and partition metrics.
 - `comparison/`: raw-vs-SSA comparison tables and impact analysis outputs.
-- `calibration/`: DayTrader reference-based calibration outputs, when generated.
-- `sensitivity/`: Xerces-J scale and sensitivity outputs, when generated.
+- `calibration/`: DayTrader reference-based calibration outputs.
+- `sensitivity/`: Xerces-J scale and sensitivity outputs.
 
 ## Stage 1 Leiden Baseline Layout
 
@@ -29,26 +29,29 @@ The formal Stage 1 Leiden baseline is stored under:
 
 ```text
 results/<subject>/01_stage1_leiden_baseline/
-  graph/
-    stage1_edges.csv
-  clustering/
-    stage1_clusters.csv
-  metrics/
-    stage1_metrics.csv
-  summaries/
-    stage1_cluster_summary.csv
-  baseline_metadata.yml
+  baseline_index.yml
+  raw_reference_leiden/
+    graph/stage1_edges.csv
+    clustering/stage1_clusters.csv
+    metrics/stage1_metrics.csv
+    summaries/stage1_cluster_summary.csv
+    baseline_metadata.yml
+  ssa_selected_leiden/
+    graph/stage1_edges.csv
+    clustering/stage1_clusters.csv
+    metrics/stage1_metrics.csv
+    summaries/stage1_cluster_summary.csv
+    baseline_metadata.yml
 ```
 
-Typical subdirectories are:
+Contents:
 
-- `graph/` for `stage1_edges.csv`, the exact fixed graph used by Leiden.
-- `clustering/` for `stage1_clusters.csv`.
-- `metrics/` for `stage1_metrics.csv`.
-- `summaries/` for `stage1_cluster_summary.csv`.
-- `baseline_metadata.yml` for fixed baseline settings and the SHA-256 hash of `graph/stage1_edges.csv`.
+- `raw_reference_leiden/` for the raw structural reference profile.
+- `ssa_selected_leiden/` for the selected non-zero SSA-informed comparison profile.
+- `baseline_index.yml` for the generated profile list and comparison purpose.
+- each profile-level `baseline_metadata.yml` for fixed settings and SHA-256 hashes of `graph/stage1_edges.csv` and extracted inputs.
 
-This baseline is a fixed-config formal snapshot reconstructed from normalized extracted CSV inputs, not from mutable Pre-experiment result files. It may reproduce the same partition as the matching default SSA diagnostic run, but the two layers have different responsibilities: Pre-experiment is a diagnostic workspace, while Stage 1 is the frozen baseline for later comparison.
+These baselines are fixed-config snapshots reconstructed from normalized extracted CSV inputs, not from mutable Pre-experiment result files.
 
 ## Subject-Specific Outputs
 
@@ -58,7 +61,7 @@ DayTrader calibration outputs are stored under:
 results/daytrader/00_pre_experiment/calibration/
 ```
 
-This folder contains reference-mapping validation, weight sweep summaries, and ranked candidate settings.
+This folder contains reference-mapping validation, weight sweep summaries, ranked candidate settings, and the selected profile record.
 
 Xerces-J default comparison outputs are stored with the other pre-experiment comparison files under:
 
@@ -72,9 +75,9 @@ Xerces-J sensitivity-specific outputs are stored under:
 results/xerces-j/00_pre_experiment/sensitivity/
 ```
 
-This folder contains cluster-size summary, resolution sweep, and SSA lambda sweep outputs. The older `results/xerces-j/stage1/` tree is a legacy generated-output location and is not the active diagnostic path.
+This folder contains cluster-size summary, resolution sweep, and SSA lambda sweep outputs. Xerces-J has no separate active diagnostic output tree outside `00_pre_experiment/sensitivity/`.
 
-Historical generated outputs may be archived locally under `results/_legacy/`. That archive is local-only and should stay excluded through `.git/info/exclude`, not `.gitignore`.
+Historical generated outputs are not kept in the active results layout.
 
 ## Report Location
 

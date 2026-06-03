@@ -81,7 +81,7 @@ def build_raw_graph(
 ):
     import networkx as nx
 
-    graph = nx.DiGraph()
+    graph = nx.Graph()
     if structural_dependencies is None:
         graph.add_edges_from(edges_or_class_nodes)
         return graph

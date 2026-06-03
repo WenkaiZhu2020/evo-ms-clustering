@@ -1,0 +1,86 @@
+
+# Xerces-J Sensitivity Notes
+
+## 1. Role
+
+Xerces-J is the larger-scale Stage 1 subject.
+
+It is used to check whether the same class-level extraction, graph-construction, and Leiden workflow remains usable on a larger Java system.
+
+Xerces-J is a technical remodularization case. It is not treated as a business microservice ground-truth subject.
+
+## 2. Default Diagnostic Result
+
+| Metric | Raw Setting | SSA Setting |
+| --- | ---: | ---: |
+| Class count | 814 | 814 |
+| Edge count | 3780 | 4148 |
+| Cluster count | 31 | 30 |
+| Weighted modularity | 0.661519 | 0.644268 |
+| Max-cluster ratio | 0.144963 | 0.187961 |
+
+Source:
+
+```text
+results/xerces-j/00_pre_experiment/comparison/metrics_summary.csv
+````
+
+Under the default diagnostic setting, SSA adds:
+
+```text
+368
+```
+
+new class-pair edges.
+
+The SSA partition also has a larger dominant cluster and slightly lower weighted modularity than the raw partition.
+
+## 3. Sensitivity Outputs
+
+The Xerces-J sensitivity runner writes:
+
+```text
+results/xerces-j/00_pre_experiment/sensitivity/
+  cluster_size_summary.csv
+  resolution_sweep.csv
+  ssa_lambda_sweep.csv
+```
+
+The generic Pre-experiment runner remains responsible for the default raw-vs-SSA comparison.
+
+## 4. Main Observation
+
+Xerces-J shows visible sensitivity to the SSA contribution.
+
+As lambda increases, SSA-derived evidence can connect more classes across existing structural regions. This may enlarge dominant clusters or shift cluster boundaries more strongly.
+
+The result supports a cautious interpretation:
+
+* SSA provides additional behavioural evidence;
+* the additional evidence changes the partition;
+* a stronger SSA contribution may increase aggregation risk;
+* the effect should be controlled rather than assumed to be beneficial.
+
+## 5. Limitation
+
+This is a case-specific result.
+
+Xerces-J alone cannot support a general claim that larger systems always show stronger SSA sensitivity.
+
+Its role is to provide larger-scale evidence for the current pipeline and to identify risks that should be considered in later stages.
+
+## 6. Reproduction
+
+Run:
+
+```bash
+bash scripts/run_pre_xerces_j.sh
+bash scripts/run_xerces_j_sensitivity.sh
+bash scripts/run_stage1_xerces_j.sh
+```
+
+The formal Stage 1 profiles are stored under:
+
+```text
+results/xerces-j/01_stage1_leiden_baseline/
+```

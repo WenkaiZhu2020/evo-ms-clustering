@@ -7,13 +7,14 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from evo_ms.graph.raw_graph_builder import build_raw_edges, build_raw_graph
-from evo_ms.graph.ssa_graph_builder import build_g_ssa_graph, build_ssa_edges, build_ssa_graph
+from evo_ms.graph.ssa_graph_builder import build_g_ssa_graph, build_ssa_edges
 from evo_ms.evidence.ssa_flow_evidence import validate_ssa_flow_type
 
 
-def test_build_raw_graph_adds_directed_edges() -> None:
+def test_build_raw_graph_adds_undirected_edges() -> None:
     graph = build_raw_graph([("A", "B")])
     assert graph.has_edge("A", "B")
+    assert not graph.is_directed()
 
 
 def test_build_raw_edges_adds_simple_type_edge() -> None:
@@ -128,16 +129,10 @@ def test_build_raw_graph_uses_weighted_raw_edges() -> None:
 
     assert graph.has_node("A")
     assert graph.has_edge("A", "B")
+    assert not graph.is_directed()
     assert graph["A"]["B"]["type_weight"] == 1.0
     assert graph["A"]["B"]["call_weight"] == 2.0
     assert graph["A"]["B"]["raw_weight"] == 3.0
-
-
-def test_build_ssa_graph_accumulates_raw_and_ssa_weights() -> None:
-    graph = build_ssa_graph([("A", "B", "type"), ("A", "B", "return_value_flow")])
-    assert graph["A"]["B"]["raw_weight"] == 1.0
-    assert graph["A"]["B"]["ssa_flow_weight"] == 3.0
-    assert graph["A"]["B"]["g_ssa_weight"] == 4.0
 
 
 def test_build_ssa_edges_adds_return_value_flow() -> None:
@@ -331,6 +326,7 @@ def test_build_g_ssa_graph_uses_weighted_ssa_edges() -> None:
     )
 
     assert graph.has_edge("A", "B")
+    assert not graph.is_directed()
     assert graph["A"]["B"]["call_weight"] == 2.0
     assert graph["A"]["B"]["return_flow_weight"] == 3.0
     assert graph["A"]["B"]["g_ssa_weight"] == 5.0

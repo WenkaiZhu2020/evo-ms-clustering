@@ -1,20 +1,16 @@
 # Evolutionary Software Clustering for Microservice Identification
 
-This repository supports a master's dissertation experiment on class-level software clustering for monolith-to-microservices migration.
-
-The current implementation is limited to the Stage 1 structural pipeline:
+This repository supports a master's dissertation experiment on class-level software clustering for monolith-to-microservices migration. The current implementation covers Stage 1 only:
 
 ```text
 Soot/Shimple extraction
--> normalized CSVs in data/extracted/<subject>/
--> G_raw and G_ssa construction
--> Leiden clustering
--> evaluation tables in results/<subject>/<stage>/
+-> normalized CSVs
+-> Pre-experiment diagnostics
+-> two formal Stage 1 Leiden profiles
+-> result tables
 ```
 
-`G_raw` uses type and call dependency evidence with `raw_weight`.
-
-`G_ssa` adds Soot/Shimple-derived return_value flow and argument_passing flow evidence with `g_ssa_weight`.
+`G_raw` uses type and call dependency evidence with `raw_weight`. `G_ssa` adds scoped Soot/Shimple return-value and argument-passing flow evidence with `g_ssa_weight`.
 
 ## Subjects
 
@@ -31,7 +27,6 @@ configs/      Experiment and subject configuration.
 data/         Input data only: raw Java projects, normalized extracted CSVs, and references.
 docs/stage1/ Stage 1 technical documentation and reading guide.
 docs/reports/ Human-readable experiment reports and benchmark evidence.
-docs/archive/ Historical/deprecated notes only.
 experiments/ Runnable experiment entrypoints.
 results/      Generated experiment outputs.
 scripts/      Thin command wrappers for current subjects.
@@ -56,13 +51,7 @@ export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 
 ## Run Order
 
-Each subject has a thin script wrapper under `scripts/`. Raw Java source and build output stay under `data/raw_projects/<subject>/`.
-
-JPetStore expects compiled classes under:
-
-```text
-data/raw_projects/jpetstore/target/classes
-```
+Each subject has thin wrappers under `scripts/`. Raw Java source and build output stay under `data/raw_projects/<subject>/`.
 
 Core runs:
 
@@ -79,14 +68,19 @@ bash scripts/run_daytrader_calibration.sh
 bash scripts/extract_soot_xerces_j.sh
 bash scripts/run_pre_xerces_j.sh
 bash scripts/run_xerces_j_sensitivity.sh
-PYTHONPATH=src .venv/bin/python experiments/01_stage1_leiden_baseline/run.py --subject xerces-j
+bash scripts/run_stage1_xerces_j.sh
 ```
 
-The Stage 1 Leiden runner independently reconstructs the fixed default SSA-informed baseline graph from:
+The Stage 1 Leiden runner reads normalized extracted CSVs directly from:
 
 ```text
 data/extracted/<subject>/
 ```
+
+Formal Stage 1 writes two frozen profiles:
+
+- `raw_reference_leiden`: strongest admissible raw structural reference from DayTrader calibration.
+- `ssa_selected_leiden`: selected non-zero SSA-informed profile retained for controlled comparison.
 
 ## Validation
 

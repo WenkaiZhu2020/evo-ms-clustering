@@ -1,48 +1,68 @@
+
 # Soot Extraction
 
-Stage 1 uses a standalone Maven-based Java extraction tool to prepare normalized class-level CSV files for graph construction.
-
-The Java extractor lives under `tools/soot_extractor/`. It validates the compiled class directory, limits discovery to configured application package prefixes, creates the output directory, and writes normalized Stage 1 CSV files.
-
-The current implementation uses Soot class metadata and Jimple method bodies to extract class nodes, structural type dependencies, and call dependencies. It also converts selected method bodies to Shimple form and extracts scoped SSA-derived flow evidence for return_value flow and argument_passing flow. It does not run graph construction or Leiden clustering.
-
-Structural evidence kinds are normalized as:
-
-- `extends_type_reference`
-- `implements_type_reference`
-- `field_type_reference`
-- `method_parameter_type_reference`
-- `method_return_type_reference`
-- `method_call`
+The Java extractor is stored under `tools/soot_extractor/`. It reads compiled Java classes, applies package filters, and writes normalized class-level CSV files.
 
 ## Inputs
 
-- `--subject`: subject identifier.
-- `--classes-dir`: compiled application classes directory.
-- `--classpath`: classpath used by Soot analysis.
-- `--app-packages`: comma-separated application package prefixes to include.
-- `--out-dir`: output directory for normalized CSV files.
+| CLI Option | Meaning |
+| --- | --- |
+| `--subject` | subject identifier |
+| `--classes-dir` | compiled application classes |
+| `--classpath` | Soot classpath |
+| `--app-packages` | included application package prefixes |
+| `--exclude-packages` | optional excluded package prefixes |
+| `--out-dir` | normalized CSV output directory |
 
-Only compiled classes under the configured application packages are considered in scope.
+Only configured application classes are emitted as graph nodes. External libraries and excluded packages are not treated as application classes.
 
-## Outputs
+## Extracted Files
 
-The extractor creates:
+```text
+data/extracted/<subject>/
+  class_nodes.csv
+  structural_dependencies.csv
+  ssa_flow_edges.csv
+````
 
-- `class_nodes.csv`
-- `structural_dependencies.csv`
-- `ssa_flow_edges.csv`
+## Structural Evidence
 
-All three files contain extracted data when evidence is present. `ssa_flow_edges.csv` is limited to:
+The extractor records the following structural evidence types:
 
-- `return_value_flow`
-- `argument_passing_flow`
+| Evidence Kind                     | Meaning                                                       |
+| --------------------------------- | ------------------------------------------------------------- |
+| `extends_type_reference`          | one application class extends another class                   |
+| `implements_type_reference`       | one application class implements an in-scope interface        |
+| `field_type_reference`            | a field type refers to another application class              |
+| `method_parameter_type_reference` | a method parameter refers to another application class        |
+| `method_return_type_reference`    | a method return type refers to another application class      |
+| `method_call`                     | a method calls a method declared in another application class |
 
-Phi-related flow is not emitted as graph evidence.
+The first five evidence kinds are grouped as type dependencies. Method calls are recorded separately.
+
+## SSA-Derived Flow Evidence
+
+Concrete method bodies are converted into Shimple form for scoped SSA analysis.
+
+The current implementation records:
+
+| Flow Type               | Meaning                                                                     |
+| ----------------------- | --------------------------------------------------------------------------- |
+| `return_value_flow`     | a returned value is passed from one application class to another            |
+| `argument_passing_flow` | a value associated with one class is passed as an argument to another class |
+
+The SSA scope is intentionally limited.
+
+The extractor does not emit:
+
+* phi-related flow as graph evidence;
+* local-variable-level graph nodes;
+* full pointer-analysis results;
+* shared-domain-object evidence.
+
+The final graph remains class-level.
 
 ## Subject Wrappers
-
-The current repository provides thin extraction wrappers for the active Stage 1 subjects:
 
 ```bash
 bash scripts/extract_soot_jpetstore.sh
@@ -50,23 +70,21 @@ bash scripts/extract_soot_daytrader.sh
 bash scripts/extract_soot_xerces_j.sh
 ```
 
-These wrappers keep subject-specific source paths, compiled class directories, classpaths, package filters, and output directories out of the Java extractor itself.
-
-## JPetStore Example
+Use Java 17 for extractor tests:
 
 ```bash
-JAVA_HOME=$(/usr/libexec/java_home -v 17) mvn -f tools/soot_extractor/pom.xml test
-bash scripts/extract_soot_jpetstore.sh
+mvn -f tools/soot_extractor/pom.xml test
 ```
 
-The JPetStore wrapper expects classes under:
+## Xerces-J Scope
+
+Xerces-J uses staged Java 8-compatible bytecode under Java 17.
+
+The active application scope is centered on:
 
 ```text
-data/raw_projects/jpetstore/target/classes
+org.apache.xerces
+org.apache.xml
 ```
 
-## Xerces-J Note
-
-Xerces-J is the larger technical remodularization benchmark in Stage 1. Its extraction may require scoped preparation because the project includes tools, samples, tests, and external-looking packages that are not part of the intended application graph.
-
-The current Xerces-J wrapper uses the existing preparation and extraction scripts, with package scope centered on the Xerces/XML implementation packages recorded in the subject config and extraction notes. The goal is to extract normalized class-level evidence for `G_raw` and `G_ssa`, not to include every auxiliary source file in the upstream project.
+Tests, samples, tools, `org.apache.html`, and `org.w3c.dom` are excluded from the application graph.

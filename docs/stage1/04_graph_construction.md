@@ -1,69 +1,108 @@
+
 # Graph Construction
 
-Stage 1 builds class-level graphs from normalized extraction outputs.
+Stage 1 builds undirected class-level graphs from normalized extracted CSV files.
 
-`G_raw` uses structural type and call dependency evidence:
+Each node represents one in-scope application class. Edges represent aggregated dependency evidence between class pairs.
+
+## Evidence Weights
+
+| Evidence Channel | Embedded Row Weight |
+| --- | ---: |
+| Type dependency | 1.0 |
+| Method call | 2.0 |
+| `return_value_flow` | 3.0 |
+| `argument_passing_flow` | 3.0 |
+
+These values are stored in the extracted CSV rows.
+
+The config block:
 
 ```text
-raw_weight = type_weight + call_weight
-```
+expected_extracted_evidence_weights
+````
 
-`G_ssa` adds Soot/Shimple-derived SSA flow evidence:
+is used only to validate the extracted data. It does not silently replace or rescale existing CSV weights.
 
-```text
-ssa_flow_weight = return_flow_weight + argument_flow_weight
-g_ssa_weight = type_weight + call_weight + ssa_flow_weight
-```
+## `G_raw`
 
-For sensitivity analysis, the same graph construction can scale the SSA contribution:
+`G_raw` contains structural evidence only:
 
 ```text
-g_ssa_weight(lambda) = type_weight + call_weight + lambda * ssa_flow_weight
+raw_weight
+=
+type_weight
++
+call_weight
 ```
 
-`lambda = 0` corresponds to the raw-structure baseline. Low lambda values treat SSA as a weak behavioural signal. Higher values test whether SSA flow evidence starts to dominate the graph and create over-aggregation or hub effects.
+`type_weight` is the sum of type-dependency rows between the same class pair.
 
-The current scoped SSA flow evidence includes only:
+`call_weight` is the sum of method-call rows between the same class pair.
 
-- `return_value_flow`
-- `argument_passing_flow`
+## `G_ssa`
 
-The current graph construction uses scoped Soot-based SSA evidence rather than full program-wide SSA evidence.
+`G_ssa` extends `G_raw` with scoped SSA-derived flow evidence:
 
-## `raw_edges.csv`
+```text
+ssa_flow_weight
+=
+return_flow_weight
++
+argument_flow_weight
+```
 
-`raw_edges.csv` is produced by grouping `structural_dependencies.csv` by class-level
-`source` and `target`:
+```text
+g_ssa_weight
+=
+raw_weight
++
+ssa_lambda * ssa_flow_weight
+```
 
-- `type_weight`: sum of `type` dependency weights
-- `call_weight`: sum of `call` dependency weights
-- `raw_weight`: `type_weight + call_weight`
+Only two SSA flow types are currently used:
 
-Self-loops are removed before graph construction.
+```text
+return_value_flow
+argument_passing_flow
+```
 
-## `ssa_edges.csv`
+`ssa_lambda` controls the overall contribution of SSA-derived evidence after extraction. It does not change the embedded row weights.
 
-`ssa_edges.csv` combines `raw_edges.csv` with grouped `ssa_flow_edges.csv`.
+## Aggregation Rules
 
-Required columns:
+The graph-construction layer applies the following rules:
 
-- `source`
-- `target`
-- `type_weight`
-- `call_weight`
-- `return_flow_weight`
-- `argument_flow_weight`
-- `ssa_flow_weight`
-- `g_ssa_weight`
+* `A-B` and `B-A` are normalized into one undirected class pair.
+* Repeated evidence rows for the same class pair are summed.
+* Self-loops are removed from both `G_raw` and final `G_ssa`.
+* SSA-only class pairs are retained in `G_ssa`.
+* For SSA-only edges, `type_weight = 0` and `call_weight = 0`.
+* When `ssa_lambda = 0`, SSA-only edges are removed because their final `g_ssa_weight` becomes zero.
 
-Flow type mapping:
+## Frozen Stage 1 Profiles
 
-- `return_value_flow` contributes to `return_flow_weight`
-- `argument_passing_flow` contributes to `argument_flow_weight`
+| Profile                | Graph Type | Lambda | Resolution | Seed |
+| ---------------------- | ---------- | -----: | ---------: | ---: |
+| `raw_reference_leiden` | raw        |    0.0 |        1.0 |   42 |
+| `ssa_selected_leiden`  | ssa        |    2.0 |       1.25 |   42 |
 
-SSA-flow-only edges are retained with `type_weight = 0` and `call_weight = 0`.
-Shared-domain-object evidence is outside the Stage 1 graph construction schema.
+`raw_reference_leiden` is the strongest admissible raw structural reference identified through DayTrader calibration.
 
-## Current Scope
+`ssa_selected_leiden` is the strongest admissible non-zero SSA-informed profile retained for controlled comparison.
 
-Stage 1 compares `G_raw` and `G_ssa` only. It does not add semantic embeddings, NSGA-II objectives, or new evidence types. Later stages can reuse these edge tables as controlled inputs or move SSA into a separate objective or penalty.
+## Output Columns
+
+`raw_edges.csv`:
+
+```text
+source,target,type_weight,call_weight,raw_weight
+```
+
+`ssa_edges.csv`:
+
+```text
+source,target,type_weight,call_weight,return_flow_weight,argument_flow_weight,ssa_flow_weight,g_ssa_weight
+```
+
+The SSA Stage 1 profile uses the same edge-table structure as `ssa_edges.csv`.

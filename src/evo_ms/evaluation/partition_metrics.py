@@ -237,6 +237,28 @@ def partition_size_metrics(partition: dict[Hashable, int]) -> dict[str, float]:
     }
 
 
+def cluster_size_distribution(clusters: pd.DataFrame) -> str:
+    _validate_clusters(clusters)
+    return _cluster_size_distribution(_cluster_sizes(clusters))
+
+
+def partition_similarity(
+    class_nodes: pd.DataFrame,
+    left_clusters: pd.DataFrame,
+    right_clusters: pd.DataFrame,
+) -> tuple[float, float]:
+    _validate_class_nodes(class_nodes)
+    _validate_clusters(left_clusters)
+    _validate_clusters(right_clusters)
+    class_ids = class_nodes["class_id"].dropna().astype(str).tolist()
+    left = _cluster_by_class_for_nodes(left_clusters, class_ids, "left_clusters")
+    right = _cluster_by_class_for_nodes(right_clusters, class_ids, "right_clusters")
+    return (
+        _adjusted_rand_index(left, right, class_ids),
+        _normalized_mutual_information(left, right, class_ids),
+    )
+
+
 def _weight_column(graph_type: str) -> str:
     try:
         return WEIGHT_COLUMNS[graph_type]

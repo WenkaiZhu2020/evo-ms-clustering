@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 
 import pandas as pd
+import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "src"
@@ -18,6 +19,8 @@ from evo_ms.evaluation.reference_metrics import calculate_reference_metrics
 from evo_ms.evaluation.reference_metrics import load_reference_mapping
 from evo_ms.evaluation.reference_metrics import reference_mapping_diagnostics
 from evo_ms.extraction.dependency_extractor import load_extracted_subject
+from evo_ms.extraction.evidence_weight_validation import expected_extracted_evidence_weights
+from evo_ms.extraction.evidence_weight_validation import validate_extracted_evidence_weights
 from evo_ms.graph.raw_graph_builder import build_raw_edges
 from evo_ms.graph.ssa_graph_builder import build_ssa_edges
 from evo_ms.utils.config_loader import load_yaml
@@ -36,6 +39,8 @@ def run_daytrader_calibration(
 ) -> Path:
     logger = get_logger(__name__)
     subject_config = _load_subject_config(root, subject)
+    pre_config = load_yaml(root / "configs" / "experiments" / "00_pre_experiment.yml")
+    expected_weights = expected_extracted_evidence_weights(pre_config)
     extracted_dir = root / subject_config.get("extracted_output_path", f"data/extracted/{subject}")
     reference_path = root / subject_config.get(
         "reference_mapping_path",
@@ -50,6 +55,12 @@ def run_daytrader_calibration(
     class_nodes = extracted["class_nodes"]
     structural_dependencies = extracted["structural_dependencies"]
     ssa_flow_edges = extracted["ssa_flow_edges"]
+    validate_extracted_evidence_weights(
+        structural_dependencies,
+        ssa_flow_edges,
+        expected_weights,
+        subject=subject,
+    )
     raw_edges = build_raw_edges(class_nodes, structural_dependencies)
     reference_mapping = load_reference_mapping(reference_path)
 
@@ -155,6 +166,10 @@ def run_daytrader_calibration(
     summary = pd.DataFrame(rows)
     summary.to_csv(calibration_dir / "weight_sweep_summary.csv", index=False)
     _rank_settings(summary).to_csv(calibration_dir / "top_weight_settings.csv", index=False)
+    _write_selected_baseline_profiles(
+        calibration_dir / "selected_baseline_profiles.yml",
+        select_baseline_profiles(summary, expected_weights),
+    )
     _top_ssa_degree_classes(class_nodes, build_ssa_edges(class_nodes, raw_edges, ssa_flow_edges)).to_csv(
         calibration_dir / "top_ssa_degree_classes.csv",
         index=False,
@@ -173,6 +188,85 @@ def _load_subject_config(root: Path, subject: str) -> dict:
 def _rank_settings(summary: pd.DataFrame) -> pd.DataFrame:
     if summary.empty:
         return summary
+    ranked = _with_admissibility_flags(summary)
+    ranked["ranking_score"] = ranked["mojofm_vs_reference"] + 100.0 * ranked["pairwise_f1"]
+    return (
+        ranked.sort_values(
+            ["is_candidate", "ranking_score", "mojofm_vs_reference", "pairwise_f1"],
+            ascending=[False, False, False, False],
+        )
+        .head(10)
+        .reset_index(drop=True)
+    )
+
+
+def select_baseline_profiles(
+    summary: pd.DataFrame,
+    expected_weights: dict[str, float],
+    seed: int = 42,
+) -> dict:
+    ranked = _with_admissibility_flags(summary)
+    ranked["resolution_distance_from_1"] = (ranked["resolution"] - 1.0).abs()
+    raw = (
+        ranked.loc[(ranked["ssa_lambda"] == 0.0) & ranked["is_candidate"]]
+        .sort_values(
+            [
+                "mojofm_vs_reference",
+                "pairwise_f1",
+                "max_cluster_ratio",
+                "resolution_distance_from_1",
+            ],
+            ascending=[False, False, True, True],
+        )
+        .head(1)
+    )
+    ssa = (
+        ranked.loc[(ranked["ssa_lambda"] > 0.0) & ranked["is_candidate"]]
+        .sort_values(
+            [
+                "mojofm_vs_reference",
+                "pairwise_f1",
+                "max_cluster_ratio",
+                "ssa_lambda",
+                "resolution_distance_from_1",
+            ],
+            ascending=[False, False, True, True, True],
+        )
+        .head(1)
+    )
+    if raw.empty:
+        raise ValueError("no admissible raw_reference_leiden candidate")
+    if ssa.empty:
+        raise ValueError("no admissible ssa_selected_leiden candidate")
+    raw_row = raw.iloc[0]
+    ssa_row = ssa.iloc[0]
+    return {
+        "selection_source": "daytrader_reference_calibration",
+        "selection_rule_version": 1,
+        "base_evidence_weights": {
+            key: float(value)
+            for key, value in expected_weights.items()
+        },
+        "profiles": {
+            "raw_reference_leiden": {
+                "graph_type": "raw",
+                "ssa_lambda": 0.0,
+                "resolution": float(raw_row["resolution"]),
+                "seed": int(seed),
+                "role": "strongest_admissible_raw_structural_reference",
+            },
+            "ssa_selected_leiden": {
+                "graph_type": "ssa",
+                "ssa_lambda": float(ssa_row["ssa_lambda"]),
+                "resolution": float(ssa_row["resolution"]),
+                "seed": int(seed),
+                "role": "strongest_admissible_nonzero_ssa_comparison",
+            },
+        },
+    }
+
+
+def _with_admissibility_flags(summary: pd.DataFrame) -> pd.DataFrame:
     ranked = summary.copy()
     reference_cluster_target = max(1, int(round(ranked["cluster_count"].median())))
     ranked["rejected_extreme_cluster_count"] = ranked["cluster_count"].gt(
@@ -190,15 +284,12 @@ def _rank_settings(summary: pd.DataFrame) -> pd.DataFrame:
             "rejected_low_reference_coverage",
         ],
     ].any(axis=1)
-    ranked["ranking_score"] = ranked["mojofm_vs_reference"] + 100.0 * ranked["pairwise_f1"]
-    return (
-        ranked.sort_values(
-            ["is_candidate", "ranking_score", "mojofm_vs_reference", "pairwise_f1"],
-            ascending=[False, False, False, False],
-        )
-        .head(10)
-        .reset_index(drop=True)
-    )
+    return ranked
+
+
+def _write_selected_baseline_profiles(path: Path, profiles: dict) -> None:
+    with path.open("w", encoding="utf-8") as handle:
+        yaml.safe_dump(profiles, handle, sort_keys=False)
 
 
 def _top_ssa_degree_classes(class_nodes: pd.DataFrame, ssa_edges: pd.DataFrame) -> pd.DataFrame:
