@@ -6,6 +6,11 @@ cd "$(dirname "$0")/.."
 MAVEN_BIN="${MAVEN:-mvn}"
 TOOL_DIR="tools/soot_extractor"
 TOOL_MAIN="org.evomicro.sootextractor.SootExtractorCli"
+PYTHON_BIN="${PYTHON:-.venv/bin/python}"
+
+if [[ ! -x "$PYTHON_BIN" ]]; then
+  PYTHON_BIN="${PYTHON:-python3}"
+fi
 
 if [[ -z "${SKIP_DAYTRADER_PREPARE:-}" ]]; then
   bash scripts/prepare_daytrader.sh
@@ -16,6 +21,8 @@ if [[ -z "${JAVA_HOME:-}" ]] && command -v /usr/libexec/java_home >/dev/null 2>&
   export JAVA_HOME
 fi
 
+EXTRACTOR_ARGS="$("$PYTHON_BIN" scripts/subject_extraction_config.py --subject daytrader)"
+
 "$MAVEN_BIN" -q -f "$TOOL_DIR/pom.xml" -DskipTests compile exec:java \
   -Dexec.mainClass="$TOOL_MAIN" \
-  -Dexec.args="--subject daytrader --classes-dir data/raw_projects/daytrader/target/classes --classpath data/raw_projects/daytrader/target/classes --app-packages com.ibm.websphere.samples.daytrader --out-dir data/extracted/daytrader"
+  -Dexec.args="$EXTRACTOR_ARGS"

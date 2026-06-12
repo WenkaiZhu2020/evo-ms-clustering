@@ -10,7 +10,7 @@ base_evidence_weights:
   return_value_flow: 3.0
   argument_passing_flow: 3.0
 ssa_lambda: 0.0
-resolution: 1.0
+resolution: 1.25
 seed: 42
 source_extracted_data: data/extracted/jpetstore/
 edge_table: graph/stage1_edges.csv
@@ -19,6 +19,6 @@ extracted_input_sha256:
   class_nodes.csv: 69b59fef4e0cf7feb7402d14beac895b1790db0906b2b6dc11c54743f431e7e0
   structural_dependencies.csv: b3a22590d19437abaef838eb05f7e4801f2f243cea18f52ab3e592e1f3d765c0
   ssa_flow_edges.csv: 56c2f1e9852a05d14fa6aa4ab1f3bf9738789be0b7a5430601eff7d5bc216fb1
-generated_at_utc: '2026-06-03T14:12:54Z'
-git_head: 92f6e169c3a18e9b65506b04bb23cceca33f30ad
+generated_at_utc: '2026-06-12T03:23:01Z'
+git_head: bd9c21091f972640c865b82467361fca6ca24e7a
 git_dirty: false

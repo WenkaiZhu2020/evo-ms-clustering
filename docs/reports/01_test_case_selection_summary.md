@@ -26,7 +26,7 @@ compiled classes
 -> G_raw and G_ssa
 -> Leiden clustering
 -> Stage 1 metrics
-````
+```
 
 JPetStore is not used as the main calibration subject.
 

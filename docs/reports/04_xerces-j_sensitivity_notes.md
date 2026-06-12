@@ -23,7 +23,7 @@ Source:
 
 ```text
 results/xerces-j/00_pre_experiment/comparison/metrics_summary.csv
-````
+```
 
 Under the default diagnostic setting, SSA adds:
 

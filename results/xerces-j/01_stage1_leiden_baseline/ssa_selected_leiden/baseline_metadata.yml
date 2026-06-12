@@ -9,16 +9,16 @@ base_evidence_weights:
   method_call: 2.0
   return_value_flow: 3.0
   argument_passing_flow: 3.0
-ssa_lambda: 2.0
-resolution: 1.25
+ssa_lambda: 0.25
+resolution: 1.5
 seed: 42
 source_extracted_data: data/extracted/xerces-j/
 edge_table: graph/stage1_edges.csv
-edge_table_sha256: efe3913b576cb9e0f11ce29c467c1ff7f8672ca1b2c1cb59f19480bc5ec8108e
+edge_table_sha256: f7e170089622d29808f3179de99583c0059b6fae0145530ff4efbcff6c72af2e
 extracted_input_sha256:
   class_nodes.csv: 05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2
   structural_dependencies.csv: 5e9a30af0b89d61a4aa4d639d9f379f7a50408706b6efad07c9fa028976dd09c
   ssa_flow_edges.csv: a66b3c7c7592d5dab18a1ddd6eb090ef3974c1d2d547d16f26125d1131ab794d
-generated_at_utc: '2026-06-03T14:12:54Z'
-git_head: 92f6e169c3a18e9b65506b04bb23cceca33f30ad
+generated_at_utc: '2026-06-12T03:23:16Z'
+git_head: bd9c21091f972640c865b82467361fca6ca24e7a
 git_dirty: false

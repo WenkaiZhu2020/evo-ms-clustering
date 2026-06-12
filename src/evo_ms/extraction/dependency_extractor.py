@@ -24,6 +24,14 @@ SSA_FLOW_COLUMNS = [
 
 ALLOWED_DEPENDENCY_TYPES = frozenset({"type", "call"})
 ALLOWED_SSA_FLOW_TYPES = frozenset({"return_value_flow", "argument_passing_flow"})
+STRUCTURAL_EVIDENCE_DEPENDENCY_TYPES = {
+    "extends_type_reference": "type",
+    "implements_type_reference": "type",
+    "field_type_reference": "type",
+    "method_parameter_type_reference": "type",
+    "method_return_type_reference": "type",
+    "method_call": "call",
+}
 
 
 def load_class_nodes_csv(path: str | Path) -> pd.DataFrame:
@@ -45,6 +53,7 @@ def load_structural_dependencies_csv(
     frame["dependency_type"] = _as_text(frame["dependency_type"])
     frame["weight"] = _numeric_non_negative(frame["weight"], path)
     _validate_allowed_values(frame, "dependency_type", ALLOWED_DEPENDENCY_TYPES, path)
+    _validate_structural_evidence(frame, path)
     _validate_edge_endpoints(frame, class_nodes, path)
     return frame
 
@@ -117,6 +126,26 @@ def _validate_allowed_values(
         raise ValueError(
             f"{Path(path)} contains unsupported {column} values: "
             f"{', '.join(invalid)}; expected one of: {allowed}"
+        )
+
+
+def _validate_structural_evidence(frame: pd.DataFrame, path: str | Path) -> None:
+    evidence_kinds = frame["evidence_kind"].astype("string")
+    _validate_allowed_values(
+        frame.assign(evidence_kind=evidence_kinds),
+        "evidence_kind",
+        frozenset(STRUCTURAL_EVIDENCE_DEPENDENCY_TYPES),
+        path,
+    )
+    expected_types = evidence_kinds.map(STRUCTURAL_EVIDENCE_DEPENDENCY_TYPES)
+    mismatched = frame.loc[
+        expected_types != frame["dependency_type"],
+        ["evidence_kind", "dependency_type"],
+    ].drop_duplicates()
+    if not mismatched.empty:
+        raise ValueError(
+            f"{Path(path)} contains evidence_kind/dependency_type mismatches: "
+            f"{mismatched.to_dict(orient='records')}"
         )
 
 

@@ -29,24 +29,24 @@ Stage 1 does not claim that the generated clusters are final microservice bounda
 | Subject | Classes | Raw Edges | SSA Edges | New SSA Edges | Raw Clusters | SSA Clusters | Raw Modularity | SSA Modularity | Raw Max-Cluster Ratio | SSA Max-Cluster Ratio |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | JPetStore | 24 | 53 | 60 | 7 | 4 | 4 | 0.442070 | 0.387485 | 0.291667 | 0.333333 |
-| DayTrader | 121 | 267 | 275 | 8 | 28 | 28 | 0.357424 | 0.348186 | 0.264463 | 0.297521 |
+| DayTrader | 53 | 161 | 169 | 8 | 11 | 12 | 0.324597 | 0.329575 | 0.245283 | 0.264151 |
 | Xerces-J | 814 | 3780 | 4148 | 368 | 31 | 30 | 0.661519 | 0.644268 | 0.144963 | 0.187961 |
 
 Source:
 
 ```text
 results/<subject>/00_pre_experiment/comparison/metrics_summary.csv
-````
+```
 
 The default runs show that SSA adds new class-pair evidence in all three subjects.
 
 The number of new edges is limited in JPetStore and DayTrader, but more visible in Xerces-J. The SSA setting also changes cluster boundaries and increases the largest-cluster ratio in the three subjects.
 
-Raw structural modularity remains higher in the current default comparison. This is an internal graph result. It should not be interpreted as final decomposition correctness.
+Raw modularity is higher for JPetStore and Xerces-J, while SSA modularity is slightly higher for DayTrader. Each value describes its corresponding weighted graph: `G_raw` uses `raw_weight`, and `G_ssa` uses `g_ssa_weight`. These values are descriptive diagnostics, not a strict ranking across different weighted graphs.
 
 ## 4. DayTrader Calibration
 
-DayTrader is used for calibration because it provides a reference mapping.
+DayTrader is used for calibration because it provides a reference mapping. All 53 retained classes are mapped, giving 53 / 53 coverage (100%). These metrics are calibration evidence, not an independent validation result.
 
 The calibration sweep varies:
 
@@ -59,8 +59,8 @@ The selected formal profiles are:
 
 | Profile                | Graph Type | Lambda | Resolution | Seed | Role                                                 |
 | ---------------------- | ---------- | -----: | ---------: | ---: | ---------------------------------------------------- |
-| `raw_reference_leiden` | raw        |    0.0 |        1.0 |   42 | strongest admissible raw structural reference        |
-| `ssa_selected_leiden`  | ssa        |    2.0 |       1.25 |   42 | strongest admissible non-zero SSA comparison profile |
+| `raw_reference_leiden` | raw        |    0.0 |       1.25 |   42 | selected raw structural reference        |
+| `ssa_selected_leiden`  | ssa        |   0.25 |        1.5 |   42 | selected non-zero SSA comparison profile |
 
 The raw profile produced the stronger reference-based result.
 

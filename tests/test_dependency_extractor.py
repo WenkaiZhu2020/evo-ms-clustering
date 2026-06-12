@@ -73,6 +73,34 @@ def test_load_extracted_subject_rejects_unknown_dependency_type(tmp_path: Path) 
         load_extracted_subject(tmp_path)
 
 
+def test_load_extracted_subject_rejects_unknown_structural_evidence_kind(
+    tmp_path: Path,
+) -> None:
+    write_valid_extraction(tmp_path)
+    (tmp_path / "structural_dependencies.csv").write_text(
+        "source,target,dependency_type,weight,evidence_kind,evidence_location\n"
+        "A,B,type,1,unknown_reference,A.java\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="unsupported evidence_kind values"):
+        load_extracted_subject(tmp_path)
+
+
+def test_load_extracted_subject_rejects_structural_evidence_type_mismatch(
+    tmp_path: Path,
+) -> None:
+    write_valid_extraction(tmp_path)
+    (tmp_path / "structural_dependencies.csv").write_text(
+        "source,target,dependency_type,weight,evidence_kind,evidence_location\n"
+        "A,B,type,2,method_call,A.call\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="evidence_kind/dependency_type mismatches"):
+        load_extracted_subject(tmp_path)
+
+
 def test_load_extracted_subject_rejects_unknown_flow_type(tmp_path: Path) -> None:
     write_valid_extraction(tmp_path)
     (tmp_path / "ssa_flow_edges.csv").write_text(

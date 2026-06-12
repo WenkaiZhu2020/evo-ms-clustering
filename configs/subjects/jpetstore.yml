@@ -4,10 +4,11 @@ project_root: data/raw_projects/jpetstore
 build_tool: maven
 compile_command: ./mvnw clean package -DskipTests
 classes_dir: target/classes
+classpath_entries:
+  - target/classes
 app_packages:
   - org.mybatis.jpetstore
 source_path: data/raw_projects/jpetstore
 extracted_output_path: data/extracted/jpetstore
 result_output_path: results/jpetstore
-include_packages: []
 exclude_packages: []
