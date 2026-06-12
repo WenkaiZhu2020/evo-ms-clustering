@@ -38,7 +38,7 @@ They are used to compare graph settings and Leiden outputs. They do not prove fi
 
 | Metric | Meaning |
 | --- | --- |
-| `weighted_modularity` | weighted Leiden modularity |
+| `weighted_modularity` | weighted Leiden modularity on the corresponding graph representation |
 | `internal_edge_weight_ratio` | internal edge weight divided by total edge weight |
 | `internal_external_edge_ratio` | internal edge weight divided by external edge weight |
 
@@ -46,13 +46,15 @@ For `G_raw`, structural metrics use:
 
 ```text
 raw_weight
-````
+```
 
 For `G_ssa`, structural metrics use:
 
 ```text
 g_ssa_weight
 ```
+
+Raw and SSA modularity values are descriptive diagnostics for their corresponding weighted graphs. They should not be treated as a strict direct ranking across two different graph representations.
 
 ## Granularity and Balance
 

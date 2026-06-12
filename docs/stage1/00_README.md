@@ -26,7 +26,7 @@ compiled Java classes
    -> Xerces-J sensitivity analysis, where applicable
 -> formal Stage 1 Leiden profiles
 -> later Stage 2 NSGA-II comparison
-````
+```
 
 ## Active Subjects
 

@@ -7,7 +7,7 @@ Generated CSV results remain under:
 
 ```text
 results/<subject>/
-````
+```
 
 Technical implementation notes remain under:
 

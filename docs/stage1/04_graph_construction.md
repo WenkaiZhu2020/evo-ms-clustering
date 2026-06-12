@@ -20,7 +20,7 @@ The config block:
 
 ```text
 expected_extracted_evidence_weights
-````
+```
 
 is used only to validate the extracted data. It does not silently replace or rescale existing CSV weights.
 
@@ -75,11 +75,15 @@ argument_passing_flow
 
 `ssa_lambda` controls the overall contribution of SSA-derived evidence after extraction. It does not change the embedded row weights.
 
+The embedded weights are fixed Stage 1 design settings. The calibration sweep varies `ssa_lambda`; it does not claim that the embedded weight combination is universally optimal.
+
+Stage 1 exports only `return_value_flow` and `argument_passing_flow`. It does not claim full pointer analysis, complete whole-program data flow, direct phi-edge export, or shared-domain-object extraction.
+
 ## Aggregation Rules
 
 The graph-construction layer applies the following rules:
 
-* `A-B` and `B-A` are normalized into one undirected class pair.
+* Directed evidence records are aggregated into undirected class-pair edges. This is an intentional Stage 1 choice; direction is not preserved in the final graph.
 * Repeated evidence rows for the same class pair are summed.
 * Self-loops are removed from both `G_raw` and final `G_ssa`.
 * SSA-only class pairs are retained in `G_ssa`.
@@ -93,9 +97,9 @@ The graph-construction layer applies the following rules:
 | `raw_reference_leiden` | raw        |    0.0 |       1.25 |   42 |
 | `ssa_selected_leiden`  | ssa        |   0.25 |        1.5 |   42 |
 
-`raw_reference_leiden` is the strongest admissible raw structural reference identified through DayTrader calibration.
+`raw_reference_leiden` is the raw structural reference selected through DayTrader calibration.
 
-`ssa_selected_leiden` is the strongest admissible non-zero SSA-informed profile retained for controlled comparison.
+`ssa_selected_leiden` is the selected non-zero SSA-informed profile retained for controlled comparison.
 
 ## Output Columns
 

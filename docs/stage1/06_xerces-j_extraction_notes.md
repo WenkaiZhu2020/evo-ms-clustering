@@ -22,7 +22,7 @@ Compiled classes are staged under:
 
 ```text
 data/raw_projects/xerces-j/target/classes
-````
+```
 
 ## Extraction Scope
 

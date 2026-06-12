@@ -7,7 +7,7 @@
 
 It is separate from the embedded base weights of individual evidence rows.
 
-DayTrader is used for calibration because a reference-service mapping is available. This allows different lambda and resolution settings to be compared with external metrics.
+DayTrader is used for calibration because a reference-service mapping is available. All 53 retained classes are mapped, giving 53 / 53 coverage (100%). The reference metrics are calibration evidence, not an independent validation result.
 
 ## 2. Frozen Base Evidence Weights
 
@@ -23,7 +23,7 @@ These values are stored in:
 ```text
 data/extracted/<subject>/structural_dependencies.csv
 data/extracted/<subject>/ssa_flow_edges.csv
-````
+```
 
 The config block:
 
@@ -98,12 +98,21 @@ selected_baseline_profiles.yml
 
 | Profile                | Graph Type | Lambda | Resolution | Seed | Role                                                 |
 | ---------------------- | ---------- | -----: | ---------: | ---: | ---------------------------------------------------- |
-| `raw_reference_leiden` | raw        |    0.0 |       1.25 |   42 | strongest admissible raw structural reference        |
-| `ssa_selected_leiden`  | ssa        |   0.25 |        1.5 |   42 | strongest admissible non-zero SSA comparison profile |
+| `raw_reference_leiden` | raw        |    0.0 |       1.25 |   42 | selected raw structural reference        |
+| `ssa_selected_leiden`  | ssa        |   0.25 |        1.5 |   42 | selected non-zero SSA comparison profile |
 
-The raw profile produced the stronger reference-based result in the current DayTrader calibration.
+Candidates are admissible when:
 
-The selected SSA profile is still retained because the dissertation needs a reproducible non-zero SSA setting. Its purpose is to evaluate the effect of behavioural enrichment under controlled conditions.
+* `cluster_count` is at most 36, derived from the median sweep cluster count of 12;
+* `max_cluster_ratio` is at most 0.6;
+* `singleton_ratio` is at most 0.25;
+* `reference_coverage_ratio` is at least 0.8.
+
+The raw profile is selected from `ssa_lambda = 0` candidates by MoJoFM descending, pairwise F1 descending, max-cluster ratio ascending, then distance from resolution 1.0 ascending.
+
+The SSA profile is selected from `ssa_lambda > 0` candidates using the same first three criteria, followed by lambda ascending and distance from resolution 1.0 ascending.
+
+These are representative controlled-comparison settings selected by the current rule, not universal optimum values. The formal profiles use seed 42 for reproducibility; Stage 1 does not claim multi-seed stability.
 
 ## 6. Interpretation
 
