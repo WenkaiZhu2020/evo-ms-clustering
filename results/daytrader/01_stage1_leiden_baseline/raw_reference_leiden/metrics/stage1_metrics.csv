@@ -1,2 +1,2 @@
 subject,algorithm,graph_type,cluster_count,modularity,average_cluster_size,max_cluster_size,min_cluster_size,max_cluster_ratio,singleton_ratio,internal_external_edge_ratio,internal_edge_weight_ratio
-daytrader,leiden,raw,11,0.324596763898912,4.818181818181818,13,1,0.24528301886792453,0.07547169811320754,1.3929359823399559,0.5821033210332104
+daytrader,leiden,raw,13,0.31334113012486203,4.076923076923077,9,1,0.16981132075471697,0.07547169811320754,0.9781021897810219,0.4944649446494465
