@@ -8,6 +8,6 @@ generated_profiles:
   profile_directory: ssa_selected_leiden
 comparison_purpose: raw_reference_leiden is the structural reference; ssa_selected_leiden
   is retained for controlled SSA comparison.
-generated_at_utc: '2026-06-03T14:12:54Z'
-git_head: 92f6e169c3a18e9b65506b04bb23cceca33f30ad
+generated_at_utc: '2026-06-12T00:34:42Z'
+git_head: e6510d5e53af0d3643524e724b1f4829f26c575a
 git_dirty: false

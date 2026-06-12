@@ -9,16 +9,16 @@ base_evidence_weights:
   method_call: 2.0
   return_value_flow: 3.0
   argument_passing_flow: 3.0
-ssa_lambda: 2.0
-resolution: 1.25
+ssa_lambda: 0.25
+resolution: 1.5
 seed: 42
 source_extracted_data: data/extracted/daytrader/
 edge_table: graph/stage1_edges.csv
-edge_table_sha256: ff1d1c18ae1d0b3cf8856d1e45680c796276588be67ae490859aa2fec8d796a2
+edge_table_sha256: 77cadebe50cd63d05044afa4765f79293c6862e1ca47f24fab62e494ffb3d266
 extracted_input_sha256:
-  class_nodes.csv: f0989916602e3f42d09c85576ccc61330d5e1d5a1015db0d94740e5617c45733
-  structural_dependencies.csv: 1864e946508bc6f95352c4783931b81949cc16b42003cd2ace2d61be9695cd96
-  ssa_flow_edges.csv: 64d9c41739f676dfedb0e0c2f4157bb2cfe0b8d648395c351f536e44fb06dcfb
-generated_at_utc: '2026-06-03T14:12:54Z'
-git_head: 92f6e169c3a18e9b65506b04bb23cceca33f30ad
+  class_nodes.csv: 52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd
+  structural_dependencies.csv: 95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0
+  ssa_flow_edges.csv: d36e22b81da0e7b1c8a14fd42ef85e96f5d7705e487923065713535c337f1a95
+generated_at_utc: '2026-06-12T00:34:35Z'
+git_head: e6510d5e53af0d3643524e724b1f4829f26c575a
 git_dirty: false
