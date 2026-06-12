@@ -13,7 +13,7 @@ profiles:
   raw_reference_leiden:
     graph_type: raw
     ssa_lambda: 0.0
-    resolution: 1.0
+    resolution: 1.25
     seed: 42
     selection_source: daytrader_reference_calibration
     selection_role: strongest_admissible_raw_structural_reference

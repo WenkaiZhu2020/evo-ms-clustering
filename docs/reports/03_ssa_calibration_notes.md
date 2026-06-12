@@ -40,7 +40,7 @@ Changing the YAML values does not reweight an existing extracted dataset. Reweig
 For each class pair:
 
 ```text
-ssa_flow_weight
+raw_ssa_flow_sum
 =
 return_flow_weight
 +
@@ -48,11 +48,17 @@ argument_flow_weight
 ```
 
 ```text
+ssa_flow_weight
+=
+ssa_lambda * raw_ssa_flow_sum
+```
+
+```text
 g_ssa_weight
 =
 raw_weight
 +
-ssa_lambda * ssa_flow_weight
+ssa_flow_weight
 ```
 
 When:
@@ -92,8 +98,8 @@ selected_baseline_profiles.yml
 
 | Profile                | Graph Type | Lambda | Resolution | Seed | Role                                                 |
 | ---------------------- | ---------- | -----: | ---------: | ---: | ---------------------------------------------------- |
-| `raw_reference_leiden` | raw        |    0.0 |        1.0 |   42 | strongest admissible raw structural reference        |
-| `ssa_selected_leiden`  | ssa        |    2.0 |       1.25 |   42 | strongest admissible non-zero SSA comparison profile |
+| `raw_reference_leiden` | raw        |    0.0 |       1.25 |   42 | strongest admissible raw structural reference        |
+| `ssa_selected_leiden`  | ssa        |   0.25 |        1.5 |   42 | strongest admissible non-zero SSA comparison profile |
 
 The raw profile produced the stronger reference-based result in the current DayTrader calibration.
 

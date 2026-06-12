@@ -43,8 +43,8 @@ CargoTracker is inactive in the current subject set. PiggyMetrics is not used as
 
 | Profile | Graph Type | Lambda | Resolution | Seed | Role |
 | --- | --- | ---: | ---: | ---: | --- |
-| `raw_reference_leiden` | raw | 0.0 | 1.0 | 42 | strongest admissible raw structural reference |
-| `ssa_selected_leiden` | ssa | 2.0 | 1.25 | 42 | strongest admissible non-zero SSA comparison profile |
+| `raw_reference_leiden` | raw | 0.0 | 1.25 | 42 | strongest admissible raw structural reference |
+| `ssa_selected_leiden` | ssa | 0.25 | 1.5 | 42 | strongest admissible non-zero SSA comparison profile |
 
 The raw profile remains the stronger structural reference in the current DayTrader calibration.
 
