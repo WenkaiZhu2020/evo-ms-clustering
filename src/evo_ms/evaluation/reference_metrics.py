@@ -150,6 +150,61 @@ def _same_cluster_pairs(labels: dict[str, str], class_names: list[str]) -> set[t
     }
 
 
+def _maximum_matching_size(adjacency: list[set[str]]) -> int:
+    matched_candidate: dict[str, int] = {}
+
+    def augment(candidate_index: int, visited: set[str]) -> bool:
+        for reference_cluster in sorted(adjacency[candidate_index]):
+            if reference_cluster in visited:
+                continue
+            visited.add(reference_cluster)
+            previous = matched_candidate.get(reference_cluster)
+            if previous is None or augment(previous, visited):
+                matched_candidate[reference_cluster] = candidate_index
+                return True
+        return False
+
+    return sum(augment(index, set()) for index in range(len(adjacency)))
+
+
+def _mojo_distance(
+    candidate: dict[str, str],
+    reference: dict[str, str],
+    class_names: list[str],
+) -> int:
+    candidate_clusters = _classes_by_label(candidate, class_names)
+    preserved = 0
+    maximum_overlap_targets: list[set[str]] = []
+    for members in candidate_clusters.values():
+        overlaps = Counter(reference[class_name] for class_name in members)
+        maximum_overlap = max(overlaps.values())
+        preserved += maximum_overlap
+        maximum_overlap_targets.append(
+            {
+                reference_cluster
+                for reference_cluster, count in overlaps.items()
+                if count == maximum_overlap
+            }
+        )
+
+    join_savings = _maximum_matching_size(maximum_overlap_targets)
+    return (
+        len(class_names)
+        - preserved
+        + len(candidate_clusters)
+        - join_savings
+    )
+
+
+def _maximum_mojo_distance(reference: dict[str, str], class_names: list[str]) -> int:
+    cluster_sizes = Counter(reference[class_name] for class_name in class_names)
+    maximum_distance = 0
+    for cluster_size in sorted(cluster_sizes.values()):
+        if cluster_size > maximum_distance:
+            maximum_distance += 1
+    return len(class_names) - maximum_distance
+
+
 def _mojofm(
     candidate: dict[str, str],
     reference: dict[str, str],
@@ -157,17 +212,16 @@ def _mojofm(
 ) -> float:
     if not class_names:
         return 0.0
-    candidate_clusters = _classes_by_label(candidate, class_names)
-    reference_cluster_count = len(set(reference.values()))
-    preserved = 0
-    for members in candidate_clusters.values():
-        overlaps = Counter(reference[class_name] for class_name in members)
-        preserved += max(overlaps.values(), default=0)
-    mojo_distance = len(class_names) - preserved
-    max_distance = len(class_names) - reference_cluster_count
-    if max_distance <= 0:
+
+    mojo_distance = _mojo_distance(candidate, reference, class_names)
+    maximum_distance = _maximum_mojo_distance(reference, class_names)
+    if maximum_distance <= 0:
         return 100.0 if mojo_distance == 0 else 0.0
-    return float(max(0.0, min(100.0, (1.0 - mojo_distance / max_distance) * 100.0)))
+
+    # MoJoFM normalizes the directional candidate-to-reference MoJo distance.
+    return float(
+        max(0.0, min(100.0, (1.0 - mojo_distance / maximum_distance) * 100.0))
+    )
 
 
 def _classes_by_label(labels: dict[str, str], class_names: list[str]) -> dict[str, list[str]]:

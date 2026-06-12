@@ -4,19 +4,18 @@ project_root: data/raw_projects/xerces-j
 build_tool: ant+javac
 compile_command: bash scripts/prepare_xerces_j.sh
 classes_dir: target/classes
+classpath_entries:
+  - target/classes
+  - tools/icu4j.jar
+  - tools/resolver.jar
+  - tools/serializer.jar
 app_packages:
   - org.apache.xerces
   - org.apache.xml
 source_path: data/raw_projects/xerces-j
 extracted_output_path: data/extracted/xerces-j
 result_output_path: results/xerces-j
-include_packages:
-  - org.apache.xerces
-  - org.apache.xml
 exclude_packages:
   - org.apache.html
   - org.w3c.dom
-  - samples
-  - tests
-  - tools
 # Raw source is cloned locally by scripts/prepare_xerces_j.sh and ignored by Git.

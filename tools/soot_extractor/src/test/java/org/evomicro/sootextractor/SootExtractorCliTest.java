@@ -1,6 +1,7 @@
 package org.evomicro.sootextractor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -122,6 +123,18 @@ final class SootExtractorCliTest {
 
     List<String> ssaFlows = Files.readAllLines(outDir.resolve("ssa_flow_edges.csv"));
     assertTrue(ssaFlows.stream().noneMatch(line -> line.contains("com.example.noise")));
+  }
+
+  @Test
+  void exclusionPrefixesMustUseQualifiedPackageNames() {
+    assertTrue(
+        SootExtractorCli.isApplicationClass(
+            "com.example.noise.Primitive", List.of("com.example"), List.of("noise")));
+    assertFalse(
+        SootExtractorCli.isApplicationClass(
+            "com.example.noise.Primitive",
+            List.of("com.example"),
+            List.of("com.example.noise")));
   }
 
   private Path compileFixture() throws IOException {

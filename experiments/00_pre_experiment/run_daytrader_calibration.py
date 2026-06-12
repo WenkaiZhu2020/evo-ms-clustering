@@ -40,6 +40,7 @@ def run_daytrader_calibration(
     logger = get_logger(__name__)
     subject_config = _load_subject_config(root, subject)
     pre_config = load_yaml(root / "configs" / "experiments" / "00_pre_experiment.yml")
+    seed = int(pre_config.get("leiden", {}).get("seed", 42))
     expected_weights = expected_extracted_evidence_weights(pre_config)
     extracted_dir = root / subject_config.get("extracted_output_path", f"data/extracted/{subject}")
     reference_path = root / subject_config.get(
@@ -98,7 +99,7 @@ def run_daytrader_calibration(
             raw_edges,
             graph_type="raw",
             resolution=resolution,
-            seed=42,
+            seed=seed,
         )
         for ssa_lambda in ssa_lambdas or SSA_LAMBDAS:
             logger.info(
@@ -118,7 +119,7 @@ def run_daytrader_calibration(
                 ssa_edges,
                 graph_type="ssa",
                 resolution=resolution,
-                seed=42,
+                seed=seed,
             )
             smoke = calculate_stage1_smoke_metrics(
                 class_nodes,
@@ -168,7 +169,7 @@ def run_daytrader_calibration(
     _rank_settings(summary).to_csv(calibration_dir / "top_weight_settings.csv", index=False)
     _write_selected_baseline_profiles(
         calibration_dir / "selected_baseline_profiles.yml",
-        select_baseline_profiles(summary, expected_weights),
+        select_baseline_profiles(summary, expected_weights, seed=seed),
     )
     _top_ssa_degree_classes(class_nodes, build_ssa_edges(class_nodes, raw_edges, ssa_flow_edges)).to_csv(
         calibration_dir / "top_ssa_degree_classes.csv",

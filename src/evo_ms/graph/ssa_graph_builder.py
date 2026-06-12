@@ -22,7 +22,7 @@ def build_ssa_edges(
     ssa_flow_edges: pd.DataFrame,
     ssa_lambda: float = 1.0,
 ) -> pd.DataFrame:
-    """Merge raw structural weights with SSA flow weights."""
+    """Merge raw weights with SSA flow; ssa_flow_weight is lambda-scaled."""
     _validate_required_columns(class_nodes, ["class_id"], "class_nodes")
     _validate_required_columns(
         raw_edges,
@@ -64,6 +64,7 @@ def build_ssa_edges(
         axis=1,
         result_type="expand",
     )
+    # The public CSV column stores the lambda-scaled SSA contribution.
     combined["ssa_flow_weight"] = weights["ssa_flow_weight"]
     combined["g_ssa_weight"] = weights["g_ssa_weight"]
     combined = combined.loc[combined["g_ssa_weight"] > 0].copy()
