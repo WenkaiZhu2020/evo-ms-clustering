@@ -1,160 +1,301 @@
 # Evolutionary Software Clustering (Stage 1)
 
-This repository implements Stage 1 of a research prototype for class-level software modularization using structural dependencies and SSA-derived data-flow evidence.
+This repository contains the Stage 1 code and outputs for a Java software clustering experiment.
 
-The goal is to study how SSA enrichment affects Leiden clustering results on Java monolithic systems.
+Stage 1 compares two class-level graph representations:
 
-## 1. Stage 1 Scope
+* `G_raw`: a structural graph built from type and method-call dependencies.
+* `G_ssa`: an SSA-enriched graph that adds selected return-value and argument-passing flow evidence.
 
-Stage 1 includes the full pipeline:
+Both graphs are clustered with Leiden. The goal is to check whether SSA-derived evidence changes the graph and the resulting class partitions.
 
-Soot / Shimple extraction  
-→ normalized CSV generation  
-→ graph construction (G_raw / G_ssa)  
-→ Leiden clustering  
-→ pre-experiment diagnostics  
-→ DayTrader calibration  
-→ Xerces-J sensitivity analysis  
-→ formal Stage 1 outputs  
+Stage 1 is limited to the Leiden baseline. Later NSGA-II and semantic embedding stages are not included here.
+
+## 1. Stage 1 Flow
+
+The Stage 1 workflow is:
+
+```text
+Java extraction with Soot / Shimple
+→ normalized CSV files
+→ CSV loading and validation
+→ G_raw / G_ssa graph construction
+→ pre-experiment runs
+→ DayTrader calibration
+→ Xerces-J sensitivity analysis
+→ fixed formal Leiden profiles
+→ formal Stage 1 outputs
+```
+
+There are two main result layers:
+
+* `00_pre_experiment`: diagnostics, calibration, and sensitivity analysis.
+* `01_stage1_leiden_baseline`: final Stage 1 outputs generated after the formal profiles are fixed.
 
 ## 2. Subject Systems
 
-- JPetStore  
-  Small system used for pipeline validation and sanity checking.
+Three Java systems are used.
 
-- DayTrader  
-  Calibration subject with reference mapping.  
-  Used to select formal Leiden profiles.
+### JPetStore
 
-- Xerces-J  
-  Large-scale system used for sensitivity and scalability analysis.
+JPetStore is the small subject. It is mainly used to check that the full pipeline works on a compact system.
 
-## 3. Graph Construction
+It checks:
 
-### G_raw (structural graph)
+* extraction
+* CSV loading
+* graph construction
+* Leiden clustering
+* metric generation
 
-Built from:
-- type dependencies
-- method call dependencies
+### DayTrader
 
-Weight column:
-- raw_weight
+DayTrader is the calibration subject.
 
-### G_ssa (SSA-enriched graph)
+It has a reference-service mapping for the retained application classes, so it is used to select the formal raw and SSA Leiden profiles.
 
-Built from G_raw + SSA-derived data-flow evidence:
+DayTrader is used for:
 
-- return-value flow
-- argument-passing flow
+* default pre-experiment diagnostics
+* lambda and resolution calibration
+* reference-based comparison during calibration
 
-Weight column:
-- g_ssa_weight
-- scaled by lambda
+The DayTrader reference metrics are used as calibration evidence, not as independent validation.
 
-If lambda = 0:
+### Xerces-J
 
-G_ssa == G_raw
+Xerces-J is the larger subject.
 
-## 4. SSA Evidence
+It is used to check larger-scale behaviour and parameter sensitivity. It does not provide a reference decomposition in this project.
 
-SSA evidence is extracted using Soot / Shimple at method level.
+Xerces-J is used for:
 
-It produces data-flow records which are aggregated into class-level edges.
+* default pre-experiment diagnostics
+* larger-scale feasibility checking
+* lambda sensitivity analysis
+* resolution sensitivity analysis
 
-Two types of SSA evidence:
-- return flow
-- argument flow
+## 3. Extracted Data
 
-These are summed and injected into the graph as additional edge weights.
+The Java extractor uses Soot and Shimple to process compiled Java classes.
 
-## 5. Experiment Pipeline
+Extractor outputs are stored under:
 
-Extraction (Soot)  
-→ CSV normalization  
-→ G_raw / G_ssa construction  
-→ Pre-experiment (diagnostic run)  
-→ DayTrader calibration (lambda + resolution sweep)  
-→ Formal profile selection  
-→ Stage 1 formal runs (all subjects)  
-→ Xerces-J sensitivity analysis  
+```text
+data/extracted/<subject>/
+```
+
+The main CSV files are:
+
+* `class_nodes.csv`
+* `structural_dependencies.csv`
+* `ssa_flow_edges.csv`
+
+The Python pipeline loads and validates these files before graph construction.
+
+## 4. Graphs
+
+### G_raw
+
+`G_raw` is the raw structural graph.
+
+It uses:
+
+* type dependency evidence
+* method call evidence
+
+Main weight column:
+
+* `raw_weight`
+
+### G_ssa
+
+`G_ssa` starts from `G_raw` and adds selected SSA-derived flow evidence:
+
+* return-value flow
+* argument-passing flow
+
+Main weight column:
+
+* `g_ssa_weight`
+
+The SSA contribution is controlled by `lambda`.
+
+When `lambda = 0`, `G_ssa` is equivalent to `G_raw` in active edge weights.
+
+## 5. CSV Validation
+
+Before graph construction, the Python loader checks the normalized CSV files.
+
+It validates:
+
+* required columns
+* allowed evidence values
+* source and target class references
+* embedded evidence weights
+
+Main validation files:
+
+* `src/evo_ms/extraction/dependency_extractor.py`
+* `src/evo_ms/extraction/evidence_weight_validation.py`
 
 ## 6. Pre-experiment
 
-Purpose:
-- verify extraction correctness
-- validate graph construction
-- ensure Leiden execution works
-- observe initial SSA impact
+The pre-experiment layer is not the final result layer.
 
-Not used for final results.
+It is used to check that each subject can pass through the full pipeline and to inspect the first effect of SSA-derived evidence.
 
-## 7. Calibration (DayTrader)
+For all subjects, the default pre-experiment run checks:
 
-Used to select formal Leiden profiles:
+* whether the extracted CSVs can be loaded
+* whether `G_raw` and `G_ssa` can be constructed
+* whether Leiden can run
+* whether metrics can be generated
+* whether SSA-derived evidence changes the graph or partition
 
-- raw_reference_leiden
-- ssa_selected_leiden
+Additional pre-experiment analyses are subject-specific:
 
-These are fixed for Stage 1.
+* JPetStore is mainly used for pipeline validation.
+* DayTrader is used for calibration.
+* Xerces-J is used for sensitivity analysis.
 
-## 8. Xerces-J Sensitivity
+## 7. DayTrader Calibration
 
-Used for:
+DayTrader calibration explores combinations of:
 
-- large-scale behavior check
-- lambda sensitivity
-- SSA impact at scale
+* SSA `lambda`
+* Leiden resolution
 
-Not reference-based.
+The purpose is to select two formal Leiden profiles:
+
+* `raw_reference_leiden`
+* `ssa_selected_leiden`
+
+These profiles are selected for controlled comparison. They are not claimed to be universally optimal.
+
+## 8. Xerces-J Sensitivity Analysis
+
+Xerces-J sensitivity analysis checks how the larger graph reacts when parameters change.
+
+It examines:
+
+* how SSA-weight share changes as `lambda` increases
+* how raw and SSA partitions diverge
+* how cluster count and modularity respond to parameter changes
+
+This is a larger-scale sensitivity check, not reference-based validation.
 
 ## 9. Formal Stage 1
 
-After calibration, both profiles are frozen and applied to:
+After calibration, two formal Leiden profiles are fixed:
 
-- JPetStore
-- DayTrader
-- Xerces-J
+### raw_reference_leiden
 
-These outputs are the final results used in Chapter 4.
+* graph: `G_raw`
+* weight column: `raw_weight`
+* lambda: `0.0`
+* resolution: `1.25`
+* seed: `42`
+
+### ssa_selected_leiden
+
+* graph: `G_ssa`
+* weight column: `g_ssa_weight`
+* lambda: `0.25`
+* resolution: `1.5`
+* seed: `42`
+
+These two profiles are then applied to all three subjects:
+
+* JPetStore
+* DayTrader
+* Xerces-J
+
+Formal outputs are stored under:
+
+```text
+results/<subject>/01_stage1_leiden_baseline/
+```
+
+These outputs are the Stage 1 results used for dissertation analysis.
 
 ## 10. Repository Structure
 
-configs/      subject and experiment configuration  
-data/         raw projects, extracted CSVs, reference data  
-docs/         Stage 1 documentation and reports  
-experiments/  runnable pipelines  
-results/      generated outputs  
-scripts/      execution wrappers  
-src/          core implementation  
-tests/        unit tests  
-tools/        Soot extractor (Java/Maven)  
+```text
+configs/      Subject and experiment configuration files.
+data/         Raw projects, extracted CSV files, and reference data.
+docs/         Stage 1 technical notes and experiment reports.
+experiments/  Python experiment entrypoints.
+results/      Generated experiment outputs.
+scripts/      Shell wrappers for extraction and experiment runs.
+src/          Core Python implementation.
+tests/        Python tests and fixtures.
+tools/        Java Soot extractor.
+```
 
-## 11. Execution
+## 11. Main Run Order
 
-bash scripts/extract_soot_jpetstore.sh  
-bash scripts/run_pre_jpetstore.sh  
-bash scripts/run_stage1_jpetstore.sh  
+Prepare or build the Java subject first, then run extraction.
 
-bash scripts/extract_soot_daytrader.sh  
-bash scripts/run_pre_daytrader.sh  
-bash scripts/run_daytrader_calibration.sh  
-bash scripts/run_stage1_daytrader.sh  
+Extraction:
 
-bash scripts/extract_soot_xerces_j.sh  
-bash scripts/run_pre_xerces_j.sh  
-bash scripts/run_xerces_j_sensitivity.sh  
-bash scripts/run_stage1_xerces_j.sh  
+```bash
+bash scripts/extract_soot_jpetstore.sh
+bash scripts/extract_soot_daytrader.sh
+bash scripts/extract_soot_xerces_j.sh
+```
+
+Default pre-experiment diagnostics:
+
+```bash
+bash scripts/run_pre_jpetstore.sh
+bash scripts/run_pre_daytrader.sh
+bash scripts/run_pre_xerces_j.sh
+```
+
+Additional pre-experiment analysis:
+
+```bash
+bash scripts/run_daytrader_calibration.sh
+bash scripts/run_xerces_j_sensitivity.sh
+```
+
+Formal Stage 1 outputs:
+
+```bash
+bash scripts/run_stage1_jpetstore.sh
+bash scripts/run_stage1_daytrader.sh
+bash scripts/run_stage1_xerces_j.sh
+```
 
 ## 12. Testing
 
-pytest
+Python tests:
 
+```bash
+pytest
+```
+
+Java extractor tests:
+
+```bash
 mvn -f tools/soot_extractor/pom.xml test
+```
 
 ## 13. Data Policy
 
-data/raw_projects/ → ignored by git  
-data/extracted/ → normalized CSV outputs  
-results/ → experiment outputs (frozen via git tag)  
+Raw Java projects are local research inputs and are not committed.
 
-Only tagged Stage 1 outputs are considered final.
+Normalized extraction outputs are stored under:
+
+```text
+data/extracted/
+```
+
+Generated experiment outputs are stored under:
+
+```text
+results/
+```
+
+Final Stage 1 outputs are identified by the frozen Git snapshot and the formal Stage 1 result folders.
