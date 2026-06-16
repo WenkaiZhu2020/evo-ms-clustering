@@ -26,6 +26,8 @@ Stage 1 does not claim that the generated clusters are final microservice bounda
 
 ## 3. Default Diagnostic Results
 
+Default diagnostic results use the pre-experiment setting and should not be confused with the frozen formal Stage 1 profiles.
+
 | Subject | Classes | Raw Edges | SSA Edges | New SSA Edges | Raw Clusters | SSA Clusters | Raw Modularity | SSA Modularity | Raw Max-Cluster Ratio | SSA Max-Cluster Ratio |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | JPetStore | 24 | 53 | 60 | 7 | 4 | 4 | 0.442070 | 0.387485 | 0.291667 | 0.333333 |
@@ -44,7 +46,24 @@ The number of new edges is limited in JPetStore and DayTrader, but more visible 
 
 Raw modularity is higher for JPetStore and Xerces-J, while SSA modularity is slightly higher for DayTrader. Each value describes its corresponding weighted graph: `G_raw` uses `raw_weight`, and `G_ssa` uses `g_ssa_weight`. These values are descriptive diagnostics, not a strict ranking across different weighted graphs.
 
-## 4. DayTrader Calibration
+## 4. Formal Stage 1 Results
+
+Formal Stage 1 uses the frozen profiles:
+
+```text
+raw: lambda=0.0, resolution=1.0
+SSA: lambda=0.25, resolution=1.0
+```
+
+| Subject | Raw Clusters | SSA Clusters | Raw Modularity | SSA Modularity |
+| --- | ---: | ---: | ---: | ---: |
+| JPetStore | 4 | 4 | 0.442070 | 0.413664 |
+| DayTrader | 11 | 11 | 0.324597 | 0.325156 |
+| Xerces-J | 31 | 29 | 0.661519 | 0.652311 |
+
+Diagnostic and pre-experiment settings may use different lambda values and should not be mixed with the formal Stage 1 outputs.
+
+## 5. DayTrader Calibration
 
 DayTrader is used for constrained internal-primary calibration with reference-based sanity checks. All 53 retained classes are mapped to a domain-informed proxy reference, giving 53 / 53 coverage (100%). These metrics are calibration evidence, not an independent validation result.
 
@@ -70,7 +89,7 @@ The selected profile record is stored at:
 results/daytrader/00_pre_experiment/calibration/selected_baseline_profiles.yml
 ```
 
-## 5. Main Findings
+## 6. Main Findings
 
 * SSA adds new class-level relations in all three subjects.
 * SSA changes clustering behaviour, but the amount of change differs by subject.
@@ -79,7 +98,7 @@ results/daytrader/00_pre_experiment/calibration/selected_baseline_profiles.yml
 * Calibration uses internal structural metrics as primary signals and reference metrics as sanity checks.
 * A minimum-effective non-zero SSA profile is retained for controlled comparison rather than as an assumed improvement.
 
-## 6. Limitations
+## 7. Limitations
 
 The current evaluation has several limits:
 
@@ -88,7 +107,7 @@ The current evaluation has several limits:
 * Xerces-J is used for scale and sensitivity rather than external accuracy;
 * the selected Leiden profiles should be treated as reproducible reference points for later comparison.
 
-## 7. Reproduction
+## 8. Reproduction
 
 Run:
 

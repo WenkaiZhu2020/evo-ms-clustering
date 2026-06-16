@@ -190,11 +190,25 @@ def _rank_settings(summary: pd.DataFrame) -> pd.DataFrame:
     if summary.empty:
         return summary
     ranked = _with_admissibility_flags(summary)
-    ranked["ranking_score"] = ranked["mojofm_vs_reference"] + 100.0 * ranked["pairwise_f1"]
+    ranked["is_stress_lambda"] = ranked["ssa_lambda"].gt(1.0)
+    ranked["resolution_distance_from_1"] = (ranked["resolution"] - 1.0).abs()
+    ranked["ranking_basis"] = (
+        "internal_first_admissible_then_controlled_lambda_balance_reference_tiebreak"
+    )
     return (
         ranked.sort_values(
-            ["is_candidate", "ranking_score", "mojofm_vs_reference", "pairwise_f1"],
-            ascending=[False, False, False, False],
+            [
+                "is_candidate",
+                "is_stress_lambda",
+                "weighted_modularity",
+                "internal_edge_weight_ratio",
+                "max_cluster_ratio",
+                "singleton_ratio",
+                "resolution_distance_from_1",
+                "pairwise_f1",
+                "mojofm_vs_reference",
+            ],
+            ascending=[False, True, False, False, True, True, True, False, False],
         )
         .head(10)
         .reset_index(drop=True)
@@ -342,7 +356,9 @@ def _top_ssa_degree_classes(class_nodes: pd.DataFrame, ssa_edges: pd.DataFrame) 
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run DayTrader reference-based calibration.")
+    parser = argparse.ArgumentParser(
+        description="Run DayTrader constrained internal-primary calibration with reference sanity checks.",
+    )
     parser.add_argument("--subject", default="daytrader")
     args = parser.parse_args()
 

@@ -52,13 +52,13 @@ It checks:
 
 DayTrader is the calibration subject.
 
-It has a reference-service mapping for the retained application classes, so it is used to select the formal raw and SSA Leiden profiles.
+DayTrader has a domain-informed proxy reference for the retained application classes. Internal structural metrics guide calibration, while reference metrics are retained as sanity checks.
 
 DayTrader is used for:
 
 * default pre-experiment diagnostics
 * lambda and resolution calibration
-* reference-based comparison during calibration
+* reference-based sanity checks during calibration
 
 The DayTrader reference metrics are used as calibration evidence, not as independent validation.
 

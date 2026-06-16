@@ -49,7 +49,7 @@ DayTrader is also used to compare lambda and resolution settings before the form
 
 Xerces-J is included as the larger-scale subject.
 
-It is a technical remodularization case rather than a business microservice ground-truth case. Its purpose is to inspect:
+It is a technical remodularization case rather than a business microservice reference-decomposition case. Its purpose is to inspect:
 
 * graph scale;
 * cluster-size behaviour;
