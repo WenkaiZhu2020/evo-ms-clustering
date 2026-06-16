@@ -19,6 +19,6 @@ extracted_input_sha256:
   class_nodes.csv: 52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd
   structural_dependencies.csv: 95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0
   ssa_flow_edges.csv: d36e22b81da0e7b1c8a14fd42ef85e96f5d7705e487923065713535c337f1a95
-generated_at_utc: '2026-06-16T06:13:16Z'
-git_head: b703296798046ad9418557fd627e334df08d07ba
-git_dirty: true
+generated_at_utc: '2026-06-16T06:20:34Z'
+git_head: 12a5b6ac0996d59967965cb7c02b5dd3626cc302
+git_dirty: false
