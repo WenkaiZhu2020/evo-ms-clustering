@@ -20,7 +20,7 @@ Subdirectories:
 - `graph/`: generated `G_raw` and `G_ssa` edge tables and graph summaries.
 - `clustering/`: Leiden cluster assignments and partition metrics.
 - `comparison/`: raw-vs-SSA comparison tables and impact analysis outputs.
-- `calibration/`: DayTrader reference-based calibration outputs.
+- `calibration/`: DayTrader constrained internal-primary calibration outputs with reference-based sanity checks.
 - `sensitivity/`: Xerces-J scale and sensitivity outputs.
 
 ## Stage 1 Leiden Baseline Layout

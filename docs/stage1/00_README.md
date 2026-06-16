@@ -33,7 +33,7 @@ compiled Java classes
 | Subject     | Role                             |
 | ----------- | -------------------------------- |
 | `jpetstore` | small pipeline-validation case   |
-| `daytrader` | reference-based calibration case |
+| `daytrader` | constrained calibration case with reference-based sanity checks |
 | `xerces-j`  | larger-scale sensitivity case    |
 
 Research-facing summaries are stored under `docs/reports/`.

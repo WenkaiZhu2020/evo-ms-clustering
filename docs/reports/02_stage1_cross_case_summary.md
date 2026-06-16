@@ -21,7 +21,7 @@ Stage 1 does not claim that the generated clusters are final microservice bounda
 | Subject | Role | Main Purpose |
 | --- | --- | --- |
 | JPetStore | pipeline-validation case | verify the complete extraction, graph-construction, Leiden, and metrics pipeline |
-| DayTrader | reference-based calibration case | compare raw and SSA settings and select formal Leiden profiles |
+| DayTrader | constrained calibration case | compare raw and SSA settings and select formal Leiden profiles with reference-based sanity checks |
 | Xerces-J | larger-scale sensitivity case | inspect scale behaviour and SSA sensitivity under the same workflow |
 
 ## 3. Default Diagnostic Results
@@ -46,7 +46,7 @@ Raw modularity is higher for JPetStore and Xerces-J, while SSA modularity is sli
 
 ## 4. DayTrader Calibration
 
-DayTrader is used for calibration because it provides a reference mapping. All 53 retained classes are mapped, giving 53 / 53 coverage (100%). These metrics are calibration evidence, not an independent validation result.
+DayTrader is used for constrained internal-primary calibration with reference-based sanity checks. All 53 retained classes are mapped to a domain-informed proxy reference, giving 53 / 53 coverage (100%). These metrics are calibration evidence, not an independent validation result.
 
 The calibration sweep varies:
 
@@ -59,12 +59,10 @@ The selected formal profiles are:
 
 | Profile                | Graph Type | Lambda | Resolution | Seed | Role                                                 |
 | ---------------------- | ---------- | -----: | ---------: | ---: | ---------------------------------------------------- |
-| `raw_reference_leiden` | raw        |    0.0 |       1.25 |   42 | selected raw structural reference        |
-| `ssa_selected_leiden`  | ssa        |   0.25 |        1.5 |   42 | selected non-zero SSA comparison profile |
+| `raw_reference_leiden` | raw        |    0.0 |        1.0 |   42 | internal-primary raw structural reference |
+| `ssa_selected_leiden`  | ssa        |   0.25 |        1.0 |   42 | minimum-effective non-zero SSA comparison profile |
 
-The raw profile produced the stronger reference-based result.
-
-The non-zero SSA profile is still retained because the dissertation needs to inspect the effect of behavioural enrichment under a controlled setting. This does not mean that SSA automatically improves clustering quality.
+The selected SSA profile is the minimum non-zero SSA setting within the near-best internal structural-quality band. Reference metrics are retained as sanity checks; this does not mean that SSA automatically improves clustering quality.
 
 The selected profile record is stored at:
 
@@ -78,8 +76,8 @@ results/daytrader/00_pre_experiment/calibration/selected_baseline_profiles.yml
 * SSA changes clustering behaviour, but the amount of change differs by subject.
 * Additional flow evidence does not automatically improve internal structural metrics.
 * Higher SSA contribution may enlarge dominant clusters.
-* Raw structural Leiden remains the stronger reference in the current DayTrader calibration.
-* A non-zero SSA profile is retained for controlled comparison rather than as an assumed improvement.
+* Calibration uses internal structural metrics as primary signals and reference metrics as sanity checks.
+* A minimum-effective non-zero SSA profile is retained for controlled comparison rather than as an assumed improvement.
 
 ## 6. Limitations
 

@@ -1,133 +1,63 @@
-
 # SSA Calibration Notes
 
 ## 1. Purpose
 
-`ssa_lambda` controls the overall contribution of SSA-derived flow evidence in `G_ssa`.
+`ssa_lambda` controls the overall contribution of SSA-derived flow evidence after extraction. The embedded row weights are fixed in the normalized CSV rows; lambda scales their aggregate contribution during graph construction.
 
-It is separate from the embedded base weights of individual evidence rows.
+DayTrader is used for constrained internal-primary calibration with reference-based sanity checks. Its service mapping is a domain-informed proxy reference, not an independent validation oracle.
 
-DayTrader is used for calibration because a reference-service mapping is available. All 53 retained classes are mapped, giving 53 / 53 coverage (100%). The reference metrics are calibration evidence, not an independent validation result.
-
-## 2. Frozen Base Evidence Weights
+## 2. Evidence Weights and Formula
 
 | Evidence Channel | Embedded Row Weight |
 | --- | ---: |
 | Type dependency | 1.0 |
 | Method call | 2.0 |
-| `return_value_flow` | 3.0 |
-| `argument_passing_flow` | 3.0 |
-
-These values are stored in:
+| Return-value flow | 3.0 |
+| Argument-passing flow | 3.0 |
 
 ```text
-data/extracted/<subject>/structural_dependencies.csv
-data/extracted/<subject>/ssa_flow_edges.csv
+raw_ssa_flow_sum = return_flow_weight + argument_flow_weight
+ssa_flow_weight = ssa_lambda * raw_ssa_flow_sum
+g_ssa_weight = raw_weight + ssa_flow_weight
 ```
 
-The config block:
+`expected_extracted_evidence_weights` is a validation check only. Changing YAML does not reweight an existing extracted dataset.
 
-```text
-expected_extracted_evidence_weights
-```
+## 3. Sweep Space
 
-is used only for validation.
+| Item | Values |
+| --- | --- |
+| Lambda sweep | 0.0, 0.25, 0.5, 1.0, 2.0, 3.0, 4.0 |
+| Calibration lambda regime | 0.0 for raw; 0.0 < lambda <= 1.0 for SSA |
+| Stress-testing regime | lambda > 1.0 |
+| Resolution grid | 0.5, 0.75, 1.0, 1.25, 1.5 |
+| Seed | 42 |
 
-Changing the YAML values does not reweight an existing extracted dataset. Reweighting requires a new extraction or an explicit change in the graph-construction logic.
+Values above 1.0 are retained in the sweep output for sensitivity and stress testing, but they are not eligible for selecting the formal SSA calibration profile.
 
-## 3. Graph Formula
+## 4. Selection Rule
 
-For each class pair:
+Candidates must pass these filters:
 
-```text
-raw_ssa_flow_sum
-=
-return_flow_weight
-+
-argument_flow_weight
-```
+* non-extreme cluster count;
+* `max_cluster_ratio <= 0.4`;
+* `singleton_ratio <= 0.15`;
+* `reference_coverage_ratio >= 0.8`;
+* for SSA candidates, `ssa_lambda <= 1.0`.
 
-```text
-ssa_flow_weight
-=
-ssa_lambda * raw_ssa_flow_sum
-```
+Raw candidates use `ssa_lambda = 0.0` and are ranked by weighted modularity, internal edge weight ratio, balance metrics, resolution proximity to 1.0, then reference metrics.
 
-```text
-g_ssa_weight
-=
-raw_weight
-+
-ssa_flow_weight
-```
+SSA candidates use `0.0 < ssa_lambda <= 1.0`. The rule first keeps candidates within 0.005 weighted-modularity points of the best admissible SSA candidate, then chooses the lowest non-zero lambda in that near-best band. Internal edge weight ratio, balance metrics, resolution proximity, and reference metrics break ties.
 
-When:
+MoJoFM and pairwise F1 remain in the output as reference-based sanity checks. They are not primary ranking signals.
 
-```text
-ssa_lambda = 0
-```
+## 5. Selected Profiles
 
-the SSA contribution is removed. The resulting graph is equivalent to the raw structural setting.
+| Profile | Graph Type | Lambda | Resolution | Seed | Role |
+| --- | --- | ---: | ---: | ---: | --- |
+| `raw_reference_leiden` | raw | 0.0 | 1.0 | 42 | internal-primary raw structural reference |
+| `ssa_selected_leiden` | ssa | 0.25 | 1.0 | 42 | minimum-effective non-zero SSA comparison profile |
 
-## 4. Sweep Dimensions
+All 53 retained DayTrader classes are mapped to reference services, so reference coverage is 53 / 53 = 100%.
 
-| Item                | Value                                                                 |
-| ------------------- | --------------------------------------------------------------------- |
-| Lambda grid         | `0.0`, `0.25`, `0.5`, `1.0`, `2.0`, `3.0`, `4.0`                      |
-| Resolution grid     | `0.5`, `0.75`, `1.0`, `1.25`, `1.5`                                   |
-| Seed                | `42`                                                                  |
-| Calibration subject | DayTrader                                                             |
-| External metrics    | MoJoFM, pairwise F1, ARI, NMI, pairwise precision, pairwise recall    |
-| Additional checks   | cluster count, max-cluster ratio, singleton ratio, reference coverage |
-
-Calibration outputs are stored under:
-
-```text
-results/daytrader/00_pre_experiment/calibration/
-```
-
-The main files are:
-
-```text
-weight_sweep_summary.csv
-top_weight_settings.csv
-selected_baseline_profiles.yml
-```
-
-## 5. Frozen Leiden Profiles
-
-| Profile                | Graph Type | Lambda | Resolution | Seed | Role                                                 |
-| ---------------------- | ---------- | -----: | ---------: | ---: | ---------------------------------------------------- |
-| `raw_reference_leiden` | raw        |    0.0 |       1.25 |   42 | selected raw structural reference        |
-| `ssa_selected_leiden`  | ssa        |   0.25 |        1.5 |   42 | selected non-zero SSA comparison profile |
-
-Candidates are admissible when:
-
-* `cluster_count` is at most 36, derived from the median sweep cluster count of 12;
-* `max_cluster_ratio` is at most 0.6;
-* `singleton_ratio` is at most 0.25;
-* `reference_coverage_ratio` is at least 0.8.
-
-The raw profile is selected from `ssa_lambda = 0` candidates by MoJoFM descending, pairwise F1 descending, max-cluster ratio ascending, then distance from resolution 1.0 ascending.
-
-The SSA profile is selected from `ssa_lambda > 0` candidates using the same first three criteria, followed by lambda ascending and distance from resolution 1.0 ascending.
-
-These are representative controlled-comparison settings selected by the current rule, not universal optimum values. The formal profiles use seed 42 for reproducibility; Stage 1 does not claim multi-seed stability.
-
-## 6. Interpretation
-
-Two forms of comparison are used.
-
-### Matched-setting comparison
-
-A fixed resolution is used while lambda changes.
-
-This shows how SSA strength affects the graph and partition without changing clustering granularity.
-
-### Calibrated-profile comparison
-
-The frozen raw and SSA profiles use their selected settings.
-
-This provides reproducible Leiden reference points for later NSGA-II evaluation.
-
-The selected SSA profile should not be described as an improvement over raw. It is retained as a controlled SSA-informed comparison.
+The selected profiles are representative controlled-comparison settings. They are not universal optima. The formal Leiden profiles use a fixed seed of 42 for reproducibility; Stage 1 does not claim multi-seed stability.

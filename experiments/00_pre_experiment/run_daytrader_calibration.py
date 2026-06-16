@@ -212,26 +212,41 @@ def select_baseline_profiles(
         ranked.loc[(ranked["ssa_lambda"] == 0.0) & ranked["is_candidate"]]
         .sort_values(
             [
-                "mojofm_vs_reference",
-                "pairwise_f1",
+                "weighted_modularity",
+                "internal_edge_weight_ratio",
                 "max_cluster_ratio",
+                "singleton_ratio",
                 "resolution_distance_from_1",
+                "pairwise_f1",
+                "mojofm_vs_reference",
             ],
-            ascending=[False, False, True, True],
+            ascending=[False, False, True, True, True, False, False],
         )
         .head(1)
     )
+    admissible_ssa = ranked.loc[
+        (ranked["ssa_lambda"] > 0.0)
+        & (ranked["ssa_lambda"] <= 1.0)
+        & ranked["is_candidate"]
+    ].copy()
+    best_ssa_modularity = admissible_ssa["weighted_modularity"].max()
+    modularity_tolerance = 0.005
     ssa = (
-        ranked.loc[(ranked["ssa_lambda"] > 0.0) & ranked["is_candidate"]]
+        admissible_ssa.loc[
+            admissible_ssa["weighted_modularity"]
+            >= best_ssa_modularity - modularity_tolerance
+        ]
         .sort_values(
             [
-                "mojofm_vs_reference",
-                "pairwise_f1",
-                "max_cluster_ratio",
                 "ssa_lambda",
+                "internal_edge_weight_ratio",
+                "max_cluster_ratio",
+                "singleton_ratio",
                 "resolution_distance_from_1",
+                "pairwise_f1",
+                "mojofm_vs_reference",
             ],
-            ascending=[False, False, True, True, True],
+            ascending=[True, False, True, True, True, False, False],
         )
         .head(1)
     )
@@ -242,8 +257,9 @@ def select_baseline_profiles(
     raw_row = raw.iloc[0]
     ssa_row = ssa.iloc[0]
     return {
-        "selection_source": "daytrader_reference_calibration",
-        "selection_rule_version": 1,
+        "selection_source": "constrained_minimum_effective_ssa_calibration",
+        "selection_rule_version": 2,
+        "reference_metric_role": "domain_informed_proxy_reference_sanity_check",
         "base_evidence_weights": {
             key: float(value)
             for key, value in expected_weights.items()
@@ -254,14 +270,14 @@ def select_baseline_profiles(
                 "ssa_lambda": 0.0,
                 "resolution": float(raw_row["resolution"]),
                 "seed": int(seed),
-                "role": "strongest_admissible_raw_structural_reference",
+                "role": "internal_primary_raw_structural_reference",
             },
             "ssa_selected_leiden": {
                 "graph_type": "ssa",
                 "ssa_lambda": float(ssa_row["ssa_lambda"]),
                 "resolution": float(ssa_row["resolution"]),
                 "seed": int(seed),
-                "role": "strongest_admissible_nonzero_ssa_comparison",
+                "role": "minimum_effective_nonzero_ssa_comparison",
             },
         },
     }
@@ -273,9 +289,12 @@ def _with_admissibility_flags(summary: pd.DataFrame) -> pd.DataFrame:
     ranked["rejected_extreme_cluster_count"] = ranked["cluster_count"].gt(
         max(reference_cluster_target * 3, reference_cluster_target + 10),
     )
-    ranked["rejected_high_max_cluster_ratio"] = ranked["max_cluster_ratio"].gt(0.6)
-    ranked["rejected_high_singleton_ratio"] = ranked["singleton_ratio"].gt(0.25)
+    ranked["rejected_high_max_cluster_ratio"] = ranked["max_cluster_ratio"].gt(0.4)
+    ranked["rejected_high_singleton_ratio"] = ranked["singleton_ratio"].gt(0.15)
     ranked["rejected_low_reference_coverage"] = ranked["reference_coverage_ratio"].lt(0.8)
+    ranked["rejected_high_ssa_lambda"] = ranked["ssa_lambda"].gt(1.0) & ranked[
+        "ssa_lambda"
+    ].gt(0.0)
     ranked["is_candidate"] = ~ranked.loc[
         :,
         [
@@ -283,6 +302,7 @@ def _with_admissibility_flags(summary: pd.DataFrame) -> pd.DataFrame:
             "rejected_high_max_cluster_ratio",
             "rejected_high_singleton_ratio",
             "rejected_low_reference_coverage",
+            "rejected_high_ssa_lambda",
         ],
     ].any(axis=1)
     return ranked

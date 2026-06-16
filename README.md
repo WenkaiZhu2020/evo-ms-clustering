@@ -194,7 +194,7 @@ After calibration, two formal Leiden profiles are fixed:
 * graph: `G_raw`
 * weight column: `raw_weight`
 * lambda: `0.0`
-* resolution: `1.25`
+* resolution: `1.0`
 * seed: `42`
 
 ### ssa_selected_leiden
@@ -202,7 +202,7 @@ After calibration, two formal Leiden profiles are fixed:
 * graph: `G_ssa`
 * weight column: `g_ssa_weight`
 * lambda: `0.25`
-* resolution: `1.5`
+* resolution: `1.0`
 * seed: `42`
 
 These two profiles are then applied to all three subjects:

@@ -10,7 +10,7 @@ The aim is not to claim final decomposition quality from one benchmark. Instead,
 | Subject | Role | Reason |
 | --- | --- | --- |
 | JPetStore | pipeline-validation case | Small enough for manual inspection. It checks whether extraction, normalized CSV loading, graph construction, Leiden, and metrics run correctly from end to end. |
-| DayTrader | reference-based calibration case | Provides a usable reference mapping. It supports external metrics and the selection of reproducible Leiden profiles. |
+| DayTrader | constrained calibration case | Provides a usable domain-informed proxy reference. It supports reference-based sanity checks and the selection of reproducible Leiden profiles. |
 | Xerces-J | larger-scale sensitivity case | Contains a larger technical codebase. It is used to inspect whether the same workflow remains usable beyond small business-style systems. |
 
 ## JPetStore
@@ -43,7 +43,7 @@ This allows the pipeline to report external metrics such as:
 * ARI;
 * NMI.
 
-DayTrader is also used to compare lambda and resolution settings before the formal Leiden profiles are frozen.
+DayTrader is also used to compare lambda and resolution settings before the formal Leiden profiles are frozen. Calibration is internal-primary; reference metrics are used as sanity checks.
 
 ## Xerces-J
 
@@ -68,7 +68,7 @@ The three subjects provide separate evidence for:
 
 ```text
 pipeline validation
-reference-based calibration
+constrained internal-primary calibration with reference-based sanity checks
 larger-scale sensitivity
 ```
 

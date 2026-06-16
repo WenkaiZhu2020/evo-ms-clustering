@@ -32,10 +32,10 @@ The formal Stage 1 layer uses fixed profiles. These profiles are retained as rep
 | Subject | Role |
 | --- | --- |
 | JPetStore | small pipeline-validation case |
-| DayTrader | calibration case with reference mapping |
+| DayTrader | constrained calibration case with reference-based sanity checks |
 | Xerces-J | larger-scale sensitivity case |
 
-JPetStore is used to verify the complete pipeline. DayTrader supports reference-based calibration. Xerces-J is used to inspect scale and sensitivity under the same workflow.
+JPetStore is used to verify the complete pipeline. DayTrader supports constrained internal-primary calibration with reference-based sanity checks. Xerces-J is used to inspect scale and sensitivity under the same workflow.
 
 CargoTracker is inactive in the current subject set. PiggyMetrics is not used as an input subject.
 
@@ -43,12 +43,10 @@ CargoTracker is inactive in the current subject set. PiggyMetrics is not used as
 
 | Profile | Graph Type | Lambda | Resolution | Seed | Role |
 | --- | --- | ---: | ---: | ---: | --- |
-| `raw_reference_leiden` | raw | 0.0 | 1.25 | 42 | selected raw structural reference |
-| `ssa_selected_leiden` | ssa | 0.25 | 1.5 | 42 | selected non-zero SSA comparison profile |
+| `raw_reference_leiden` | raw | 0.0 | 1.0 | 42 | internal-primary raw structural reference |
+| `ssa_selected_leiden` | ssa | 0.25 | 1.0 | 42 | minimum-effective non-zero SSA comparison profile |
 
-The raw profile remains the stronger structural reference in the current DayTrader calibration.
-
-The selected SSA profile is still retained because it provides a controlled non-zero setting for evaluating the effect of behavioural enrichment.
+The selected SSA profile is the minimum non-zero SSA setting within the near-best internal structural-quality band.
 
 Both formal profiles use seed 42 for reproducibility; Stage 1 does not claim multi-seed stability.
 

@@ -6,8 +6,8 @@ The runner reconstructs fixed baseline graphs from normalized extracted CSV inpu
 
 Formal profiles:
 
-- `raw_reference_leiden`: `graph_type=raw`, `ssa_lambda=0.0`, `resolution=1.25`, `seed=42`.
-- `ssa_selected_leiden`: `graph_type=ssa`, `ssa_lambda=0.25`, `resolution=1.5`, `seed=42`.
+- `raw_reference_leiden`: `graph_type=raw`, `ssa_lambda=0.0`, `resolution=1.0`, `seed=42`.
+- `ssa_selected_leiden`: `graph_type=ssa`, `ssa_lambda=0.25`, `resolution=1.0`, `seed=42`.
 
 Inputs:
 

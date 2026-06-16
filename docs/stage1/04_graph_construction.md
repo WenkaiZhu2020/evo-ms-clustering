@@ -94,12 +94,12 @@ The graph-construction layer applies the following rules:
 
 | Profile                | Graph Type | Lambda | Resolution | Seed |
 | ---------------------- | ---------- | -----: | ---------: | ---: |
-| `raw_reference_leiden` | raw        |    0.0 |       1.25 |   42 |
-| `ssa_selected_leiden`  | ssa        |   0.25 |        1.5 |   42 |
+| `raw_reference_leiden` | raw        |    0.0 |        1.0 |   42 |
+| `ssa_selected_leiden`  | ssa        |   0.25 |        1.0 |   42 |
 
-`raw_reference_leiden` is the raw structural reference selected through DayTrader calibration.
+`raw_reference_leiden` is the internal-primary raw structural reference selected through DayTrader calibration.
 
-`ssa_selected_leiden` is the selected non-zero SSA-informed profile retained for controlled comparison.
+`ssa_selected_leiden` is the minimum-effective non-zero SSA-informed profile retained for controlled comparison.
 
 ## Output Columns
 
