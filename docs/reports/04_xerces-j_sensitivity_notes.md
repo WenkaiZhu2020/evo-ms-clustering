@@ -7,9 +7,11 @@ Xerces-J is the larger-scale Stage 1 subject.
 
 It is used to check whether the same class-level extraction, graph-construction, and Leiden workflow remains usable on a larger Java system.
 
-Xerces-J is a technical remodularization case. It is not treated as a business microservice ground-truth subject.
+Xerces-J is a technical remodularization case. It is not treated as a business microservice reference-decomposition subject.
 
 ## 2. Default Diagnostic Result
+
+These values come from the default pre-experiment diagnostic setting, not from the frozen formal Stage 1 SSA profile.
 
 | Metric | Raw Setting | SSA Setting |
 | --- | ---: | ---: |
@@ -35,7 +37,17 @@ new class-pair edges.
 
 The SSA partition also has a larger dominant cluster and slightly lower weighted modularity than the raw partition.
 
-## 3. Sensitivity Outputs
+## 3. Formal Stage 1 Result
+
+Formal Stage 1 uses the frozen baseline profiles. These outputs are the comparison targets for later stages, while sensitivity results are used for robustness and stress interpretation.
+
+| Metric | Raw Profile | SSA Profile |
+| --- | ---: | ---: |
+| Cluster count | 31 | 29 |
+| Weighted modularity | 0.661519 | 0.652311 |
+| Max-cluster ratio | 0.144963 | 0.192875 |
+
+## 4. Sensitivity Outputs
 
 The Xerces-J sensitivity runner writes:
 
@@ -48,7 +60,7 @@ results/xerces-j/00_pre_experiment/sensitivity/
 
 The generic Pre-experiment runner remains responsible for the default raw-vs-SSA comparison.
 
-## 4. Main Observation
+## 5. Main Observation
 
 Xerces-J shows visible sensitivity to the SSA contribution.
 
@@ -61,7 +73,7 @@ The result supports a cautious interpretation:
 * a stronger SSA contribution may increase aggregation risk;
 * the effect should be controlled rather than assumed to be beneficial.
 
-## 5. Limitation
+## 6. Limitation
 
 This is a case-specific result.
 
@@ -69,7 +81,7 @@ Xerces-J alone cannot support a general claim that larger systems always show st
 
 Its role is to provide larger-scale evidence for the current pipeline and to identify risks that should be considered in later stages.
 
-## 6. Reproduction
+## 7. Reproduction
 
 Run:
 

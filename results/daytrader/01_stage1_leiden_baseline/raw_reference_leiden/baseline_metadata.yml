@@ -1,8 +1,8 @@
 subject: daytrader
 profile_name: raw_reference_leiden
 role: frozen_leiden_baseline_for_later_comparison
-selection_role: strongest_admissible_raw_structural_reference
-selection_source: daytrader_reference_calibration
+selection_role: internal_primary_raw_structural_reference
+selection_source: constrained_minimum_effective_ssa_calibration
 graph_type: raw
 base_evidence_weights:
   type_dependency: 1.0
@@ -10,7 +10,7 @@ base_evidence_weights:
   return_value_flow: 3.0
   argument_passing_flow: 3.0
 ssa_lambda: 0.0
-resolution: 1.25
+resolution: 1.0
 seed: 42
 source_extracted_data: data/extracted/daytrader/
 edge_table: graph/stage1_edges.csv
@@ -19,6 +19,6 @@ extracted_input_sha256:
   class_nodes.csv: 52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd
   structural_dependencies.csv: 95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0
   ssa_flow_edges.csv: d36e22b81da0e7b1c8a14fd42ef85e96f5d7705e487923065713535c337f1a95
-generated_at_utc: '2026-06-12T03:23:09Z'
-git_head: bd9c21091f972640c865b82467361fca6ca24e7a
+generated_at_utc: '2026-06-16T06:20:34Z'
+git_head: 12a5b6ac0996d59967965cb7c02b5dd3626cc302
 git_dirty: false

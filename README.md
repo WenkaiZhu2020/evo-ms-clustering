@@ -52,13 +52,13 @@ It checks:
 
 DayTrader is the calibration subject.
 
-It has a reference-service mapping for the retained application classes, so it is used to select the formal raw and SSA Leiden profiles.
+DayTrader has a domain-informed proxy reference for the retained application classes. Internal structural metrics guide calibration, while reference metrics are retained as sanity checks.
 
 DayTrader is used for:
 
 * default pre-experiment diagnostics
 * lambda and resolution calibration
-* reference-based comparison during calibration
+* reference-based sanity checks during calibration
 
 The DayTrader reference metrics are used as calibration evidence, not as independent validation.
 
@@ -194,7 +194,7 @@ After calibration, two formal Leiden profiles are fixed:
 * graph: `G_raw`
 * weight column: `raw_weight`
 * lambda: `0.0`
-* resolution: `1.25`
+* resolution: `1.0`
 * seed: `42`
 
 ### ssa_selected_leiden
@@ -202,7 +202,7 @@ After calibration, two formal Leiden profiles are fixed:
 * graph: `G_ssa`
 * weight column: `g_ssa_weight`
 * lambda: `0.25`
-* resolution: `1.5`
+* resolution: `1.0`
 * seed: `42`
 
 These two profiles are then applied to all three subjects:

@@ -74,4 +74,4 @@ bash scripts/run_stage1_xerces_j.sh
 
 Xerces-J is used as a larger-scale technical case.
 
-It is not treated as a business microservice ground-truth subject.
+It is not treated as a business microservice reference-decomposition subject.

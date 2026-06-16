@@ -69,12 +69,12 @@ Raw and SSA modularity values are descriptive diagnostics for their correspondin
 
 | Metric                     | Meaning                                               |
 | -------------------------- | ----------------------------------------------------- |
-| `mojofm_vs_reference`      | MoJoFM against the reference partition                |
+| `mojofm_vs_reference`      | MoJoFM against the domain-informed proxy reference partition |
 | `pairwise_precision`       | same-service precision                                |
 | `pairwise_recall`          | same-service recall                                   |
 | `pairwise_f1`              | same-service F1                                       |
-| `ari_vs_reference`         | ARI against the reference partition                   |
-| `nmi_vs_reference`         | NMI against the reference partition                   |
+| `ari_vs_reference`         | ARI against the domain-informed proxy reference partition |
+| `nmi_vs_reference`         | NMI against the domain-informed proxy reference partition |
 | `reference_coverage_ratio` | mapped extracted classes divided by extracted classes |
 
 Reference metrics are calculated only on mapped classes.
@@ -90,4 +90,4 @@ The metric groups serve different purposes:
 | partition change            | compare raw and SSA Leiden outputs               |
 | structural quality          | inspect cohesion and separation inside the graph |
 | granularity and balance     | detect oversized clusters or fragmentation       |
-| DayTrader reference metrics | support calibration and profile selection        |
+| DayTrader reference metrics | provide secondary sanity checks during calibration |

@@ -1,5 +1,6 @@
-selection_source: daytrader_reference_calibration
-selection_rule_version: 1
+selection_source: constrained_minimum_effective_ssa_calibration
+selection_rule_version: 2
+reference_metric_role: domain_informed_proxy_reference_sanity_check
 base_evidence_weights:
   type_dependency: 1.0
   method_call: 2.0
@@ -9,12 +10,12 @@ profiles:
   raw_reference_leiden:
     graph_type: raw
     ssa_lambda: 0.0
-    resolution: 1.25
+    resolution: 1.0
     seed: 42
-    role: strongest_admissible_raw_structural_reference
+    role: internal_primary_raw_structural_reference
   ssa_selected_leiden:
     graph_type: ssa
     ssa_lambda: 0.25
-    resolution: 1.5
+    resolution: 1.0
     seed: 42
-    role: strongest_admissible_nonzero_ssa_comparison
+    role: minimum_effective_nonzero_ssa_comparison
