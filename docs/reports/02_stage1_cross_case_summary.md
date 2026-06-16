@@ -24,29 +24,7 @@ Stage 1 does not claim that the generated clusters are final microservice bounda
 | DayTrader | constrained calibration case | compare raw and SSA settings and select formal Leiden profiles with reference-based sanity checks |
 | Xerces-J | larger-scale sensitivity case | inspect scale behaviour and SSA sensitivity under the same workflow |
 
-## 3. Default Diagnostic Results
-
-Default diagnostic results use the pre-experiment setting and should not be confused with the frozen formal Stage 1 profiles.
-
-| Subject | Classes | Raw Edges | SSA Edges | New SSA Edges | Raw Clusters | SSA Clusters | Raw Modularity | SSA Modularity | Raw Max-Cluster Ratio | SSA Max-Cluster Ratio |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| JPetStore | 24 | 53 | 60 | 7 | 4 | 4 | 0.442070 | 0.387485 | 0.291667 | 0.333333 |
-| DayTrader | 53 | 161 | 169 | 8 | 11 | 12 | 0.324597 | 0.329575 | 0.245283 | 0.264151 |
-| Xerces-J | 814 | 3780 | 4148 | 368 | 31 | 30 | 0.661519 | 0.644268 | 0.144963 | 0.187961 |
-
-Source:
-
-```text
-results/<subject>/00_pre_experiment/comparison/metrics_summary.csv
-```
-
-The default runs show that SSA adds new class-pair evidence in all three subjects.
-
-The number of new edges is limited in JPetStore and DayTrader, but more visible in Xerces-J. The SSA setting also changes cluster boundaries and increases the largest-cluster ratio in the three subjects.
-
-Raw modularity is higher for JPetStore and Xerces-J, while SSA modularity is slightly higher for DayTrader. Each value describes its corresponding weighted graph: `G_raw` uses `raw_weight`, and `G_ssa` uses `g_ssa_weight`. These values are descriptive diagnostics, not a strict ranking across different weighted graphs.
-
-## 4. Formal Stage 1 Results
+## 3. Formal Stage 1 Results
 
 Formal Stage 1 uses the frozen profiles:
 
@@ -62,6 +40,14 @@ SSA: lambda=0.25, resolution=1.0
 | Xerces-J | 31 | 29 | 0.661519 | 0.652311 |
 
 Diagnostic and pre-experiment settings may use different lambda values and should not be mixed with the formal Stage 1 outputs.
+
+## 4. Formal Raw-vs-SSA Comparison
+
+| Subject | Cluster count delta | ARI raw-vs-SSA | NMI raw-vs-SSA | Changed partition ratio |
+| --- | ---: | ---: | ---: | ---: |
+| JPetStore | 0 | 0.876593 | 0.912301 | 0.541667 |
+| DayTrader | 0 | 0.945670 | 0.969307 | 0.377358 |
+| Xerces-J | -2 | 0.701535 | 0.862387 | 0.831695 |
 
 ## 5. DayTrader Calibration
 
@@ -131,3 +117,6 @@ results/<subject>/00_pre_experiment/
 results/daytrader/00_pre_experiment/calibration/
 results/xerces-j/00_pre_experiment/sensitivity/
 results/<subject>/01_stage1_leiden_baseline/
+```
+
+Pre-experiment diagnostic results are reported separately in the calibration and sensitivity notes. They should not be mixed with the frozen formal Stage 1 profiles reported in this cross-case summary.
