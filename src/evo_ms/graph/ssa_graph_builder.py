@@ -1,3 +1,5 @@
+"""Build G_ssa by adding scoped SSA flow evidence to G_raw edges."""
+
 import pandas as pd
 
 from evo_ms.evidence.ssa_flow_evidence import aggregate_ssa_flow_weights

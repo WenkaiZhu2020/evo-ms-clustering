@@ -1,3 +1,5 @@
+"""Generate frozen formal Stage 1 Leiden baseline profiles."""
+
 from __future__ import annotations
 
 import argparse
@@ -32,6 +34,7 @@ def run_stage1_leiden(
     subject: str | None = None,
     config_path: Path | None = None,
 ) -> list[Path]:
+    """Run configured formal profiles for one subject or all Stage 1 subjects."""
     config = load_yaml(config_path or root / "configs" / "experiments" / "01_stage1_leiden.yml")
     subjects = [subject] if subject else list(config.get("subjects", []))
     if not subjects:
@@ -62,6 +65,7 @@ def run_subject(
     profiles: list[dict[str, object]],
     expected_weights: Mapping[str, object],
 ) -> Path:
+    """Rebuild fixed graphs from extracted CSVs and write formal baseline outputs."""
     logger = get_logger(__name__)
     subject_config = _load_subject_config(root, subject)
     extracted_dir = root / subject_config.get("extracted_output_path", f"data/extracted/{subject}")

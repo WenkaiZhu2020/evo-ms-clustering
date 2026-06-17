@@ -1,3 +1,5 @@
+"""Reference-dependent metrics used as DayTrader calibration sanity checks."""
+
 from __future__ import annotations
 
 import math
@@ -12,6 +14,7 @@ REFERENCE_COLUMNS = ["class_name", "reference_service"]
 
 
 def load_reference_mapping(path: str | Path) -> pd.DataFrame:
+    """Load the DayTrader proxy-reference mapping used by calibration metrics."""
     mapping = pd.read_csv(path)
     missing = [column for column in REFERENCE_COLUMNS if column not in mapping.columns]
     if missing:
@@ -34,6 +37,7 @@ def reference_mapping_diagnostics(
     class_nodes: pd.DataFrame,
     reference_mapping: pd.DataFrame,
 ) -> dict[str, pd.DataFrame | float]:
+    """Report reference coverage and missing-class lists for extracted classes."""
     _validate_class_nodes(class_nodes)
     mapping = _validate_reference_mapping(reference_mapping)
     extracted_names = set(class_nodes["class_name"].dropna().astype(str))
@@ -57,6 +61,7 @@ def calculate_reference_metrics(
     clusters: pd.DataFrame,
     reference_mapping: pd.DataFrame,
 ) -> dict[str, float]:
+    """Compare a candidate partition with the mapped proxy reference classes."""
     _validate_class_nodes(class_nodes)
     _validate_clusters(clusters)
     mapping = _validate_reference_mapping(reference_mapping)
@@ -172,6 +177,7 @@ def _mojo_distance(
     reference: dict[str, str],
     class_names: list[str],
 ) -> int:
+    """Compute directional Move/Join distance from candidate to reference."""
     candidate_clusters = _classes_by_label(candidate, class_names)
     preserved = 0
     maximum_overlap_targets: list[set[str]] = []

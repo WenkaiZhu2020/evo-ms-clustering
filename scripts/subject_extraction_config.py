@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""Convert subject YAML scope settings into Soot extractor CLI arguments."""
+
 from __future__ import annotations
 
 import argparse
@@ -10,6 +12,7 @@ import yaml
 
 
 def load_extraction_cli_args(root: Path, subject: str) -> list[str]:
+    """Return the normalized Java extractor arguments for one configured subject."""
     config_path = root / "configs" / "subjects" / f"{subject}.yml"
     if not config_path.is_file():
         raise FileNotFoundError(f"missing subject config: {config_path}")

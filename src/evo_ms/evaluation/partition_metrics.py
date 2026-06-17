@@ -1,3 +1,5 @@
+"""Internal graph and partition metrics for Stage 1 Leiden outputs."""
+
 import json
 import math
 from collections import Counter
@@ -20,6 +22,7 @@ def calculate_partition_metrics(
     algorithm: str,
     graph_type: str,
 ) -> pd.DataFrame:
+    """Compute structural quality and balance metrics for one graph partition."""
     weight_column = _weight_column(graph_type)
     _validate_class_nodes(class_nodes)
     _validate_clusters(clusters)
@@ -228,6 +231,7 @@ def calculate_ssa_impact_tables(
 
 
 def partition_size_metrics(partition: dict[Hashable, int]) -> dict[str, float]:
+    """Return compact size metrics for simple partition dictionaries."""
     sizes = Counter(partition.values())
     if not sizes:
         return {"clusters": 0, "average_cluster_size": 0.0}
@@ -238,6 +242,7 @@ def partition_size_metrics(partition: dict[Hashable, int]) -> dict[str, float]:
 
 
 def cluster_size_distribution(clusters: pd.DataFrame) -> str:
+    """Serialize cluster-size frequencies for CSV output."""
     _validate_clusters(clusters)
     return _cluster_size_distribution(_cluster_sizes(clusters))
 
@@ -247,6 +252,7 @@ def partition_similarity(
     left_clusters: pd.DataFrame,
     right_clusters: pd.DataFrame,
 ) -> tuple[float, float]:
+    """Return ARI and NMI for two cluster assignments on the same class set."""
     _validate_class_nodes(class_nodes)
     _validate_clusters(left_clusters)
     _validate_clusters(right_clusters)

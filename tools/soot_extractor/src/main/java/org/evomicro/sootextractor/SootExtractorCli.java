@@ -38,6 +38,12 @@ import soot.shimple.toolkits.scalar.ShimpleLocalDefs;
 import soot.shimple.toolkits.scalar.ShimpleLocalUses;
 import soot.toolkits.scalar.UnitValueBoxPair;
 
+/**
+ * Command-line Soot/Shimple extractor that writes normalized Stage 1 CSV inputs.
+ *
+ * <p>The extractor emits class nodes, structural dependency evidence, and scoped SSA flow evidence for configured
+ * application package prefixes.
+ */
 public final class SootExtractorCli {
   static final List<String> CLASS_NODES_COLUMNS = List.of("class_id", "class_name", "package", "class_file_path");
   static final List<String> STRUCTURAL_DEPENDENCY_COLUMNS =
@@ -51,6 +57,7 @@ public final class SootExtractorCli {
     System.exit(run(args));
   }
 
+  /** Parses CLI options, runs extraction, and writes the three normalized CSV tables. */
   public static int run(String[] args) {
     Map<String, String> options;
     try {
@@ -101,6 +108,7 @@ public final class SootExtractorCli {
     }
   }
 
+  /** Configures Soot and extracts all class-level evidence for the selected application classes. */
   static ExtractionResult extractStructuralDependencies(
       Path classesDir, String classpath, List<String> applicationClasses, Set<String> applicationClassSet) {
     G.reset();
@@ -147,6 +155,7 @@ public final class SootExtractorCli {
     return index < 0 ? "" : className.substring(0, index);
   }
 
+  /** Extracts declaration-level type references for G_raw structural evidence. */
   private static void extractTypeDependencies(
       SootClass sootClass, Set<String> applicationClassSet, Set<StructuralDependency> dependencies) {
     String source = sootClass.getName();
@@ -229,6 +238,7 @@ public final class SootExtractorCli {
     return null;
   }
 
+  /** Extracts method-call evidence from Jimple bodies for G_raw structural edges. */
   private static void extractCallDependencies(
       SootClass sootClass, Set<String> applicationClassSet, Set<StructuralDependency> dependencies) {
     String source = sootClass.getName();
@@ -269,6 +279,7 @@ public final class SootExtractorCli {
     }
   }
 
+  /** Converts concrete method bodies to Shimple and extracts scoped SSA flow patterns. */
   private static void extractSsaFlowEdges(SootClass sootClass, Set<String> applicationClassSet, Set<FlowEdge> flowEdges) {
     for (SootMethod method : sootClass.getMethods()) {
       if (!method.isConcrete()) {
@@ -307,6 +318,7 @@ public final class SootExtractorCli {
     }
   }
 
+  /** Records return-value flow when one application call result is passed into another application call. */
   private static void extractReturnValueFlows(
       SootMethod method,
       ShimpleBody shimpleBody,
@@ -349,6 +361,7 @@ public final class SootExtractorCli {
     }
   }
 
+  /** Records argument-passing flow from a resolved application source class to an invoked application class. */
   private static void extractArgumentPassingFlows(
       SootMethod method,
       ShimpleBody shimpleBody,
@@ -487,6 +500,7 @@ public final class SootExtractorCli {
     return discoverApplicationClasses(classesDir, appPackages, List.of());
   }
 
+  /** Discovers compiled classes that match the configured include and exclude package prefixes. */
   static List<String> discoverApplicationClasses(Path classesDir, List<String> appPackages, List<String> excludePackages)
       throws IOException {
     try (Stream<Path> files = Files.walk(classesDir)) {
@@ -523,6 +537,7 @@ public final class SootExtractorCli {
     }
   }
 
+  /** Writes class_nodes.csv using fully qualified class names as stable class ids. */
   static void writeClassNodes(Path path, List<ClassNode> classNodes) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
       writer.write(String.join(",", CLASS_NODES_COLUMNS));
@@ -534,6 +549,7 @@ public final class SootExtractorCli {
     }
   }
 
+  /** Writes structural_dependencies.csv with type and call evidence rows. */
   static void writeStructuralDependencies(Path path, List<StructuralDependency> dependencies) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
       writer.write(String.join(",", STRUCTURAL_DEPENDENCY_COLUMNS));
@@ -552,6 +568,7 @@ public final class SootExtractorCli {
     }
   }
 
+  /** Writes ssa_flow_edges.csv with return-value and argument-passing flow rows. */
   static void writeSsaFlowEdges(Path path, List<FlowEdge> flowEdges) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
       writer.write(String.join(",", SSA_FLOW_COLUMNS));

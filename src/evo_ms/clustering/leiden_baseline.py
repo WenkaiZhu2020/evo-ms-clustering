@@ -1,3 +1,5 @@
+"""Run weighted Leiden clustering for Stage 1 graph baselines."""
+
 import pandas as pd
 
 
@@ -14,6 +16,7 @@ def run_leiden_baseline(
     resolution: float = 1.0,
     seed: int | None = 42,
 ) -> pd.DataFrame:
+    """Cluster all extracted classes with Leiden using the requested graph weight."""
     weight_column = _weight_column(graph_type)
     _validate_class_nodes(class_nodes)
     _validate_edges(edges, weight_column, class_nodes)

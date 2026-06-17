@@ -1,3 +1,5 @@
+"""Build the undirected G_raw class graph from structural dependency evidence."""
+
 from collections.abc import Iterable
 import warnings
 
@@ -79,6 +81,7 @@ def build_raw_graph(
     edges_or_class_nodes: Iterable[tuple[str, str]] | pd.DataFrame,
     structural_dependencies: pd.DataFrame | None = None,
 ):
+    """Create a NetworkX view of G_raw while preserving isolated class nodes."""
     import networkx as nx
 
     graph = nx.Graph()

@@ -12,6 +12,10 @@ if [[ ! -x "$PYTHON_BIN" ]]; then
   PYTHON_BIN="${PYTHON:-python3}"
 fi
 
+if [[ -z "${SKIP_JPETSTORE_PREPARE:-}" ]]; then
+  bash scripts/prepare_jpetstore.sh
+fi
+
 if [[ -z "${JAVA_HOME:-}" ]] && command -v /usr/libexec/java_home >/dev/null 2>&1; then
   JAVA_HOME="$(/usr/libexec/java_home -v 17)"
   export JAVA_HOME
