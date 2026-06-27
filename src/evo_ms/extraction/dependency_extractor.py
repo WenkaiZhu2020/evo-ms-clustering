@@ -1,3 +1,5 @@
+"""Load and validate normalized extraction CSV files for Stage 1."""
+
 from pathlib import Path
 from typing import Any
 
@@ -71,6 +73,7 @@ def load_ssa_flow_edges_csv(path: str | Path, class_nodes: pd.DataFrame) -> pd.D
 
 
 def load_extracted_subject(extracted_dir: str | Path) -> dict[str, pd.DataFrame]:
+    """Load the three normalized CSV tables used by graph construction."""
     root = Path(extracted_dir)
     class_nodes = load_class_nodes_csv(root / "class_nodes.csv")
     structural_dependencies = load_structural_dependencies_csv(
@@ -166,6 +169,7 @@ def _validate_edge_endpoints(
 
 
 def extract_dependencies(project_dir: str | Path, output_dir: str | Path) -> dict[str, Any]:
+    """Placeholder for a future Python-side extractor entry point."""
     return {
         "project_dir": str(project_dir),
         "output_dir": str(output_dir),

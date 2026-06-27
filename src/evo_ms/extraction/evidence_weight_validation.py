@@ -1,3 +1,5 @@
+"""Validate embedded evidence weights in normalized extraction outputs."""
+
 from __future__ import annotations
 
 from collections.abc import Mapping
@@ -14,6 +16,7 @@ DEFAULT_EXPECTED_EXTRACTED_EVIDENCE_WEIGHTS: dict[str, float] = {
 
 
 def expected_extracted_evidence_weights(config: Mapping[str, object]) -> dict[str, float]:
+    """Read expected CSV row weights from config, falling back to Stage 1 defaults."""
     values = config.get("expected_extracted_evidence_weights")
     if values is None:
         return dict(DEFAULT_EXPECTED_EXTRACTED_EVIDENCE_WEIGHTS)

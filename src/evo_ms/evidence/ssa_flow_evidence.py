@@ -1,3 +1,5 @@
+"""Aggregate SSA-derived flow evidence into class-pair weights."""
+
 import pandas as pd
 
 ALLOWED_SSA_FLOW_TYPES = frozenset({"return_value_flow", "argument_passing_flow"})
@@ -14,6 +16,7 @@ SSA_FLOW_AGGREGATE_COLUMNS = [
 
 
 def validate_ssa_flow_type(flow_type: str) -> str:
+    """Validate that a flow type is one of the two Stage 1 SSA channels."""
     if flow_type not in ALLOWED_SSA_FLOW_TYPES:
         allowed = ", ".join(sorted(ALLOWED_SSA_FLOW_TYPES))
         raise ValueError(f"unsupported SSA flow type: {flow_type}; expected one of: {allowed}")

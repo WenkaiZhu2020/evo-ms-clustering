@@ -1,7 +1,10 @@
+"""Summarize class membership for generated Leiden clusters."""
+
 import pandas as pd
 
 
 def summarize_clusters(clusters: pd.DataFrame) -> pd.DataFrame:
+    """Return cluster sizes and class-name lists for reportable CSV summaries."""
     _validate_clusters(clusters)
     summary = (
         clusters.assign(class_name=clusters["class_name"].astype(str))

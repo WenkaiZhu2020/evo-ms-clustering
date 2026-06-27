@@ -1,3 +1,5 @@
+"""Run Xerces-J scale and sensitivity diagnostics for Stage 1."""
+
 from __future__ import annotations
 
 import argparse
@@ -33,6 +35,7 @@ SSA_LAMBDAS = [0.0, 0.25, 0.5, 1.0, 2.0, 3.0, 4.0]
 
 
 def run_xerces_j_sensitivity(root: Path = ROOT) -> Path:
+    """Generate Xerces-J resolution, lambda, and cluster-size sensitivity CSVs."""
     logger = get_logger(__name__)
     subject = "xerces-j"
     subject_config = _load_subject_config(root, subject)
@@ -139,6 +142,7 @@ def _resolution_sweep(
     resolutions: Iterable[float],
     seed: int,
 ) -> pd.DataFrame:
+    """Measure how raw and SSA partitions change across Leiden resolutions."""
     rows = []
     defaults = {
         "raw": default_raw_clusters,
@@ -188,6 +192,7 @@ def _ssa_lambda_sweep(
     ssa_lambdas: Iterable[float],
     seed: int,
 ) -> pd.DataFrame:
+    """Measure how the Xerces-J SSA partition changes as lambda increases."""
     rows = []
     for ssa_lambda in ssa_lambdas:
         ssa_edges = build_ssa_edges(

@@ -61,6 +61,21 @@ def test_run_leiden_baseline_uses_g_ssa_weight_for_ssa_graph() -> None:
     assert clusters["class_id"].tolist() == ["A", "B"]
 
 
+def test_run_leiden_baseline_accepts_n_iterations_override() -> None:
+    require_leiden()
+
+    clusters = run_leiden_baseline(
+        class_nodes_frame("A", "B", "C", "D"),
+        edge_frame(("A", "B", 2.0), ("C", "D", 2.0), weight_column="g_ssa_weight"),
+        graph_type="ssa",
+        seed=7,
+        n_iterations=-1,
+    )
+
+    assert clusters["class_id"].tolist() == ["A", "B", "C", "D"]
+    assert clusters["cluster_id"].notna().all()
+
+
 def test_run_leiden_baseline_rejects_invalid_graph_type() -> None:
     with pytest.raises(ValueError, match="graph_type must be 'raw' or 'ssa'"):
         run_leiden_baseline(

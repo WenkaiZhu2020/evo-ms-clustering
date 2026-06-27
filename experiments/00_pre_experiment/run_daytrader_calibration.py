@@ -1,3 +1,5 @@
+"""Run DayTrader lambda/resolution calibration for formal Stage 1 profiles."""
+
 from __future__ import annotations
 
 import argparse
@@ -37,6 +39,7 @@ def run_daytrader_calibration(
     ssa_lambdas: list[float] | None = None,
     resolutions: list[float] | None = None,
 ) -> Path:
+    """Run the DayTrader sweep and write calibration summaries and selected profiles."""
     logger = get_logger(__name__)
     subject_config = _load_subject_config(root, subject)
     pre_config = load_yaml(root / "configs" / "experiments" / "00_pre_experiment.yml")
@@ -187,6 +190,7 @@ def _load_subject_config(root: Path, subject: str) -> dict:
 
 
 def _rank_settings(summary: pd.DataFrame) -> pd.DataFrame:
+    """Rank visible sweep rows using internal-first diagnostics for inspection."""
     if summary.empty:
         return summary
     ranked = _with_admissibility_flags(summary)
@@ -220,6 +224,7 @@ def select_baseline_profiles(
     expected_weights: dict[str, float],
     seed: int = 42,
 ) -> dict:
+    """Select raw and minimum-effective SSA profiles from admissible candidates."""
     ranked = _with_admissibility_flags(summary)
     ranked["resolution_distance_from_1"] = (ranked["resolution"] - 1.0).abs()
     raw = (

@@ -1,3 +1,5 @@
+"""Weight formulas for Stage 1 raw and SSA-informed class edges."""
+
 from collections.abc import Mapping
 import math
 
@@ -10,6 +12,7 @@ DEFAULT_EVIDENCE_WEIGHTS: dict[str, float] = {
 
 
 def calculate_raw_weight(type_weight: object = 0.0, call_weight: object = 0.0) -> float:
+    """Combine structural type and call evidence into raw_weight."""
     return _validated_weight(type_weight, "type_weight") + _validated_weight(
         call_weight,
         "call_weight",
@@ -39,6 +42,7 @@ def calculate_g_ssa_weight(
     argument_flow_weight: object = 0.0,
     ssa_lambda: object = 1.0,
 ) -> float:
+    """Return the total G_ssa edge weight for one class pair."""
     return calculate_raw_weight(type_weight, call_weight) + calculate_ssa_flow_weight(
         return_flow_weight,
         argument_flow_weight,
@@ -71,6 +75,7 @@ def calculate_edge_weight(
     evidence_types: list[str] | tuple[str, ...],
     weights: dict[str, float] | None = None,
 ) -> float:
+    """Sum configured evidence weights for simple unit tests and utilities."""
     active_weights = weights or DEFAULT_EVIDENCE_WEIGHTS
     total = 0.0
     for evidence_type in evidence_types:

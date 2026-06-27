@@ -1,3 +1,5 @@
+"""Run the Stage 1 diagnostic pre-experiment workflow."""
+
 from __future__ import annotations
 
 import argparse
@@ -31,6 +33,7 @@ def run_pre_experiment(
     resolution: float | None = None,
     ssa_lambda: float | None = None,
 ) -> list[Path]:
+    """Run raw-vs-SSA graph construction, Leiden, and impact diagnostics."""
     config = load_yaml(config_path or root / "configs" / "experiments" / "00_pre_experiment.yml")
     subjects = [subject] if subject else list(config.get("subjects", []))
     if not subjects:
@@ -67,6 +70,7 @@ def run_subject(
     expected_weights: dict[str, float],
     seed: int,
 ) -> Path:
+    """Generate one subject's mutable diagnostic outputs under 00_pre_experiment."""
     logger = get_logger(__name__)
     subject_config = _load_subject_config(root, subject)
     extracted_dir = root / subject_config.get("extracted_output_path", f"data/extracted/{subject}")
