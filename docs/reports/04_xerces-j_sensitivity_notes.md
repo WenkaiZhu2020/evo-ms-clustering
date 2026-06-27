@@ -62,14 +62,16 @@ The generic Pre-experiment runner remains responsible for the default raw-vs-SSA
 
 ## 5. Main Observation
 
-Xerces-J shows visible sensitivity to the SSA contribution.
+Xerces-J shows visible sensitivity to the SSA contribution at a fixed seed.
 
-As lambda increases, SSA-derived evidence can connect more classes across existing structural regions. This may enlarge dominant clusters or shift cluster boundaries more strongly.
+This must be read against a seed-noise baseline. On Xerces-J the raw Leiden partition is itself highly seed-unstable (28 distinct partitions across 30 seeds), and 37% of pure reseeds move the raw partition by at least the mean SSA effect. The lambda-sweep and SSA-driven movement described below are therefore real at a fixed seed, but lie within the same order as Leiden's own seed-induced variation on this subject. See section 7 "Seed Robustness Control" in `02_stage1_cross_case_summary.md`.
+
+As lambda increases, SSA-derived evidence can connect more classes across existing structural regions. This may enlarge dominant clusters or shift cluster boundaries more strongly at a fixed seed (read against the seed-noise baseline above).
 
 The result supports a cautious interpretation:
 
 * SSA provides additional behavioural evidence;
-* the additional evidence changes the partition;
+* the additional evidence changes the partition at a fixed seed, but within Leiden's seed-noise band on this subject (section 7);
 * a stronger SSA contribution may increase aggregation risk;
 * the effect should be controlled rather than assumed to be beneficial.
 

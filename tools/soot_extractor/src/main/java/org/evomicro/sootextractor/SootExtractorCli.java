@@ -171,7 +171,13 @@ public final class SootExtractorCli {
           source);
     }
     for (SootClass iface : sootClass.getInterfaces()) {
-      addTypeDependency(source, iface.getName(), applicationClassSet, dependencies, "implements_type_reference", source);
+      addTypeDependency(
+        source, 
+        iface.getName(), 
+        applicationClassSet, 
+        dependencies, 
+        "implements_type_reference", 
+        source);
     }
     for (SootField field : sootClass.getFields()) {
       addTypeDependency(
