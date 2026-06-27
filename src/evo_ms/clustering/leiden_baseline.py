@@ -15,8 +15,15 @@ def run_leiden_baseline(
     graph_type: str = "ssa",
     resolution: float = 1.0,
     seed: int | None = 42,
+    n_iterations: int | None = None,
 ) -> pd.DataFrame:
-    """Cluster all extracted classes with Leiden using the requested graph weight."""
+    """Cluster all extracted classes with Leiden using the requested graph weight.
+
+    ``n_iterations`` is forwarded to ``leidenalg.find_partition`` only when it is
+    not ``None``. Leaving it ``None`` keeps the library default, so the frozen
+    formal pipeline is unaffected; the seed-robustness harness passes ``-1`` to
+    run Leiden to convergence.
+    """
     weight_column = _weight_column(graph_type)
     _validate_class_nodes(class_nodes)
     _validate_edges(edges, weight_column, class_nodes)
@@ -42,12 +49,17 @@ def run_leiden_baseline(
     graph.vs["class_id"] = node_ids
     graph.es["weight"] = weights
 
+    partition_kwargs = {
+        "weights": "weight",
+        "resolution_parameter": resolution,
+        "seed": seed,
+    }
+    if n_iterations is not None:
+        partition_kwargs["n_iterations"] = n_iterations
     partition = leidenalg.find_partition(
         graph,
         leidenalg.RBConfigurationVertexPartition,
-        weights="weight",
-        resolution_parameter=resolution,
-        seed=seed,
+        **partition_kwargs,
     )
 
     return pd.DataFrame(

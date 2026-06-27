@@ -78,13 +78,36 @@ results/daytrader/00_pre_experiment/calibration/selected_baseline_profiles.yml
 ## 6. Main Findings
 
 * SSA adds new class-level relations in all three subjects.
-* SSA changes clustering behaviour, but the amount of change differs by subject.
+* At the frozen seed, switching to G_ssa changes the partition (Section 4), but a 30-seed robustness control shows this change stays within Leiden's own seed-induced variation -- within +/-2 std of the seed-noise distance on DayTrader and Xerces-J, where 19% and 37% of pure reseeds move the raw partition by at least the mean SSA effect. SSA does not repartition classes beyond seed noise, which supports shelving SSA at class level (see Section 7 and `results/<subject>/02_stage1_seed_robustness/`).
 * Additional flow evidence does not automatically improve internal structural metrics.
-* Higher SSA contribution may enlarge dominant clusters.
+* Higher SSA contribution may enlarge dominant clusters, though on Xerces-J this movement is within Leiden's seed-noise variation (Section 7).
 * Calibration uses internal structural metrics as primary signals and reference metrics as sanity checks.
 * A minimum-effective non-zero SSA profile is retained for controlled comparison rather than as an assumed improvement.
 
-## 7. Limitations
+## 7. Seed Robustness Control
+
+Leiden is stochastic, so the formal profiles fix a single seed (42). To test whether the raw->SSA partition change is meaningful, a 30-seed control (seeds 0-29, resolution 1.0, raw lambda 0.0, ssa lambda 0.25, Leiden run to convergence) compares two distance distributions per subject, with distance = 1 - ARI:
+
+* SSA effect: `ARI(raw_seed_i, ssa_seed_i)` over the 30 seeds;
+* Seed noise: `ARI(raw_seed_i, raw_seed_j)` over all 435 seed pairs.
+
+| Subject | SSA-effect distance (mean +/- std) | Seed-noise distance (mean +/- std) | SSA effect within seed-noise +/-2 std | Reseeds moving raw >= mean SSA effect |
+| --- | --- | --- | --- | ---: |
+| JPetStore | 0.123 +/- 0.000 | 0.000 +/- 0.000 | n/a -- raw seed-stable (1 partition / 30 seeds) | 0% |
+| DayTrader | 0.109 +/- 0.094 | 0.066 +/- 0.144 | yes (band [-0.224, 0.354]) | 19% |
+| Xerces-J | 0.283 +/- 0.064 | 0.216 +/- 0.109 | yes (band [-0.002, 0.434]) | 37% |
+
+On the two seed-unstable subjects (DayTrader, Xerces-J) the mean SSA-effect distance is the same order as the seed-noise distance and lies inside its +/-2 std band, and a substantial fraction of pure reseeds (19% and 37%) move the raw partition by at least the mean SSA effect. On Xerces-J the raw partition is itself highly seed-unstable (28 distinct partitions across 30 seeds). JPetStore is the seed-trivial 24-class case: its raw partition is identical across all seeds, so any SSA change registers as "outside" zero noise.
+
+Conclusion: at the frozen seed, switching to G_ssa does change the partition (Section 4), but that change does not exceed Leiden's own seed-induced variation. SSA does not repartition classes beyond seed noise, which supports shelving SSA at class level. Per-subject values, raw seed distributions, and run metadata are in `results/<subject>/02_stage1_seed_robustness/`.
+
+### Reading the Mann-Whitney result
+
+A Mann-Whitney U test on the two distance distributions returns p < 0.05 for every subject (DayTrader p = 2.7e-14, Xerces-J p = 0.0027). This does not contradict "SSA effect within seed noise." Mann-Whitney only asks whether one distribution tends to rank higher than the other; here it is detecting a difference in distribution *shape*, not a larger repartition. The seed-noise distances are zero-inflated -- 81% of reseed pairs are identical on DayTrader (3% on Xerces-J) -- while the SSA-effect distances are never zero (smallest 0.054 on DayTrader, 0.119 on Xerces-J). A test that compares "many exact zeros" against "never zero" separates the two easily even when their non-zero magnitudes overlap, which they do.
+
+The p-value is also not a trustworthy strict-significance statement here: the 435 seed-noise pairs are built from only 30 raw partitions, so they share data and are not independent samples, which violates the test's assumptions. It is reported as a guideline alongside the effect-size and band-overlap view above, not as proof that SSA matters.
+
+## 8. Limitations
 
 The current evaluation has several limits:
 
@@ -93,7 +116,7 @@ The current evaluation has several limits:
 * Xerces-J is used for scale and sensitivity rather than external accuracy;
 * the selected Leiden profiles should be treated as reproducible reference points for later comparison.
 
-## 8. Reproduction
+## 9. Reproduction
 
 Run:
 
@@ -108,6 +131,8 @@ bash scripts/run_xerces_j_sensitivity.sh
 bash scripts/run_stage1_jpetstore.sh
 bash scripts/run_stage1_daytrader.sh
 bash scripts/run_stage1_xerces_j.sh
+
+python experiments/01_stage1_leiden_baseline/run_seed_robustness.py --num-seeds 30
 ```
 
 Main outputs:
@@ -117,6 +142,7 @@ results/<subject>/00_pre_experiment/
 results/daytrader/00_pre_experiment/calibration/
 results/xerces-j/00_pre_experiment/sensitivity/
 results/<subject>/01_stage1_leiden_baseline/
+results/<subject>/02_stage1_seed_robustness/
 ```
 
 Pre-experiment diagnostic results are reported separately in the calibration and sensitivity notes. They should not be mixed with the frozen formal Stage 1 profiles reported in this cross-case summary.

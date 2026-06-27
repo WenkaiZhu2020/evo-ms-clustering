@@ -1,0 +1,46 @@
+subject: xerces-j
+role: seed_robustness_control_for_ssa_effect
+does_not_modify: results/<subject>/01_stage1_leiden_baseline/
+resolution: 1.0
+raw_ssa_lambda: 0.0
+ssa_ssa_lambda: 0.25
+n_iterations: -1
+seeds:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 16
+- 17
+- 18
+- 19
+- 20
+- 21
+- 22
+- 23
+- 24
+- 25
+- 26
+- 27
+- 28
+- 29
+source_extracted_data: data/extracted/xerces-j/
+extracted_input_sha256:
+  class_nodes.csv: 05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2
+  structural_dependencies.csv: 5e9a30af0b89d61a4aa4d639d9f379f7a50408706b6efad07c9fa028976dd09c
+  ssa_flow_edges.csv: a66b3c7c7592d5dab18a1ddd6eb090ef3974c1d2d547d16f26125d1131ab794d
+generated_at_utc: '2026-06-25T14:06:31Z'
+git_head: 11a8f823227357561b91624339954b68b85a0904
+git_dirty: true
