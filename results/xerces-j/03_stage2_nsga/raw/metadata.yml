@@ -1,0 +1,57 @@
+subject: xerces-j
+role: stage2_raw_structure_only_nsga
+input_graph: G_raw
+weight_column: raw_weight
+stage1_baseline_profile: raw_reference_leiden
+population_size: 100
+generations: 100
+seeds:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+source_extracted_data: data/extracted/xerces-j/
+extracted_input_sha256:
+  class_nodes.csv: 05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2
+  structural_dependencies.csv: 5e9a30af0b89d61a4aa4d639d9f379f7a50408706b6efad07c9fa028976dd09c
+graph_edge_sha256: 3795b4ab2c33a48f521f6242b791bf29f5a1c67364a3938d504594bae9c6a12e
+hypervolume_reference_point:
+- 1.0629532710280374
+- 3.6131768814564773
+- 6.2451284310352815
+hypervolume_reference_point_method: nadir_plus_10_percent_observed_span
+hypervolume_scope: subject_raw_objective_space_only
+initialization:
+  enabled: true
+  strategy: structure_aware_seeded
+  basis: raw_reference_leiden_and_raw_graph
+  include_raw_leiden: true
+  random_fill: true
+  perturbations:
+    enabled: true
+    fractions:
+    - 0.005
+    - 0.01
+    - 0.02
+    - 0.05
+    per_fraction: 5
+  graph_groupings:
+    enabled: true
+    target_offsets_from_raw_leiden:
+    - -10
+    - 0
+    - 10
+    include_sqrt_target: true
+  provenance_columns:
+  - is_injected_seed
+  - injected_seed_name
+  - injected_seed_category
+generated_at_utc: '2026-06-30T13:00:55Z'
+git_head: ef35ca70d54ead60709c407385267c77f04359af
+git_dirty: true
