@@ -1,0 +1,52 @@
+experiment_name: 02_stage2_nsga_structure_only
+description: Raw-graph structure-only NSGA-II (pymoo) with three structural objectives, compared against the frozen Stage 1 raw Leiden baseline.
+subject: null
+input_graph:
+  name: G_raw
+  weight_column: raw_weight
+  evidence:
+    - type_dependency
+    - method_call
+# Three optimization objectives. All other metrics are post-hoc evaluation only.
+objectives:
+  - name: coupling
+    direction: minimize
+  - name: cohesion
+    direction: maximize
+  - name: imbalance
+    direction: minimize
+# Hard anti-degeneration constraints from Stage 1 admissibility.
+constraints:
+  max_cluster_ratio: 0.4
+  singleton_ratio: 0.15
+  min_cluster_count: 2
+nsga:
+  algorithm: NSGA2          # via pymoo; do not hand-write the algorithm core.
+  population_size: 100
+  generations: 100
+initialization:
+  enabled: true
+  strategy: structure_aware_seeded
+  basis: raw_reference_leiden_and_raw_graph
+  include_raw_leiden: true
+  random_fill: true
+  perturbations:
+    enabled: true
+    fractions: [0.005, 0.01, 0.02, 0.05]
+    per_fraction: 5
+  graph_groupings:
+    enabled: true
+    target_offsets_from_raw_leiden: [-10, 0, 10]
+    include_sqrt_target: true
+# Frozen Stage 1 Leiden comparison profile for ARI/NMI through partition_similarity.
+baseline_leiden_profiles:
+  - raw_reference_leiden
+# Post-hoc evaluation metrics only. None of these are optimization objectives.
+post_hoc_metrics:
+  - modularity
+  - hypervolume
+  - mojofm        # DayTrader only.
+  - pairwise_f1   # DayTrader only.
+# Multi-seed robustness for stochastic NSGA-II, mirroring the Stage 1 pattern.
+random_seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+output_root: results       # Future output path: results/<subject>/03_stage2_nsga/.
