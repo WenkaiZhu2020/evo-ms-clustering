@@ -27,7 +27,7 @@ from evo_ms.evaluation.partition_metrics import cluster_size_distribution
 from evo_ms.evaluation.partition_metrics import partition_similarity
 from evo_ms.evaluation.reference_metrics import calculate_reference_metrics
 from evo_ms.evaluation.reference_metrics import load_reference_mapping
-from evo_ms.extraction.dependency_extractor import load_extracted_subject
+from evo_ms.extraction.dependency_extractor import load_raw_extracted_subject
 from evo_ms.graph.raw_graph_builder import build_raw_edges
 from evo_ms.optimization import encoding
 from evo_ms.optimization.objectives import evaluate_structural_objectives
@@ -198,8 +198,7 @@ def _run_seed(
         verbose=False,
         save_history=False,
     )
-    labels, objective_matrix, constraints = _result_arrays(result)
-    _ = objective_matrix
+    labels, _, constraints, front_diagnostics = _front_arrays(result)
     solutions = []
     seen: set[tuple[int, ...]] = set()
     for raw_labels, raw_g in zip(labels, constraints, strict=True):
@@ -226,30 +225,112 @@ def _run_seed(
                 "injected_seed_category": "" if seed_record is None else str(seed_record["category"]),
             }
         )
-    solutions.sort(key=lambda item: (item["F"][0], item["F"][1], item["F"][2]))
+    solutions.sort(key=lambda item: (item["F"][0], item["F"][1], item["F"][2], _label_key(item["labels"])))
+    front_diagnostics["n_unique_objective_vectors"] = int(
+        len({tuple(_objective_key(solution["F"])) for solution in solutions})
+    )
+    front_diagnostics["n_unique_canonical_partitions"] = int(
+        len({_label_key(solution["labels"]) for solution in solutions})
+    )
+    front_diagnostics["front_validation_passed"] = bool(
+        len(solutions) == front_diagnostics["n_unique_canonical_partitions"]
+        and len(solutions) <= front_diagnostics["recomputed_nondominated_size"]
+    )
     return {
         "seed": int(seed),
         "solutions": solutions,
         "seed_initialization_count": len(seed_records),
         "seed_initialization_categories": _category_counts(seed_records),
+        "front_diagnostics": front_diagnostics,
     }
 
 
 def _result_arrays(result) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    opt = result.opt
-    labels = opt.get("X")
-    objectives = opt.get("F")
-    constraints = opt.get("G")
-    if labels is None or len(labels) == 0:
-        labels = result.pop.get("X")
-        objectives = result.pop.get("F")
-        constraints = result.pop.get("G")
-    labels = np.atleast_2d(np.asarray(labels, dtype=int))
-    objectives = np.atleast_2d(np.asarray(objectives, dtype=float))
+    labels, objectives, constraints, _ = _front_arrays(result)
+    return labels, objectives, constraints
+
+
+def _front_arrays(result) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, object]]:
+    pop_x, pop_f, pop_g = _population_arrays(result.pop)
+    opt_x, opt_f, opt_g = _population_arrays(result.opt)
+    final_population_size = len(pop_x)
+    result_opt_size = len(opt_x)
+    feasible_mask = _feasible_mask(pop_g, final_population_size)
+    feasible_population_size = int(np.sum(feasible_mask))
+    constraint_violating_population_size = int(final_population_size - feasible_population_size)
+    if final_population_size == 0:
+        labels, objectives, constraints = opt_x, opt_f, opt_g
+        recomputed_size = 0
+        source = "result.opt" if result_opt_size else "result.pop_fallback"
+        used_infeasible_fallback = False
+    else:
+        pool_mask = feasible_mask if feasible_population_size else np.ones(final_population_size, dtype=bool)
+        pool_indices = np.flatnonzero(pool_mask)
+        front_local = _nondominated_indices(pop_f[pool_indices])
+        front_indices = pool_indices[front_local]
+        labels = pop_x[front_indices]
+        objectives = pop_f[front_indices]
+        constraints = pop_g[front_indices]
+        recomputed_size = len(front_indices)
+        used_infeasible_fallback = feasible_population_size == 0
+        source = "recomputed_nondominated_front"
+
+    canonical_keys = [_label_key(row) for row in labels]
+    objective_keys = [_objective_key(row) for row in objectives]
+    diagnostics = {
+        "front_source": source,
+        "final_population_size": int(final_population_size),
+        "result_opt_size": int(result_opt_size),
+        "feasible_population_size": feasible_population_size,
+        "constraint_violating_population_size": constraint_violating_population_size,
+        "recomputed_nondominated_size": int(recomputed_size),
+        "n_unique_objective_vectors": int(len(set(objective_keys))),
+        "n_unique_canonical_partitions": int(len(set(canonical_keys))),
+        "front_validation_passed": bool(len(labels) == recomputed_size),
+        "has_feasible_solution": bool(feasible_population_size > 0),
+        "used_infeasible_fallback": bool(used_infeasible_fallback),
+    }
+    return labels, objectives, constraints, diagnostics
+
+
+def _population_arrays(population) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    if population is None or len(population) == 0:
+        return (
+            np.empty((0, 0), dtype=int),
+            np.empty((0, 3), dtype=float),
+            np.empty((0, 3), dtype=float),
+        )
+    labels = np.atleast_2d(np.asarray(population.get("X"), dtype=int))
+    objectives = np.atleast_2d(np.asarray(population.get("F"), dtype=float))
+    constraints = population.get("G")
     if constraints is None:
         constraints = np.zeros((len(labels), 3), dtype=float)
     constraints = np.atleast_2d(np.asarray(constraints, dtype=float))
     return labels, objectives, constraints
+
+
+def _feasible_mask(constraints: np.ndarray, size: int) -> np.ndarray:
+    if size == 0:
+        return np.asarray([], dtype=bool)
+    if constraints.size == 0:
+        return np.ones(size, dtype=bool)
+    return np.all(np.atleast_2d(constraints) <= 0.0, axis=1)
+
+
+def _nondominated_indices(objectives: np.ndarray) -> np.ndarray:
+    if len(objectives) == 0:
+        return np.asarray([], dtype=int)
+    from pymoo.util.nds.non_dominated_sorting import NonDominatedSorting
+
+    indices = NonDominatedSorting().do(
+        np.asarray(objectives, dtype=float),
+        only_non_dominated_front=True,
+    )
+    return np.asarray(sorted(indices.tolist()), dtype=int)
+
+
+def _objective_key(values: np.ndarray) -> tuple[str, ...]:
+    return tuple(f"{float(value):.12g}" for value in np.asarray(values, dtype=float))
 
 
 def _materialize_results(
@@ -411,14 +492,15 @@ def _select_solution(posthoc_rows: list[dict], pareto_rows: list[dict]) -> dict:
     ]
     if not candidates:
         candidates = [row for row in pareto_rows if row["solution_id"] in posthoc_by_id]
-    selected = max(
+    selected = min(
         candidates,
         key=lambda row: (
-            float(posthoc_by_id[row["solution_id"]]["weighted_modularity"]),
-            not bool(row["is_injected_seed"]),
-            -float(row["coupling"]),
-            float(row["cohesion"]),
-            -float(row["imbalance"]),
+            -float(posthoc_by_id[row["solution_id"]]["weighted_modularity"]),
+            bool(row["is_injected_seed"]),
+            float(row["coupling"]),
+            -float(row["cohesion"]),
+            float(row["imbalance"]),
+            _label_tuple_from_row(row),
         ),
     )
     metrics = posthoc_by_id[selected["solution_id"]]
@@ -585,7 +667,7 @@ def _raw_graph_inputs(
     subject_config: Mapping[str, object],
 ) -> tuple[Path, dict[str, pd.DataFrame], pd.DataFrame]:
     extracted_dir = root / subject_config.get("extracted_output_path", f"data/extracted/{subject}")
-    extracted = load_extracted_subject(extracted_dir)
+    extracted = load_raw_extracted_subject(extracted_dir)
     raw_edges = build_raw_edges(extracted["class_nodes"], extracted["structural_dependencies"])
     return extracted_dir, extracted, raw_edges
 
@@ -745,7 +827,10 @@ def _strongest_edge_grouping_labels(
             index = parent[index]
         return int(index)
 
-    for row in raw_edges.sort_values(RAW_WEIGHT_COLUMN, ascending=False).to_dict("records"):
+    for row in raw_edges.sort_values(
+        [RAW_WEIGHT_COLUMN, "source", "target"],
+        ascending=[False, True, True],
+    ).to_dict("records"):
         if cluster_count <= target_count:
             break
         left = index_by_id.get(str(row["source"]))
@@ -764,14 +849,17 @@ def _strongest_edge_grouping_labels(
     return repair_labels(np.asarray([find(index) for index in range(class_count)], dtype=int), class_count)
 
 
-def _adjacency_by_class(edges: pd.DataFrame) -> dict[str, set[str]]:
+def _adjacency_by_class(edges: pd.DataFrame) -> dict[str, tuple[str, ...]]:
     adjacency: dict[str, set[str]] = {}
     for row in edges.to_dict("records"):
         source = str(row["source"])
         target = str(row["target"])
         adjacency.setdefault(source, set()).add(target)
         adjacency.setdefault(target, set()).add(source)
-    return adjacency
+    return {
+        class_id: tuple(sorted(neighbors))
+        for class_id, neighbors in sorted(adjacency.items())
+    }
 
 
 def _deduplicate_seed_records(
@@ -793,6 +881,15 @@ def _deduplicate_seed_records(
 def _label_key(labels: np.ndarray) -> tuple[int, ...]:
     canonical = encoding.canonical_relabel(labels)
     return tuple(int(value) for value in canonical.tolist())
+
+
+def _label_tuple_from_row(row: Mapping[str, object]) -> tuple[int, ...]:
+    value = row.get("label_vector", "[]")
+    if isinstance(value, str):
+        labels = json.loads(value)
+    else:
+        labels = value
+    return _label_key(np.asarray(labels, dtype=int))
 
 
 def _category_counts(records: list[dict[str, object]]) -> dict[str, int]:

@@ -88,6 +88,20 @@ def load_extracted_subject(extracted_dir: str | Path) -> dict[str, pd.DataFrame]
     }
 
 
+def load_raw_extracted_subject(extracted_dir: str | Path) -> dict[str, pd.DataFrame]:
+    """Load only the raw structural inputs required by raw-only Stage 2."""
+    root = Path(extracted_dir)
+    class_nodes = load_class_nodes_csv(root / "class_nodes.csv")
+    structural_dependencies = load_structural_dependencies_csv(
+        root / "structural_dependencies.csv",
+        class_nodes,
+    )
+    return {
+        "class_nodes": class_nodes,
+        "structural_dependencies": structural_dependencies,
+    }
+
+
 def _read_required_columns(path: str | Path, required_columns: list[str]) -> pd.DataFrame:
     csv_path = Path(path)
     frame = pd.read_csv(csv_path)

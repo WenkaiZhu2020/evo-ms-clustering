@@ -1,0 +1,27 @@
+{
+  "config_sha256": "b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d",
+  "git_commit": "131587f2a4b77d1b8c2153eab16a5d64944ee05c",
+  "normalization_bounds": {
+    "lower_bounds": [
+      0.1084409594095941,
+      -72.3878017032274,
+      -0.11958553641765944
+    ],
+    "upper_bounds": [
+      0.89940036900369,
+      5.271193030968573,
+      1.6356401977353319
+    ]
+  },
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance"
+  ],
+  "reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "seed": 0
+}
