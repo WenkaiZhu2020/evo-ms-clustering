@@ -1,0 +1,150 @@
+{
+  "algorithm_config_sha256": "b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d",
+  "bounds_config": "configs/experiments/stage2_robustness_bounds.yml",
+  "bounds_config_sha256": "6cc452f1d235539d05658f93d25c5dbffbd1cfcb3b7bc85ebfefe528b2769c13",
+  "calibration_seeds": [
+    1000,
+    1001
+  ],
+  "calibration_status": "smoke",
+  "config_path": "configs/experiments/02_stage2_nsga_structure_only.yml",
+  "config_snapshot": {
+    "baseline_leiden_profiles": [
+      "raw_reference_leiden"
+    ],
+    "constraints": {
+      "max_cluster_ratio": 0.4,
+      "min_cluster_count": 2,
+      "singleton_ratio": 0.15
+    },
+    "description": "Raw-graph structure-only NSGA-II (pymoo) with three structural objectives, compared against the frozen Stage 1 raw Leiden baseline.",
+    "experiment_name": "02_stage2_nsga_structure_only",
+    "initialization": {
+      "basis": "raw_reference_leiden_and_raw_graph",
+      "enabled": true,
+      "graph_groupings": {
+        "enabled": true,
+        "include_sqrt_target": true,
+        "target_offsets_from_raw_leiden": [
+          -10,
+          0,
+          10
+        ]
+      },
+      "include_raw_leiden": true,
+      "perturbations": {
+        "enabled": true,
+        "fractions": [
+          0.005,
+          0.01,
+          0.02,
+          0.05
+        ],
+        "per_fraction": 5
+      },
+      "random_fill": true,
+      "strategy": "structure_aware_seeded"
+    },
+    "input_graph": {
+      "evidence": [
+        "type_dependency",
+        "method_call"
+      ],
+      "name": "G_raw",
+      "weight_column": "raw_weight"
+    },
+    "nsga": {
+      "algorithm": "NSGA2",
+      "generations": 100,
+      "population_size": 100
+    },
+    "objectives": [
+      {
+        "direction": "minimize",
+        "name": "coupling"
+      },
+      {
+        "direction": "maximize",
+        "name": "cohesion"
+      },
+      {
+        "direction": "minimize",
+        "name": "imbalance"
+      }
+    ],
+    "output_root": "results",
+    "post_hoc_metrics": [
+      "modularity",
+      "hypervolume",
+      "mojofm",
+      "pairwise_f1"
+    ],
+    "random_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "subject": null
+  },
+  "end_timestamp_utc": "2026-07-02T11:47:10Z",
+  "formal_seeds": [
+    0,
+    1
+  ],
+  "front_source": "recomputed_nondominated_front",
+  "git_commit": "131587f2a4b77d1b8c2153eab16a5d64944ee05c",
+  "input_graph": "G_raw",
+  "input_graph_hashes": {
+    "class_nodes.csv": "52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd",
+    "raw_edges": "7a93a133db3dc573532ec90a68674d8b8b939c8adc106c64fbd5449db697faef",
+    "structural_dependencies.csv": "95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0"
+  },
+  "normalization_bounds": {
+    "lower_bounds": [
+      0.1084409594095941,
+      -72.3878017032274,
+      -0.11958553641765944
+    ],
+    "upper_bounds": [
+      0.89940036900369,
+      5.271193030968573,
+      1.6356401977353319
+    ]
+  },
+  "numpy_version": "2.3.5",
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance"
+  ],
+  "platform": "macOS-26.5-arm64-arm-64bit",
+  "pymoo_version": "0.6.2",
+  "python_version": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+  "reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "role": "stage2_raw_structure_only_nsga_robustness",
+  "run_type": "smoke",
+  "source_fingerprint": {
+    "experiments/02_stage2_nsga_structure_only/run.py": "a0d859bc976f5611e20bbbd720b7f8085919233eb8e434d2cd952c93c5ad6794",
+    "experiments/02_stage2_nsga_structure_only/run_robustness.py": "9a33418b7b8194fb1a25e2a0c6aa96bdf4bac8cc7bb05c69f3958c50e8a53e6d",
+    "src/evo_ms/extraction/dependency_extractor.py": "90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a",
+    "src/evo_ms/optimization/encoding.py": "298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5",
+    "src/evo_ms/optimization/objectives.py": "11d47a1a903b0fece29c30c14e152decc0aca209ca148c39fe0bef3f19eb4155",
+    "src/evo_ms/optimization/problem.py": "1d0ee5dd7dad4be6199314808360f8ebeda943729215e15b78bcb2e7100351c4"
+  },
+  "stage1_leiden_partition_hash": "90a727ad67cdb6f3c02b278d77b405b0acd65bb52019939dd3afd822c9132cd6",
+  "start_timestamp_utc": "2026-07-02T11:47:00Z",
+  "subject": "daytrader",
+  "working_tree_diff_sha256": "10e325621a85df19354ec938bde704176515c95049e33ee267a646841293d98b",
+  "working_tree_dirty": true
+}

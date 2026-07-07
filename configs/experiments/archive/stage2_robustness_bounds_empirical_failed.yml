@@ -1,0 +1,157 @@
+schema_version: 2
+objective_order: &id002
+- coupling
+- negative_cohesion
+- imbalance
+reference_point:
+- 1.1
+- 1.1
+- 1.1
+subjects:
+  daytrader:
+    calibration_status: formal
+    generated_from_commit: 131587f2a4b77d1b8c2153eab16a5d64944ee05c
+    working_tree_dirty: true
+    algorithm_config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    calibration_seed_count: 10
+    objective_order:
+    - coupling
+    - negative_cohesion
+    - imbalance
+    reference_point:
+    - 1.1
+    - 1.1
+    - 1.1
+    lower_bounds:
+    - 0.10724169741697417
+    - -73.11280701754386
+    - -0.11958553641765944
+    upper_bounds:
+    - 0.9125922509225092
+    - 5.538484848484848
+    - 1.6356401977353319
+    calibration_seeds:
+    - 1000
+    - 1001
+    - 1002
+    - 1003
+    - 1004
+    - 1005
+    - 1006
+    - 1007
+    - 1008
+    - 1009
+    calibration_solution_count: 995
+    margin_rule: lower=observed_min-max(0.1*observed_range,1e-6); upper=observed_max+max(0.1*observed_range,1e-6)
+    space: pymoo_minimization_objectives
+    input_graph: G_raw
+    stage1_baseline_profile: raw_reference_leiden
+    config_path: configs/experiments/02_stage2_nsga_structure_only.yml
+    config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    generated_at_utc: '2026-07-02T12:09:37Z'
+    note: Smoke bounds are for pipeline checks only. Formal robustness requires calibration_status=formal.
+    source_fingerprint: &id001
+      experiments/02_stage2_nsga_structure_only/run.py: a0d859bc976f5611e20bbbd720b7f8085919233eb8e434d2cd952c93c5ad6794
+      experiments/02_stage2_nsga_structure_only/run_robustness.py: 9a33418b7b8194fb1a25e2a0c6aa96bdf4bac8cc7bb05c69f3958c50e8a53e6d
+      src/evo_ms/extraction/dependency_extractor.py: 90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a
+      src/evo_ms/optimization/problem.py: 1d0ee5dd7dad4be6199314808360f8ebeda943729215e15b78bcb2e7100351c4
+      src/evo_ms/optimization/objectives.py: 11d47a1a903b0fece29c30c14e152decc0aca209ca148c39fe0bef3f19eb4155
+      src/evo_ms/optimization/encoding.py: 298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5
+    working_tree_diff_sha256: 1d8959812584cb67bf444f05391c0f68c55d9fd9fbd71f3206b7882a99597037
+  jpetstore:
+    calibration_status: formal
+    generated_from_commit: 131587f2a4b77d1b8c2153eab16a5d64944ee05c
+    working_tree_dirty: true
+    algorithm_config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    calibration_seed_count: 10
+    objective_order:
+    - coupling
+    - negative_cohesion
+    - imbalance
+    reference_point:
+    - 1.1
+    - 1.1
+    - 1.1
+    lower_bounds:
+    - 0.21012345679012343
+    - -16.69388888888889
+    - -0.07216878364870323
+    upper_bounds:
+    - 0.7108641975308643
+    - -3.7005555555555554
+    - 0.7938566201357355
+    calibration_seeds:
+    - 1000
+    - 1001
+    - 1002
+    - 1003
+    - 1004
+    - 1005
+    - 1006
+    - 1007
+    - 1008
+    - 1009
+    calibration_solution_count: 941
+    margin_rule: lower=observed_min-max(0.1*observed_range,1e-6); upper=observed_max+max(0.1*observed_range,1e-6)
+    space: pymoo_minimization_objectives
+    input_graph: G_raw
+    stage1_baseline_profile: raw_reference_leiden
+    config_path: configs/experiments/02_stage2_nsga_structure_only.yml
+    config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    generated_at_utc: '2026-07-02T12:08:37Z'
+    note: Smoke bounds are for pipeline checks only. Formal robustness requires calibration_status=formal.
+    source_fingerprint: *id001
+    working_tree_diff_sha256: 1d8959812584cb67bf444f05391c0f68c55d9fd9fbd71f3206b7882a99597037
+  xerces-j:
+    calibration_status: formal
+    generated_from_commit: 131587f2a4b77d1b8c2153eab16a5d64944ee05c
+    working_tree_dirty: true
+    algorithm_config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    calibration_seed_count: 10
+    objective_order: *id002
+    reference_point:
+    - 1.1
+    - 1.1
+    - 1.1
+    lower_bounds:
+    - 0.039585909417685125
+    - -30.46071540246009
+    - -0.5513810437001982
+    upper_bounds:
+    - 1.0721897915168943
+    - 2.7289172118915164
+    - 6.23197833818107
+    calibration_seeds:
+    - 1000
+    - 1001
+    - 1002
+    - 1003
+    - 1004
+    - 1005
+    - 1006
+    - 1007
+    - 1008
+    - 1009
+    calibration_solution_count: 1000
+    margin_rule: lower=observed_min-max(0.1*observed_range,1e-6); upper=observed_max+max(0.1*observed_range,1e-6)
+    space: pymoo_minimization_objectives
+    input_graph: G_raw
+    stage1_baseline_profile: raw_reference_leiden
+    config_path: configs/experiments/02_stage2_nsga_structure_only.yml
+    config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    generated_at_utc: '2026-07-02T12:18:09Z'
+    note: Smoke bounds are for pipeline checks only. Formal robustness requires calibration_status=formal.
+    source_fingerprint: *id001
+    working_tree_diff_sha256: 1d8959812584cb67bf444f05391c0f68c55d9fd9fbd71f3206b7882a99597037
+generated_from_commit: 131587f2a4b77d1b8c2153eab16a5d64944ee05c
+algorithm_config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+source_fingerprint: *id001
+working_tree_diff_sha256: 1d8959812584cb67bf444f05391c0f68c55d9fd9fbd71f3206b7882a99597037
+working_tree_dirty: true
+status: rejected_for_formal_use
+reason: formal_seed_bound_violation
+subject: jpetstore
+violating_seed: 12
+violating_objective: negative_cohesion
+observed_value: -3.495833333333333
+previous_upper_bound: -3.7005555555555554
