@@ -9,7 +9,9 @@ Stage 1 compares two class-level graph representations:
 
 Both graphs are clustered with Leiden. The goal is to check whether SSA-derived evidence changes the graph and the resulting class partitions.
 
-Stage 1 is limited to the Leiden baseline. Later NSGA-II and semantic embedding stages are not included here.
+Stage 1 is the frozen Leiden baseline. The repository also contains a Stage 2
+structure-only NSGA-II scaffold for design review; it does not yet implement
+the algorithm or write results. Semantic embedding stages are not included.
 
 ## 1. Stage 1 Flow
 
