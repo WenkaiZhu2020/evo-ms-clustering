@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 REPO_URL="${XERCES_J_REPO_URL:-https://github.com/apache/xerces2-j.git}"
 REPO_DIR="data/raw_projects/xerces-j"

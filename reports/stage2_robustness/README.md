@@ -18,15 +18,15 @@ Hypervolume 使用理论 bounds，并在 pymoo 最小化目标顺序 `[coupling,
 
 ## 操作脚本
 
-所有脚本位于 `scripts/stage2/`，默认使用已知的锁定 Codex runtime；也可以通过 `PYTHON` 或 `STAGE2_PYTHON` 显式覆盖。脚本会校验 Python、numpy、pandas、pymoo、igraph 与 leidenalg 的版本，并要求在 `stage2-nsga` worktree 执行。
+所有脚本位于 `scripts/02_stage2_nsga_structure_only/`，默认使用已知的锁定 Codex runtime；也可以通过 `PYTHON` 或 `STAGE2_PYTHON` 显式覆盖。脚本会校验 Python、numpy、pandas、pymoo、igraph 与 leidenalg 的版本，并要求在 `stage2-nsga` worktree 执行。
 
 ```bash
-scripts/stage2/check_environment.sh
-scripts/stage2/generate_theoretical_bounds.sh daytrader
-scripts/stage2/verify_seed.sh daytrader 0
-scripts/stage2/run_smoke_subject.sh daytrader 0,1
-scripts/stage2/run_formal_subject.sh jpetstore --resume
-scripts/stage2/run_tests.sh
+scripts/02_stage2_nsga_structure_only/check_environment.sh
+scripts/02_stage2_nsga_structure_only/generate_theoretical_bounds.sh daytrader
+scripts/02_stage2_nsga_structure_only/verify_seed.sh daytrader 0
+scripts/02_stage2_nsga_structure_only/run_smoke_subject.sh daytrader 0,1
+scripts/02_stage2_nsga_structure_only/run_formal_subject.sh jpetstore --resume
+scripts/02_stage2_nsga_structure_only/run_tests.sh
 ```
 
 formal 输出写入 `results/<subject>/03_stage2_nsga/robustness/`；smoke 输出明确写入 `robustness_smoke/`，不会覆盖正式结果。每个正式 seed 保存 complete Pareto front、压缩 label 分区、selected solution、selected partition、run metrics 和 metadata。

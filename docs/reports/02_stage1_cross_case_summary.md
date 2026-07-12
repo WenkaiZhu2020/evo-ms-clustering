@@ -121,16 +121,16 @@ The current evaluation has several limits:
 Run:
 
 ```bash
-bash scripts/run_pre_jpetstore.sh
-bash scripts/run_pre_daytrader.sh
-bash scripts/run_pre_xerces_j.sh
+bash scripts/00_pre_experiment/run_pre_jpetstore.sh
+bash scripts/00_pre_experiment/run_pre_daytrader.sh
+bash scripts/00_pre_experiment/run_pre_xerces_j.sh
 
-bash scripts/run_daytrader_calibration.sh
-bash scripts/run_xerces_j_sensitivity.sh
+bash scripts/00_pre_experiment/run_daytrader_calibration.sh
+bash scripts/00_pre_experiment/run_xerces_j_sensitivity.sh
 
-bash scripts/run_stage1_jpetstore.sh
-bash scripts/run_stage1_daytrader.sh
-bash scripts/run_stage1_xerces_j.sh
+bash scripts/01_stage1_leiden_baseline/run_stage1_jpetstore.sh
+bash scripts/01_stage1_leiden_baseline/run_stage1_daytrader.sh
+bash scripts/01_stage1_leiden_baseline/run_stage1_xerces_j.sh
 
 python experiments/01_stage1_leiden_baseline/run_seed_robustness.py --num-seeds 30
 ```

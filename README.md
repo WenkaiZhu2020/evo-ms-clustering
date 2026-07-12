@@ -242,32 +242,32 @@ Prepare or build the Java subject first, then run extraction.
 Extraction:
 
 ```bash
-bash scripts/extract_soot_jpetstore.sh
-bash scripts/extract_soot_daytrader.sh
-bash scripts/extract_soot_xerces_j.sh
+bash scripts/extraction/extract_soot_jpetstore.sh
+bash scripts/extraction/extract_soot_daytrader.sh
+bash scripts/extraction/extract_soot_xerces_j.sh
 ```
 
 Default pre-experiment diagnostics:
 
 ```bash
-bash scripts/run_pre_jpetstore.sh
-bash scripts/run_pre_daytrader.sh
-bash scripts/run_pre_xerces_j.sh
+bash scripts/00_pre_experiment/run_pre_jpetstore.sh
+bash scripts/00_pre_experiment/run_pre_daytrader.sh
+bash scripts/00_pre_experiment/run_pre_xerces_j.sh
 ```
 
 Additional pre-experiment analysis:
 
 ```bash
-bash scripts/run_daytrader_calibration.sh
-bash scripts/run_xerces_j_sensitivity.sh
+bash scripts/00_pre_experiment/run_daytrader_calibration.sh
+bash scripts/00_pre_experiment/run_xerces_j_sensitivity.sh
 ```
 
 Formal Stage 1 outputs:
 
 ```bash
-bash scripts/run_stage1_jpetstore.sh
-bash scripts/run_stage1_daytrader.sh
-bash scripts/run_stage1_xerces_j.sh
+bash scripts/01_stage1_leiden_baseline/run_stage1_jpetstore.sh
+bash scripts/01_stage1_leiden_baseline/run_stage1_daytrader.sh
+bash scripts/01_stage1_leiden_baseline/run_stage1_xerces_j.sh
 ```
 
 ## 12. Testing

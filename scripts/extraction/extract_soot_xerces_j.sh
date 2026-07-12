@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 MAVEN_BIN="${MAVEN:-mvn}"
 TOOL_DIR="tools/soot_extractor"
@@ -13,7 +13,7 @@ if [[ ! -x "$PYTHON_BIN" ]]; then
 fi
 
 if [[ -z "${SKIP_XERCES_J_PREPARE:-}" ]]; then
-  bash scripts/prepare_xerces_j.sh
+  bash scripts/extraction/prepare_xerces_j.sh
 fi
 
 if [[ -z "${JAVA_HOME:-}" ]] && command -v /usr/libexec/java_home >/dev/null 2>&1; then
@@ -21,7 +21,7 @@ if [[ -z "${JAVA_HOME:-}" ]] && command -v /usr/libexec/java_home >/dev/null 2>&
   export JAVA_HOME
 fi
 
-EXTRACTOR_ARGS="$("$PYTHON_BIN" scripts/subject_extraction_config.py --subject xerces-j)"
+EXTRACTOR_ARGS="$("$PYTHON_BIN" scripts/extraction/subject_extraction_config.py --subject xerces-j)"
 
 "$MAVEN_BIN" -q -f "$TOOL_DIR/pom.xml" -DskipTests compile exec:java \
   -Dexec.mainClass="$TOOL_MAIN" \

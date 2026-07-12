@@ -65,9 +65,9 @@ The final graph remains class-level.
 ## Subject Wrappers
 
 ```bash
-bash scripts/extract_soot_jpetstore.sh
-bash scripts/extract_soot_daytrader.sh
-bash scripts/extract_soot_xerces_j.sh
+bash scripts/extraction/extract_soot_jpetstore.sh
+bash scripts/extraction/extract_soot_daytrader.sh
+bash scripts/extraction/extract_soot_xerces_j.sh
 ```
 
 Use Java 17 for extractor tests:

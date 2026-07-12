@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 REPO_URL="${DAYTRADER_REPO_URL:-https://github.com/WASdev/sample.daytrader7.git}"
 REPO_DIR="data/raw_projects/daytrader"
