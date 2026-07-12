@@ -166,6 +166,8 @@ def _run_seed(
     seed: int,
     population_size: int,
     generations: int,
+    save_history: bool = False,
+    callback: object | None = None,
 ) -> dict[str, object]:
     from pymoo.optimize import minimize
 
@@ -196,7 +198,8 @@ def _run_seed(
         termination=("n_gen", int(generations)),
         seed=int(seed),
         verbose=False,
-        save_history=False,
+        save_history=bool(save_history),
+        callback=callback,
     )
     labels, _, constraints, front_diagnostics = _front_arrays(result)
     solutions = []
@@ -242,6 +245,9 @@ def _run_seed(
         "seed_initialization_count": len(seed_records),
         "seed_initialization_categories": _category_counts(seed_records),
         "front_diagnostics": front_diagnostics,
+        # Formal robustness keeps this disabled. The convergence diagnostic is
+        # the only caller that requests pymoo's per-generation populations.
+        "history": list(result.history) if save_history else [],
     }
 
 
