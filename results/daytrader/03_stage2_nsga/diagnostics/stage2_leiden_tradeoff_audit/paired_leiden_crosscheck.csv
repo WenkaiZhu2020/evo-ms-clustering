@@ -1,0 +1,5 @@
+stored_column,recomputed_column,max_abs_delta,passed_atol_1e-12
+leiden_coupling,coupling,5.551115123125783e-17,True
+leiden_cohesion,cohesion,0.0,True
+leiden_imbalance,imbalance,0.0,True
+leiden_modularity,weighted_modularity,5.551115123125783e-17,True
