@@ -12,8 +12,12 @@ can be compared with the frozen Stage 1 `raw_reference_leiden` baseline.
   3. minimize cluster-size imbalance, `std(sizes) / mean(sizes)`.
 - **Encoding**: an integer label vector over classes with variable `k`, aligned
   with the Stage 1 `cluster_by_class` mapping and partition DataFrame schema.
-- **Hard constraints or repair logic**: `max_cluster_ratio <= 0.40`,
-  `singleton_ratio <= 0.15`, and a minimum cluster count.
+- **Hard constraints or repair logic**: `max_cluster_ratio <= 0.40` and a
+  minimum cluster count (`k >= 2`). `singleton_ratio` remains a diagnostic
+  output only. Labels are bounded by `0..n-1`, but this is not a separate
+  `k <= n-1` hard constraint.
+- **Initialization**: Leiden -> NSGA-II hybrid warm start, using the frozen
+  raw Leiden partition, local perturbations, graph groupings, and random fill.
 - **Baseline**: frozen Stage 1 `raw_reference_leiden`, compared with
   `partition_similarity` for ARI/NMI and changed-partition ratio.
 - **Post-hoc metrics only**: modularity, Hypervolume, MoJoFM, and Pairwise F1
@@ -33,6 +37,16 @@ Output is written under:
 ```text
 results/<subject>/03_stage2_nsga/raw/
 ```
+
+Formal output directories must be treated as immutable. Before running
+robustness experiments, use a new output directory and verify that the target
+path does not already contain saved formal results.
+
+Provenance note: the top-level `source_fingerprint` field in
+`configs/experiments/stage2_robustness_bounds.yml` is legacy metadata. The
+authoritative compatibility evidence is the subject-level working-tree
+fingerprints and complete bounds-file SHA recorded by the formal manifests;
+both match the implementation and configuration used for the saved formal runs.
 
 Run example:
 

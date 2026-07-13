@@ -33,7 +33,9 @@ from evo_ms.optimization import encoding
 from evo_ms.optimization.objectives import evaluate_structural_objectives
 from evo_ms.optimization.problem import build_nsga2_algorithm
 from evo_ms.optimization.problem import build_structural_problem
+from evo_ms.optimization.problem import DEFAULT_MAX_CLUSTER_RATIO
 from evo_ms.optimization.problem import repair_labels
+from evo_ms.optimization.problem import validate_max_cluster_ratio
 from evo_ms.utils.config_loader import load_yaml
 from evo_ms.utils.logging import get_logger
 
@@ -44,6 +46,22 @@ RAW_WEIGHT_COLUMN = "raw_weight"
 RAW_BASELINE_PROFILE = "raw_reference_leiden"
 
 
+def resolve_max_cluster_ratio(
+    config: Mapping[str, object],
+    cli_override: float | None = None,
+) -> float:
+    """Resolve the shared threshold with CLI taking precedence over YAML."""
+    constraints = config.get("constraints", {})
+    if not isinstance(constraints, Mapping):
+        raise ValueError("constraints must be a mapping")
+    value = (
+        cli_override
+        if cli_override is not None
+        else constraints.get("max_cluster_ratio", DEFAULT_MAX_CLUSTER_RATIO)
+    )
+    return validate_max_cluster_ratio(float(value))
+
+
 def run_stage2_nsga(
     root: Path = ROOT,
     subject: str | None = None,
@@ -52,6 +70,7 @@ def run_stage2_nsga(
     generations: int | None = None,
     output_group: str | None = None,
     config_path: Path | None = None,
+    max_cluster_ratio: float | None = None,
 ) -> Path:
     """Run raw-only Stage 2 NSGA-II for one subject."""
     config = load_yaml(config_path or CONFIG_PATH)
@@ -65,6 +84,7 @@ def run_stage2_nsga(
 
     nsga_config = config.get("nsga", {})
     initialization_config = config.get("initialization", {})
+    configured_max_cluster_ratio = resolve_max_cluster_ratio(config, max_cluster_ratio)
     population_size = int(population_size or nsga_config.get("population_size", 100))
     generations = int(generations or nsga_config.get("generations", 100))
 
@@ -97,6 +117,7 @@ def run_stage2_nsga(
                 seed=seed,
                 population_size=population_size,
                 generations=generations,
+                max_cluster_ratio=configured_max_cluster_ratio,
             )
         )
 
@@ -166,6 +187,7 @@ def _run_seed(
     seed: int,
     population_size: int,
     generations: int,
+    max_cluster_ratio: float = 0.4,
     save_history: bool = False,
     callback: object | None = None,
 ) -> dict[str, object]:
@@ -177,6 +199,7 @@ def _run_seed(
         raw_leiden_clusters=raw_leiden_clusters,
         seed=seed,
         config=initialization_config,
+        max_cluster_ratio=max_cluster_ratio,
     )
     seed_record_by_key = {
         _label_key(np.asarray(record["labels"], dtype=int)): record
@@ -187,19 +210,25 @@ def _run_seed(
         raw_edges,
         RAW_WEIGHT_COLUMN,
         seed=seed,
+        max_cluster_ratio=max_cluster_ratio,
     )
     algorithm = build_nsga2_algorithm(
         population_size=population_size,
         seed_labels=[record["labels"] for record in seed_records],
+        max_cluster_ratio=max_cluster_ratio,
     )
+    minimize_kwargs = {
+        "seed": int(seed),
+        "verbose": False,
+        "save_history": bool(save_history),
+    }
+    if callback is not None:
+        minimize_kwargs["callback"] = callback
     result = minimize(
         problem,
         algorithm,
         termination=("n_gen", int(generations)),
-        seed=int(seed),
-        verbose=False,
-        save_history=bool(save_history),
-        callback=callback,
+        **minimize_kwargs,
     )
     labels, _, constraints, front_diagnostics = _front_arrays(result)
     solutions = []
@@ -474,6 +503,9 @@ def _partition_metrics_row(
         if class_count == 0 or sizes.empty
         else float(sizes.max() / class_count),
         "singleton_ratio": 0.0 if class_count == 0 else float(singleton_count / class_count),
+        "cluster_size_cv": 0.0
+        if sizes.empty or float(sizes.mean()) == 0.0
+        else float(sizes.std(ddof=0) / sizes.mean()),
         "cluster_size_distribution": cluster_size_distribution(clusters),
     }
     if reference_mapping is not None:
@@ -684,6 +716,7 @@ def _seed_initialization_records(
     raw_leiden_clusters: pd.DataFrame,
     seed: int,
     config: Mapping[str, object],
+    max_cluster_ratio: float = 0.4,
 ) -> list[dict[str, object]]:
     """Build deterministic structure-aware initial labels for one NSGA-II seed."""
     if not bool(config.get("enabled", True)):
@@ -709,7 +742,7 @@ def _seed_initialization_records(
             {
                 "name": "raw_leiden",
                 "category": "raw_leiden",
-                "labels": repair_labels(raw_leiden_labels, len(class_ids)),
+                "labels": repair_labels(raw_leiden_labels, len(class_ids), max_cluster_ratio),
             }
         )
 
@@ -721,6 +754,7 @@ def _seed_initialization_records(
             index_by_id=index_by_id,
             rng=rng,
             config=config,
+            max_cluster_ratio=max_cluster_ratio,
         )
     )
     records.extend(
@@ -730,9 +764,10 @@ def _seed_initialization_records(
             index_by_id=index_by_id,
             raw_leiden_cluster_count=len(set(raw_leiden_labels.tolist())),
             config=config,
+            max_cluster_ratio=max_cluster_ratio,
         )
     )
-    return _deduplicate_seed_records(records, len(class_ids))
+    return _deduplicate_seed_records(records, len(class_ids), max_cluster_ratio)
 
 
 def _perturbed_leiden_records(
@@ -742,6 +777,7 @@ def _perturbed_leiden_records(
     index_by_id: dict[str, int],
     rng: np.random.Generator,
     config: Mapping[str, object],
+    max_cluster_ratio: float = 0.4,
 ) -> list[dict[str, object]]:
     perturbation_config = config.get("perturbations", {})
     if not isinstance(perturbation_config, Mapping) or not bool(
@@ -774,7 +810,7 @@ def _perturbed_leiden_records(
                 {
                     "name": f"raw_leiden_perturb_{fraction:g}_{repetition}",
                     "category": "raw_leiden_perturbation",
-                    "labels": repair_labels(labels, len(class_ids)),
+                    "labels": repair_labels(labels, len(class_ids), max_cluster_ratio),
                 }
             )
     return records
@@ -786,6 +822,7 @@ def _graph_grouping_records(
     index_by_id: dict[str, int],
     raw_leiden_cluster_count: int,
     config: Mapping[str, object],
+    max_cluster_ratio: float = 0.4,
 ) -> list[dict[str, object]]:
     grouping_config = config.get("graph_groupings", {})
     if not isinstance(grouping_config, Mapping) or not bool(grouping_config.get("enabled", True)):
@@ -810,6 +847,7 @@ def _graph_grouping_records(
                     raw_edges=raw_edges,
                     index_by_id=index_by_id,
                     target_count=target_count,
+                    max_cluster_ratio=max_cluster_ratio,
                 ),
             }
         )
@@ -821,11 +859,12 @@ def _strongest_edge_grouping_labels(
     raw_edges: pd.DataFrame,
     index_by_id: dict[str, int],
     target_count: int,
+    max_cluster_ratio: float = 0.4,
 ) -> np.ndarray:
     parent = np.arange(class_count, dtype=int)
     sizes = np.ones(class_count, dtype=int)
     cluster_count = class_count
-    max_size = max(1, int(np.floor(0.4 * class_count)))
+    max_size = max(1, int(np.floor(max_cluster_ratio * class_count)))
 
     def find(index: int) -> int:
         while parent[index] != index:
@@ -852,7 +891,11 @@ def _strongest_edge_grouping_labels(
         parent[right_root] = left_root
         sizes[left_root] += sizes[right_root]
         cluster_count -= 1
-    return repair_labels(np.asarray([find(index) for index in range(class_count)], dtype=int), class_count)
+    return repair_labels(
+        np.asarray([find(index) for index in range(class_count)], dtype=int),
+        class_count,
+        max_cluster_ratio,
+    )
 
 
 def _adjacency_by_class(edges: pd.DataFrame) -> dict[str, tuple[str, ...]]:
@@ -871,11 +914,16 @@ def _adjacency_by_class(edges: pd.DataFrame) -> dict[str, tuple[str, ...]]:
 def _deduplicate_seed_records(
     records: list[dict[str, object]],
     class_count: int,
+    max_cluster_ratio: float = 0.4,
 ) -> list[dict[str, object]]:
     unique: list[dict[str, object]] = []
     seen: set[tuple[int, ...]] = set()
     for record in records:
-        labels = repair_labels(np.asarray(record["labels"], dtype=int), class_count)
+        labels = repair_labels(
+            np.asarray(record["labels"], dtype=int),
+            class_count,
+            max_cluster_ratio,
+        )
         key = _label_key(labels)
         if key in seen:
             continue
@@ -1103,6 +1151,7 @@ def main() -> int:
     parser.add_argument("--generations", type=int, default=None)
     parser.add_argument("--output-group", default=None)
     parser.add_argument("--config", type=Path, default=CONFIG_PATH)
+    parser.add_argument("--max-cluster-ratio", type=float, default=None)
     args = parser.parse_args()
 
     seeds = None
@@ -1118,6 +1167,7 @@ def main() -> int:
         generations=args.generations,
         output_group=args.output_group,
         config_path=args.config,
+        max_cluster_ratio=args.max_cluster_ratio,
     )
     print(f"Stage 2 output: {output_dir.relative_to(ROOT)}")
     return 0

@@ -15,10 +15,9 @@ objectives:
     direction: maximize
   - name: imbalance
     direction: minimize
-# Hard anti-degeneration constraints from Stage 1 admissibility.
+# Hard anti-degeneration constraints. Singleton ratio is post-hoc only.
 constraints:
-  max_cluster_ratio: 0.4
-  singleton_ratio: 0.15
+  max_cluster_ratio: 0.40
   min_cluster_count: 2
 nsga:
   algorithm: NSGA2          # via pymoo; do not hand-write the algorithm core.

@@ -15,6 +15,9 @@ The current design documents are in `docs/stage2/`:
   subject scope, multi-seed protocol, selection rule, and raw Leiden comparison.
 - [encoding_and_operators.md](encoding_and_operators.md):
   label-vector encoding, seeded initialization, operators, and constraints.
+- [reproducibility.md](reproducibility.md):
+  formal-result provenance, verified inputs, dependency evidence, and known
+  replay limitations.
 
 Current optimization objectives:
 

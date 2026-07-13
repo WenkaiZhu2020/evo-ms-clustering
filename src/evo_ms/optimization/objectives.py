@@ -27,9 +27,7 @@ import pandas as pd
 # Reuse the Stage 1 O(E) edge split primitive without changing Stage 1 behavior.
 from evo_ms.evaluation.partition_metrics import _edge_weight_split
 
-# Anti-degeneration thresholds from Stage 1 admissibility.
-MAX_CLUSTER_RATIO = 0.4
-SINGLETON_RATIO = 0.15
+# Stage 2 anti-degeneration threshold independent of experiment configuration.
 MIN_CLUSTER_COUNT = 2
 
 
@@ -104,25 +102,28 @@ def evaluate_structural_objectives(
     return coupling, cohesion, imbalance
 
 
-def admissibility_violation(labels: np.ndarray, class_count: int) -> np.ndarray:
+def admissibility_violation(
+    labels: np.ndarray,
+    class_count: int,
+    max_cluster_ratio: float,
+) -> np.ndarray:
     """Return pymoo-compatible violations for hard anti-degeneration constraints.
 
     The returned vector uses pymoo's convention: each value must be `<= 0.0` for
-    feasibility. The entries are max-cluster ratio, singleton ratio, and minimum
-    cluster count, in that order.
+    feasibility. The entries are max-cluster ratio and minimum cluster count,
+    in that order. Singleton ratio remains a post-hoc diagnostic, not a hard
+    admissibility constraint.
     """
     labels = np.asarray(labels, dtype=int).reshape(-1)
     if class_count <= 0 or len(labels) == 0:
-        return np.asarray([0.0, 0.0, float(MIN_CLUSTER_COUNT)], dtype=float)
+        return np.asarray([0.0, float(MIN_CLUSTER_COUNT)], dtype=float)
 
     counts = np.asarray(list(Counter(labels.tolist()).values()), dtype=float)
     cluster_count = int(len(counts))
-    max_cluster_ratio = float(counts.max() / class_count) if len(counts) else 0.0
-    singleton_ratio = float(np.sum(counts == 1.0) / class_count) if len(counts) else 0.0
+    observed_max_cluster_ratio = float(counts.max() / class_count) if len(counts) else 0.0
     return np.asarray(
         [
-            max_cluster_ratio - MAX_CLUSTER_RATIO,
-            singleton_ratio - SINGLETON_RATIO,
+            observed_max_cluster_ratio - float(max_cluster_ratio),
             float(MIN_CLUSTER_COUNT - cluster_count),
         ],
         dtype=float,

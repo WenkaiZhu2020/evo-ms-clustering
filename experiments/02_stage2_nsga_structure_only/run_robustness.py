@@ -110,7 +110,10 @@ def generate_theoretical_bounds(
     _validate_nonnegative_raw_weights(raw_edges)
     max_raw_edge_weight = _max_raw_edge_weight(raw_edges)
     class_count = int(len(context["class_nodes"]))
-    imbalance_bound = theoretical_imbalance_upper_bound(class_count)
+    imbalance_bound = theoretical_imbalance_upper_bound(
+        class_count,
+        context["max_cluster_ratio"],
+    )
     git_state = stage2._git_state(ROOT)
     config_sha = _file_sha256(config_path)
     graph_hashes = _input_graph_hashes(context)
@@ -149,9 +152,7 @@ def generate_theoretical_bounds(
             "maximum aggregated raw edge weight."
         ),
         "imbalance_upper_bound": imbalance_bound,
-        "imbalance_bound_method": (
-            "exact_extreme_allocation_over_cluster_count_and_singleton_count"
-        ),
+        "imbalance_bound_method": "exact_extreme_allocation_over_cluster_count",
         "imbalance_bound_tightness": "exact_for_current_size_constraints",
         "bounds_derivation": {
             "coupling": "external_weight/total_weight with non-negative weights gives [0,1]",
@@ -191,6 +192,7 @@ def run_calibration(
             seed=seed,
             population_size=context["population_size"],
             generations=context["generations"],
+            max_cluster_ratio=context["max_cluster_ratio"],
         )
         objective_rows.extend(
             np.asarray(solution["F"], dtype=float)
@@ -252,8 +254,9 @@ def run_robustness(
     run_type: str,
     allow_smoke_bounds: bool,
     resume: bool = False,
+    max_cluster_ratio: float | None = None,
 ) -> Path:
-    context = _load_context(subject, config_path)
+    context = _load_context(subject, config_path, max_cluster_ratio=max_cluster_ratio)
     bounds = _load_subject_bounds(
         bounds_config,
         subject,
@@ -403,13 +406,16 @@ def _run_one_seed(
     runtime_sec = time.perf_counter() - start
     seed_dir.mkdir(parents=True, exist_ok=True)
 
-    pd.DataFrame(result["pareto_rows"]).to_csv(seed_dir / "pareto_front.csv", index=False)
+    pd.DataFrame(_pareto_rows_with_diagnostics(result)).to_csv(
+        seed_dir / "pareto_front.csv",
+        index=False,
+    )
     pd.DataFrame(result["label_rows"]).to_csv(
         seed_dir / "pareto_labels.csv.xz",
         index=False,
         compression={"method": "xz", "preset": 9 | lzma.PRESET_EXTREME},
     )
-    pd.DataFrame([result["selected_solution"]]).to_csv(
+    pd.DataFrame([{**result["selected_solution"], **result["selected_posthoc_metrics"]}]).to_csv(
         seed_dir / "selected_solution.csv",
         index=False,
     )
@@ -431,6 +437,31 @@ def _run_one_seed(
     return metrics
 
 
+def _pareto_rows_with_diagnostics(result: dict[str, Any]) -> list[dict[str, Any]]:
+    """Attach post-hoc partition diagnostics to every persisted Pareto row."""
+    diagnostics_by_solution = {
+        str(row["solution_id"]): row
+        for row in result["posthoc_rows"]
+    }
+    fields = [
+        "weighted_modularity",
+        "cluster_count",
+        "max_cluster_ratio",
+        "singleton_ratio",
+        "cluster_size_cv",
+    ]
+    return [
+        {
+            **row,
+            **{
+                field: diagnostics_by_solution[str(row["solution_id"])][field]
+                for field in fields
+            },
+        }
+        for row in result["pareto_rows"]
+    ]
+
+
 def _run_seed_in_memory(
     seed: int,
     context: dict[str, Any],
@@ -444,6 +475,7 @@ def _run_seed_in_memory(
         seed=seed,
         population_size=context["population_size"],
         generations=context["generations"],
+        max_cluster_ratio=context["max_cluster_ratio"],
     )
     front_diagnostics = dict(seed_result.get("front_diagnostics", {}))
     pareto_rows, label_rows, posthoc_rows, _, _ = stage2._materialize_results(
@@ -615,7 +647,11 @@ def _run_metrics_row(
     return row
 
 
-def _load_context(subject: str, config_path: Path) -> dict[str, Any]:
+def _load_context(
+    subject: str,
+    config_path: Path,
+    max_cluster_ratio: float | None = None,
+) -> dict[str, Any]:
     if subject not in SUBJECTS:
         raise ValueError(f"subject must be one of: {', '.join(SUBJECTS)}")
     config = load_yaml(config_path)
@@ -631,6 +667,7 @@ def _load_context(subject: str, config_path: Path) -> dict[str, Any]:
         "config_path": config_path,
         "population_size": int(nsga_config.get("population_size", 100)),
         "generations": int(nsga_config.get("generations", 100)),
+        "max_cluster_ratio": stage2.resolve_max_cluster_ratio(config, max_cluster_ratio),
         "initialization_config": config.get("initialization", {}),
         "extracted_dir": extracted_dir,
         "class_nodes": class_nodes,
@@ -666,71 +703,55 @@ def _max_raw_edge_weight(raw_edges: pd.DataFrame) -> float:
     return float(np.max(raw_edges["raw_weight"].to_numpy(dtype=float)))
 
 
-def theoretical_imbalance_upper_bound(class_count: int) -> float:
+def theoretical_imbalance_upper_bound(
+    class_count: int,
+    max_cluster_ratio: float = stage2.DEFAULT_MAX_CLUSTER_RATIO,
+) -> float:
     """Exact max of np.std(cluster_sizes)/mean under current size constraints.
 
-    The objective uses population standard deviation. For fixed n, k, and
-    singleton count, maximizing variance is equivalent to maximizing the sum
-    of squared cluster sizes. Because x^2 is convex, the maximum under lower
-    and upper integer bounds is reached by concentrating remaining classes into
-    as few clusters as possible.
+    The objective uses population standard deviation. For fixed n and k,
+    maximizing variance is equivalent to maximizing the sum of squared cluster
+    sizes. Because x^2 is convex, the maximum under the active lower and upper
+    integer bounds is reached by concentrating remaining classes into as few
+    clusters as possible. Singleton count is unconstrained in final Stage 2.
     """
     n = int(class_count)
     if n <= 0:
         return 0.0
-    max_cluster_size = int(np.floor(n * 0.4))
+    max_cluster_size = int(np.floor(n * max_cluster_ratio))
     if max_cluster_size < 1:
         return 0.0
-    max_singletons = int(np.floor(n * 0.15))
     best = 0.0
     for cluster_count in range(2, n + 1):
         if cluster_count * 1 > n or cluster_count * max_cluster_size < n:
             continue
-        for singleton_count in range(0, min(cluster_count, max_singletons) + 1):
-            sizes = _extreme_cluster_sizes(
-                class_count=n,
-                cluster_count=cluster_count,
-                singleton_count=singleton_count,
-                max_cluster_size=max_cluster_size,
-            )
-            if sizes is None:
-                continue
-            values = np.asarray(sizes, dtype=float)
-            imbalance = float(np.std(values) / np.mean(values))
-            best = max(best, imbalance)
+        sizes = _extreme_cluster_sizes(
+            class_count=n,
+            cluster_count=cluster_count,
+            max_cluster_size=max_cluster_size,
+        )
+        values = np.asarray(sizes, dtype=float)
+        imbalance = float(np.std(values) / np.mean(values))
+        best = max(best, imbalance)
     return float(best)
 
 
 def _extreme_cluster_sizes(
     class_count: int,
     cluster_count: int,
-    singleton_count: int,
     max_cluster_size: int,
-) -> list[int] | None:
-    non_singletons = cluster_count - singleton_count
-    remaining_classes = class_count - singleton_count
-    if non_singletons < 0 or remaining_classes < 0:
-        return None
-    if non_singletons == 0:
-        if remaining_classes == 0 and class_count == singleton_count:
-            return [1] * singleton_count
-        return None
-    if max_cluster_size < 2:
-        return None
-    min_remaining = 2 * non_singletons
-    max_remaining = max_cluster_size * non_singletons
-    if remaining_classes < min_remaining or remaining_classes > max_remaining:
-        return None
-    sizes = [1] * singleton_count + [2] * non_singletons
-    surplus = remaining_classes - min_remaining
-    index = singleton_count
+) -> list[int]:
+    """Most imbalanced legal sizes for fixed n, k, and max cluster size."""
+    sizes = [1] * cluster_count
+    surplus = class_count - cluster_count
+    index = 0
     while surplus > 0 and index < len(sizes):
         add = min(surplus, max_cluster_size - sizes[index])
         sizes[index] += add
         surplus -= add
         index += 1
     if surplus != 0:
-        return None
+        raise ValueError("cluster count cannot satisfy max-cluster bound")
     return sizes
 
 
@@ -769,14 +790,12 @@ def _validate_bounds_against_context(
         atol=1e-15,
     ):
         raise ValueError("bounds max_raw_edge_weight does not match current G_raw")
-    expected_imbalance = theoretical_imbalance_upper_bound(len(context["class_nodes"]))
-    if not np.isclose(
-        float(bounds.get("imbalance_upper_bound")),
-        expected_imbalance,
-        rtol=1e-12,
-        atol=1e-12,
-    ):
-        raise ValueError("bounds imbalance_upper_bound does not match current constraints")
+    expected_imbalance = theoretical_imbalance_upper_bound(
+        len(context["class_nodes"]),
+        context["max_cluster_ratio"],
+    )
+    if float(bounds.get("imbalance_upper_bound")) + 1e-12 < expected_imbalance:
+        raise ValueError("bounds imbalance_upper_bound does not cover current constraints")
 
 
 def _base_manifest(
@@ -1210,6 +1229,7 @@ def main() -> int:
     parser.add_argument("--allow-smoke-bounds", action="store_true")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--config", type=Path, default=stage2.CONFIG_PATH)
+    parser.add_argument("--max-cluster-ratio", type=float, default=None)
     args = parser.parse_args()
 
     if args.generate_theoretical_bounds:
@@ -1272,6 +1292,7 @@ def main() -> int:
         run_type=run_type,
         allow_smoke_bounds=args.allow_smoke_bounds,
         resume=args.resume,
+        max_cluster_ratio=args.max_cluster_ratio,
     )
     print(f"Robustness output: {_relative(output_dir)}")
     return 0

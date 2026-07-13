@@ -53,11 +53,13 @@ The anti-degeneration constraints are not objectives. They are handled through
 pymoo constraints or repair operators:
 
 - `max_cluster_ratio <= 0.40`
-- `singleton_ratio <= 0.15`
-- minimum cluster count
+- `k >= 2`
 
 Cluster-size balance is intentionally both a soft optimization objective
-through `imbalance` and part of hard admissibility through these constraints.
+through `imbalance` and part of hard admissibility through the max-cluster
+constraint. `singleton_ratio` is retained as a diagnostic metric only.
+Candidate labels are bounded by `0..n-1`, but the formal problem has no separate
+hard constraint requiring `k <= n-1`.
 
 ## Post-Hoc Metrics Only
 

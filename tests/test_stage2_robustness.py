@@ -72,6 +72,17 @@ def test_raw_only_loader_does_not_require_ssa_csv(tmp_path: Path) -> None:
     assert len(extracted["structural_dependencies"]) == 1
 
 
+def test_max_cluster_ratio_resolution_prefers_cli_then_yaml_then_default() -> None:
+    assert stage2_run.resolve_max_cluster_ratio({"constraints": {}}) == 0.4
+    assert stage2_run.resolve_max_cluster_ratio(
+        {"constraints": {"max_cluster_ratio": 0.45}}
+    ) == 0.45
+    assert stage2_run.resolve_max_cluster_ratio(
+        {"constraints": {"max_cluster_ratio": 0.45}},
+        cli_override=0.5,
+    ) == 0.5
+
+
 def test_adjacency_iteration_order_is_stable() -> None:
     edges = pd.DataFrame(
         [
@@ -171,6 +182,36 @@ def test_select_solution_tie_breaks_by_canonical_label_vector_independent_of_ord
     assert selected_reverse["solution_id"] == "a"
 
 
+def test_persisted_pareto_rows_include_partition_diagnostics() -> None:
+    result = {
+        "pareto_rows": [{"solution_id": "seed0_solution000", "coupling": 0.2}],
+        "posthoc_rows": [
+            {
+                "solution_id": "seed0_solution000",
+                "weighted_modularity": 0.5,
+                "cluster_count": 4,
+                "max_cluster_ratio": 0.4,
+                "singleton_ratio": 0.0,
+                "cluster_size_cv": 0.2,
+            }
+        ],
+    }
+
+    rows = stage2_robustness._pareto_rows_with_diagnostics(result)
+
+    assert rows == [
+        {
+            "solution_id": "seed0_solution000",
+            "coupling": 0.2,
+            "weighted_modularity": 0.5,
+            "cluster_count": 4,
+            "max_cluster_ratio": 0.4,
+            "singleton_ratio": 0.0,
+            "cluster_size_cv": 0.2,
+        }
+    ]
+
+
 def test_normalize_checked_rejects_out_of_bounds() -> None:
     bounds = {
         "objective_order": ["coupling", "negative_cohesion", "imbalance"],
@@ -241,13 +282,10 @@ def _brute_force_compositions(total: int, parts: int):
 
 def _brute_force_imbalance_bound(n: int) -> float:
     max_cluster_size = int(np.floor(n * 0.4))
-    max_singletons = int(np.floor(n * 0.15))
     best = 0.0
     for k in range(2, n + 1):
         for sizes in _brute_force_compositions(n, k):
             if max(sizes) > max_cluster_size:
-                continue
-            if sum(size == 1 for size in sizes) > max_singletons:
                 continue
             values = np.asarray(sizes, dtype=float)
             best = max(best, float(np.std(values) / np.mean(values)))

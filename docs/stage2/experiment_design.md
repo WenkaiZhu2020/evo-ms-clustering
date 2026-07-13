@@ -32,7 +32,9 @@ Class counts come from `data/extracted/<subject>/`, aligned with frozen Stage 1.
 
 NSGA-II is stochastic, so single-seed results are insufficient. Stage 2:
 
-- runs each subject across the fixed seed set from config;
+- uses the experiment YAML for standard defaults, while the formal robustness
+  runner defines the 30-seed evaluation set as seeds `0..29`; the saved formal
+  manifests confirm this set for all three subjects;
 - retains each seed's Pareto front and Hypervolume;
 - reports mean and standard deviation for Hypervolume across seeds;
 - preserves seed, metadata, input hashes, and git head for reproducibility.
@@ -42,13 +44,13 @@ NSGA-II is stochastic, so single-seed results are insufficient. Stage 2:
 - Engine: pymoo `NSGA2`; do not hand-write the NSGA-II core.
 - Population and generations: config defaults, currently population `100` and
   generations `100`.
-- Initialization: structure-aware heuristic seeding, followed by random fill for
-  diversity. The seed set contains the frozen raw Leiden partition, graph-local
-  perturbations of it, and strongest-edge raw-graph groupings.
+- Initialization: Leiden -> NSGA-II hybrid warm start, followed by random fill
+  for diversity. The seed set contains the frozen raw Leiden partition,
+  graph-local perturbations of it, and strongest-edge raw-graph groupings.
 - Objective evaluation: O(E) edge-weight processing; no `_weighted_modularity`
   inside the optimization loop.
-- Constraints or repair: `max_cluster_ratio <= 0.40`,
-  `singleton_ratio <= 0.15`, and minimum cluster count.
+- Constraints or repair: `max_cluster_ratio <= 0.40` and minimum cluster
+  count. `singleton_ratio` is diagnostic-only.
 - Leiden resolution is not carried into Stage 2. Resolution is a Leiden-only
   parameter; NSGA-II controls granularity through the balance objective,
   admissibility constraints, and genetic operators.
