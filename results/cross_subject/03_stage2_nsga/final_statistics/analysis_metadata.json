@@ -1,0 +1,5 @@
+{
+  "test": "paired Wilcoxon signed-rank, two-sided",
+  "bonferroni_alpha": 0.004166666666666667,
+  "bonferroni_family_size": 12
+}
