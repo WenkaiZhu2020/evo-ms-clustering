@@ -1,6 +1,17 @@
-# 命令日志
+# Command Log
 
-以下记录本次的全部数据生成命令，以及用于口径、输入、输出和工作区检查的 shell 命令类别。内联 Python 的只读检查以 `...` 概述；它们不创建或修改数据。所有数据生成均使用指定 Codex Python 解释器。
+## Superseded Diagnostic
+
+This audit used the earlier `robustness/` outputs and a 2,994-row DayTrader
+front, not `robustness_final_30seeds/`. It is retained only as superseded
+provenance and is not used in final Stage 2 conclusions. The final-aligned
+diagnostics under `results/cross_subject/03_stage2_nsga/final_statistics/`
+are authoritative.
+
+This file records the data-generation commands and the shell command classes
+used to inspect definitions, inputs, outputs, and the worktree. Read-only
+inline Python checks are summarized as `...`; they did not create or modify
+data. All data generation used the specified Codex Python interpreter.
 
 ```bash
 git -C /Users/zhuwenkai/Desktop/evo-ms-clustering-stage2-rawonly status --short --branch
