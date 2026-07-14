@@ -119,6 +119,93 @@ Maven, or Ant. Consequently, an exact fresh computational rerun cannot be
 claimed from the saved evidence alone. Do not describe the historical lock as
 the final formal environment.
 
+## Errata
+
+### E1. Wilcoxon tie handling used an inconsistent float tolerance (corrected)
+
+`analyze_final_robustness.py` compares each seed's selected solution against the
+Leiden baseline. The baseline objectives are recomputed from the saved partition
+at analysis time, so pairs that are in fact identical can differ by float
+round-off (observed magnitude `<= 8.4e-17`). The original code judged ties with
+`np.isclose` but counted directions with strict `< 0` / `> 0`, and passed the
+unfiltered difference vector to `scipy.stats.wilcoxon`. Because SciPy discards
+only *exact* zeros, those round-off pairs entered the signed-rank test as real
+observations, occupying the smallest ranks.
+
+Two rows were affected, both on `coupling`; every other row was already correct.
+The fix snaps `np.isclose` ties to exact zero once and derives the tie mask, the
+direction counts, and SciPy's zero handling from that single tolerance.
+
+| Row | Round-off pairs | Genuine pairs | W before → after | p before → after |
+| --- | ---: | ---: | --- | --- |
+| `xerces-j` / `coupling` | 21 of 30 | 9 | `165.0` → `6.0` | `0.147449` → `0.050612` |
+| `daytrader` / `coupling` | 6 of 30 | 24 | `85.0` → `46.0` | `0.002391` → `0.002961` |
+
+**No significance decision changed.** All 14 comparisons (10 executed tests plus
+4 degenerate all-identical rows) hold the same `bonferroni_significant` verdict
+at `alpha = 0.005` before and after the fix, and `decision_changed_10_vs_12` is
+`False` for all 10 executed tests under both family sizes. The affected
+`p`-values stay on the same side of their threshold: `xerces-j` / `coupling`
+remains non-significant (`0.0506 > 0.005`) and `daytrader` / `coupling` remains
+significant (`0.00296 <= 0.005`).
+
+The bug also double-counted round-off ties in the descriptive columns, so
+`nsga_lower_count + ties + nsga_higher_count` exceeded `n_pairs` on those two
+rows (`36` and `51` against `n_pairs = 30`). All 14 rows now conserve both
+`lower + ties + higher == n_pairs` and `lower + higher == nonzero_pairs`.
+
+The `rank_biserial` column was never affected: it already filtered with
+`np.isclose`. The disagreement between a correct `rank_biserial` and a
+contaminated `W`/`p` on the same row was the visible symptom of this bug.
+
+Regenerated artifacts: `paired_selected_vs_leiden_wilcoxon.csv` and
+`bonferroni_10_vs_12_comparison.csv`. The latter previously had no generator in
+the repository; it is now emitted by `analyze_final_robustness.py` from the same
+rows as the paired table, so the two files cannot drift apart. Neither file is
+listed in `formal_output_sha256sums.txt`, so the 546-file integrity snapshot of
+the formal run directories is unaffected.
+
+### E2. Legacy fields in `stage2_robustness_bounds.yml` (not modified)
+
+The bounds file is left byte-for-byte unchanged: its SHA-256 is pinned by all
+three formal manifests and checked by the provenance verifier. Two of its fields
+are legacy and must not be read as provenance:
+
+- **Top-level `source_fingerprint`** is stale. It disagrees with the per-subject
+  `working_tree_fingerprint` on four of six files (`run.py`, `run_robustness.py`,
+  `problem.py`, `objectives.py`) and matches neither the current tree nor the
+  formal run state. Nothing verifies it. The authoritative record of the source
+  state that produced the formal runs is the per-subject
+  `working_tree_fingerprint` together with the formal manifests; those agree with
+  each other and with the current tree, and the verifier checks them.
+- **`reference_point`** is inert. `run_robustness.py` overwrites it with the
+  module constant `REFERENCE_POINT`, which is the value actually used for
+  Hypervolume.
+
+The bounds *values* are unaffected by either field: they are derived
+deterministically from `class_count` and `max_raw_edge_weight`, which are
+properties of the frozen extraction inputs, not of the source code.
+
+## Selected-Solution Comparison: Scope of Selection Bias
+
+The per-seed solution is chosen by
+`highest_weighted_modularity_among_feasible_pareto_solutions`, and every metric
+in the paired table is then computed on that same one solution per seed. This
+has an asymmetric consequence that reports must respect:
+
+- **`weighted_modularity` is selection-biased in NSGA-II's favour.** The front's
+  best-modularity solution is picked and then tested on modularity. On DayTrader
+  NSGA-II still loses this comparison on all 30 seeds, which makes that negative
+  result conservative rather than fragile.
+- **`coupling`, `cohesion`, and `imbalance` are not selection criteria** and
+  carry no winner's-curse on their own comparison. They appear only as
+  lexicographic tie-breakers below `weighted_modularity` in `_select_solution`,
+  and that chain never engaged: across all 90 seed-runs (3 subjects x 30 seeds)
+  the maximum feasible `weighted_modularity` on the Pareto front was unique, so
+  no tie-breaker — including `imbalance` — ever influenced which solution was
+  selected. The `imbalance` result is therefore an unbiased property of the
+  modularity-selected solution.
+
 ## Verification Commands
 
 Validate saved inputs, config/bounds hashes, formal seed layout, and core

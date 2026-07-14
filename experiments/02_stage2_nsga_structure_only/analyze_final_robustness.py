@@ -66,16 +66,23 @@ def main() -> int:
             nsga = selected[metric].to_numpy(dtype=float)
             leiden_values = np.full(len(nsga), float(baseline[metric]))
             delta = nsga - leiden_values
-            all_zero = bool(np.all(np.isclose(delta, 0.0)))
+            # Objectives recomputed from the saved partitions differ from the
+            # Leiden baseline by float round-off (~1e-17) on pairs that are in
+            # fact identical. Snap those to exact zero with a single tolerance so
+            # the tie mask, the direction counts, and scipy's zero handling all
+            # agree; scipy.wilcoxon only discards *exact* zeros, so unsnapped
+            # round-off would otherwise enter the test as real signed ranks.
+            tie_mask = np.isclose(delta, 0.0)
+            delta = np.where(tie_mask, 0.0, delta)
+            all_zero = bool(np.all(tie_mask))
             if all_zero:
-                delta = np.zeros_like(delta)
                 statistic = p_value = rbc = np.nan
                 nonzero = 0
             else:
                 test = wilcoxon(delta, alternative="two-sided", method="auto")
                 statistic, p_value = float(test.statistic), float(test.pvalue)
                 rbc = _rank_biserial(delta)
-                nonzero = int(np.count_nonzero(~np.isclose(delta, 0.0)))
+                nonzero = int(np.count_nonzero(delta))
             rows.append({
                 "subject": subject, "metric": metric, "n_pairs": len(nsga),
                 "nsga_median": float(np.median(nsga)), "leiden_median": float(np.median(leiden_values)),
@@ -83,7 +90,7 @@ def main() -> int:
                 "wilcoxon_statistic": statistic, "p_value_two_sided": p_value,
                 "rank_biserial_nsga_minus_leiden": rbc, "nonzero_pairs": nonzero,
                 "all_pairs_identical": all_zero,
-                "nsga_lower_count": int(np.sum(delta < 0)), "ties": int(np.sum(np.isclose(delta, 0.0))),
+                "nsga_lower_count": int(np.sum(delta < 0)), "ties": int(np.sum(tie_mask)),
                 "nsga_higher_count": int(np.sum(delta > 0)),
             })
 
@@ -106,6 +113,44 @@ def main() -> int:
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(args.output_dir / "paired_selected_vs_leiden_wilcoxon.csv", index=False)
+
+    # Sensitivity of every executed test to the Bonferroni family size: the
+    # executed-test family (10) versus the wider family (12). Degenerate
+    # all-identical comparisons run no test and are excluded.
+    alpha_10 = 0.05 / 10
+    alpha_12 = 0.05 / 12
+    comparison = []
+    for row in rows:
+        if bool(row["all_pairs_identical"]):
+            continue
+        significant_10 = bool(row["p_value_two_sided"] <= alpha_10)
+        significant_12 = bool(row["p_value_two_sided"] <= alpha_12)
+        comparison.append(
+            {
+                key: row[key]
+                for key in (
+                    "subject", "metric", "n_pairs", "nsga_median", "leiden_median",
+                    "median_difference_nsga_minus_leiden", "wilcoxon_statistic",
+                    "p_value_two_sided", "rank_biserial_nsga_minus_leiden",
+                    "nonzero_pairs",
+                )
+            }
+            | {
+                "bonferroni_alpha_12": alpha_12,
+                "bonferroni_significant": significant_12,
+                "all_pairs_identical": bool(row["all_pairs_identical"]),
+                "nsga_lower_count": row["nsga_lower_count"],
+                "ties": row["ties"],
+                "nsga_higher_count": row["nsga_higher_count"],
+                "bonferroni_alpha_10": alpha_10,
+                "significant_family_10": significant_10,
+                "significant_family_12": significant_12,
+                "decision_changed_10_vs_12": significant_10 != significant_12,
+            }
+        )
+    pd.DataFrame(comparison).to_csv(
+        args.output_dir / "bonferroni_10_vs_12_comparison.csv", index=False
+    )
     with (args.output_dir / "analysis_metadata.json").open("w", encoding="utf-8") as handle:
         json.dump(
             {

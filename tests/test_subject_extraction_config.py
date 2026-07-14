@@ -3,7 +3,9 @@ import os
 from pathlib import Path
 
 
-HELPER_PATH = Path(__file__).resolve().parents[1] / "scripts" / "subject_extraction_config.py"
+HELPER_PATH = (
+    Path(__file__).resolve().parents[1] / "scripts" / "extraction" / "subject_extraction_config.py"
+)
 SPEC = spec_from_file_location("subject_extraction_config", HELPER_PATH)
 subject_extraction_config = module_from_spec(SPEC)
 assert SPEC.loader is not None
