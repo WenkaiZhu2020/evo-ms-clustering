@@ -15,7 +15,7 @@ data/extracted/<subject>/
                        then random fill
        encoding: integer label vector over classes
        objectives: coupling down, cohesion up, imbalance down
-       constraints: max cluster ratio, singleton ratio, minimum cluster count
+       constraints: max cluster ratio, minimum cluster count
   -> Pareto front across fixed random seeds
   -> select one final solution from the Pareto front
   -> post-hoc evaluation only
