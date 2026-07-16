@@ -97,9 +97,24 @@
     "cost_based_retention_forbidden": true
   },
   "input_hashes": {
-    "jpetstore": null,
-    "daytrader": null,
-    "xerces": null
+    "jpetstore": {
+      "aggregate_sha256": "1ecdb9083a37668fd07388454095a317268c8b736e6fd45957ab16bf87f6ad23",
+      "class_count": 24,
+      "generated_at_utc": "2026-07-16T13:24:22.024525Z",
+      "canonicalization": "class_id<TAB>input_hash<LF>, sorted by class_id"
+    },
+    "daytrader": {
+      "aggregate_sha256": "ab09380f87119e4fe4621efbbdd8fdfd8cfc92cd383ed812169e2427a35eae44",
+      "class_count": 53,
+      "generated_at_utc": "2026-07-16T13:24:22.024525Z",
+      "canonicalization": "class_id<TAB>input_hash<LF>, sorted by class_id"
+    },
+    "xerces": {
+      "aggregate_sha256": "f81d0f9bda5aa0fcdf3a35c75876cc73c8b419eccfb8c9e00634ec13fad4d60a",
+      "class_count": 814,
+      "generated_at_utc": "2026-07-16T13:24:22.024525Z",
+      "canonicalization": "class_id<TAB>input_hash<LF>, sorted by class_id"
+    }
   },
   "semantic_graph_hashes": {
     "jpetstore": null,
