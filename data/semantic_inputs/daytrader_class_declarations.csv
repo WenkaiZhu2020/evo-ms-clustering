@@ -1,0 +1,958 @@
+subject,class_id,class_name,kind,superclass_present,semantic_text,method_count,annotation_count,interface_count,truncated_method_count,input_hash
+daytrader,com.ibm.websphere.samples.daytrader.TradeAction,TradeAction,class,false,"public class TradeAction implements TradeServices {
+    OrderDataBean buy(String, String, double, int);
+    void cancelOrder(Integer, boolean);
+    OrderDataBean completeOrder(Integer, boolean);
+    QuoteDataBean createQuote(String, String, BigDecimal);
+    void createTrade();
+    AccountDataBean getAccountData(String);
+    AccountProfileDataBean getAccountProfileData(String);
+    Collection getAllQuotes();
+    Collection getClosedOrders(String);
+    HoldingDataBean getHolding(Integer);
+    Collection getHoldings(String);
+    MarketSummaryDataBean getMarketSummary();
+    MarketSummaryDataBean getMarketSummaryInternal();
+    Collection getOrders(String);
+    QuoteDataBean getQuote(String);
+    AccountDataBean login(String, String);
+    void logout(String);
+    void orderCompleted(String, Integer);
+    void queueOrder(Integer, boolean);
+    AccountDataBean register(String, String, String, String, String, String, BigDecimal);
+    AccountDataBean register(String, String, String, String, String, String, String);
+    RunStatsDataBean resetTrade(boolean);
+    OrderDataBean sell(String, Integer, int);
+    OrderDataBean sell(String, int, int);
+    AccountProfileDataBean updateAccountProfile(AccountProfileDataBean);
+    QuoteDataBean updateQuotePriceVolume(String, BigDecimal, double);
+}
+",26,0,1,0,033fdf6c2fa49a51a305fe52789247c81b8e17bbf41f418a3ea98b0dfa191659
+daytrader,com.ibm.websphere.samples.daytrader.TradeServices,TradeServices,interface,false,"public interface TradeServices {
+    OrderDataBean buy(String, String, double, int);
+    void cancelOrder(Integer, boolean);
+    OrderDataBean completeOrder(Integer, boolean);
+    QuoteDataBean createQuote(String, String, BigDecimal);
+    AccountDataBean getAccountData(String);
+    AccountProfileDataBean getAccountProfileData(String);
+    Collection getAllQuotes();
+    Collection getClosedOrders(String);
+    HoldingDataBean getHolding(Integer);
+    Collection getHoldings(String);
+    MarketSummaryDataBean getMarketSummary();
+    Collection getOrders(String);
+    QuoteDataBean getQuote(String);
+    AccountDataBean login(String, String);
+    void logout(String);
+    void orderCompleted(String, Integer);
+    void queueOrder(Integer, boolean);
+    AccountDataBean register(String, String, String, String, String, String, BigDecimal);
+    RunStatsDataBean resetTrade(boolean);
+    OrderDataBean sell(String, Integer, int);
+    AccountProfileDataBean updateAccountProfile(AccountProfileDataBean);
+    QuoteDataBean updateQuotePriceVolume(String, BigDecimal, double);
+}
+",22,0,0,0,79faebc4f5a70102505410ea8714fc1c26baa036aa637175132dd4a55b1b8f40
+daytrader,com.ibm.websphere.samples.daytrader.beans.MarketSummaryDataBean,MarketSummaryDataBean,class,false,"public class MarketSummaryDataBean implements Serializable {
+    BigDecimal getGainPercent();
+    BigDecimal getOpenTSIA();
+    MarketSummaryDataBean getRandomInstance();
+    Date getSummaryDate();
+    BigDecimal getTSIA();
+    Collection getTopGainers();
+    Collection getTopLosers();
+    double getVolume();
+    void print();
+    void setOpenTSIA(BigDecimal);
+    void setSummaryDate(Date);
+    void setTSIA(BigDecimal);
+    void setTopGainers(Collection);
+    void setTopLosers(Collection);
+    void setVolume(double);
+    String toHTML();
+    JsonObject toJSON();
+    String toString();
+}
+",18,0,1,0,c0e0176c877f840828c4caa0ca1603ddb7225b66f53d5b840fb0c003f3294a71
+daytrader,com.ibm.websphere.samples.daytrader.beans.RunStatsDataBean,RunStatsDataBean,class,false,"public class RunStatsDataBean implements Serializable {
+    int getBuyOrderCount();
+    int getCancelledOrderCount();
+    int getDeletedOrderCount();
+    int getHoldingCount();
+    int getNewUserCount();
+    int getOpenOrderCount();
+    int getOrderCount();
+    int getSellOrderCount();
+    int getSumLoginCount();
+    int getSumLogoutCount();
+    int getTradeStockCount();
+    int getTradeUserCount();
+    void setBuyOrderCount(int);
+    void setCancelledOrderCount(int);
+    void setDeletedOrderCount(int);
+    void setHoldingCount(int);
+    void setNewUserCount(int);
+    void setOpenOrderCount(int);
+    void setOrderCount(int);
+    void setSellOrderCount(int);
+    void setSumLoginCount(int);
+    void setSumLogoutCount(int);
+    void setTradeStockCount(int);
+    void setTradeUserCount(int);
+    String toString();
+}
+",25,0,1,0,b6e55ef211e1bcc9532314cbe4d459af83d96d462127bc2abdd9ec76b8570a8d
+daytrader,com.ibm.websphere.samples.daytrader.direct.KeySequenceDirect,KeySequenceDirect,class,false,"public class KeySequenceDirect {
+    Collection allocNewBlock(Connection, String, boolean, boolean);
+    Integer getNextID(Connection, String, boolean, boolean);
+}
+",2,0,0,0,7b6aafd7330dd4b826621f1e857114857f540c5b2d7441420d524b5e9c4318c6
+daytrader,com.ibm.websphere.samples.daytrader.direct.TradeDirect,TradeDirect,class,false,"public class TradeDirect implements TradeServices {
+    OrderDataBean buy(String, String, double, int);
+    void cancelOrder(Connection, Integer);
+    void cancelOrder(Integer, boolean);
+    String checkDBProductName();
+    void commit(Connection);
+    OrderDataBean completeOrder(Connection, Integer);
+    OrderDataBean completeOrder(Integer, boolean);
+    HoldingDataBean createHolding(Connection, int, String, double, BigDecimal);
+    OrderDataBean createOrder(Connection, AccountDataBean, QuoteDataBean, HoldingDataBean, String, double);
+    QuoteDataBean createQuote(String, String, BigDecimal);
+    void creditAccountBalance(Connection, AccountDataBean, BigDecimal);
+    void destroy();
+    AccountDataBean getAccountData(Connection, String);
+    AccountDataBean getAccountData(String);
+    AccountDataBean getAccountData(int);
+    AccountDataBean getAccountData(int, Connection);
+    AccountDataBean getAccountDataFromResultSet(ResultSet);
+    AccountProfileDataBean getAccountProfileData(Connection, Integer);
+    AccountProfileDataBean getAccountProfileData(Connection, String);
+    AccountProfileDataBean getAccountProfileData(String);
+    AccountProfileDataBean getAccountProfileDataFromResultSet(ResultSet);
+    Collection getAllQuotes();
+    Collection getClosedOrders(String);
+    Connection getConn();
+    Connection getConnPublic();
+    void getDataSource();
+    HoldingDataBean getHolding(Integer);
+    HoldingDataBean getHoldingData(Connection, int);
+    HoldingDataBean getHoldingData(int);
+    HoldingDataBean getHoldingDataFromResultSet(ResultSet);
+    Collection getHoldings(String);
+    boolean getInGlobalTxn();
+    MarketSummaryDataBean getMarketSummary();
+    OrderDataBean getOrderData(Connection, int);
+    OrderDataBean getOrderDataFromResultSet(ResultSet);
+    Collection getOrders(String);
+    QuoteDataBean getQuote(Connection, String);
+    QuoteDataBean getQuote(String);
+    QuoteDataBean getQuoteData(Connection, String);
+    QuoteDataBean getQuoteDataFromResultSet(ResultSet);
+    QuoteDataBean getQuoteForUpdate(Connection, String);
+    PreparedStatement getStatement(Connection, String);
+    PreparedStatement getStatement(Connection, String, int, int);
+    void init();
+    AccountDataBean login(String, String);
+    void logout(String);
+    void orderCompleted(String, Integer);
+    void publishQuotePriceChange(QuoteDataBean, BigDecimal, BigDecimal, double);
+    void queueOrder(Integer, boolean);
+    boolean recreateDBTables(Object[], PrintWriter);
+    AccountDataBean register(String, String, String, String, String, String, BigDecimal);
+    void releaseConn(Connection);
+    void removeHolding(Connection, int, int);
+    RunStatsDataBean resetTrade(boolean);
+    void rollBack(Connection, Exception);
+    OrderDataBean sell(String, Integer, int);
+    void setInGlobalTxn(boolean);
+    AccountProfileDataBean updateAccountProfile(AccountProfileDataBean);
+    void updateAccountProfile(Connection, AccountProfileDataBean);
+    void updateHoldingStatus(Connection, Integer, String);
+    void updateOrderHolding(Connection, int, int);
+    void updateOrderStatus(Connection, Integer, String);
+    QuoteDataBean updateQuotePriceVolume(String, BigDecimal, double);
+    void updateQuotePriceVolume(Connection, String, BigDecimal, double, double);
+    QuoteDataBean updateQuotePriceVolumeInt(String, BigDecimal, double, boolean);
+}
+",65,0,1,0,13e953a2da53b4570061f31d0a9e42f4b1125bbc41935c9ed16dff71dfa99ef1
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.DTBroker3MDB,DTBroker3MDB,class,false,"@MessageDriven
+@TransactionAttribute
+@TransactionManagement
+public class DTBroker3MDB implements MessageListener {
+    TradeServices getTrade(boolean);
+    void onMessage(Message);
+}
+",2,3,1,0,4912385984127e955b6c0d849843e4f4f52283377581b1410b6de9a3bba22757
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.DTStreamer3MDB,DTStreamer3MDB,class,false,"@MessageDriven
+@TransactionAttribute
+@TransactionManagement
+public class DTStreamer3MDB implements MessageListener {
+    void onMessage(Message);
+}
+",1,3,1,0,2418cc2f34f28cce50e44343c2514a1659b9a3455a18ea6f45f4b3f3f217290f
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.MarketSummarySingleton,MarketSummarySingleton,class,false,"@Singleton
+public class MarketSummarySingleton {
+    MarketSummaryDataBean getMarketSummaryDataBean();
+    void setMarketSummaryDataBean(MarketSummaryDataBean);
+    void setup();
+    void updateMarketSummary();
+}
+",4,1,0,0,c89e34e1575247704b611fd1b4991a46cc4da1f138e95b64c3262e0008131459
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean,TradeSLSBBean,class,false,"@Stateless
+@TransactionAttribute
+@TransactionManagement
+public class TradeSLSBBean implements TradeSLSBLocal, TradeSLSBRemote {
+    OrderDataBean buy(String, String, double, int);
+    void cancelOrder(Integer, boolean);
+    OrderDataBean completeOrder(Integer, boolean);
+    HoldingDataBean createHolding(AccountDataBean, QuoteDataBean, double, BigDecimal);
+    OrderDataBean createOrder(AccountDataBean, QuoteDataBean, HoldingDataBean, String, double);
+    QuoteDataBean createQuote(String, String, BigDecimal);
+    AccountDataBean getAccountData(String);
+    AccountProfileDataBean getAccountProfileData(String);
+    Collection getAllQuotes();
+    Collection getClosedOrders(String);
+    HoldingDataBean getHolding(Integer);
+    Collection getHoldings(String);
+    MarketSummaryDataBean getMarketSummary();
+    Collection getOrders(String);
+    QuoteDataBean getQuote(String);
+    double investmentReturn(double, double);
+    AccountDataBean login(String, String);
+    void logout(String);
+    void orderCompleted(String, Integer);
+    QuoteDataBean pingTwoPhase(String);
+    void postConstruct();
+    void publishQuotePriceChange(QuoteDataBean, BigDecimal, BigDecimal, double);
+    void queueOrder(Integer, boolean);
+    AccountDataBean register(String, String, String, String, String, String, BigDecimal);
+    RunStatsDataBean resetTrade(boolean);
+    OrderDataBean sell(String, Integer, int);
+    AccountProfileDataBean updateAccountProfile(AccountProfileDataBean);
+    QuoteDataBean updateQuotePriceVolume(String, BigDecimal, double);
+}
+",28,3,2,0,afe397d01db1e331390f5a45f3c9ee5e0718f8e0c4786528e82a9a96a041ebbf
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean$quotePriceComparator,TradeSLSBBean$quotePriceComparator,class,false,"class TradeSLSBBean$quotePriceComparator implements Comparator {
+    int compare(Object, Object);
+}
+",1,0,1,0,0f30e2856083ce7809ae33a44b890c6c8ea99f7964d06f567693cbe9834acc7d
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal,TradeSLSBLocal,interface,false,"@Local
+public interface TradeSLSBLocal extends TradeServices {
+    double investmentReturn(double, double);
+    QuoteDataBean pingTwoPhase(String);
+    void publishQuotePriceChange(QuoteDataBean, BigDecimal, BigDecimal, double);
+}
+",3,1,1,0,ebb0a71ae821572211f9108ae470bb16755bf374a203a0cabed519823f207842
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote,TradeSLSBRemote,interface,false,"@Remote
+public interface TradeSLSBRemote extends TradeServices {
+    double investmentReturn(double, double);
+    QuoteDataBean pingTwoPhase(String);
+    void publishQuotePriceChange(QuoteDataBean, BigDecimal, BigDecimal, double);
+}
+",3,1,1,0,3f95dc954e38484462053beb3b05e249e536f1db830393b557d7ccb93dea5c3c
+daytrader,com.ibm.websphere.samples.daytrader.entities.AccountDataBean,AccountDataBean,class,false,"@Entity
+@Table
+public class AccountDataBean implements Serializable {
+    boolean equals(Object);
+    Integer getAccountID();
+    BigDecimal getBalance();
+    Date getCreationDate();
+    Collection getHoldings();
+    Date getLastLogin();
+    int getLoginCount();
+    int getLogoutCount();
+    BigDecimal getOpenBalance();
+    Collection getOrders();
+    AccountProfileDataBean getProfile();
+    String getProfileID();
+    AccountDataBean getRandomInstance();
+    int hashCode();
+    void login(String);
+    void logout();
+    void print();
+    void setAccountID(Integer);
+    void setBalance(BigDecimal);
+    void setCreationDate(Date);
+    void setHoldings(Collection);
+    void setLastLogin(Date);
+    void setLoginCount(int);
+    void setLogoutCount(int);
+    void setOpenBalance(BigDecimal);
+    void setOrders(Collection);
+    void setProfile(AccountProfileDataBean);
+    void setProfileID(String);
+    String toHTML();
+    String toString();
+}
+",30,2,1,0,fe52a5446d2684cc6bf34f902d2639c2b5cf29d2cf0d2697f2738fc0ee50e0c8
+daytrader,com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean,AccountProfileDataBean,class,false,"@Entity
+@Table
+public class AccountProfileDataBean implements Serializable {
+    boolean equals(Object);
+    AccountDataBean getAccount();
+    String getAddress();
+    String getCreditCard();
+    String getEmail();
+    String getFullName();
+    String getPassword();
+    AccountProfileDataBean getRandomInstance();
+    String getUserID();
+    int hashCode();
+    void print();
+    void setAccount(AccountDataBean);
+    void setAddress(String);
+    void setCreditCard(String);
+    void setEmail(String);
+    void setFullName(String);
+    void setPassword(String);
+    void setUserID(String);
+    String toHTML();
+    String toString();
+}
+",20,2,1,0,26bf5ddd5afd93758bea2f0ec580c37da14b40090c1eb538ff4f5f803064b02c
+daytrader,com.ibm.websphere.samples.daytrader.entities.HoldingDataBean,HoldingDataBean,class,false,"@Entity
+@Table
+public class HoldingDataBean implements Serializable {
+    boolean equals(Object);
+    AccountDataBean getAccount();
+    Integer getHoldingID();
+    Date getPurchaseDate();
+    BigDecimal getPurchasePrice();
+    double getQuantity();
+    QuoteDataBean getQuote();
+    String getQuoteID();
+    HoldingDataBean getRandomInstance();
+    int hashCode();
+    void print();
+    void setAccount(AccountDataBean);
+    void setHoldingID(Integer);
+    void setPurchaseDate(Date);
+    void setPurchasePrice(BigDecimal);
+    void setQuantity(double);
+    void setQuote(QuoteDataBean);
+    void setQuoteID(String);
+    String toHTML();
+    String toString();
+}
+",20,2,1,0,70d9a4e6f0264fe8807e68d1a19767fe1293b6160bd82ed88e8d97a461a283e7
+daytrader,com.ibm.websphere.samples.daytrader.entities.OrderDataBean,OrderDataBean,class,false,"@Entity
+@NamedQueries
+@Table
+public class OrderDataBean implements Serializable {
+    void cancel();
+    boolean equals(Object);
+    AccountDataBean getAccount();
+    Date getCompletionDate();
+    HoldingDataBean getHolding();
+    Date getOpenDate();
+    BigDecimal getOrderFee();
+    Integer getOrderID();
+    String getOrderStatus();
+    String getOrderType();
+    BigDecimal getPrice();
+    double getQuantity();
+    QuoteDataBean getQuote();
+    OrderDataBean getRandomInstance();
+    String getSymbol();
+    int hashCode();
+    boolean isBuy();
+    boolean isCancelled();
+    boolean isCompleted();
+    boolean isOpen();
+    boolean isSell();
+    void print();
+    void setAccount(AccountDataBean);
+    void setCompletionDate(Date);
+    void setHolding(HoldingDataBean);
+    void setOpenDate(Date);
+    void setOrderFee(BigDecimal);
+    void setOrderID(Integer);
+    void setOrderStatus(String);
+    void setOrderType(String);
+    void setPrice(BigDecimal);
+    void setQuantity(double);
+    void setQuote(QuoteDataBean);
+    void setSymbol(String);
+    String toHTML();
+    String toString();
+}
+",36,3,1,0,ae0f42373042008c9575a3bf38f5a99e0721d4ef93cf23666a5c7fec29de466c
+daytrader,com.ibm.websphere.samples.daytrader.entities.QuoteDataBean,QuoteDataBean,class,false,"@Entity
+@NamedNativeQueries
+@NamedQueries
+@Table
+public class QuoteDataBean implements Serializable {
+    boolean equals(Object);
+    double getChange();
+    String getCompanyName();
+    BigDecimal getHigh();
+    BigDecimal getLow();
+    BigDecimal getOpen();
+    BigDecimal getPrice();
+    QuoteDataBean getRandomInstance();
+    String getSymbol();
+    double getVolume();
+    int hashCode();
+    void print();
+    void setChange(double);
+    void setCompanyName(String);
+    void setHigh(BigDecimal);
+    void setLow(BigDecimal);
+    void setOpen(BigDecimal);
+    void setPrice(BigDecimal);
+    void setSymbol(String);
+    void setVolume(double);
+    String toHTML();
+    String toString();
+}
+",22,4,1,0,d97a597b2ca04fc97d5f53c0f0470038c74fad862840cc1e56aad74a5391db40
+daytrader,com.ibm.websphere.samples.daytrader.util.CompleteOrderThread,CompleteOrderThread,class,false,"public class CompleteOrderThread implements Runnable {
+    void run();
+}
+",1,0,1,0,b427c2f5f157730fc86ef980d45f643a647c07f814fdab3314fcb1e42a37f531
+daytrader,com.ibm.websphere.samples.daytrader.util.FinancialUtils,FinancialUtils,class,false,"public class FinancialUtils {
+    BigDecimal computeGain(BigDecimal, BigDecimal);
+    BigDecimal computeGainPercent(BigDecimal, BigDecimal);
+    BigDecimal computeHoldingsTotal(Collection);
+    String printChangeHTML(double);
+    String printGainHTML(BigDecimal);
+    String printGainPercentHTML(BigDecimal);
+    String printQuoteLink(String);
+}
+",7,0,0,0,2dad4285e08e95ea31d66fcdc09ed215a0fb63a657a79681e349b320c8281737
+daytrader,com.ibm.websphere.samples.daytrader.util.KeyBlock,KeyBlock,class,true,"public class KeyBlock extends AbstractSequentialList {
+    ListIterator listIterator(int);
+    int size();
+}
+",2,0,0,0,64a09d222de48169dff2cfb960584f599f85341ad2addcc5b0e197ea8f0a5c55
+daytrader,com.ibm.websphere.samples.daytrader.util.KeyBlock$KeyBlockIterator,KeyBlock$KeyBlockIterator,class,false,"class KeyBlock$KeyBlockIterator implements ListIterator {
+    void add(Object);
+    boolean hasNext();
+    boolean hasPrevious();
+    Object next();
+    int nextIndex();
+    Object previous();
+    int previousIndex();
+    void remove();
+    void set(Object);
+}
+",9,0,1,0,a5582bf8911a310d1794168c8370f56d7720253dacdcf48ac5bb01fef9160dbf
+daytrader,com.ibm.websphere.samples.daytrader.util.Log,Log,class,false,"public class Log {
+    void debug(String);
+    boolean doActionTrace();
+    boolean doDebug();
+    boolean doStat();
+    boolean doTrace();
+    void error(String);
+    void error(String, String, String, Throwable);
+    void error(String, String, Throwable);
+    void error(String, Throwable);
+    void error(Throwable, String);
+    void error(Throwable, String, String);
+    void error(Throwable, String, String, String);
+    boolean getActionTrace();
+    boolean getTrace();
+    void log(String);
+    void log(String, String);
+    void log(String, String, String);
+    void print(String);
+    void printCollection(Collection);
+    void printCollection(String, Collection);
+    void printObject(Object);
+    void setActionTrace(boolean);
+    void setTrace(boolean);
+    void stat(String);
+    void trace(String);
+    void trace(String, Object);
+    void trace(String, Object, Object);
+    void trace(String, Object, Object, Object);
+    void trace(String, Object, Object, Object, Object);
+    void trace(String, Object, Object, Object, Object, Object);
+    void trace(String, Object, Object, Object, Object, Object, Object);
+    void trace(String, Object, Object, Object, Object, Object, Object, Object);
+    void traceEnter(String);
+    void traceExit(String);
+}
+",34,0,0,0,5c88d85e0f49968d803f52175b628c4d465c7d7348b050bedb8c66252dbf3aba
+daytrader,com.ibm.websphere.samples.daytrader.util.MDBStats,MDBStats,class,true,"public class MDBStats extends HashMap {
+    TimerStat addTiming(String, long, long);
+    MDBStats getInstance();
+    void reset();
+}
+",3,0,0,0,3cf888238d2f47f057ddc8a187c5a4e3a5b4d5615adb164ce99408b0a9f50ed5
+daytrader,com.ibm.websphere.samples.daytrader.util.TimerStat,TimerStat,class,false,"public class TimerStat {
+    double getAvgSecs();
+    int getCount();
+    double getMax();
+    double getMaxSecs();
+    double getMin();
+    double getMinSecs();
+    double getTotalTime();
+    void setCount(int);
+    void setMax(double);
+    void setMin(double);
+    void setTotalTime(double);
+}
+",11,0,0,0,69d7f98dab546a408a5670d85feec4ea45c3b2c941cd2e197665e4370bc7ab9f
+daytrader,com.ibm.websphere.samples.daytrader.util.TradeConfig,TradeConfig,class,false,"public class TradeConfig {
+    int getAccessMode();
+    boolean getActionTrace();
+    boolean getDisplayOrderAlerts();
+    String getHostname();
+    boolean getJDBCDriverNeedsGlobalTransation();
+    boolean getLongRun();
+    int getMAX_HOLDINGS();
+    int getMAX_QUOTES();
+    int getMAX_USERS();
+    int getMarketSummaryInterval();
+    String getNextUserIDFromDeck();
+    BigDecimal getOrderFee(String);
+    int getOrderProcessingMode();
+    String[] getOrderProcessingModeNames();
+    String getPage(int);
+    int getPercentSentToWebsocket();
+    int getPrimIterations();
+    boolean getPublishQuotePriceChange();
+    BigDecimal getRandomPriceChangeFactor();
+    int getRunTimeMode();
+    String[] getRunTimeModeNames();
+    char getScenarioAction(boolean);
+    int getScenarioCount();
+    int[][] getScenarioMixes();
+    boolean getTrace();
+    boolean getUpdateQuotePrices();
+    String getUserID();
+    int getWebInterface();
+    String[] getWebInterfaceNames();
+    void incrementScenarioCount();
+    void incrementSellDeficit();
+    String nextUserID();
+    double random();
+    String rndAddress();
+    String rndBalance();
+    BigDecimal rndBigDecimal(float);
+    boolean rndBoolean();
+    String rndCreditCard();
+    String rndEmail(String);
+    float rndFloat(int);
+    String rndFullName();
+    int rndInt(int);
+    String rndNewUserID();
+    float rndPrice();
+    float rndQuantity();
+    String rndSymbol();
+    String rndSymbols();
+    String rndUserID();
+    void setAccessMode(int);
+    void setActionTrace(boolean);
+    void setConfigParam(String, String);
+    void setDisplayOrderAlerts(boolean);
+    void setJDBCDriverNeedsGlobalTransation(boolean);
+    void setLongRun(boolean);
+    void setMAX_HOLDINGS(int);
+    void setMAX_QUOTES(int);
+    void setMAX_USERS(int);
+    void setMarketSummaryInterval(int);
+    void setOrderProcessingMode(int);
+    void setPercentSentToWebsocket(int);
+    void setPrimIterations(int);
+    void setPublishQuotePriceChange(boolean);
+    void setRunTimeMode(int);
+    void setRunTimeModeNames(String[]);
+    void setScenarioCount(int);
+    void setTrace(boolean);
+    void setUpdateQuotePrices(boolean);
+    void setUseRemoteEJBInterface(boolean);
+    void setWebInterface(int);
+    boolean useRemoteEJBInterface();
+}
+",70,0,0,0,e94f37be483cca3b9c8b0bc9d59407688f9d35c2f13aaaeb08c3245d8ba18b52
+daytrader,com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage,WebSocketJMSMessage,interface,false,"@Qualifier
+@Retention
+@Target
+public interface WebSocketJMSMessage extends Annotation {
+}
+",0,3,1,0,e95b8733d3181d904136f23d47d135939f19ba98573cc973c9f5610fef33a7da
+daytrader,com.ibm.websphere.samples.daytrader.web.OrdersAlertFilter,OrdersAlertFilter,class,false,"@WebFilter
+public class OrdersAlertFilter implements Filter {
+    void destroy();
+    void doFilter(ServletRequest, ServletResponse, FilterChain);
+    void init(FilterConfig);
+}
+",3,1,1,0,92772fd1a525dacc0e70f4670f2949914b10b431daada536adc8c55779ef3351
+daytrader,com.ibm.websphere.samples.daytrader.web.TradeAppServlet,TradeAppServlet,class,true,"@WebServlet
+public class TradeAppServlet extends HttpServlet {
+    void doGet(HttpServletRequest, HttpServletResponse);
+    void doPost(HttpServletRequest, HttpServletResponse);
+    String getServletInfo();
+    void init(ServletConfig);
+    void performTask(HttpServletRequest, HttpServletResponse);
+}
+",5,1,0,0,3d2ab00130a8f8132f5a696c290b47eac5f6a24bcc94ba431756875254fb2dfc
+daytrader,com.ibm.websphere.samples.daytrader.web.TradeServletAction,TradeServletAction,class,false,"public class TradeServletAction {
+    void doAccount(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doAccountUpdate(ServletContext, HttpServletRequest, HttpServletResponse, String, String, String, String, String, String, String);
+    void doBuy(ServletContext, HttpServletRequest, HttpServletResponse, String, String, String);
+    void doHome(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doLogin(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doLogout(ServletContext, HttpServletRequest, HttpServletResponse, String);
+    void doMarketSummary(ServletContext, HttpServletRequest, HttpServletResponse, String);
+    void doPortfolio(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doQuotes(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doRegister(ServletContext, HttpServletRequest, HttpServletResponse, String, String, String, String, String, String, String, String);
+    void doSell(ServletContext, HttpServletRequest, HttpServletResponse, String, Integer);
+    void doWelcome(ServletContext, HttpServletRequest, HttpServletResponse, String);
+    void requestDispatch(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+}
+",13,0,0,0,bb55e7f4a209cc8d7ab39fdf0df63b8c7a2bd45561128be5de602098b6fe37e8
+daytrader,com.ibm.websphere.samples.daytrader.web.TradeWebContextListener,TradeWebContextListener,class,false,"@WebListener
+public class TradeWebContextListener implements ServletContextListener {
+    void contextDestroyed(ServletContextEvent);
+    void contextInitialized(ServletContextEvent);
+}
+",2,1,1,0,54c23417abe0ec6d2f80bccd8b6382753c53345c2fcad75ef19fd3535ff56790
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.AccountDataJSF,AccountDataJSF,class,false,"@Named
+@RequestScoped
+public class AccountDataJSF {
+    void doAccountData(AccountDataBean, Collection);
+    Integer getAccountID();
+    OrderData[] getAllOrders();
+    BigDecimal getBalance();
+    OrderData[] getClosedOrders();
+    Date getCreationDate();
+    Date getCurrentTime();
+    BigDecimal getGain();
+    String getGainHTML();
+    BigDecimal getGainPercent();
+    String getGainPercentHTML();
+    BigDecimal getHoldingsTotal();
+    Date getLastLogin();
+    int getLoginCount();
+    int getLogoutCount();
+    Integer getNumberHoldings();
+    Integer getNumberOfOrderRows();
+    Integer getNumberOfOrders();
+    BigDecimal getOpenBalance();
+    String getProfileID();
+    Date getSessionCreationDate();
+    BigDecimal getSumOfCashHoldings();
+    void home();
+    void setAccountID(Integer);
+    void setAllOrders(OrderData[]);
+    void setBalance(BigDecimal);
+    void setClosedOrders(OrderData[]);
+    void setCreationDate(Date);
+    void setCurrentTime(Date);
+    void setGain(BigDecimal);
+    void setGainPercent(BigDecimal);
+    void setHoldingsTotal(BigDecimal);
+    void setLastLogin(Date);
+    void setLoginCount(int);
+    void setLogoutCount(int);
+    void setNumberHoldings(Integer);
+    void setNumberOfOrderRows(Integer);
+    void setNumberOfOrders(Integer);
+    void setOpenBalance(BigDecimal);
+    void setProfileID(String);
+    void setSessionCreationDate(Date);
+    void setSumOfCashHoldings(BigDecimal);
+    void toggleShowAllRows();
+}
+",43,2,0,0,cfff56b2a6a4d45897abb39d483bd8221647b52684a93e655e5c2ed620df3c66
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.ExternalContextProducer,ExternalContextProducer,class,false,"public class ExternalContextProducer {
+    ExternalContext produceFacesExternalContext();
+}
+",1,0,0,0,cf767647279cb1e18a1974b7e25b0ef85cdbe8365b813a1d15750008a1d91a08
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.HoldingData,HoldingData,class,false,"@Named
+@SessionScoped
+public class HoldingData implements Serializable {
+    BigDecimal getBasis();
+    BigDecimal getGain();
+    String getGainHTML();
+    Integer getHoldingID();
+    BigDecimal getMarketValue();
+    BigDecimal getPrice();
+    Date getPurchaseDate();
+    BigDecimal getPurchasePrice();
+    double getQuantity();
+    String getQuoteID();
+    void setBasis(BigDecimal);
+    void setGain(BigDecimal);
+    void setHoldingID(Integer);
+    void setMarketValue(BigDecimal);
+    void setPrice(BigDecimal);
+    void setPurchaseDate(Date);
+    void setPurchasePrice(BigDecimal);
+    void setQuantity(double);
+    void setQuoteID(String);
+}
+",19,2,1,0,0466b8b5e7e9bbbaec557b72974530d8e3a29c86c3ec24b22f32d026cbd120d4
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.JSFLoginFilter,JSFLoginFilter,class,false,"@WebFilter
+public class JSFLoginFilter implements Filter {
+    void destroy();
+    void doFilter(ServletRequest, ServletResponse, FilterChain);
+    void init(FilterConfig);
+}
+",3,1,1,0,215ce11132c1dc52980218c193843844db4457e16138bb64e44a2650e009350b
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.LoginValidator,LoginValidator,class,false,"@FacesValidator
+public class LoginValidator implements Validator {
+    void validate(FacesContext, UIComponent, Object);
+}
+",1,1,1,0,c32c34c8b21acf508805d02f76b762068742452c7c38a20fcdfb1002531a68ca
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.MarketSummaryJSF,MarketSummaryJSF,class,false,"@Named
+@RequestScoped
+public class MarketSummaryJSF {
+    BigDecimal getGainPercent();
+    String getGainPercentHTML();
+    void getMarketSummary();
+    BigDecimal getOpenTSIA();
+    Date getSummaryDate();
+    BigDecimal getTSIA();
+    QuoteData[] getTopGainers();
+    QuoteData[] getTopLosers();
+    double getVolume();
+    void setGainPercent(BigDecimal);
+    void setOpenTSIA(BigDecimal);
+    void setSummaryDate(Date);
+    void setTSIA(BigDecimal);
+    void setTopGainers(QuoteData[]);
+    void setTopLosers(QuoteData[]);
+    void setVolume(double);
+}
+",16,2,0,0,b993776901ea25956839514f9bc4167f25110ae7ce97e482fed6583815adc7a9
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.OrderData,OrderData,class,false,"public class OrderData {
+    Date getCompletionDate();
+    Date getOpenDate();
+    BigDecimal getOrderFee();
+    Integer getOrderID();
+    String getOrderStatus();
+    String getOrderType();
+    BigDecimal getPrice();
+    double getQuantity();
+    String getSymbol();
+    BigDecimal getTotal();
+    void setCompletionDate(Date);
+    void setOpenDate(Date);
+    void setOrderFee(BigDecimal);
+    void setOrderID(Integer);
+    void setOrderStatus(String);
+    void setOrderType(String);
+    void setPrice(BigDecimal);
+    void setQuantity(double);
+    void setSymbol(String);
+    void setTotal(BigDecimal);
+}
+",20,0,0,0,f5d70a04f3e76bbc0a742b4be8eaffc786d4f03bb5cfc3bacc2ca4d129020d84
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.OrderDataJSF,OrderDataJSF,class,false,"@Named
+public class OrderDataJSF {
+    void getAllOrder();
+    OrderData[] getAllOrders();
+    void getOrder();
+    OrderData getOrderData();
+    void setAllOrders(OrderData[]);
+    void setOrderData(OrderData);
+}
+",6,1,0,0,6f6185d3d371430468e930cbf320195ff438ce3f8c518b352be7e58534216c13
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.PortfolioJSF,PortfolioJSF,class,false,"@Named
+@RequestScoped
+public class PortfolioJSF {
+    BigDecimal getBalance();
+    HtmlDataTable getDataTable();
+    ArrayList getHoldingDatas();
+    BigDecimal getHoldingsTotal();
+    Integer getNumberHoldings();
+    BigDecimal getOpenBalance();
+    void getPortfolio();
+    BigDecimal getSumOfCashHoldings();
+    BigDecimal getTotalBasis();
+    BigDecimal getTotalGain();
+    BigDecimal getTotalGainPercent();
+    String getTotalGainPercentHTML();
+    BigDecimal getTotalValue();
+    String sell();
+    void setBalance(BigDecimal);
+    void setDataTable(HtmlDataTable);
+    void setHoldingDatas(ArrayList);
+    void setHoldingsTotal(BigDecimal);
+    void setNumberHoldings(Integer);
+    void setOpenBalance(BigDecimal);
+    void setSumOfCashHoldings(BigDecimal);
+    void setTotalBasis(BigDecimal);
+    void setTotalGain(BigDecimal);
+    void setTotalGainPercent(BigDecimal);
+    void setTotalValue(BigDecimal);
+}
+",25,2,0,0,6d99cfe661cf7fb2d5f26e23b40798585d64319d63a530b9067da8b7ce6ea506
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.QuoteData,QuoteData,class,false,"public class QuoteData {
+    double getChange();
+    String getChangeHTML();
+    String getCompanyName();
+    BigDecimal getGain();
+    String getGainHTML();
+    BigDecimal getGainPercent();
+    String getGainPercentHTML();
+    BigDecimal getHigh();
+    BigDecimal getLow();
+    BigDecimal getOpen();
+    BigDecimal getPrice();
+    String getRange();
+    String getSymbol();
+    double getVolume();
+    void setChange(double);
+    void setCompanyName(String);
+    void setGain(BigDecimal);
+    void setGainPercent(BigDecimal);
+    void setHigh(BigDecimal);
+    void setLow(BigDecimal);
+    void setOpen(BigDecimal);
+    void setPrice(BigDecimal);
+    void setRange(String);
+    void setSymbol(String);
+    void setVolume(double);
+}
+",25,0,0,0,0f6f6049b9c714e355cf03efbec5f9e2883315049a6506c8fc8bc7ffc40be36d
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.QuoteJSF,QuoteJSF,class,false,"@Named
+@RequestScoped
+public class QuoteJSF {
+    String buy();
+    void getAllQuotes();
+    HtmlDataTable getDataTable();
+    Integer getQuantity();
+    QuoteData[] getQuotes();
+    String getQuotesBySymbols();
+    String getSymbols();
+    void setDataTable(HtmlDataTable);
+    void setQuantity(Integer);
+    void setQuotes(QuoteData[]);
+    void setSymbols(String);
+}
+",11,2,0,0,b0c3916f092940e14d25e45ab633463056cf3477245e18d2784f37cfc38c145b
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.TradeActionProducer,TradeActionProducer,class,false,"public class TradeActionProducer {
+    TradeAction produceTradeAction();
+}
+",1,0,0,0,4277db18ed7ead0dbd11694747de529e6445a9913d4128db077bbcfc4995751a
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.TradeAppJSF,TradeAppJSF,class,false,"@Named
+@SessionScoped
+public class TradeAppJSF implements Serializable {
+    String getAddress();
+    String getCcn();
+    String getCpassword();
+    String getEmail();
+    String getFullname();
+    String getMoney();
+    String getPassword();
+    String getResults();
+    String getUserID();
+    String login();
+    String logout();
+    String register();
+    void setAddress(String);
+    void setCcn(String);
+    void setCpassword(String);
+    void setEmail(String);
+    void setFullname(String);
+    void setMoney(String);
+    void setPassword(String);
+    void setResults(String);
+    void setUserID(String);
+    String updateProfile();
+}
+",22,2,1,0,2543e97405d6998464b4194d8e699a912bba4c764f3df5147a5d5682ada39c19
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.TradeConfigJSF,TradeConfigJSF,class,false,"@Named
+@RequestScoped
+public class TradeConfigJSF {
+    String buildDatabaseTables();
+    int getMarketSummaryInterval();
+    int getMaxQuotes();
+    int getMaxUsers();
+    String getOrderProcessingMode();
+    String[] getOrderProcessingModeList();
+    int getPercentSentToWebsocket();
+    int getPrimIterations();
+    String getResult();
+    String getRuntimeMode();
+    String[] getRuntimeModeList();
+    String getWebInterface();
+    String[] getWebInterfaceList();
+    boolean isActionTrace();
+    boolean isDisplayOrderAlerts();
+    boolean isLongRun();
+    boolean isPublishQuotePriceChange();
+    boolean isTrace();
+    boolean isUseRemoteEJBInterface();
+    String populateDatabase();
+    String resetTrade();
+    void setActionTrace(boolean);
+    void setDisplayOrderAlerts(boolean);
+    void setLongRun(boolean);
+    void setMarketSummaryInterval(int);
+    void setMaxUsers(int);
+    void setOrderProcessingMode(String);
+    void setOrderProcessingModeList(String[]);
+    void setPercentSentToWebsocket(int);
+    void setPrimIterations(int);
+    void setPublishQuotePriceChange(boolean);
+    void setResult(String);
+    void setRuntimeMode(String);
+    void setRuntimeModeList(String[]);
+    void setTrace(boolean);
+    void setUseRemoteEJBInterface(boolean);
+    void setWebInterface(String);
+    void setWebInterfaceList(String[]);
+    void setmaxQuotes(int);
+    void updateConfig();
+}
+",40,2,0,0,8ff43f56d896f403f186b666ae271e4414c1a4b52de2fb376f9ab5a24b364ad7
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.ActionDecoder,ActionDecoder,class,false,"public class ActionDecoder implements Decoder$Text {
+    ActionMessage decode(String);
+    void destroy();
+    void init(EndpointConfig);
+    boolean willDecode(String);
+}
+",4,0,1,0,4f1ade6b8ee5d528e11a33caab76f938b8f815c0d6abae7de7fee37ec0251965
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage,ActionMessage,class,false,"public class ActionMessage {
+    void doDecoding(String);
+    String getDecodedAction();
+}
+",2,0,0,0,3948a340df804c01c2a4d36caa6994f81fbbb944ad6559b40402a81f8aed7b64
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage$1,ActionMessage$1,class,false,"class ActionMessage$1 {
+}
+",0,0,0,0,57d3596e7f4560971733d7ac639f5f8ee8492847b62455152d3430a62e2994f9
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.JsonDecoder,JsonDecoder,class,false,"public class JsonDecoder implements Decoder$Text {
+    JsonMessage decode(String);
+    void destroy();
+    void init(EndpointConfig);
+    boolean willDecode(String);
+}
+",4,0,1,0,a14ca8dd66bf5ba6c61a10183b4bbe6b10c2380299efc4546a241e5b1b211835
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.JsonEncoder,JsonEncoder,class,false,"public class JsonEncoder implements Encoder$Text {
+    void destroy();
+    String encode(JsonMessage);
+    void init(EndpointConfig);
+}
+",3,0,1,0,8a52a7f6c1e9e8da7cae8cd162c74e475575194bbcf2ba88398274f666631d5b
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage,JsonMessage,class,false,"public class JsonMessage {
+    String getKey();
+    String getValue();
+    void setKey(String);
+    void setValue(String);
+}
+",4,0,0,0,f10472ed6aed19b4467a0a35a2aa3bdd56cd871b00c8e724bfce2026fc86d7a5
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.MarketSummaryWebSocket,MarketSummaryWebSocket,class,false,"@ServerEndpoint
+public class MarketSummaryWebSocket {
+    JsonObject mergeJsonObjects(JsonObject, JsonObject);
+    void onClose(Session, CloseReason);
+    void onError(Throwable, Session);
+    void onJMSMessage(Message);
+    void onOpen(Session, EndpointConfig);
+    void sendMarketSummary(ActionMessage, Session);
+    void sendRecentQuotePriceChangeList();
+    void startScheduler();
+}
+",8,1,0,0,42fefb8b53ecc2359f5423ab59cffee8913b55d5b0d00df1c0ce653deb24cc18
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.RecentStockChangeList,RecentStockChangeList,class,false,"public class RecentStockChangeList {
+    void addStockChange(Message);
+    boolean isEmpty();
+    JsonObject stockChangesInJSON();
+}
+",3,0,0,0,a6d05df62b71da261fa4f3333e72b68393e336d74865b338eee45d0dfc077202

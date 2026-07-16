@@ -61,6 +61,7 @@ pymoo==0.6.2
 scipy==1.16.3
 matplotlib==3.10.8
 PyYAML==6.0.3
+transformers==5.14.1
 pytest==9.1.1
 ```
 
@@ -68,9 +69,10 @@ pytest==9.1.1
 formal Stage 2 manifests. The remaining direct pins are verified by a clean
 Python 3.13 installation from `requirements.txt`. SciPy is directly imported
 by the Stage 2 robustness analysis; Matplotlib is directly imported by the
-Stage 2 convergence diagnostic. Torch, Transformers, Sentence Transformers,
-Hugging Face Hub, and Safetensors are not added because Nomic execution code
-has not yet been implemented in the repository.
+Stage 2 convergence diagnostic. Transformers is pinned because Stage 3 input
+validation loads the exact Nomic tokenizer without model weights. Torch,
+Sentence Transformers, Hugging Face Hub, and Safetensors are not added because
+Nomic embedding execution code has not yet been implemented in the repository.
 
 ## 4. Java extraction environment
 

@@ -1,4 +1,4 @@
-subject,class_id,class_name,kind,superclass_present,semantic_text,method_count,annotation_count,interface_count,input_hash
+subject,class_id,class_name,kind,superclass_present,semantic_text,method_count,annotation_count,interface_count,truncated_method_count,input_hash
 jpetstore,org.mybatis.jpetstore.domain.Account,Account,class,false,"public class Account implements Serializable {
     String getAddress1();
     String getAddress2();
@@ -37,7 +37,7 @@ jpetstore,org.mybatis.jpetstore.domain.Account,Account,class,false,"public class
     void setUsername(String);
     void setZip(String);
 }
-",36,0,1,5d95274200b9ab99375a7bc37b5349cfc93695abe59b0a2cd0e43d862583d31f
+",36,0,1,0,5d95274200b9ab99375a7bc37b5349cfc93695abe59b0a2cd0e43d862583d31f
 jpetstore,org.mybatis.jpetstore.domain.Cart,Cart,class,false,"public class Cart implements Serializable {
     void addItem(Item, boolean);
     boolean containsItemId(String);
@@ -50,7 +50,7 @@ jpetstore,org.mybatis.jpetstore.domain.Cart,Cart,class,false,"public class Cart 
     Item removeItemById(String);
     void setQuantityByItemId(String, int);
 }
-",10,0,1,ae327ae131da8459f0c754810733634f4636c2e170a0d8a931f5f11d9f3369e3
+",10,0,1,0,ae327ae131da8459f0c754810733634f4636c2e170a0d8a931f5f11d9f3369e3
 jpetstore,org.mybatis.jpetstore.domain.CartItem,CartItem,class,false,"public class CartItem implements Serializable {
     void calculateTotal();
     Item getItem();
@@ -62,7 +62,7 @@ jpetstore,org.mybatis.jpetstore.domain.CartItem,CartItem,class,false,"public cla
     void setItem(Item);
     void setQuantity(int);
 }
-",9,0,1,2a2403051db0607a20d67d1c4b1b8f2b126034d4f2c5720a4b43e8876ca8d6d1
+",9,0,1,0,2a2403051db0607a20d67d1c4b1b8f2b126034d4f2c5720a4b43e8876ca8d6d1
 jpetstore,org.mybatis.jpetstore.domain.Category,Category,class,false,"public class Category implements Serializable {
     String getCategoryId();
     String getDescription();
@@ -72,7 +72,7 @@ jpetstore,org.mybatis.jpetstore.domain.Category,Category,class,false,"public cla
     void setName(String);
     String toString();
 }
-",7,0,1,bfbe27d957dd8236c5c66e052c5909fa3d85ec699939aa80457af01b52fe5a27
+",7,0,1,0,bfbe27d957dd8236c5c66e052c5909fa3d85ec699939aa80457af01b52fe5a27
 jpetstore,org.mybatis.jpetstore.domain.Item,Item,class,false,"public class Item implements Serializable {
     String getAttribute1();
     String getAttribute2();
@@ -100,7 +100,7 @@ jpetstore,org.mybatis.jpetstore.domain.Item,Item,class,false,"public class Item 
     void setUnitCost(BigDecimal);
     String toString();
 }
-",25,0,1,8f2e7798981f368cf27f4eee7ac74d9d8293982b71e3119e5316d51fbf6220cb
+",25,0,1,0,8f2e7798981f368cf27f4eee7ac74d9d8293982b71e3119e5316d51fbf6220cb
 jpetstore,org.mybatis.jpetstore.domain.LineItem,LineItem,class,false,"public class LineItem implements Serializable {
     void calculateTotal();
     Item getItem();
@@ -117,7 +117,7 @@ jpetstore,org.mybatis.jpetstore.domain.LineItem,LineItem,class,false,"public cla
     void setQuantity(int);
     void setUnitPrice(BigDecimal);
 }
-",14,0,1,315d9fdaf0eeb121799f5e34b58d0d8a954a0b265d3cda69ab98d8697da46a15
+",14,0,1,0,315d9fdaf0eeb121799f5e34b58d0d8a954a0b265d3cda69ab98d8697da46a15
 jpetstore,org.mybatis.jpetstore.domain.Order,Order,class,false,"public class Order implements Serializable {
     void addLineItem(CartItem);
     void addLineItem(LineItem);
@@ -177,7 +177,7 @@ jpetstore,org.mybatis.jpetstore.domain.Order,Order,class,false,"public class Ord
     void setTotalPrice(BigDecimal);
     void setUsername(String);
 }
-",57,0,1,006b4b1ce25257b9bbce3209473d2582368b7b0f284062a709753303e6921bd1
+",57,0,1,0,006b4b1ce25257b9bbce3209473d2582368b7b0f284062a709753303e6921bd1
 jpetstore,org.mybatis.jpetstore.domain.Product,Product,class,false,"public class Product implements Serializable {
     String getCategoryId();
     String getDescription();
@@ -189,14 +189,14 @@ jpetstore,org.mybatis.jpetstore.domain.Product,Product,class,false,"public class
     void setProductId(String);
     String toString();
 }
-",9,0,1,e5296ac04efff722891302a63489b01a32f0c86595bc4287e74ced19fe8192c5
+",9,0,1,0,e5296ac04efff722891302a63489b01a32f0c86595bc4287e74ced19fe8192c5
 jpetstore,org.mybatis.jpetstore.domain.Sequence,Sequence,class,false,"public class Sequence implements Serializable {
     String getName();
     int getNextId();
     void setName(String);
     void setNextId(int);
 }
-",4,0,1,51ff6ed36b9c0f4048b21eba64728837120caf4dfe3e6e7b0fc62550ba24a089
+",4,0,1,0,51ff6ed36b9c0f4048b21eba64728837120caf4dfe3e6e7b0fc62550ba24a089
 jpetstore,org.mybatis.jpetstore.mapper.AccountMapper,AccountMapper,interface,false,"public interface AccountMapper {
     Account getAccountByUsername(String);
     Account getAccountByUsernameAndPassword(String, String);
@@ -207,42 +207,42 @@ jpetstore,org.mybatis.jpetstore.mapper.AccountMapper,AccountMapper,interface,fal
     void updateProfile(Account);
     void updateSignon(Account);
 }
-",8,0,0,fbf942adc8a5c6036a7bf5498e0ad11c4e470a5bfad8f8846740138145f27ea5
+",8,0,0,0,fbf942adc8a5c6036a7bf5498e0ad11c4e470a5bfad8f8846740138145f27ea5
 jpetstore,org.mybatis.jpetstore.mapper.CategoryMapper,CategoryMapper,interface,false,"public interface CategoryMapper {
     Category getCategory(String);
     List getCategoryList();
 }
-",2,0,0,77045e6e50f73c3cbd199dc5537096c548999d9dabbdce2d12d5ea9ef68c1fd9
+",2,0,0,0,77045e6e50f73c3cbd199dc5537096c548999d9dabbdce2d12d5ea9ef68c1fd9
 jpetstore,org.mybatis.jpetstore.mapper.ItemMapper,ItemMapper,interface,false,"public interface ItemMapper {
     int getInventoryQuantity(String);
     Item getItem(String);
     List getItemListByProduct(String);
     void updateInventoryQuantity(Map);
 }
-",4,0,0,46865703180302cba3a502392172882bd12eef02a25d68b8fadea2e950037bdb
+",4,0,0,0,46865703180302cba3a502392172882bd12eef02a25d68b8fadea2e950037bdb
 jpetstore,org.mybatis.jpetstore.mapper.LineItemMapper,LineItemMapper,interface,false,"public interface LineItemMapper {
     List getLineItemsByOrderId(int);
     void insertLineItem(LineItem);
 }
-",2,0,0,40f209695f43ebed808ee266c5265e0d032ff7607933101edec189de1634a1b4
+",2,0,0,0,40f209695f43ebed808ee266c5265e0d032ff7607933101edec189de1634a1b4
 jpetstore,org.mybatis.jpetstore.mapper.OrderMapper,OrderMapper,interface,false,"public interface OrderMapper {
     Order getOrder(int);
     List getOrdersByUsername(String);
     void insertOrder(Order);
     void insertOrderStatus(Order);
 }
-",4,0,0,be60bbfe64991d122c53390240b91317703e08e794a236aecd63b3a482beec75
+",4,0,0,0,be60bbfe64991d122c53390240b91317703e08e794a236aecd63b3a482beec75
 jpetstore,org.mybatis.jpetstore.mapper.ProductMapper,ProductMapper,interface,false,"public interface ProductMapper {
     Product getProduct(String);
     List getProductListByCategory(String);
     List searchProductList(String);
 }
-",3,0,0,afd68148ad4082277eb3d9d64fa5785aa184223a17b106720118f27a4211c9aa
+",3,0,0,0,afd68148ad4082277eb3d9d64fa5785aa184223a17b106720118f27a4211c9aa
 jpetstore,org.mybatis.jpetstore.mapper.SequenceMapper,SequenceMapper,interface,false,"public interface SequenceMapper {
     Sequence getSequence(Sequence);
     void updateSequence(Sequence);
 }
-",2,0,0,397e1f58a092b8af9680028ce2121bbe684304b6880a2851792711c9bccc3bcb
+",2,0,0,0,397e1f58a092b8af9680028ce2121bbe684304b6880a2851792711c9bccc3bcb
 jpetstore,org.mybatis.jpetstore.service.AccountService,AccountService,class,false,"@Service
 public class AccountService {
     Account getAccount(String);
@@ -250,7 +250,7 @@ public class AccountService {
     void insertAccount(Account);
     void updateAccount(Account);
 }
-",4,1,0,425e493934670a393d66391ffdcbb23d857c4daae14039582ee91b123d4f6299
+",4,1,0,0,425e493934670a393d66391ffdcbb23d857c4daae14039582ee91b123d4f6299
 jpetstore,org.mybatis.jpetstore.service.CatalogService,CatalogService,class,false,"@Service
 public class CatalogService {
     Category getCategory(String);
@@ -262,7 +262,7 @@ public class CatalogService {
     boolean isItemInStock(String);
     List searchProductList(String);
 }
-",8,1,0,2eaf41eb5323e93cf5fab878ed1def36c1e531e07ad02f6d860ef4365b2a6386
+",8,1,0,0,2eaf41eb5323e93cf5fab878ed1def36c1e531e07ad02f6d860ef4365b2a6386
 jpetstore,org.mybatis.jpetstore.service.OrderService,OrderService,class,false,"@Service
 public class OrderService {
     int getNextId(String);
@@ -270,13 +270,13 @@ public class OrderService {
     List getOrdersByUsername(String);
     void insertOrder(Order);
 }
-",4,1,0,2bdfcfd59cb9af71af2221693d603d5e818fbee3f623d987031eb7be80349e6f
+",4,1,0,0,2bdfcfd59cb9af71af2221693d603d5e818fbee3f623d987031eb7be80349e6f
 jpetstore,org.mybatis.jpetstore.web.actions.AbstractActionBean,AbstractActionBean,abstract class,false,"public abstract class AbstractActionBean implements ActionBean, Serializable {
     ActionBeanContext getContext();
     void setContext(ActionBeanContext);
     void setMessage(String);
 }
-",3,0,2,32836c8944cdd4e745f8b640658a41d2be7ab3cca756bc15792a5fc76df648fa
+",3,0,2,0,32836c8944cdd4e745f8b640658a41d2be7ab3cca756bc15792a5fc76df648fa
 jpetstore,org.mybatis.jpetstore.web.actions.AccountActionBean,AccountActionBean,class,true,"@SessionScope
 public class AccountActionBean extends AbstractActionBean {
     void clear();
@@ -298,7 +298,7 @@ public class AccountActionBean extends AbstractActionBean {
     Resolution signon();
     Resolution signonForm();
 }
-",18,1,0,384028f5517a4c1b4b78fa9411c0c5f9002cf3bcd068ce35596462980f06fe10
+",18,1,0,0,384028f5517a4c1b4b78fa9411c0c5f9002cf3bcd068ce35596462980f06fe10
 jpetstore,org.mybatis.jpetstore.web.actions.CartActionBean,CartActionBean,class,true,"@SessionScope
 public class CartActionBean extends AbstractActionBean {
     Resolution addItemToCart();
@@ -311,7 +311,7 @@ public class CartActionBean extends AbstractActionBean {
     Resolution updateCartQuantities();
     ForwardResolution viewCart();
 }
-",9,1,0,1a7a603e8314ecee38ebe10eaa92d39aed7e4635ea39e2c2aedb544d148ee8e2
+",9,1,0,0,1a7a603e8314ecee38ebe10eaa92d39aed7e4635ea39e2c2aedb544d148ee8e2
 jpetstore,org.mybatis.jpetstore.web.actions.CatalogActionBean,CatalogActionBean,class,true,"@SessionScope
 public class CatalogActionBean extends AbstractActionBean {
     void clear();
@@ -341,7 +341,7 @@ public class CatalogActionBean extends AbstractActionBean {
     ForwardResolution viewMain();
     ForwardResolution viewProduct();
 }
-",26,1,0,68da1c85a6cf5cc60a2f9f95190758306deab6f6ee927de687d1f4a5c52c9f55
+",26,1,0,0,68da1c85a6cf5cc60a2f9f95190758306deab6f6ee927de687d1f4a5c52c9f55
 jpetstore,org.mybatis.jpetstore.web.actions.OrderActionBean,OrderActionBean,class,true,"@SessionScope
 public class OrderActionBean extends AbstractActionBean {
     void clear();
@@ -360,4 +360,4 @@ public class OrderActionBean extends AbstractActionBean {
     void setShippingAddressRequired(boolean);
     Resolution viewOrder();
 }
-",15,1,0,d36d1de8b4299553a0a5b42104e3e952a27d318675b564280279f283b851efda
+",15,1,0,0,d36d1de8b4299553a0a5b42104e3e952a27d318675b564280279f283b851efda
