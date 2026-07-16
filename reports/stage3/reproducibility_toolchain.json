@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "branch": "stage3-semantic",
+  "git_commit_before_checkpoint": "db14a04a679c6ec03f54415b6291bb12eae0fa79",
+  "platform": {
+    "operating_system": "macOS 26.5",
+    "architecture": "arm64",
+    "uname": "Darwin zhuwenkaideMacBook-Air-120.local 25.5.0 Darwin Kernel Version 25.5.0: Mon Apr 27 20:41:12 PDT 2026; root:xnu-12377.121.6~2/RELEASE_ARM64_T6050 arm64"
+  },
+  "python": {
+    "version": "3.13.7",
+    "executable": "/Users/zhuwenkai/Desktop/evo-ms-clustering-stage2-formal/.venv/bin/python3",
+    "pip_version": "26.1.2",
+    "virtual_environment": "/Users/zhuwenkai/Desktop/evo-ms-clustering-stage2-formal/.venv",
+    "canonical_requirements_file": "requirements.txt",
+    "pip_check_passed": true
+  },
+  "java": {
+    "runtime_vendor": "Homebrew OpenJDK",
+    "runtime_version": "17.0.19",
+    "compiler_version": "javac 17.0.19",
+    "maven_version": "Apache Maven 3.9.11",
+    "maven_java_home": "/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home",
+    "maven_wrapper_present": false,
+    "maven_wrapper_used": false,
+    "soot_version": "4.5.0"
+  },
+  "nomic": {
+    "model_name": "nomic-ai/nomic-embed-code",
+    "model_revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+    "tokenizer_revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+    "pooling": "last_token",
+    "l2_normalize": true,
+    "max_sequence_length": 32768,
+    "query_prompt_used": false
+  },
+  "python_direct_dependencies": {
+    "pandas": "2.2.3",
+    "numpy": "2.4.4",
+    "networkx": "3.6.1",
+    "igraph": "1.0.0",
+    "leidenalg": "0.12.0",
+    "pymoo": "0.6.2",
+    "scipy": "1.16.3",
+    "matplotlib": "3.10.8",
+    "PyYAML": "6.0.3",
+    "transformers": "5.14.1",
+    "torch": "2.13.0",
+    "pytest": "9.1.1"
+  },
+  "day2_input_aggregate_hashes": {
+    "jpetstore": "1ecdb9083a37668fd07388454095a317268c8b736e6fd45957ab16bf87f6ad23",
+    "daytrader": "ab09380f87119e4fe4621efbbdd8fdfd8cfc92cd383ed812169e2427a35eae44",
+    "xerces": "f81d0f9bda5aa0fcdf3a35c75876cc73c8b419eccfb8c9e00634ec13fad4d60a"
+  }
+}

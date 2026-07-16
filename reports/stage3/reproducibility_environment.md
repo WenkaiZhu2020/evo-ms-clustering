@@ -2,54 +2,48 @@
 
 ## 1. Purpose
 
-This checkpoint freezes the software environment before Nomic embedding
-generation and Stage 3 formal execution. It records the canonical Python
-installation contract, the active workstation environment, and the Java
-toolchain used by the Soot declaration extractor.
+This checkpoint freezes the software environment after deterministic Stage 3
+input generation and before Nomic embedding generation. It does not generate
+model embeddings, semantic graphs, or Stage 3 optimisation results.
 
 ## 2. Repository state
 
 | Item | Value |
 | --- | --- |
 | Branch | `stage3-semantic` |
-| Commit before this checkpoint | `1724498b79dcd39980caf52b39512dcd4c3373ab` |
-| Working tree before this checkpoint | clean |
+| Starting commit | `db14a04a679c6ec03f54415b6291bb12eae0fa79` |
+| Working tree before checkpoint | clean |
 | Operating system | macOS 26.5 |
-| Architecture | Apple Silicon, `arm64` |
-| Kernel evidence | `Darwin ... 25.5.0 ... RELEASE_ARM64_T6050 arm64` |
+| Architecture | Apple Silicon `arm64` |
 
-No experimental logic, model setting, extraction behaviour, output data,
-objective definition, graph parameter, seed, or frozen contract value is
-changed by this checkpoint.
+The four Day 2 commits were present before this checkpoint. The Day 2 CSV
+files, aggregate hashes, method parameters, and experimental settings are
+preserved.
 
-## 3. Python environment
+## 3. Python dependency contract
 
-The repository has one canonical Python dependency file:
+The canonical Python installation contract is
+[`requirements.txt`](../../requirements.txt). No `pyproject.toml`, setup file,
+Pipfile, Poetry lock, uv lock, Conda file, Maven wrapper, or CI dependency
+installation file is used by this repository. The existing requirements-file
+approach is preserved.
 
-```text
-requirements.txt
-```
+Before this checkpoint, the canonical file already contained exact pins for
+all listed runtime, analysis, tokenizer, and test packages. The only
+requirements change in this checkpoint is the addition of
+`torch==2.13.0` for the planned Day 3 Nomic embedding runtime.
 
-No `pyproject.toml`, `setup.py`, `setup.cfg`, Pipfile, Poetry lock, uv lock,
-Conda environment file, Maven wrapper, or CI dependency-installation file is
-present. The existing dependency-management approach is therefore preserved.
-
-The active workstation `python3` reports:
+The active validated environment is:
 
 | Item | Value |
 | --- | --- |
 | Python | `3.13.7` |
-| pip | `26.0.1` |
-| `python3 -m pip check` | `No broken requirements found.` |
+| Python executable | `/Users/zhuwenkai/Desktop/evo-ms-clustering-stage2-formal/.venv/bin/python3` |
+| pip | `26.1.2` |
+| Virtual environment | `/Users/zhuwenkai/Desktop/evo-ms-clustering-stage2-formal/.venv` |
+| `pip check` | passed: no broken requirements |
 
-The active workstation interpreter does not contain the project's direct
-Python packages; its `pip freeze` is a Codex-tooling environment snapshot,
-not an install of this repository. It is preserved in
-[`python_environment_freeze.txt`](python_environment_freeze.txt). The clean
-pin-install validation environment described below contains every canonical
-dependency.
-
-The exact pinned direct dependencies are:
+Exact direct pins:
 
 ```text
 pandas==2.2.3
@@ -62,86 +56,100 @@ scipy==1.16.3
 matplotlib==3.10.8
 PyYAML==6.0.3
 transformers==5.14.1
+torch==2.13.0
 pytest==9.1.1
 ```
 
-`numpy==2.4.4` and `pymoo==0.6.2` preserve the versions recorded in the
-formal Stage 2 manifests. The remaining direct pins are verified by a clean
-Python 3.13 installation from `requirements.txt`. SciPy is directly imported
-by the Stage 2 robustness analysis; Matplotlib is directly imported by the
-Stage 2 convergence diagnostic. Transformers is pinned because Stage 3 input
-validation loads the exact Nomic tokenizer without model weights. Torch,
-Sentence Transformers, Hugging Face Hub, and Safetensors are not added because
-Nomic embedding execution code has not yet been implemented in the repository.
+The canonical requirements file contains required direct dependencies for the
+existing Stage 1/Stage 2 code, the frozen Stage 3 tokenizer pipeline, and
+tests. The complete active environment snapshot, including transitive
+packages, is stored in
+[`python_environment_freeze.txt`](python_environment_freeze.txt). It is an
+audit and reconstruction record, not a replacement for the minimal contract.
 
-## 4. Java extraction environment
+The global `python3` initially had no project dependencies. The explicit
+compatible pins were installed into the ignored repo-local `.venv`; all direct
+imports and versions were then verified there.
 
-The default workstation Java is Homebrew OpenJDK `25.0.1`, and the default
-Maven invocation reports Java 25. The extractor is validated with Homebrew
-OpenJDK `17.0.19`, matching the Maven compiler and Surefire toolchain settings
-in `tools/soot_extractor/pom.xml`:
+`tokenizers==0.22.2`, `huggingface-hub==1.23.0`, and
+`safetensors==0.8.0` are installed transitively for Transformers and are
+recorded in the full freeze snapshot; they are not direct repository imports.
+
+## 4. Java and Soot extraction environment
+
+The validated extractor toolchain uses Java 17:
 
 | Item | Value |
 | --- | --- |
-| Validated Java runtime | OpenJDK `17.0.19`, Homebrew |
-| Validated Java compiler | `javac 17.0.19` |
+| Java runtime vendor | Homebrew OpenJDK |
+| Java runtime | `17.0.19` |
+| Java compiler | `javac 17.0.19` |
 | Maven | Apache Maven `3.9.11` |
-| Maven home | `/opt/homebrew/Cellar/maven/3.9.11/libexec` |
-| Maven Java home used for validation | `/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home` |
+| Maven Java home | `/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home` |
+| Maven wrapper | absent and not used |
 | Soot | `org.soot-oss:soot:4.5.0` |
 | JUnit | `org.junit.jupiter:junit-jupiter:5.11.4` |
 | Maven compiler plugin | `3.13.0`, release/toolchain 17 |
 | Maven Surefire plugin | `3.5.2`, toolchain 17 |
 | Maven exec plugin | `3.5.0` |
-| Maven wrapper | None |
 
-The extractor is not validated on Java 25. Soot's ASM path previously rejected
-Java 25 class-file major version 69, so Java 17 is the required extraction
-runtime for this repository.
+The default workstation JDK is OpenJDK 25.0.1, but the extractor is validated
+with Java 17 because the Maven configuration requires release 17 and Soot's
+ASM path is not the validated path on Java 25.
 
-## 5. Nomic model contract
-
-The frozen Stage 3 configuration and manifest agree on:
+## 5. Frozen Nomic contract
 
 | Item | Frozen value |
 | --- | --- |
 | Model | `nomic-ai/nomic-embed-code` |
-| Revision | `9a0457648f060c4279d4a3982d2d27a4df6fac59` |
+| Model revision | `9a0457648f060c4279d4a3982d2d27a4df6fac59` |
+| Tokenizer revision | `9a0457648f060c4279d4a3982d2d27a4df6fac59` |
 | Pooling | `last_token` |
 | L2 normalization | `true` |
+| Maximum sequence length | `32768` |
+| Query prompt | not used |
 
-Day 1 contains no Nomic embedding-generation implementation or formal model
-run. There is no repository evidence that model weights were generated or
-cached during Day 1.
+The exact tokenizer loaded successfully from the pinned revision and reported
+`model_max_length=32768`. Full Nomic model weights were not loaded, and no
+embeddings were generated.
 
-## 6. Reproduction commands
+## 6. Verified Day 2 inputs
 
-The following commands were run successfully for the pinned Python
-environment:
+| Subject | Classes | Maximum tokens | Truncation |
+| --- | ---: | ---: | --- |
+| JPetStore | 24 | 386 | none |
+| DayTrader | 53 | 678 | none |
+| Xerces | 814 | 1501 | none |
 
-```bash
-python3 -m venv /tmp/stage3-repro-from-requirements-20260716
-/tmp/stage3-repro-from-requirements-20260716/bin/python -m pip install --quiet --upgrade pip
-/tmp/stage3-repro-from-requirements-20260716/bin/python -m pip install --quiet -r requirements.txt
-/tmp/stage3-repro-from-requirements-20260716/bin/python -m pip check
+Both extraction runs per subject produced identical `semantic_text` and
+`input_hash` values. The Day 2 aggregate hashes remain:
+
+```text
+jpetstore = 1ecdb9083a37668fd07388454095a317268c8b736e6fd45957ab16bf87f6ad23
+daytrader = ab09380f87119e4fe4621efbbdd8fdfd8cfc92cd383ed812169e2427a35eae44
+xerces    = f81d0f9bda5aa0fcdf3a35c75876cc73c8b419eccfb8c9e00634ec13fad4d60a
 ```
 
-Import/version verification was run with:
+This version-lock task must not alter any Day 2 CSV or aggregate hash.
+
+## 7. Reproduction commands
+
+The following commands were executed and validated:
 
 ```bash
-/tmp/stage3-repro-from-requirements-20260716/bin/python - <<'PY'
-import importlib.metadata as md
-packages = ['numpy', 'pandas', 'networkx', 'igraph', 'leidenalg', 'pymoo',
-            'scipy', 'matplotlib', 'PyYAML', 'pytest']
-for name in packages:
-    print(f'{name}=={md.version(name)}')
-PY
+python3 -m venv .venv
+.venv/bin/python -m pip install --quiet --upgrade pip
+.venv/bin/python -m pip install --quiet -r requirements.txt
+source .venv/bin/activate
+python3 -m pip check
+python3 scripts/stage3/verify_environment.py
 ```
 
-The printed versions matched every exact requirement pin, and `pip check`
-reported no broken requirements.
+The exact tokenizer verification is included in
+[`verify_environment.py`](../../scripts/stage3/verify_environment.py). It
+loads only `AutoTokenizer` from the pinned revision and does not load a model.
 
-Java extractor tests use Java 17:
+Java extractor tests:
 
 ```bash
 export JAVA_HOME=$(/usr/libexec/java_home -v 17)
@@ -152,46 +160,49 @@ mvn -q -f tools/soot_extractor/pom.xml test
 Focused Stage 3 Python tests:
 
 ```bash
-PYTHONPATH=src /tmp/stage3-repro-from-requirements-20260716/bin/python -m pytest \
+PYTHONPATH=src python3 -m pytest \
   tests/test_subject_extraction_config.py \
   tests/test_stage3_class_declaration_input.py -q
 ```
 
-Existing full Python suite:
+Full Python suite:
 
 ```bash
-PYTHONPATH=src /tmp/stage3-repro-from-requirements-20260716/bin/python -m pytest -q
+PYTHONPATH=src python3 -m pytest -q
 ```
 
-## 7. Platform notes
+## 8. Platform limitations
 
-This checkpoint was captured on Apple Silicon (`arm64`). No CUDA execution was
-used. No MPS, CUDA, or CPU embedding run has been performed, so cross-hardware
-bitwise equality is not claimed. The verified deterministic property is the
-construction of the class-declaration input, including its exact bytes and
-hashes.
+The validated platform is Apple Silicon `arm64`. PyTorch reports MPS built
+and available; CUDA is unavailable. No MPS, CUDA, or CPU embedding run was
+performed in this checkpoint. Input extraction and input hashing are
+deterministic, but bitwise-identical floating-point embeddings across MPS,
+CUDA, and CPU are not assumed. Day 3 must record the actual device, dtype,
+batch size, and library versions in embedding metadata.
 
-Java 17 is required for the validated Soot extractor path. The default Java 25
-installation should not be used for extraction until compatibility is
-explicitly verified.
+## 9. Current Stage 3 status
 
-## 8. Current Stage 3 status
+Completed:
 
 - Method contract frozen.
-- Exact Nomic revision pinned.
+- Exact Nomic model and tokenizer revisions pinned.
 - Deterministic declaration extractor implemented.
-- JPetStore declaration input generated.
-- Exact 24-class Stage 2 scope validated.
-- Deterministic double-run completed; current CSV hash is
-  `b9bcafa575b44b13984b043d4244351bc71c2bfcc9744fceeb49260bfbfc765b`.
-- Java extractor tests: 6 passed.
-- Focused Stage 3 Python tests: 6 passed.
-- Full Python suite: 130 passed, 1 failed because the legacy
-  `test_no_stage3_or_semantics_scaffold` still rejects the now-required
-  `docs/stage3` directory. That test was not weakened or deleted; this is a
-  legacy test-contract conflict, not a Stage 3 implementation failure.
-- `ssa_flow_edges.csv` is only a shared-extractor by-product and is not a
-  semantic input.
-- DayTrader declarations, Xerces declarations, Nomic embeddings, the semantic
-  graph, fourth-objective integration, and formal Stage 3 runs are not yet
-  complete.
+- All three subject inputs generated.
+- Scope and double-run determinism validated.
+- No class required truncation.
+- Input hashes stored in the manifest.
+
+Not yet completed:
+
+- Full Nomic model loading.
+- Embedding generation.
+- Nearest-neighbour checks.
+- Semantic graph construction.
+- Semantic objective integration.
+- Stage 3 formal multi-seed runs.
+
+## 10. Known legacy test conflict
+
+The existing scaffold test rejects `docs/stage3`, even though Stage 3 now
+requires that directory. The test remains unchanged and its failure is
+reported as a legacy scaffold conflict, not a dependency-lock failure.
