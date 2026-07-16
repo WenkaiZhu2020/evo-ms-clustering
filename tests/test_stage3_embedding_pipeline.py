@@ -15,6 +15,7 @@ from scripts.stage3.generate_embeddings import (
     vector_hash,
     validate_vectors,
 )
+from scripts.stage3.similarity import true_cosine_similarity
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +23,11 @@ EXPECTED_INPUT_HASHES = {
     "jpetstore": "1ecdb9083a37668fd07388454095a317268c8b736e6fd45957ab16bf87f6ad23",
     "daytrader": "ab09380f87119e4fe4621efbbdd8fdfd8cfc92cd383ed812169e2427a35eae44",
     "xerces": "f81d0f9bda5aa0fcdf3a35c75876cc73c8b419eccfb8c9e00634ec13fad4d60a",
+}
+EXPECTED_EMBEDDINGS_NPY_HASHES = {
+    "jpetstore": "1ae21e10d3978a658dfdf57423c7cdb157cc46767145c14e605d0bba7c9014d8",
+    "daytrader": "8aa45b898a870c7a226cdb9f2d6296a5919dca148126869140917e8874f14d29",
+    "xerces": "72a4049f856edcdf4415df39c98d5ebad0c9e0593e39f7f40596aa2c37f4a23f",
 }
 
 
@@ -99,6 +105,7 @@ def test_per_class_and_aggregate_embedding_hashes_are_stable() -> None:
         aggregate = hashlib.sha256(payload).hexdigest()
         metadata = yaml.safe_load((output / "embedding_metadata.json").read_text(encoding="utf-8"))
         assert aggregate == metadata["aggregate_embedding_sha256"]
+        assert hashlib.sha256((output / "embeddings.npy").read_bytes()).hexdigest() == EXPECTED_EMBEDDINGS_NPY_HASHES[subject]
 
 
 def test_nearest_neighbors_exclude_self_and_break_ties_by_class_id() -> None:
@@ -109,6 +116,20 @@ def test_nearest_neighbors_exclude_self_and_break_ties_by_class_id() -> None:
     assert [row["neighbor_rank"] for row in query] == [1, 2, 3, 4, 5]
     assert [row["neighbor_class_id"] for row in query] == ["a", "b", "c", "d", "e"]
     assert all(row["neighbor_class_id"] != row["class_id"] for row in neighbors)
+
+
+def test_true_cosine_is_bounded_and_handles_non_unit_identical_vectors() -> None:
+    vectors = np.asarray([[3.0, 4.0], [6.0, 8.0], [-3.0, -4.0]], dtype=np.float32)
+    similarity = true_cosine_similarity(vectors)
+    assert similarity[0, 1] == pytest.approx(1.0)
+    assert similarity[0, 2] == pytest.approx(-1.0)
+    assert np.all(similarity <= 1.0)
+    assert np.all(similarity >= -1.0)
+
+
+def test_true_cosine_rejects_zero_norm_input() -> None:
+    with pytest.raises(ValueError, match="zero-norm"):
+        true_cosine_similarity(np.asarray([[0.0, 0.0], [1.0, 0.0]], dtype=np.float32))
 
 
 def test_manifest_preserves_inputs_and_leaves_graph_hashes_null() -> None:

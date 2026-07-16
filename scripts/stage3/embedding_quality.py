@@ -14,7 +14,12 @@ from pathlib import Path
 import numpy as np
 from transformers import AutoTokenizer
 
-from generate_embeddings import INPUT_PATHS, MODEL_REVISION, SUBJECTS, read_subject
+try:  # Supports both package imports and direct script execution.
+    from .generate_embeddings import INPUT_PATHS, MODEL_REVISION, SUBJECTS, nearest_neighbors, read_subject
+    from .similarity import true_cosine_similarity
+except ImportError:  # pragma: no cover - direct CLI path
+    from generate_embeddings import INPUT_PATHS, MODEL_REVISION, SUBJECTS, nearest_neighbors, read_subject
+    from similarity import true_cosine_similarity
 
 
 MODEL = "nomic-ai/nomic-embed-code"
@@ -44,6 +49,19 @@ def load_neighbors(subject: str) -> dict[str, list[tuple[str, float]]]:
         for row in csv.DictReader(handle):
             result[row["class_id"]].append((row["neighbor_class_id"], float(row["cosine_similarity"])))
     return result
+
+
+def regenerate_neighbors(subject: str, rows: list[dict[str, str]]) -> None:
+    directory = output_dir(subject)
+    vectors = np.load(directory / "embeddings.npy")
+    with (directory / "nearest_neighbors.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["class_id", "neighbor_rank", "neighbor_class_id", "cosine_similarity"],
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        writer.writerows(nearest_neighbors(rows, vectors))
 
 
 def select_manual_rows(rows: list[dict[str, str]], token_values: dict[str, int]) -> list[tuple[str, dict[str, str]]]:
@@ -104,11 +122,12 @@ def build_report(inputs_dir: Path) -> str:
     summary: dict[str, dict[str, object]] = {}
     for subject in SUBJECT_ORDER:
         rows = read_subject(inputs_dir, subject) if inputs_dir != Path("data/semantic_inputs") else read_subject(subject)
+        regenerate_neighbors(subject, rows)
         all_rows[subject] = rows
         all_tokens[subject] = {row["class_id"]: token_count(tokenizer, row["semantic_text"]) for row in rows}
         vectors = np.load(output_dir(subject) / "embeddings.npy")
         metadata = __import__("json").loads((output_dir(subject) / "embedding_metadata.json").read_text(encoding="utf-8"))
-        matrix = vectors.astype(np.float64) @ vectors.astype(np.float64).T
+        matrix = true_cosine_similarity(vectors)
         off_diagonal = matrix[~np.eye(len(rows), dtype=bool)]
         neighbors = load_neighbors(subject)
         all_neighbors[subject] = neighbors
@@ -152,6 +171,12 @@ def build_report(inputs_dir: Path) -> str:
             lines.extend(f"- {fmt_group(rows, indices, 'same saved embedding bytes')}" for indices in s["vector_groups"])
         else:
             lines.append("- None.")
+        if subject == "xerces":
+            lines.append(
+                "These 11 duplicate-text/vector groups are expected diagnostic "
+                "evidence under the frozen simple-name input contract. The input "
+                "classes were not deduplicated."
+            )
         lines.append("")
 
     lines.extend(["## 3. Manual nearest-neighbour review", "", "Every entry is unreviewed. Reviewer status must be one of `plausible`, `questionable`, or `unclear`; this report does not declare a neighbour correct or incorrect.", ""])

@@ -21,6 +21,11 @@ import numpy as np
 import torch
 import yaml
 
+try:  # Supports both package imports in tests and direct script execution.
+    from .similarity import true_cosine_similarity
+except ImportError:  # pragma: no cover - direct CLI path
+    from similarity import true_cosine_similarity
+
 
 MODEL_REVISION = "9a0457648f060c4279d4a3982d2d27a4df6fac59"
 EXPECTED_MODEL = "nomic-ai/nomic-embed-code"
@@ -416,7 +421,7 @@ def write_csv(path: Path, fieldnames: list[str], rows: Iterable[dict[str, Any]])
 
 
 def nearest_neighbors(rows: list[dict[str, str]], vectors: np.ndarray) -> list[dict[str, Any]]:
-    similarities = vectors.astype(np.float64) @ vectors.astype(np.float64).T
+    similarities = true_cosine_similarity(vectors)
     output: list[dict[str, Any]] = []
     for index, row in enumerate(rows):
         candidates = [candidate for candidate in range(len(rows)) if candidate != index]

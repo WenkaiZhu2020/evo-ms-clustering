@@ -11,9 +11,9 @@ with `model_max_length=32768`, `truncation=false`, and special tokens enabled.
 
 | subject | classes | dimension | min norm | mean norm | max norm | NaN | Inf | all-zero | duplicate semantic_text groups | duplicate embedding groups | min off-diagonal cosine | mean off-diagonal cosine | median off-diagonal cosine | max off-diagonal cosine | mean top-1 | median top-1 | min top-1 | max top-1 | encoding seconds | aggregate embedding SHA-256 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| jpetstore | 24 | 3584 | 0.999526616 | 1.000096853 | 1.000439267 | 0 | 0 | 0 | 0 | 0 | 0.199865067 | 0.416333184 | 0.347948928 | 0.838077275 | 0.749783568 | 0.767420489 | 0.585118349 | 0.838077275 | 3.107451 | `0ae28938fef7b0c0295a5b1d33527708af7493b4f43d524436ffbf258db8802a` |
-| daytrader | 53 | 3584 | 0.999746048 | 1.000005944 | 1.000383103 | 0 | 0 | 0 | 0 | 0 | 0.026805912 | 0.285949970 | 0.244607216 | 0.885099700 | 0.687614647 | 0.714972432 | 0.354518172 | 0.885099700 | 7.387897 | `c7d2cbeec9d4c6ff5f9054b7d66563e98cffc6774771d5727030248299b7756e` |
-| xerces | 814 | 3584 | 0.999543728 | 1.000008292 | 1.000469521 | 0 | 0 | 0 | 11 | 11 | -0.010520113 | 0.282227029 | 0.270349810 | 1.000423893 | 0.801188144 | 0.808499345 | 0.418502201 | 1.000423893 | 54.291155 | `9504e21bb305a60cdfce58421b64240d1af893fd549b40b9441a00bf0fee8cb1` |
+| jpetstore | 24 | 3584 | 0.999526616 | 1.000096853 | 1.000439267 | 0 | 0 | 0 | 0 | 0 | 0.199783621 | 0.416250244 | 0.347854680 | 0.837673220 | 0.749622413 | 0.767326182 | 0.585185360 | 0.837673220 | 3.107451 | `0ae28938fef7b0c0295a5b1d33527708af7493b4f43d524436ffbf258db8802a` |
+| daytrader | 53 | 3584 | 0.999746048 | 1.000005944 | 1.000383103 | 0 | 0 | 0 | 0 | 0 | 0.026817245 | 0.285946636 | 0.244587856 | 0.885107379 | 0.687570978 | 0.715139343 | 0.354437406 | 0.885107379 | 7.387897 | `c7d2cbeec9d4c6ff5f9054b7d66563e98cffc6774771d5727030248299b7756e` |
+| xerces | 814 | 3584 | 0.999543728 | 1.000008292 | 1.000469521 | 0 | 0 | 0 | 11 | 11 | -0.010522810 | 0.282221956 | 0.270341977 | 1.000000000 | 0.801170565 | 0.808810076 | 0.418384596 | 1.000000000 | 54.291155 | `9504e21bb305a60cdfce58421b64240d1af893fd549b40b9441a00bf0fee8cb1` |
 
 ## 2. Duplicate diagnostics
 
@@ -54,6 +54,7 @@ Identical saved embedding groups:
 - `org.apache.xerces.dom.SecuritySupport$6`, `org.apache.xerces.impl.dv.SecuritySupport$6`, `org.apache.xerces.parsers.SecuritySupport$6`, `org.apache.xerces.xinclude.SecuritySupport$6`, `org.apache.xml.serialize.SecuritySupport$6` (same saved embedding bytes)
 - `org.apache.xerces.dom.SecuritySupport$7`, `org.apache.xerces.impl.dv.SecuritySupport$7`, `org.apache.xerces.parsers.SecuritySupport$7`, `org.apache.xerces.xinclude.SecuritySupport$7`, `org.apache.xml.serialize.SecuritySupport$7` (same saved embedding bytes)
 - `org.apache.xerces.dom.SecuritySupport$8`, `org.apache.xerces.impl.dv.SecuritySupport$8`, `org.apache.xerces.parsers.SecuritySupport$8`, `org.apache.xerces.xinclude.SecuritySupport$8`, `org.apache.xml.serialize.SecuritySupport$8` (same saved embedding bytes)
+These 11 duplicate-text/vector groups are expected diagnostic evidence under the frozen simple-name input contract. The input classes were not deduplicated.
 
 ## 3. Manual nearest-neighbour review
 
@@ -127,11 +128,11 @@ public class Order implements Serializable {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.domain.LineItem`: 0.705641300816
-- `org.mybatis.jpetstore.domain.Cart`: 0.649064539492
-- `org.mybatis.jpetstore.domain.Item`: 0.638256582570
-- `org.mybatis.jpetstore.domain.Account`: 0.622915442755
-- `org.mybatis.jpetstore.domain.CartItem`: 0.598131715298
+- `org.mybatis.jpetstore.domain.LineItem`: 0.705876001705
+- `org.mybatis.jpetstore.domain.Cart`: 0.648826768960
+- `org.mybatis.jpetstore.domain.Item`: 0.637909276437
+- `org.mybatis.jpetstore.domain.Account`: 0.622952145264
+- `org.mybatis.jpetstore.domain.CartItem`: 0.597784830237
 
 #### `org.mybatis.jpetstore.domain.Account` — highest-method-count
 kind=class; method_count=36; token_count=207; input_hash[:12]=5d95274200b9
@@ -179,11 +180,11 @@ public class Account implements Serializable {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.domain.Order`: 0.622915442755
-- `org.mybatis.jpetstore.domain.Category`: 0.603879003901
-- `org.mybatis.jpetstore.domain.Product`: 0.593097329808
-- `org.mybatis.jpetstore.domain.Item`: 0.569074306971
-- `org.mybatis.jpetstore.domain.LineItem`: 0.501758231054
+- `org.mybatis.jpetstore.domain.Order`: 0.622952145264
+- `org.mybatis.jpetstore.domain.Category`: 0.603757393043
+- `org.mybatis.jpetstore.domain.Product`: 0.593167849115
+- `org.mybatis.jpetstore.domain.Item`: 0.568958519111
+- `org.mybatis.jpetstore.domain.LineItem`: 0.502096208612
 
 #### `org.mybatis.jpetstore.mapper.CategoryMapper` — lowest-method-count
 kind=interface; method_count=2; token_count=16; input_hash[:12]=77045e6e50f7
@@ -197,11 +198,11 @@ public interface CategoryMapper {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.mapper.ProductMapper`: 0.821143958693
-- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.737666509856
-- `org.mybatis.jpetstore.mapper.LineItemMapper`: 0.688553305666
-- `org.mybatis.jpetstore.mapper.AccountMapper`: 0.684412971027
-- `org.mybatis.jpetstore.mapper.ItemMapper`: 0.645208661290
+- `org.mybatis.jpetstore.mapper.ProductMapper`: 0.820849580660
+- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.737617023751
+- `org.mybatis.jpetstore.mapper.LineItemMapper`: 0.688432787705
+- `org.mybatis.jpetstore.mapper.AccountMapper`: 0.684283607350
+- `org.mybatis.jpetstore.mapper.ItemMapper`: 0.645217810528
 
 #### `org.mybatis.jpetstore.mapper.AccountMapper` — interface
 kind=interface; method_count=8; token_count=61; input_hash[:12]=fbf942adc8a5
@@ -221,11 +222,11 @@ public interface AccountMapper {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.776022886102
-- `org.mybatis.jpetstore.service.AccountService`: 0.741110545240
-- `org.mybatis.jpetstore.mapper.CategoryMapper`: 0.684412971027
-- `org.mybatis.jpetstore.mapper.LineItemMapper`: 0.655594853449
-- `org.mybatis.jpetstore.mapper.ProductMapper`: 0.650741051468
+- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.775828064549
+- `org.mybatis.jpetstore.service.AccountService`: 0.740867487865
+- `org.mybatis.jpetstore.mapper.CategoryMapper`: 0.684283607350
+- `org.mybatis.jpetstore.mapper.LineItemMapper`: 0.655359509666
+- `org.mybatis.jpetstore.mapper.ProductMapper`: 0.650388082690
 
 #### `org.mybatis.jpetstore.web.actions.AbstractActionBean` — abstract
 kind=abstract class; method_count=3; token_count=32; input_hash[:12]=32836c8944cd
@@ -240,11 +241,11 @@ public abstract class AbstractActionBean implements ActionBean, Serializable {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.web.actions.AccountActionBean`: 0.649975090827
-- `org.mybatis.jpetstore.web.actions.OrderActionBean`: 0.625648224837
-- `org.mybatis.jpetstore.web.actions.CatalogActionBean`: 0.607200169569
-- `org.mybatis.jpetstore.web.actions.CartActionBean`: 0.604294611554
-- `org.mybatis.jpetstore.domain.Sequence`: 0.337830898625
+- `org.mybatis.jpetstore.web.actions.AccountActionBean`: 0.649757736540
+- `org.mybatis.jpetstore.web.actions.OrderActionBean`: 0.625636592787
+- `org.mybatis.jpetstore.web.actions.CatalogActionBean`: 0.607000132855
+- `org.mybatis.jpetstore.web.actions.CartActionBean`: 0.604306352989
+- `org.mybatis.jpetstore.domain.Sequence`: 0.337832758024
 
 #### `org.mybatis.jpetstore.service.AccountService` — annotated
 kind=class; method_count=4; token_count=34; input_hash[:12]=425e49393467
@@ -261,11 +262,11 @@ public class AccountService {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.mapper.AccountMapper`: 0.741110545240
-- `org.mybatis.jpetstore.service.OrderService`: 0.739178940169
-- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.603546740972
-- `org.mybatis.jpetstore.service.CatalogService`: 0.554814797776
-- `org.mybatis.jpetstore.mapper.CategoryMapper`: 0.543689224735
+- `org.mybatis.jpetstore.mapper.AccountMapper`: 0.740867487865
+- `org.mybatis.jpetstore.service.OrderService`: 0.738912582638
+- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.603422379403
+- `org.mybatis.jpetstore.service.CatalogService`: 0.554775264241
+- `org.mybatis.jpetstore.mapper.CategoryMapper`: 0.543610927377
 
 #### `org.mybatis.jpetstore.web.actions.AccountActionBean` — superclass
 kind=class; method_count=18; token_count=107; input_hash[:12]=384028f5517a
@@ -296,11 +297,11 @@ public class AccountActionBean extends AbstractActionBean {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.web.actions.OrderActionBean`: 0.756177697527
-- `org.mybatis.jpetstore.web.actions.CatalogActionBean`: 0.750119095540
-- `org.mybatis.jpetstore.web.actions.CartActionBean`: 0.718886763644
-- `org.mybatis.jpetstore.web.actions.AbstractActionBean`: 0.649975090827
-- `org.mybatis.jpetstore.mapper.AccountMapper`: 0.462796206592
+- `org.mybatis.jpetstore.web.actions.OrderActionBean`: 0.756061062505
+- `org.mybatis.jpetstore.web.actions.CatalogActionBean`: 0.749770252768
+- `org.mybatis.jpetstore.web.actions.CartActionBean`: 0.718803210273
+- `org.mybatis.jpetstore.web.actions.AbstractActionBean`: 0.649757736540
+- `org.mybatis.jpetstore.mapper.AccountMapper`: 0.462601144310
 
 #### `org.mybatis.jpetstore.mapper.ItemMapper` — seed-42-remainder
 kind=interface; method_count=4; token_count=33; input_hash[:12]=468657031803
@@ -316,11 +317,11 @@ public interface ItemMapper {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.mapper.ProductMapper`: 0.724789485014
-- `org.mybatis.jpetstore.mapper.LineItemMapper`: 0.701483131554
-- `org.mybatis.jpetstore.mapper.CategoryMapper`: 0.645208661290
-- `org.mybatis.jpetstore.mapper.SequenceMapper`: 0.622008224009
-- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.601912740560
+- `org.mybatis.jpetstore.mapper.ProductMapper`: 0.724543572654
+- `org.mybatis.jpetstore.mapper.LineItemMapper`: 0.701373828085
+- `org.mybatis.jpetstore.mapper.CategoryMapper`: 0.645217810528
+- `org.mybatis.jpetstore.mapper.SequenceMapper`: 0.622024591520
+- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.601883927259
 
 #### `org.mybatis.jpetstore.mapper.ProductMapper` — seed-42-remainder
 kind=interface; method_count=3; token_count=26; input_hash[:12]=afd68148ad40
@@ -335,11 +336,11 @@ public interface ProductMapper {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.mapper.CategoryMapper`: 0.821143958693
-- `org.mybatis.jpetstore.mapper.ItemMapper`: 0.724789485014
-- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.705590684934
-- `org.mybatis.jpetstore.mapper.LineItemMapper`: 0.671666395034
-- `org.mybatis.jpetstore.mapper.AccountMapper`: 0.650741051468
+- `org.mybatis.jpetstore.mapper.CategoryMapper`: 0.820849580660
+- `org.mybatis.jpetstore.mapper.ItemMapper`: 0.724543572654
+- `org.mybatis.jpetstore.mapper.OrderMapper`: 0.705293966983
+- `org.mybatis.jpetstore.mapper.LineItemMapper`: 0.671311464972
+- `org.mybatis.jpetstore.mapper.AccountMapper`: 0.650388082690
 
 #### `org.mybatis.jpetstore.domain.Product` — seed-42-remainder
 kind=class; method_count=9; token_count=51; input_hash[:12]=e5296ac04eff
@@ -360,11 +361,11 @@ public class Product implements Serializable {
 }
 ```
 top_5_neighbors:
-- `org.mybatis.jpetstore.domain.Category`: 0.838077274818
-- `org.mybatis.jpetstore.domain.Item`: 0.695526913553
-- `org.mybatis.jpetstore.domain.CartItem`: 0.608893843066
-- `org.mybatis.jpetstore.domain.Account`: 0.593097329808
-- `org.mybatis.jpetstore.domain.LineItem`: 0.577238171093
+- `org.mybatis.jpetstore.domain.Category`: 0.837673220031
+- `org.mybatis.jpetstore.domain.Item`: 0.695190136093
+- `org.mybatis.jpetstore.domain.CartItem`: 0.608577214368
+- `org.mybatis.jpetstore.domain.Account`: 0.593167849115
+- `org.mybatis.jpetstore.domain.LineItem`: 0.577464796212
 
 ### daytrader
 #### `com.ibm.websphere.samples.daytrader.direct.TradeDirect` — longest-token
@@ -442,11 +443,11 @@ public class TradeDirect implements TradeServices {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.TradeAction`: 0.806696350230
-- `com.ibm.websphere.samples.daytrader.TradeServices`: 0.803775674992
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean`: 0.677128251893
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal`: 0.576900431665
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote`: 0.560921222875
+- `com.ibm.websphere.samples.daytrader.TradeAction`: 0.806761371160
+- `com.ibm.websphere.samples.daytrader.TradeServices`: 0.803955159827
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean`: 0.677382724771
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal`: 0.577061955094
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote`: 0.560862792235
 
 #### `com.ibm.websphere.samples.daytrader.util.TradeConfig` — highest-method-count
 kind=class; method_count=70; token_count=487; input_hash[:12]=e94f37be483c
@@ -528,11 +529,11 @@ public class TradeConfig {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.web.jsf.TradeConfigJSF`: 0.717146052231
-- `com.ibm.websphere.samples.daytrader.TradeAction`: 0.568929423953
-- `com.ibm.websphere.samples.daytrader.TradeServices`: 0.555717282095
-- `com.ibm.websphere.samples.daytrader.direct.TradeDirect`: 0.549436354670
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean`: 0.476297950163
+- `com.ibm.websphere.samples.daytrader.web.jsf.TradeConfigJSF`: 0.716872274525
+- `com.ibm.websphere.samples.daytrader.TradeAction`: 0.568807016682
+- `com.ibm.websphere.samples.daytrader.TradeServices`: 0.555676995235
+- `com.ibm.websphere.samples.daytrader.direct.TradeDirect`: 0.549436038755
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean`: 0.476336039444
 
 #### `com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage` — lowest-method-count
 kind=interface; method_count=0; token_count=19; input_hash[:12]=e95b8733d318
@@ -547,11 +548,11 @@ public interface WebSocketJMSMessage extends Annotation {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.web.websocket.MarketSummaryWebSocket`: 0.455765818060
-- `com.ibm.websphere.samples.daytrader.ejb3.DTStreamer3MDB`: 0.401222734034
-- `com.ibm.websphere.samples.daytrader.ejb3.DTBroker3MDB`: 0.385145427217
-- `com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage$1`: 0.376750847581
-- `com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage`: 0.374737702767
+- `com.ibm.websphere.samples.daytrader.web.websocket.MarketSummaryWebSocket`: 0.455866785082
+- `com.ibm.websphere.samples.daytrader.ejb3.DTStreamer3MDB`: 0.401117902943
+- `com.ibm.websphere.samples.daytrader.ejb3.DTBroker3MDB`: 0.385229475268
+- `com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage$1`: 0.376692905455
+- `com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage`: 0.374763252148
 
 #### `com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage$1` — zero-method
 kind=class; method_count=0; token_count=7; input_hash[:12]=57d3596e7f45
@@ -563,11 +564,11 @@ class ActionMessage$1 {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage`: 0.607596138213
-- `com.ibm.websphere.samples.daytrader.web.websocket.ActionDecoder`: 0.536206270987
-- `com.ibm.websphere.samples.daytrader.web.jsf.TradeActionProducer`: 0.396038190698
-- `com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage`: 0.376750847581
-- `com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage`: 0.375754632224
+- `com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage`: 0.607460004240
+- `com.ibm.websphere.samples.daytrader.web.websocket.ActionDecoder`: 0.536147904828
+- `com.ibm.websphere.samples.daytrader.web.jsf.TradeActionProducer`: 0.396060806460
+- `com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage`: 0.376692905455
+- `com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage`: 0.375723744763
 
 #### `com.ibm.websphere.samples.daytrader.TradeServices` — interface
 kind=interface; method_count=22; token_count=216; input_hash[:12]=79faebc4f5a7
@@ -601,11 +602,11 @@ public interface TradeServices {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.TradeAction`: 0.885099700259
-- `com.ibm.websphere.samples.daytrader.direct.TradeDirect`: 0.803775674992
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean`: 0.675886283753
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote`: 0.659602330740
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal`: 0.641082512281
+- `com.ibm.websphere.samples.daytrader.TradeAction`: 0.885107378843
+- `com.ibm.websphere.samples.daytrader.direct.TradeDirect`: 0.803955159827
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean`: 0.676091661669
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote`: 0.659486186721
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal`: 0.641215885966
 
 #### `com.ibm.websphere.samples.daytrader.ejb3.DTBroker3MDB` — annotated
 kind=class; method_count=2; token_count=36; input_hash[:12]=491238598412
@@ -622,11 +623,11 @@ public class DTBroker3MDB implements MessageListener {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.ejb3.DTStreamer3MDB`: 0.831865912489
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean`: 0.567576043103
-- `com.ibm.websphere.samples.daytrader.direct.TradeDirect`: 0.525129891117
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote`: 0.499459068154
-- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal`: 0.475950388185
+- `com.ibm.websphere.samples.daytrader.ejb3.DTStreamer3MDB`: 0.831832897838
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean`: 0.567830404762
+- `com.ibm.websphere.samples.daytrader.direct.TradeDirect`: 0.525322918495
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote`: 0.499443154696
+- `com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal`: 0.476118075213
 
 #### `com.ibm.websphere.samples.daytrader.util.KeyBlock` — superclass
 kind=class; method_count=2; token_count=21; input_hash[:12]=64a09d222de4
@@ -640,11 +641,11 @@ public class KeyBlock extends AbstractSequentialList {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.util.KeyBlock$KeyBlockIterator`: 0.813550330601
-- `com.ibm.websphere.samples.daytrader.direct.KeySequenceDirect`: 0.543301587039
-- `com.ibm.websphere.samples.daytrader.web.websocket.RecentStockChangeList`: 0.277105287941
-- `com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage`: 0.236733008470
-- `com.ibm.websphere.samples.daytrader.entities.OrderDataBean`: 0.214982813940
+- `com.ibm.websphere.samples.daytrader.util.KeyBlock$KeyBlockIterator`: 0.813276016618
+- `com.ibm.websphere.samples.daytrader.direct.KeySequenceDirect`: 0.543274395081
+- `com.ibm.websphere.samples.daytrader.web.websocket.RecentStockChangeList`: 0.277001853425
+- `com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage`: 0.236697770974
+- `com.ibm.websphere.samples.daytrader.entities.OrderDataBean`: 0.214853480724
 
 #### `com.ibm.websphere.samples.daytrader.util.Log` — seed-42-remainder
 kind=class; method_count=34; token_count=273; input_hash[:12]=5c88d85e0f49
@@ -690,11 +691,11 @@ public class Log {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.TradeAction`: 0.396312667174
-- `com.ibm.websphere.samples.daytrader.util.TimerStat`: 0.363380957827
-- `com.ibm.websphere.samples.daytrader.web.TradeServletAction`: 0.361033710929
-- `com.ibm.websphere.samples.daytrader.util.TradeConfig`: 0.344871755670
-- `com.ibm.websphere.samples.daytrader.direct.TradeDirect`: 0.321665864083
+- `com.ibm.websphere.samples.daytrader.TradeAction`: 0.396348541118
+- `com.ibm.websphere.samples.daytrader.util.TimerStat`: 0.363404175935
+- `com.ibm.websphere.samples.daytrader.web.TradeServletAction`: 0.361118038478
+- `com.ibm.websphere.samples.daytrader.util.TradeConfig`: 0.344874977468
+- `com.ibm.websphere.samples.daytrader.direct.TradeDirect`: 0.321764024804
 
 #### `com.ibm.websphere.samples.daytrader.web.OrdersAlertFilter` — seed-42-remainder
 kind=class; method_count=3; token_count=36; input_hash[:12]=92772fd1a525
@@ -710,11 +711,11 @@ public class OrdersAlertFilter implements Filter {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.web.jsf.JSFLoginFilter`: 0.677104671922
-- `com.ibm.websphere.samples.daytrader.web.TradeWebContextListener`: 0.501257355302
-- `com.ibm.websphere.samples.daytrader.web.TradeAppServlet`: 0.437703888329
-- `com.ibm.websphere.samples.daytrader.web.jsf.OrderDataJSF`: 0.394359768930
-- `com.ibm.websphere.samples.daytrader.web.TradeServletAction`: 0.354607121940
+- `com.ibm.websphere.samples.daytrader.web.jsf.JSFLoginFilter`: 0.676974107687
+- `com.ibm.websphere.samples.daytrader.web.TradeWebContextListener`: 0.501242002434
+- `com.ibm.websphere.samples.daytrader.web.TradeAppServlet`: 0.437796564747
+- `com.ibm.websphere.samples.daytrader.web.jsf.OrderDataJSF`: 0.394371831776
+- `com.ibm.websphere.samples.daytrader.web.TradeServletAction`: 0.354647779463
 
 #### `com.ibm.websphere.samples.daytrader.web.jsf.JSFLoginFilter` — seed-42-remainder
 kind=class; method_count=3; token_count=37; input_hash[:12]=215ce11132c1
@@ -730,11 +731,11 @@ public class JSFLoginFilter implements Filter {
 }
 ```
 top_5_neighbors:
-- `com.ibm.websphere.samples.daytrader.web.OrdersAlertFilter`: 0.677104671922
-- `com.ibm.websphere.samples.daytrader.web.jsf.LoginValidator`: 0.594794432402
-- `com.ibm.websphere.samples.daytrader.web.TradeWebContextListener`: 0.468734503690
-- `com.ibm.websphere.samples.daytrader.web.jsf.TradeAppJSF`: 0.452236658830
-- `com.ibm.websphere.samples.daytrader.web.TradeAppServlet`: 0.410221612714
+- `com.ibm.websphere.samples.daytrader.web.OrdersAlertFilter`: 0.676974107687
+- `com.ibm.websphere.samples.daytrader.web.jsf.LoginValidator`: 0.594807826085
+- `com.ibm.websphere.samples.daytrader.web.TradeWebContextListener`: 0.468593569063
+- `com.ibm.websphere.samples.daytrader.web.jsf.TradeAppJSF`: 0.452097473959
+- `com.ibm.websphere.samples.daytrader.web.TradeAppServlet`: 0.410197666407
 
 ### xerces
 #### `org.apache.xerces.impl.xs.traversers.XSDHandler` — longest-token
@@ -865,11 +866,11 @@ public class XSDHandler {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.impl.xs.SchemaGrammar`: 0.765969017979
-- `org.apache.xerces.impl.xs.XMLSchemaValidator`: 0.720813925940
-- `org.apache.xerces.impl.xs.traversers.SchemaContentHandler`: 0.704350595281
-- `org.apache.xerces.impl.xs.traversers.XSDHandler$1`: 0.703081560477
-- `org.apache.xerces.xinclude.XIncludeHandler`: 0.698586196115
+- `org.apache.xerces.impl.xs.SchemaGrammar`: 0.765894808525
+- `org.apache.xerces.impl.xs.XMLSchemaValidator`: 0.720607948213
+- `org.apache.xerces.impl.xs.traversers.SchemaContentHandler`: 0.704221553496
+- `org.apache.xerces.impl.xs.traversers.XSDHandler$1`: 0.702994315894
+- `org.apache.xerces.xinclude.XIncludeHandler`: 0.698536377769
 
 #### `org.apache.xerces.dom.CoreDocumentImpl` — highest-method-count
 kind=class; method_count=125; token_count=998; input_hash[:12]=483a6d2dce2e
@@ -1006,11 +1007,11 @@ public class CoreDocumentImpl extends ParentNode implements Document {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.dom.DocumentImpl`: 0.851526406193
-- `org.apache.xerces.dom.DocumentTypeImpl`: 0.752092363196
-- `org.apache.xerces.impl.xs.opti.DefaultDocument`: 0.718394093756
-- `org.apache.xerces.dom.DeferredDocumentImpl`: 0.716114132513
-- `org.apache.xerces.dom.CoreDOMImplementationImpl`: 0.712726245172
+- `org.apache.xerces.dom.DocumentImpl`: 0.851151648369
+- `org.apache.xerces.dom.DocumentTypeImpl`: 0.752005783974
+- `org.apache.xerces.impl.xs.opti.DefaultDocument`: 0.718301974423
+- `org.apache.xerces.dom.DeferredDocumentImpl`: 0.715879456762
+- `org.apache.xerces.dom.CoreDOMImplementationImpl`: 0.712368733412
 
 #### `org.apache.xerces.dom.CoreDOMImplementationImpl$RevalidationHandlerHolder` — lowest-method-count
 kind=class; method_count=0; token_count=12; input_hash[:12]=d4c1e4d22cf6
@@ -1022,11 +1023,11 @@ class CoreDOMImplementationImpl$RevalidationHandlerHolder {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.impl.RevalidationHandler`: 0.605680712280
-- `org.apache.xerces.dom.CoreDOMImplementationImpl$XMLDTDLoaderHolder`: 0.594862506917
-- `org.apache.xerces.jaxp.validation.ValidatorHandlerImpl$1`: 0.572320625133
-- `org.apache.xerces.jaxp.validation.ValidatorHandlerImpl`: 0.517481101381
-- `org.apache.xerces.impl.xs.traversers.XSDHandler$1`: 0.514264608572
+- `org.apache.xerces.impl.RevalidationHandler`: 0.605952787545
+- `org.apache.xerces.dom.CoreDOMImplementationImpl$XMLDTDLoaderHolder`: 0.595130342366
+- `org.apache.xerces.jaxp.validation.ValidatorHandlerImpl$1`: 0.572481005096
+- `org.apache.xerces.jaxp.validation.ValidatorHandlerImpl`: 0.517572252139
+- `org.apache.xerces.impl.xs.traversers.XSDHandler$1`: 0.514440700409
 
 #### `org.apache.xerces.dom.CoreDOMImplementationImpl$XMLDTDLoaderHolder` — zero-method
 kind=class; method_count=0; token_count=12; input_hash[:12]=f263555e81ff
@@ -1038,11 +1039,11 @@ class CoreDOMImplementationImpl$XMLDTDLoaderHolder {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.impl.dtd.XMLDTDLoader`: 0.685384466748
-- `org.apache.xerces.xni.parser.XMLDTDSource`: 0.615059396533
-- `org.apache.xerces.dom.CoreDOMImplementationImpl$RevalidationHandlerHolder`: 0.594862506917
-- `org.apache.xerces.xni.XMLDTDHandler`: 0.576582290286
-- `org.apache.xerces.parsers.XMLGrammarPreparser$XMLGrammarLoaderContainer`: 0.570956978437
+- `org.apache.xerces.impl.dtd.XMLDTDLoader`: 0.685682402660
+- `org.apache.xerces.xni.parser.XMLDTDSource`: 0.615144222994
+- `org.apache.xerces.dom.CoreDOMImplementationImpl$RevalidationHandlerHolder`: 0.595130342366
+- `org.apache.xerces.xni.XMLDTDHandler`: 0.576706210861
+- `org.apache.xerces.parsers.XMLGrammarPreparser$XMLGrammarLoaderContainer`: 0.571151956504
 
 #### `org.apache.xerces.dom.DeferredNode` — interface
 kind=interface; method_count=1; token_count=13; input_hash[:12]=90fbbab23e08
@@ -1055,11 +1056,11 @@ public interface DeferredNode extends Node {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.dom.DeferredNotationImpl`: 0.769559636722
-- `org.apache.xerces.dom.DeferredElementImpl`: 0.754122318564
-- `org.apache.xerces.dom.DeferredEntityImpl`: 0.720462712561
-- `org.apache.xerces.dom.DeferredElementDefinitionImpl`: 0.718506821759
-- `org.apache.xerces.dom.DeferredTextImpl`: 0.708621175279
+- `org.apache.xerces.dom.DeferredNotationImpl`: 0.769387485453
+- `org.apache.xerces.dom.DeferredElementImpl`: 0.754095810495
+- `org.apache.xerces.dom.DeferredEntityImpl`: 0.720342990868
+- `org.apache.xerces.dom.DeferredElementDefinitionImpl`: 0.718269122841
+- `org.apache.xerces.dom.DeferredTextImpl`: 0.708463846202
 
 #### `org.apache.xerces.dom.CharacterDataImpl` — abstract
 kind=abstract class; method_count=15; token_count=122; input_hash[:12]=ff0367dfc193
@@ -1086,11 +1087,11 @@ public abstract class CharacterDataImpl extends ChildNode {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.dom.TextImpl`: 0.762513710971
-- `org.apache.xerces.dom.CommentImpl`: 0.732415061814
-- `org.apache.xerces.dom3.as.CharacterDataEditAS`: 0.695865507000
-- `org.apache.xerces.stax.events.CharactersImpl`: 0.671767158126
-- `org.apache.xerces.impl.xs.opti.TextImpl`: 0.671511683329
+- `org.apache.xerces.dom.TextImpl`: 0.762348055820
+- `org.apache.xerces.dom.CommentImpl`: 0.732466271817
+- `org.apache.xerces.dom3.as.CharacterDataEditAS`: 0.695696777781
+- `org.apache.xerces.stax.events.CharactersImpl`: 0.671803813943
+- `org.apache.xerces.impl.xs.opti.TextImpl`: 0.671329957060
 
 #### `org.apache.xerces.dom.ASDOMImplementationImpl` — superclass
 kind=class; method_count=4; token_count=48; input_hash[:12]=7eb08569cb6c
@@ -1106,11 +1107,11 @@ public class ASDOMImplementationImpl extends DOMImplementationImpl implements DO
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.dom3.as.DOMImplementationAS`: 0.879657442204
-- `org.apache.xerces.dom.DOMImplementationImpl`: 0.723896067362
-- `org.apache.xerces.parsers.DOMASBuilderImpl`: 0.718673588311
-- `org.apache.xerces.dom.ASModelImpl`: 0.690977372093
-- `org.apache.xerces.dom.PSVIDOMImplementationImpl`: 0.682976836746
+- `org.apache.xerces.dom3.as.DOMImplementationAS`: 0.879509150418
+- `org.apache.xerces.dom.DOMImplementationImpl`: 0.723717157450
+- `org.apache.xerces.parsers.DOMASBuilderImpl`: 0.718589498940
+- `org.apache.xerces.dom.ASModelImpl`: 0.690694302398
+- `org.apache.xerces.dom.PSVIDOMImplementationImpl`: 0.682698194442
 
 #### `org.apache.xerces.xs.XSAttributeGroupDefinition` — seed-42-remainder
 kind=interface; method_count=4; token_count=41; input_hash[:12]=3a2afd536b74
@@ -1126,11 +1127,11 @@ public interface XSAttributeGroupDefinition extends XSObject {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.impl.xs.XSAttributeGroupDecl`: 0.859703049851
-- `org.apache.xerces.xs.XSModelGroupDefinition`: 0.821472129763
-- `org.apache.xerces.impl.xs.XSGroupDecl`: 0.763001717801
-- `org.apache.xerces.xs.XSAttributeDeclaration`: 0.740661998969
-- `org.apache.xerces.xs.XSModelGroup`: 0.732874926066
+- `org.apache.xerces.impl.xs.XSAttributeGroupDecl`: 0.859296430522
+- `org.apache.xerces.xs.XSModelGroupDefinition`: 0.820978458715
+- `org.apache.xerces.impl.xs.XSGroupDecl`: 0.762881627906
+- `org.apache.xerces.xs.XSAttributeDeclaration`: 0.740332125503
+- `org.apache.xerces.xs.XSModelGroup`: 0.732372820113
 
 #### `org.apache.xerces.xs.ElementPSVI` — seed-42-remainder
 kind=interface; method_count=4; token_count=40; input_hash[:12]=bd5984641a6f
@@ -1146,11 +1147,11 @@ public interface ElementPSVI extends ItemPSVI {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.impl.xs.ElementPSVImpl`: 0.849890999314
-- `org.apache.xerces.dom.PSVIElementNSImpl`: 0.802117247336
-- `org.apache.xerces.xs.ItemPSVI`: 0.782946886456
-- `org.apache.xerces.xs.AttributePSVI`: 0.775439013022
-- `org.apache.xerces.xs.PSVIProvider`: 0.740140220212
+- `org.apache.xerces.impl.xs.ElementPSVImpl`: 0.849745243630
+- `org.apache.xerces.dom.PSVIElementNSImpl`: 0.802207977503
+- `org.apache.xerces.xs.ItemPSVI`: 0.782936182305
+- `org.apache.xerces.xs.AttributePSVI`: 0.775370578406
+- `org.apache.xerces.xs.PSVIProvider`: 0.740032673738
 
 #### `org.apache.xerces.parsers.XMLGrammarPreparser$XMLGrammarLoaderContainer` — seed-42-remainder
 kind=class; method_count=0; token_count=12; input_hash[:12]=9285916203a7
@@ -1162,11 +1163,11 @@ class XMLGrammarPreparser$XMLGrammarLoaderContainer {
 }
 ```
 top_5_neighbors:
-- `org.apache.xerces.parsers.XMLGrammarPreparser`: 0.726457207785
-- `org.apache.xerces.xni.grammars.XMLGrammarLoader`: 0.704047707305
-- `org.apache.xerces.jaxp.validation.XSGrammarPoolContainer`: 0.655867200893
-- `org.apache.xerces.parsers.XMLGrammarParser`: 0.642322380029
-- `org.apache.xerces.impl.xs.XSLoaderImpl$XSGrammarMerger`: 0.619551797210
+- `org.apache.xerces.parsers.XMLGrammarPreparser`: 0.726595100956
+- `org.apache.xerces.xni.grammars.XMLGrammarLoader`: 0.704132398466
+- `org.apache.xerces.jaxp.validation.XSGrammarPoolContainer`: 0.656117900357
+- `org.apache.xerces.parsers.XMLGrammarParser`: 0.642530334196
+- `org.apache.xerces.impl.xs.XSLoaderImpl$XSGrammarMerger`: 0.619786534216
 
 ## 4. Re-encoding stability
 
@@ -1184,4 +1185,4 @@ top_5_neighbors:
 - Runtime embeddings may not be bitwise identical across MPS, CUDA, and CPU. The saved hashes certify the frozen MPS/float16/batch-8 runtime and platform recorded in metadata.
 - The formal top-3 semantic graph has not been generated.
 
-Report generated at UTC: 2026-07-16T15:02:30Z
+Report generated at UTC: 2026-07-16T15:08:13Z
