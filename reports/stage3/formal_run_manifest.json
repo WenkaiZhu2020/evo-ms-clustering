@@ -39,10 +39,17 @@
     "max_sequence_length": 32768,
     "formal_truncation": false,
     "input_column": "semantic_text",
-    "device": null,
-    "dtype": null,
-    "batch_size": null,
-    "runtime_frozen": false
+    "device": "mps",
+    "dtype": "float16",
+    "batch_size": 8,
+    "runtime_frozen": true,
+    "device_name": "Apple Silicon MPS (arm64)",
+    "storage_dtype": "float32",
+    "random_seed": 42,
+    "model_load_verified": true,
+    "smoke_test_passed": true,
+    "smoke_test_report": "reports/stage3/nomic_runtime_smoke_test.md",
+    "runtime_freeze_timestamp_utc": "2026-07-16T14:52:05Z"
   },
   "semantic_input_schema": [
     "subject",

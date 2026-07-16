@@ -1,0 +1,183 @@
+{
+  "branch": "stage3-semantic",
+  "starting_commit": "a8b03d0cdb59ef8dc227078e204dcefe9429cb21",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "torch_version": "2.13.0",
+  "transformers_version": "5.14.1",
+  "sentence_transformers_version": "5.6.0",
+  "model": "nomic-ai/nomic-embed-code",
+  "revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+  "cache_location": "/Users/zhuwenkai/.cache/huggingface",
+  "disk_available_before_model_download_bytes": 783087247360,
+  "disk_available_after_model_download_bytes": 751476977664,
+  "available_devices": [
+    "mps",
+    "cpu"
+  ],
+  "selected_runtime": {
+    "device": "mps",
+    "device_name": "Apple Silicon MPS (arm64)",
+    "dtype": "float16",
+    "batch_size": 8
+  },
+  "dtype_candidates_tested": [
+    {
+      "dtype": "float16",
+      "load_succeeded": true,
+      "model_load_duration_seconds": 796.3523469580105
+    }
+  ],
+  "batch_sizes_tested": [
+    {
+      "dtype": "float16",
+      "batch_size": 1,
+      "memory_before": {},
+      "succeeded": true,
+      "elapsed_seconds": 2.5921900420216843,
+      "stats": {
+        "minimum_norm": 1.000140954790112,
+        "mean_norm": 1.000140954790112,
+        "maximum_norm": 1.000140954790112,
+        "nan_count": 0,
+        "inf_count": 0,
+        "all_zero_vector_count": 0
+      },
+      "memory_after": {}
+    },
+    {
+      "dtype": "float16",
+      "batch_size": 2,
+      "memory_before": {},
+      "succeeded": true,
+      "elapsed_seconds": 2.2358074580552056,
+      "stats": {
+        "minimum_norm": 0.9998524108354943,
+        "mean_norm": 0.9999966828128031,
+        "maximum_norm": 1.000140954790112,
+        "nan_count": 0,
+        "inf_count": 0,
+        "all_zero_vector_count": 0
+      },
+      "memory_after": {}
+    },
+    {
+      "dtype": "float16",
+      "batch_size": 4,
+      "memory_before": {},
+      "succeeded": true,
+      "elapsed_seconds": 9.417368500027806,
+      "stats": {
+        "minimum_norm": 0.9998524108354943,
+        "mean_norm": 1.0000899482486085,
+        "maximum_norm": 1.0002254725787159,
+        "nan_count": 0,
+        "inf_count": 0,
+        "all_zero_vector_count": 0
+      },
+      "memory_after": {}
+    },
+    {
+      "dtype": "float16",
+      "batch_size": 8,
+      "memory_before": {},
+      "succeeded": true,
+      "elapsed_seconds": 18.749337709043175,
+      "stats": {
+        "minimum_norm": 0.9998524108354943,
+        "mean_norm": 1.0000538802542813,
+        "maximum_norm": 1.0002254725787159,
+        "nan_count": 0,
+        "inf_count": 0,
+        "all_zero_vector_count": 0
+      },
+      "memory_after": {}
+    }
+  ],
+  "model_load_duration_seconds": 796.3523469580105,
+  "smoke_rows": [
+    {
+      "subject": "jpetstore",
+      "class_id": "org.mybatis.jpetstore.domain.Order"
+    },
+    {
+      "subject": "daytrader",
+      "class_id": "com.ibm.websphere.samples.daytrader.direct.TradeDirect"
+    },
+    {
+      "subject": "xerces-j",
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDHandler"
+    },
+    {
+      "subject": "jpetstore",
+      "class_id": "org.mybatis.jpetstore.mapper.AccountMapper"
+    },
+    {
+      "subject": "daytrader",
+      "class_id": "com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage"
+    },
+    {
+      "subject": "xerces-j",
+      "class_id": "org.apache.xerces.dom.CoreDOMImplementationImpl$RevalidationHandlerHolder"
+    },
+    {
+      "subject": "jpetstore",
+      "class_id": "org.mybatis.jpetstore.service.AccountService"
+    },
+    {
+      "subject": "jpetstore",
+      "class_id": "org.mybatis.jpetstore.web.actions.AbstractActionBean"
+    },
+    {
+      "subject": "jpetstore",
+      "class_id": "org.mybatis.jpetstore.domain.Account"
+    },
+    {
+      "subject": "jpetstore",
+      "class_id": "org.mybatis.jpetstore.domain.Cart"
+    }
+  ],
+  "smoke_test_first": {
+    "shape": [
+      10,
+      3584
+    ],
+    "stats": {
+      "minimum_norm": 0.999759023415348,
+      "mean_norm": 1.0000432654448308,
+      "maximum_norm": 1.0002254757007052,
+      "nan_count": 0,
+      "inf_count": 0,
+      "all_zero_vector_count": 0
+    },
+    "exact_byte_equality": true,
+    "maximum_absolute_difference": 0.0,
+    "minimum_corresponding_cosine": 0.9999999999999998,
+    "first_elapsed_seconds": 9.850399415940046,
+    "second_elapsed_seconds": 9.864023166941479
+  },
+  "smoke_test_second": {
+    "shape": [
+      10,
+      3584
+    ],
+    "stats": {
+      "minimum_norm": 0.999759023415348,
+      "mean_norm": 1.0000432654448308,
+      "maximum_norm": 1.0002254757007052,
+      "nan_count": 0,
+      "inf_count": 0,
+      "all_zero_vector_count": 0
+    },
+    "exact_byte_equality": true,
+    "maximum_absolute_difference": 0.0,
+    "minimum_corresponding_cosine": 0.9999999999999998,
+    "first_elapsed_seconds": 9.99137712502852,
+    "second_elapsed_seconds": 10.061237124959007
+  },
+  "smoke_test_passed": true,
+  "storage_dtype": "float32",
+  "random_seed": 42,
+  "inference_mode": true,
+  "model_eval": true,
+  "encode_normalize_embeddings_argument": false
+}

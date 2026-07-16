@@ -68,10 +68,18 @@
     "max_sequence_length": 32768,
     "formal_truncation": false,
     "input_column": "semantic_text",
-    "device": null,
-    "dtype": null,
-    "batch_size": null,
-    "runtime_frozen": false
+    "device": "mps",
+    "device_name": "Apple Silicon MPS (arm64)",
+    "dtype": "float16",
+    "batch_size": 8,
+    "storage_dtype": "float32",
+    "random_seed": 42,
+    "encode_normalize_embeddings_argument": false,
+    "inference_mode": true,
+    "model_eval": true,
+    "runtime_frozen": true,
+    "model_load_verified": true,
+    "smoke_test_passed": true
   },
   "stage3_lock": {
     "path": "requirements-stage3-lock.txt",

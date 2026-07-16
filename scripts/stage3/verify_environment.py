@@ -137,6 +137,16 @@ def main() -> int:
         "formal_truncation": False,
         "max_sequence_length": 32768,
         "input_column": "semantic_text",
+        "device": "mps",
+        "device_name": "Apple Silicon MPS (arm64)",
+        "dtype": "float16",
+        "batch_size": 8,
+        "runtime_frozen": True,
+        "storage_dtype": "float32",
+        "random_seed": 42,
+        "encode_normalize_embeddings_argument": False,
+        "inference_mode": True,
+        "model_eval": True,
     }
     for key, expected in runtime_checks.items():
         actual = runtime.get(key)
@@ -157,10 +167,15 @@ def main() -> int:
         "formal_truncation": False,
         "max_sequence_length": 32768,
         "input_column": "semantic_text",
-        "device": None,
-        "dtype": None,
-        "batch_size": None,
-        "runtime_frozen": False,
+        "device": "mps",
+        "device_name": "Apple Silicon MPS (arm64)",
+        "dtype": "float16",
+        "batch_size": 8,
+        "storage_dtype": "float32",
+        "random_seed": 42,
+        "runtime_frozen": True,
+        "model_load_verified": True,
+        "smoke_test_passed": True,
     }
     for key, expected in manifest_checks.items():
         actual = manifest_runtime.get(key)
@@ -192,7 +207,7 @@ def main() -> int:
 
     if failed:
         return 1
-    print("No full model weights were loaded; no embeddings were generated.")
+    print("Verifier does not load full model weights or generate embeddings.")
     return 0
 
 

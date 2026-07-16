@@ -125,8 +125,8 @@ ASM path is not the validated path on Java 25.
 | Query prompt | not used |
 
 The exact tokenizer loaded successfully from the pinned revision and reported
-`model_max_length=32768`. Full Nomic model weights were not loaded, and no
-embeddings were generated.
+`model_max_length=32768`. The full Nomic model was loaded for the Day 3 smoke
+test; formal subject embeddings have not yet been generated.
 
 ## Formal Nomic runtime
 
@@ -137,9 +137,11 @@ pooling implementation or query prompt is used. The input is the
 `semantic_text` column, formal truncation is disabled, expected output
 dimension is 3584, and cosine similarity is used.
 
-Device, dtype, and batch size remain unresolved execution metadata. The formal
-embedding environment is not fully frozen until the Day 3 full-model smoke
-test records those three values.
+The Day 3 full-model smoke test froze the inference runtime as MPS,
+`float16`, and batch size 8. The selected model device is Apple Silicon MPS.
+Embeddings are stored as `float32`; the runtime uses evaluation mode,
+`torch.inference_mode()`, and a fixed random seed of 42. The full smoke-test
+record is in [`nomic_runtime_smoke_test.md`](nomic_runtime_smoke_test.md).
 
 ## 6. Verified Day 2 inputs
 
@@ -224,11 +226,10 @@ PYTHONPATH=src python3 -m pytest -q
 ## 8. Platform limitations
 
 The validated platform is Apple Silicon `arm64`. PyTorch reports MPS built
-and available; CUDA is unavailable. No MPS, CUDA, or CPU embedding run was
-performed in this checkpoint. Input extraction and input hashing are
-deterministic, but bitwise-identical floating-point embeddings across MPS,
-CUDA, and CPU are not assumed. Day 3 must record the actual device, dtype,
-batch size, and library versions in embedding metadata.
+and available; CUDA is unavailable. The runtime probe and smoke test ran on
+MPS; no CUDA or CPU embedding run was performed. Input extraction and input
+hashing are deterministic, but bitwise-identical floating-point embeddings
+across MPS, CUDA, and CPU are not assumed.
 
 ## 9. Current Stage 3 status
 
@@ -237,6 +238,7 @@ Completed:
 - Method contract frozen.
 - Exact Nomic model and tokenizer revisions pinned.
 - Official SentenceTransformer runtime path and exact Stage 3 lock recorded.
+- Full-model smoke test passed; MPS/float16/batch-8 inference runtime frozen.
 - Deterministic declaration extractor implemented.
 - All three subject inputs generated.
 - Scope and double-run determinism validated.
@@ -245,7 +247,6 @@ Completed:
 
 Not yet completed:
 
-- Full Nomic model loading.
 - Embedding generation.
 - Nearest-neighbour checks.
 - Semantic graph construction.

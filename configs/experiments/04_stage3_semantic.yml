@@ -40,6 +40,16 @@ embedding_runtime:
     - device
     - dtype
     - batch_size
+  device: mps
+  device_name: Apple Silicon MPS (arm64)
+  dtype: float16
+  batch_size: 8
+  runtime_frozen: true
+  storage_dtype: float32
+  random_seed: 42
+  encode_normalize_embeddings_argument: false
+  inference_mode: true
+  model_eval: true
 semantic_input_schema:
   - subject
   - class_id
