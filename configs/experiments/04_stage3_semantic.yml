@@ -19,6 +19,27 @@ truncation:
   method_selection: longest_stable_prefix_within_limit
   silent_truncation_forbidden: true
   record_truncated_method_count: true
+embedding_runtime:
+  backend: sentence_transformers
+  loader: SentenceTransformer
+  formal_custom_pooling_implementation: false
+  model_revision_source: semantic_model.revision
+  tokenizer_revision_source: tokenizer.revision
+  prompt_name: null
+  query_prompt_used: false
+  pooling_source: pinned_model_repository
+  pooling: last_token
+  normalization_source: pinned_model_repository
+  l2_normalize: true
+  output_dimension: 3584
+  similarity: cosine
+  max_sequence_length: 32768
+  formal_truncation: false
+  input_column: semantic_text
+  execution_metadata_to_freeze_on_day3:
+    - device
+    - dtype
+    - batch_size
 semantic_input_schema:
   - subject
   - class_id

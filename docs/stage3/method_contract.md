@@ -21,6 +21,25 @@ interfaces—is always preserved. Methods retain the frozen sorted order and the
 longest stable prefix that fits within the token limit. Silent truncation is
 forbidden; every dropped method is recorded in `truncated_method_count`.
 
+## Formal embedding runtime
+
+The pinned Nomic repository is distributed in Sentence Transformers format. The
+formal pipeline therefore uses `SentenceTransformer` from the
+`sentence_transformers` package. The packaged model supplies the Qwen2Model
+transformer, last-token pooling, and vector normalization. Formal execution
+does not use a custom pooling implementation or manually reimplement pooling.
+
+No query prompt is supplied because the task is class-to-class similarity, not
+natural-language-query-to-code retrieval. Each embedding is expected to
+contain 3584 values, and cosine similarity is used. Formal input encoding uses
+the `semantic_text` column with truncation disabled; tokenizer length control is
+handled by the frozen Day 2 input contract.
+
+The formal runtime backend, loader, packaged pooling/normalization sources,
+and output dimension are frozen now. Device, dtype, and batch size remain
+execution metadata and will be frozen after the Day 3 full-model smoke test.
+Formal embeddings cannot be generated until those runtime values are recorded.
+
 ## 3. Frozen class-declaration input
 
 The input contains the entity kind, class name, meaningful superclass, class-level annotations exposed by bytecode, interfaces, method names, return types, parameter types, and private self-declared methods. Package paths, fields, method bodies, parameter names, comments, structural edges, cluster labels, and reference labels are excluded.

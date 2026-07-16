@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "branch": "stage3-semantic",
-  "git_commit_before_checkpoint": "db14a04a679c6ec03f54415b6291bb12eae0fa79",
+  "git_commit_before_checkpoint": "b05e094476783e3451feafa2e8899b6dfcd5eeea",
   "platform": {
     "operating_system": "macOS 26.5",
     "architecture": "arm64",
@@ -46,11 +46,39 @@
     "PyYAML": "6.0.3",
     "transformers": "5.14.1",
     "torch": "2.13.0",
+    "sentence-transformers": "5.6.0",
     "pytest": "9.1.1"
   },
   "day2_input_aggregate_hashes": {
     "jpetstore": "1ecdb9083a37668fd07388454095a317268c8b736e6fd45957ab16bf87f6ad23",
     "daytrader": "ab09380f87119e4fe4621efbbdd8fdfd8cfc92cd383ed812169e2427a35eae44",
     "xerces": "f81d0f9bda5aa0fcdf3a35c75876cc73c8b419eccfb8c9e00634ec13fad4d60a"
+  },
+  "embedding_runtime": {
+    "backend": "sentence_transformers",
+    "loader": "SentenceTransformer",
+    "custom_pooling": false,
+    "prompt_name": null,
+    "query_prompt_used": false,
+    "pooling_source": "pinned_model_repository",
+    "pooling": "last_token",
+    "l2_normalize": true,
+    "output_dimension": 3584,
+    "similarity": "cosine",
+    "max_sequence_length": 32768,
+    "formal_truncation": false,
+    "input_column": "semantic_text",
+    "device": null,
+    "dtype": null,
+    "batch_size": null,
+    "runtime_frozen": false
+  },
+  "stage3_lock": {
+    "path": "requirements-stage3-lock.txt",
+    "package_count": 70,
+    "sha256": "f390c0dcef98c921f7367733b8169ea7664c03f1f5fafff6e99345512abb2a8f",
+    "generated_at_utc": "2026-07-16T14:21:54.623285Z",
+    "resolver_validation": "passed",
+    "full_clean_install": "not_performed"
   }
 }

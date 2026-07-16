@@ -25,6 +25,25 @@
     "silent_truncation_forbidden": true,
     "record_truncated_method_count": true
   },
+  "embedding_runtime": {
+    "backend": "sentence_transformers",
+    "loader": "SentenceTransformer",
+    "custom_pooling": false,
+    "prompt_name": null,
+    "query_prompt_used": false,
+    "pooling_source": "pinned_model_repository",
+    "pooling": "last_token",
+    "l2_normalize": true,
+    "output_dimension": 3584,
+    "similarity": "cosine",
+    "max_sequence_length": 32768,
+    "formal_truncation": false,
+    "input_column": "semantic_text",
+    "device": null,
+    "dtype": null,
+    "batch_size": null,
+    "runtime_frozen": false
+  },
   "semantic_input_schema": [
     "subject",
     "class_id",
@@ -128,5 +147,13 @@
     "xerces_stage3_estimated_total_seconds_30_seeds": 4490.488380932773,
     "parallelism_used_in_stage2": "serial_one_process",
     "timing_source_reliable": true
+  },
+  "stage3_lock": {
+    "path": "requirements-stage3-lock.txt",
+    "package_count": 70,
+    "sha256": "f390c0dcef98c921f7367733b8169ea7664c03f1f5fafff6e99345512abb2a8f",
+    "generated_at_utc": "2026-07-16T14:21:54.623285Z",
+    "resolver_validation": "passed",
+    "full_clean_install": "not_performed"
   }
 }

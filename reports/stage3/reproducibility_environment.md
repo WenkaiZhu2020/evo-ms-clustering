@@ -11,7 +11,7 @@ model embeddings, semantic graphs, or Stage 3 optimisation results.
 | Item | Value |
 | --- | --- |
 | Branch | `stage3-semantic` |
-| Starting commit | `db14a04a679c6ec03f54415b6291bb12eae0fa79` |
+| Starting commit | `b05e094476783e3451feafa2e8899b6dfcd5eeea` |
 | Working tree before checkpoint | clean |
 | Operating system | macOS 26.5 |
 | Architecture | Apple Silicon `arm64` |
@@ -31,7 +31,8 @@ approach is preserved.
 Before this checkpoint, the canonical file already contained exact pins for
 all listed runtime, analysis, tokenizer, and test packages. The only
 requirements change in this checkpoint is the addition of
-`torch==2.13.0` for the planned Day 3 Nomic embedding runtime.
+`sentence-transformers==5.6.0` for the planned Day 3 Nomic embedding runtime;
+the existing `torch==2.13.0` pin is unchanged.
 
 The active validated environment is:
 
@@ -57,6 +58,7 @@ matplotlib==3.10.8
 PyYAML==6.0.3
 transformers==5.14.1
 torch==2.13.0
+sentence-transformers==5.6.0
 pytest==9.1.1
 ```
 
@@ -74,6 +76,19 @@ imports and versions were then verified there.
 `tokenizers==0.22.2`, `huggingface-hub==1.23.0`, and
 `safetensors==0.8.0` are installed transitively for Transformers and are
 recorded in the full freeze snapshot; they are not direct repository imports.
+
+The exact installable Stage 3 environment is
+[`requirements-stage3-lock.txt`](../../requirements-stage3-lock.txt). It
+contains 70 deterministically sorted packages and has SHA-256:
+
+```text
+f390c0dcef98c921f7367733b8169ea7664c03f1f5fafff6e99345512abb2a8f
+```
+
+The lock contains no editable installs, local paths, or mutable Git references.
+Resolver dry-run validation passed. A full clean installation was not
+performed because it would require downloading the large Torch wheel again;
+the current repo-local environment was fully installed and passed `pip check`.
 
 ## 4. Java and Soot extraction environment
 
@@ -113,6 +128,19 @@ The exact tokenizer loaded successfully from the pinned revision and reported
 `model_max_length=32768`. Full Nomic model weights were not loaded, and no
 embeddings were generated.
 
+## Formal Nomic runtime
+
+The pinned repository is packaged for Sentence Transformers. Formal embedding
+generation will use `SentenceTransformer` from `sentence_transformers`, with
+the model-packaged Qwen2Model, last-token pooling, and normalization. No custom
+pooling implementation or query prompt is used. The input is the
+`semantic_text` column, formal truncation is disabled, expected output
+dimension is 3584, and cosine similarity is used.
+
+Device, dtype, and batch size remain unresolved execution metadata. The formal
+embedding environment is not fully frozen until the Day 3 full-model smoke
+test records those three values.
+
 ## 6. Verified Day 2 inputs
 
 | Subject | Classes | Maximum tokens | Truncation |
@@ -144,6 +172,28 @@ source .venv/bin/activate
 python3 -m pip check
 python3 scripts/stage3/verify_environment.py
 ```
+
+The clean resolver check was executed in a temporary environment with:
+
+```bash
+python3 -m venv /tmp/stage3-lock-verify-20260716
+source /tmp/stage3-lock-verify-20260716/bin/activate
+python -m pip install --upgrade pip
+python -m pip install --dry-run -r requirements-stage3-lock.txt
+```
+
+The dry-run passed. The temporary environment was not used to load model
+weights or generate embeddings.
+
+Validation results for this checkpoint were:
+
+- `python3 -m pip check`: passed with no broken requirements.
+- `scripts/stage3/verify_environment.py`: passed all dependency, tokenizer,
+  runtime-path, and lock-integrity checks.
+- Java 17 Maven extractor tests: passed.
+- Focused Stage 3 Python tests: 6 passed.
+- Full Python suite: 130 passed and 1 failed only because the unchanged legacy
+  scaffold test rejects the required `docs/stage3` directory.
 
 The exact tokenizer verification is included in
 [`verify_environment.py`](../../scripts/stage3/verify_environment.py). It
@@ -186,6 +236,7 @@ Completed:
 
 - Method contract frozen.
 - Exact Nomic model and tokenizer revisions pinned.
+- Official SentenceTransformer runtime path and exact Stage 3 lock recorded.
 - Deterministic declaration extractor implemented.
 - All three subject inputs generated.
 - Scope and double-run determinism validated.
