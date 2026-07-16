@@ -77,11 +77,11 @@
     "xerces": null
   },
   "runtime_budget": {
-    "xerces_stage2_mean_seconds_per_seed": null,
-    "xerces_stage2_total_seconds_30_seeds": null,
-    "xerces_stage3_estimated_seconds_per_seed": null,
-    "xerces_stage3_estimated_total_seconds_30_seeds": null,
-    "parallelism_used_in_stage2": null,
-    "timing_source_reliable": null
+    "xerces_stage2_mean_seconds_per_seed": 99.788630687395,
+    "xerces_stage2_total_seconds_30_seeds": 2993.658920621849,
+    "xerces_stage3_estimated_seconds_per_seed": 149.682946031092,
+    "xerces_stage3_estimated_total_seconds_30_seeds": 4490.488380932773,
+    "parallelism_used_in_stage2": "serial_one_process",
+    "timing_source_reliable": true
   }
 }
