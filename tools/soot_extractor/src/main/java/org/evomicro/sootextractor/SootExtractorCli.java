@@ -24,6 +24,7 @@ import soot.SootMethod;
 import soot.Type;
 import soot.Unit;
 import soot.Value;
+import soot.Modifier;
 import soot.jimple.AssignStmt;
 import soot.jimple.CastExpr;
 import soot.jimple.IdentityStmt;
@@ -36,6 +37,8 @@ import soot.shimple.Shimple;
 import soot.shimple.ShimpleBody;
 import soot.shimple.toolkits.scalar.ShimpleLocalDefs;
 import soot.shimple.toolkits.scalar.ShimpleLocalUses;
+import soot.tagkit.AnnotationTag;
+import soot.tagkit.SyntheticTag;
 import soot.toolkits.scalar.UnitValueBoxPair;
 
 /**
@@ -50,6 +53,19 @@ public final class SootExtractorCli {
       List.of("source", "target", "dependency_type", "weight", "evidence_kind", "evidence_location");
   static final List<String> SSA_FLOW_COLUMNS =
       List.of("source", "target", "flow_type", "weight", "evidence_method", "evidence_statement");
+  static final List<String> SEMANTIC_INPUT_COLUMNS =
+      List.of(
+          "subject",
+          "class_id",
+          "class_name",
+          "kind",
+          "superclass_present",
+          "semantic_text",
+          "method_count",
+          "annotation_count",
+          "interface_count",
+          "input_hash");
+  private static final int JAVA_BRIDGE_MODIFIER = 0x40;
 
   private SootExtractorCli() {}
 
@@ -70,6 +86,8 @@ public final class SootExtractorCli {
 
     Path classesDir = Path.of(options.get("--classes-dir"));
     Path outDir = Path.of(options.get("--out-dir"));
+    Path semanticOut =
+        Path.of(options.getOrDefault("--semantic-out", outDir.resolve("class_declarations.csv").toString()));
     List<String> appPackages = parseAppPackages(options.get("--app-packages"));
     List<String> excludePackages = parseAppPackages(options.getOrDefault("--exclude-packages", ""));
 
@@ -88,9 +106,14 @@ public final class SootExtractorCli {
       ExtractionResult result =
           extractStructuralDependencies(classesDir, options.get("--classpath"), applicationClasses, applicationClassSet);
       Files.createDirectories(outDir);
+      if (semanticOut.getParent() != null) {
+        Files.createDirectories(semanticOut.getParent());
+      }
       writeClassNodes(outDir.resolve("class_nodes.csv"), result.classNodes());
       writeStructuralDependencies(outDir.resolve("structural_dependencies.csv"), result.structuralDependencies());
       writeSsaFlowEdges(outDir.resolve("ssa_flow_edges.csv"), result.ssaFlowEdges());
+      writeSemanticInputs(
+          semanticOut, options.get("--subject"), result.semanticInputs());
 
       System.out.println("subject=" + options.get("--subject"));
       System.out.println("classes_dir=" + classesDir);
@@ -100,7 +123,9 @@ public final class SootExtractorCli {
       System.out.println("application_classes_detected=" + result.classNodes().size());
       System.out.println("structural_dependencies_extracted=" + result.structuralDependencies().size());
       System.out.println("ssa_flow_edges_extracted=" + result.ssaFlowEdges().size());
+      System.out.println("class_declarations_extracted=" + result.semanticInputs().size());
       System.out.println("out_dir=" + outDir);
+      System.out.println("semantic_out=" + semanticOut);
       return 0;
     } catch (IOException error) {
       System.err.println("ERROR: failed to write normalized CSV outputs: " + error.getMessage());
@@ -132,16 +157,162 @@ public final class SootExtractorCli {
     List<ClassNode> classNodes = new ArrayList<>();
     Set<StructuralDependency> structuralDependencies = new LinkedHashSet<>();
     Set<FlowEdge> ssaFlowEdges = new LinkedHashSet<>();
+    List<ClassDeclaration> semanticInputs = new ArrayList<>();
 
     for (String className : applicationClasses) {
       SootClass sootClass = Scene.v().getSootClass(className);
       classNodes.add(classNode(classesDir, className));
+      semanticInputs.add(classDeclaration(sootClass));
       extractTypeDependencies(sootClass, applicationClassSet, structuralDependencies);
       extractCallDependencies(sootClass, applicationClassSet, structuralDependencies);
       extractSsaFlowEdges(sootClass, applicationClassSet, ssaFlowEdges);
     }
 
-    return new ExtractionResult(classNodes, new ArrayList<>(structuralDependencies), new ArrayList<>(ssaFlowEdges));
+    semanticInputs.sort(java.util.Comparator.comparing(ClassDeclaration::classId));
+    return new ExtractionResult(
+        classNodes, new ArrayList<>(structuralDependencies), new ArrayList<>(ssaFlowEdges), semanticInputs);
+  }
+
+  static ClassDeclaration classDeclaration(SootClass sootClass) {
+    List<String> annotations = classAnnotations(sootClass);
+    List<String> interfaces = sootClass.getInterfaces().stream()
+        .map(SootClass::getName)
+        .map(SootExtractorCli::simpleName)
+        .distinct()
+        .sorted()
+        .toList();
+    String superclass = meaningfulSuperclass(sootClass);
+    List<String> methods = sootClass.getMethods().stream()
+        .filter(SootExtractorCli::includeMethod)
+        .map(SootExtractorCli::renderMethod)
+        .distinct()
+        .sorted(java.util.Comparator.comparing(SootExtractorCli::methodName).thenComparing(String::compareTo))
+        .toList();
+
+    String kind = entityKind(sootClass);
+    StringBuilder text = new StringBuilder();
+    for (String annotation : annotations) {
+      text.append('@').append(annotation).append('\n');
+    }
+    if (sootClass.isPublic()) {
+      text.append("public ");
+    }
+    text.append(kind).append(' ').append(simpleName(sootClass.getName()));
+    if (superclass != null) {
+      text.append(" extends ").append(superclass);
+    }
+    if (!interfaces.isEmpty()) {
+      text.append(sootClass.isInterface() ? " extends " : " implements ");
+      text.append(String.join(", ", interfaces));
+    }
+    text.append(" {\n");
+    for (String method : methods) {
+      text.append("    ").append(method).append('\n');
+    }
+    text.append("}\n");
+
+    String semanticText = text.toString();
+    return new ClassDeclaration(
+        sootClass.getName(),
+        simpleName(sootClass.getName()),
+        kind,
+        superclass != null,
+        semanticText,
+        methods.size(),
+        annotations.size(),
+        interfaces.size(),
+        sha256(semanticText));
+  }
+
+  private static String entityKind(SootClass sootClass) {
+    if (sootClass.isEnum()) {
+      return "enum";
+    }
+    if (sootClass.isInterface()) {
+      return "interface";
+    }
+    return sootClass.isAbstract() ? "abstract class" : "class";
+  }
+
+  private static String meaningfulSuperclass(SootClass sootClass) {
+    if (!sootClass.hasSuperclass()) {
+      return null;
+    }
+    String superclass = sootClass.getSuperclass().getName();
+    if (superclass.equals("java.lang.Object") || superclass.equals("java.lang.Enum")) {
+      return null;
+    }
+    return simpleName(superclass);
+  }
+
+  private static List<String> classAnnotations(SootClass sootClass) {
+    return sootClass.getTags().stream()
+        .filter(tag -> tag instanceof soot.tagkit.VisibilityAnnotationTag)
+        .map(tag -> (soot.tagkit.VisibilityAnnotationTag) tag)
+        .flatMap(tag -> tag.getAnnotations().stream())
+        .map(AnnotationTag::getType)
+        .map(SootExtractorCli::normalizeAnnotationName)
+        .distinct()
+        .sorted()
+        .toList();
+  }
+
+  private static String normalizeAnnotationName(String value) {
+    String normalized = value;
+    if (normalized.startsWith("L") && normalized.endsWith(";")) {
+      normalized = normalized.substring(1, normalized.length() - 1);
+    }
+    return simpleName(normalized.replace('/', '.'));
+  }
+
+  private static boolean includeMethod(SootMethod method) {
+    return !method.isConstructor()
+        && !method.isStaticInitializer()
+        && !Modifier.isSynthetic(method.getModifiers())
+        && (method.getModifiers() & JAVA_BRIDGE_MODIFIER) == 0
+        && method.getTags().stream().noneMatch(tag -> tag instanceof SyntheticTag);
+  }
+
+  private static String renderMethod(SootMethod method) {
+    String parameters = method.getParameterTypes().stream()
+        .map(SootExtractorCli::normalizeType)
+        .reduce((left, right) -> left + ", " + right)
+        .orElse("");
+    return normalizeType(method.getReturnType()) + " " + method.getName() + "(" + parameters + ");";
+  }
+
+  private static String methodName(String renderedMethod) {
+    return renderedMethod.substring(renderedMethod.indexOf(' ') + 1, renderedMethod.indexOf('('));
+  }
+
+  static String normalizeType(Type type) {
+    if (type instanceof ArrayType arrayType) {
+      return normalizeType(arrayType.baseType) + "[]".repeat(arrayType.numDimensions);
+    }
+    if (type instanceof RefType refType) {
+      return simpleName(refType.getClassName());
+    }
+    return simpleName(type.toString());
+  }
+
+  static String simpleName(String name) {
+    String normalized = name.replace('/', '.');
+    int separator = normalized.lastIndexOf('.');
+    return separator < 0 ? normalized : normalized.substring(separator + 1);
+  }
+
+  private static String sha256(String value) {
+    try {
+      java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+      byte[] bytes = digest.digest(value.getBytes(StandardCharsets.UTF_8));
+      StringBuilder result = new StringBuilder(bytes.length * 2);
+      for (byte valueByte : bytes) {
+        result.append(String.format("%02x", valueByte));
+      }
+      return result.toString();
+    } catch (java.security.NoSuchAlgorithmException error) {
+      throw new IllegalStateException("SHA-256 is unavailable", error);
+    }
   }
 
   private static ClassNode classNode(Path classesDir, String className) {
@@ -593,6 +764,31 @@ public final class SootExtractorCli {
     }
   }
 
+  static void writeSemanticInputs(Path path, String subject, List<ClassDeclaration> declarations) throws IOException {
+    List<ClassDeclaration> sorted = declarations.stream()
+        .sorted(java.util.Comparator.comparing(ClassDeclaration::classId))
+        .toList();
+    try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
+      writer.write(String.join(",", SEMANTIC_INPUT_COLUMNS));
+      writer.write("\n");
+      for (ClassDeclaration declaration : sorted) {
+        writer.write(
+            csvRow(
+                subject,
+                declaration.classId(),
+                declaration.className(),
+                declaration.kind(),
+                Boolean.toString(declaration.superclassPresent()),
+                declaration.semanticText(),
+                Integer.toString(declaration.methodCount()),
+                Integer.toString(declaration.annotationCount()),
+                Integer.toString(declaration.interfaceCount()),
+                declaration.inputHash()));
+        writer.write("\n");
+      }
+    }
+  }
+
   private static String csvRow(String... values) {
     return Stream.of(values).map(SootExtractorCli::csvValue).reduce((left, right) -> left + "," + right).orElse("");
   }
@@ -611,7 +807,8 @@ public final class SootExtractorCli {
     System.err.println(
         "Usage: java org.evomicro.sootextractor.SootExtractorCli "
             + "--subject <name> --classes-dir <dir> --classpath <classpath> "
-            + "--app-packages <pkg[,pkg...]> [--exclude-packages <pkg[,pkg...]>] --out-dir <dir>");
+            + "--app-packages <pkg[,pkg...]> [--exclude-packages <pkg[,pkg...]>] --out-dir <dir> "
+            + "[--semantic-out <csv>]");
   }
 
   record ClassNode(String classId, String className, String packageName, String classFilePath) {}
@@ -623,5 +820,19 @@ public final class SootExtractorCli {
       String source, String target, String flowType, String weight, String evidenceMethod, String evidenceStatement) {}
 
   record ExtractionResult(
-      List<ClassNode> classNodes, List<StructuralDependency> structuralDependencies, List<FlowEdge> ssaFlowEdges) {}
+      List<ClassNode> classNodes,
+      List<StructuralDependency> structuralDependencies,
+      List<FlowEdge> ssaFlowEdges,
+      List<ClassDeclaration> semanticInputs) {}
+
+  record ClassDeclaration(
+      String classId,
+      String className,
+      String kind,
+      boolean superclassPresent,
+      String semanticText,
+      int methodCount,
+      int annotationCount,
+      int interfaceCount,
+      String inputHash) {}
 }
