@@ -142,6 +142,32 @@
       "canonicalization": "class_id<TAB>input_hash<LF>, sorted by class_id"
     }
   },
+  "embedding_hashes": {
+    "jpetstore": {
+      "aggregate_sha256": "0ae28938fef7b0c0295a5b1d33527708af7493b4f43d524436ffbf258db8802a",
+      "class_count": 24,
+      "output_dimension": 3584,
+      "storage_dtype": "float32",
+      "metadata_path": "results/jpetstore/04_stage3_semantic/embeddings/embedding_metadata.json",
+      "generated_at_utc": "2026-07-16T14:56:54Z"
+    },
+    "daytrader": {
+      "aggregate_sha256": "c7d2cbeec9d4c6ff5f9054b7d66563e98cffc6774771d5727030248299b7756e",
+      "class_count": 53,
+      "output_dimension": 3584,
+      "storage_dtype": "float32",
+      "metadata_path": "results/daytrader/04_stage3_semantic/embeddings/embedding_metadata.json",
+      "generated_at_utc": "2026-07-16T14:57:02Z"
+    },
+    "xerces": {
+      "aggregate_sha256": "9504e21bb305a60cdfce58421b64240d1af893fd549b40b9441a00bf0fee8cb1",
+      "class_count": 814,
+      "output_dimension": 3584,
+      "storage_dtype": "float32",
+      "metadata_path": "results/xerces/04_stage3_semantic/embeddings/embedding_metadata.json",
+      "generated_at_utc": "2026-07-16T14:57:56Z"
+    }
+  },
   "semantic_graph_hashes": {
     "jpetstore": null,
     "daytrader": null,

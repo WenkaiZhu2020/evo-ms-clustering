@@ -159,6 +159,13 @@ def dtype_name(dtype: torch.dtype) -> str:
     return str(dtype).removeprefix("torch.")
 
 
+def dtype_from_name(name: str) -> torch.dtype:
+    values = {"float16": torch.float16, "float32": torch.float32, "bfloat16": torch.bfloat16}
+    if name not in values:
+        raise ValueError(f"unsupported frozen dtype: {name}")
+    return values[name]
+
+
 def load_model(device: str, dtype: torch.dtype):
     from sentence_transformers import SentenceTransformer
 
@@ -580,53 +587,65 @@ def main() -> int:
     runtime_config = validate_contract(config, manifest)
     rows_by_subject = all_rows()
     set_seed()
-    device, available_devices, device_name = select_device()
     disk_before = disk_available_bytes()
-    model, probe = run_probe(rows_by_subject, device)
-    smoke_rows = select_smoke_rows(rows_by_subject)
-    smoke_first = smoke_check(model, smoke_rows, int(probe["selected_batch_size"]))
-    smoke_second = smoke_check(model, smoke_rows, int(probe["selected_batch_size"]))
-    runtime = {
-        "device": device,
-        "device_name": device_name,
-        "dtype": probe["selected_dtype"],
-        "batch_size": probe["selected_batch_size"],
-    }
-    probe_result = {
-        "branch": subprocess.check_output(["git", "branch", "--show-current"], text=True).strip(),
-        "starting_commit": git_commit(),
-        "platform": platform.platform(),
-        "torch_version": torch.__version__,
-        "transformers_version": __import__("transformers").__version__,
-        "sentence_transformers_version": __import__("sentence_transformers").__version__,
-        "model": EXPECTED_MODEL,
-        "revision": MODEL_REVISION,
-        "cache_location": resolve_cache_location(),
-        "disk_available_before_model_download_bytes": disk_before,
-        "disk_available_after_model_download_bytes": disk_available_bytes(),
-        "available_devices": available_devices,
-        "selected_runtime": runtime,
-        "dtype_candidates_tested": probe["dtype_candidates"],
-        "batch_sizes_tested": probe["batch_candidates"],
-        "model_load_duration_seconds": probe["model_load_duration_seconds"],
-        "smoke_rows": [{"subject": row.get("subject"), "class_id": row["class_id"]} for row in smoke_rows],
-        "smoke_test_first": smoke_first,
-        "smoke_test_second": smoke_second,
-        "smoke_test_passed": True,
-        "storage_dtype": "float32",
-        "random_seed": SEED,
-        "inference_mode": True,
-        "model_eval": True,
-        "encode_normalize_embeddings_argument": False,
-    }
-    save_json(args.runtime_json, probe_result)
+    if args.generate:
+        if runtime_config.get("runtime_frozen") is not True:
+            raise RuntimeError("formal generation requires a frozen embedding runtime")
+        runtime = {
+            "device": runtime_config["device"],
+            "device_name": runtime_config["device_name"],
+            "dtype": runtime_config["dtype"],
+            "batch_size": runtime_config["batch_size"],
+        }
+        model, _ = load_model(runtime["device"], dtype_from_name(runtime["dtype"]))
+        probe_result = None
+    else:
+        device, available_devices, device_name = select_device()
+        model, probe = run_probe(rows_by_subject, device)
+        smoke_rows = select_smoke_rows(rows_by_subject)
+        smoke_first = smoke_check(model, smoke_rows, int(probe["selected_batch_size"]))
+        smoke_second = smoke_check(model, smoke_rows, int(probe["selected_batch_size"]))
+        runtime = {
+            "device": device,
+            "device_name": device_name,
+            "dtype": probe["selected_dtype"],
+            "batch_size": probe["selected_batch_size"],
+        }
+        probe_result = {
+            "branch": subprocess.check_output(["git", "branch", "--show-current"], text=True).strip(),
+            "starting_commit": git_commit(),
+            "platform": platform.platform(),
+            "torch_version": torch.__version__,
+            "transformers_version": __import__("transformers").__version__,
+            "sentence_transformers_version": __import__("sentence_transformers").__version__,
+            "model": EXPECTED_MODEL,
+            "revision": MODEL_REVISION,
+            "cache_location": resolve_cache_location(),
+            "disk_available_before_model_download_bytes": disk_before,
+            "disk_available_after_model_download_bytes": disk_available_bytes(),
+            "available_devices": available_devices,
+            "selected_runtime": runtime,
+            "dtype_candidates_tested": probe["dtype_candidates"],
+            "batch_sizes_tested": probe["batch_candidates"],
+            "model_load_duration_seconds": probe["model_load_duration_seconds"],
+            "smoke_rows": [{"subject": row.get("subject"), "class_id": row["class_id"]} for row in smoke_rows],
+            "smoke_test_first": smoke_first,
+            "smoke_test_second": smoke_second,
+            "smoke_test_passed": True,
+            "storage_dtype": "float32",
+            "random_seed": SEED,
+            "inference_mode": True,
+            "model_eval": True,
+            "encode_normalize_embeddings_argument": False,
+        }
+        save_json(args.runtime_json, probe_result)
     if args.probe_only or not args.generate:
         clear_model(model)
         print(json.dumps(probe_result, indent=2))
         return 0
     for subject, rows in rows_by_subject.items():
-        encode_subject(model, subject, rows, {**runtime, "device_name": device_name}, git_commit())
-    stability = run_reencoding(model, rows_by_subject, {**runtime, "device_name": device_name})
+        encode_subject(model, subject, rows, runtime, git_commit())
+    stability = run_reencoding(model, rows_by_subject, runtime)
     save_json(args.stability_json, stability)
     clear_model(model)
     print(json.dumps({"runtime": probe_result, "stability": stability}, indent=2))
