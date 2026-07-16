@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "created_for": "stage3_semantic",
+  "branch": "stage3-semantic",
+  "model": {
+    "name": "nomic-ai/nomic-embed-code",
+    "revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+    "pooling": "last_token",
+    "l2_normalize": true
+  },
+  "input_variant": "class_declaration",
+  "semantic_graph": {
+    "k": 3,
+    "tie_break": "class_id_lexicographic",
+    "symmetrization": "or",
+    "edge_weight": "cosine_similarity"
+  },
+  "formal_seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+  "xerces_fallback_seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  "primary_metrics": ["MoJoFM", "PairwiseF1", "structural_modularity", "imbalance"],
+  "statistics": {
+    "test": "paired_wilcoxon_signed_rank",
+    "correction": "bonferroni",
+    "alpha_family": 0.05,
+    "adjusted_alpha": 0.0125
+  },
+  "technical_go_no_go": {
+    "embedding_coverage_required": 1.0,
+    "no_nan_or_infinite_vectors": true,
+    "total_semantic_weight_must_exceed": 0.0,
+    "node_coverage_minimum": 0.95,
+    "isolated_node_ratio_maximum": 0.05,
+    "class_scope_match": "exact_set_equality"
+  },
+  "evidence_go_no_go": {
+    "novel_edge_ratio_minimum_per_subject": 0.2,
+    "random_baseline": {
+      "metrics": ["structural_overlap", "same_reference_ratio"],
+      "percentile_threshold": 0.95,
+      "per_subject_pass_rule": "any_listed_metric_above_threshold",
+      "subjects_required_to_pass": 2,
+      "total_subjects": 3
+    }
+  },
+  "selection_projection_procedure": [
+    "take_final_stage3_four_objective_front",
+    "project_to_original_three_objectives",
+    "apply_three_objective_non_dominated_filter",
+    "deduplicate_projected_objective_vectors",
+    "apply_exact_stage2_selection_rule",
+    "apply_exact_stage2_deterministic_tiebreak",
+    "do_not_use_semantic_performance_as_an_extra_tiebreak"
+  ],
+  "hypervolume_comparison_procedure": {
+    "stage3_4d": "internal_diagnostic_only",
+    "project_to_stage2_three_objectives": true,
+    "refilter_projected_front": true,
+    "bounds_reference": "configs/experiments/stage2_robustness_bounds.yml",
+    "reference_point_reference": "experiments/02_stage2_nsga_structure_only/run_robustness.py:REFERENCE_POINT",
+    "reference_point": [1.1, 1.1, 1.1]
+  },
+  "xerces_early_start_rule": "immediately_after_one_full_configuration_matching_seed_passes_on_day5",
+  "xerces_invalidation_rule": {
+    "trigger": "any_later_correctness_bug_affecting_objectives_repair_pareto_membership_projection_hypervolume_representative_selection_metrics_or_partitions",
+    "affected_results": "all_completed_stage3_xerces_seeds",
+    "required_action": "invalidate_and_rerun",
+    "cost_based_retention_forbidden": true
+  },
+  "input_hashes": {
+    "jpetstore": null,
+    "daytrader": null,
+    "xerces": null
+  },
+  "semantic_graph_hashes": {
+    "jpetstore": null,
+    "daytrader": null,
+    "xerces": null
+  },
+  "runtime_budget": {
+    "xerces_stage2_mean_seconds_per_seed": null,
+    "xerces_stage2_total_seconds_30_seeds": null,
+    "xerces_stage3_estimated_seconds_per_seed": null,
+    "xerces_stage3_estimated_total_seconds_30_seeds": null,
+    "parallelism_used_in_stage2": null,
+    "timing_source_reliable": null
+  }
+}
