@@ -10,6 +10,17 @@ The semantic channel receives only the frozen class-declaration input. It does n
 
 The model is `nomic-ai/nomic-embed-code` at revision `9a0457648f060c4279d4a3982d2d27a4df6fac59`. Embeddings use last-token pooling and L2 normalization. No query prompt is used for class-to-class embedding. Model execution itself is not implemented today, but this model contract is frozen for the formal run.
 
+The exact tokenizer is the tokenizer shipped at the same pinned revision. Its
+verified `model_max_length` is `32768`, matching the model config's
+`max_position_embeddings` value. Token counting uses truncation disabled and
+`add_special_tokens=true`.
+
+When token count exceeds `32768`, truncation is triggered explicitly. The
+entity header—kind, class name, meaningful superclass, annotations, and
+interfaces—is always preserved. Methods retain the frozen sorted order and the
+longest stable prefix that fits within the token limit. Silent truncation is
+forbidden; every dropped method is recorded in `truncated_method_count`.
+
 ## 3. Frozen class-declaration input
 
 The input contains the entity kind, class name, meaningful superclass, class-level annotations exposed by bytecode, interfaces, method names, return types, parameter types, and private self-declared methods. Package paths, fields, method bodies, parameter names, comments, structural edges, cluster labels, and reference labels are excluded.
@@ -30,6 +41,19 @@ public class TradeServiceImpl implements TradeService {
 ## 4. Deterministic rendering contract
 
 CSV rows are sorted by `class_id`. Within a declaration, annotations and interfaces are sorted lexicographically. Methods are sorted first by method name and then by their normalized complete signature. Rendering uses UTF-8, LF line endings, no trailing spaces, and exactly one final newline. The SHA-256 input hash is computed over the exact UTF-8 bytes of `semantic_text`, including that final newline.
+
+Every subject uses this fixed CSV schema, in this exact order:
+
+```text
+subject,class_id,class_name,kind,superclass_present,semantic_text,method_count,annotation_count,interface_count,truncated_method_count,input_hash
+```
+
+`method_count` is the number of methods after filtering and signature
+deduplication but before tokenizer truncation. `truncated_method_count` is the
+number of methods dropped by the explicit length rule. The number of methods
+present in `semantic_text` is therefore
+`method_count - truncated_method_count`. `input_hash` is SHA-256 over the
+post-truncation `semantic_text` UTF-8 bytes, including its final newline.
 
 The declaration is source-like. `public` is retained only for public entities; non-public visibility is omitted. The kind is one of `class`, `abstract class`, `interface`, or `enum`. Classes use `extends` for a meaningful superclass and `implements` for interfaces. Interfaces use `extends` for parent interfaces. Implicit `java.lang.Object` and `java.lang.Enum` are omitted. The method format is:
 

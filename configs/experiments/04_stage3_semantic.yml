@@ -5,6 +5,32 @@ semantic_model:
   revision: 9a0457648f060c4279d4a3982d2d27a4df6fac59
   pooling: last_token
   l2_normalize: true
+tokenizer:
+  name: nomic-ai/nomic-embed-code
+  revision: 9a0457648f060c4279d4a3982d2d27a4df6fac59
+  max_sequence_length: 32768
+  token_counting:
+    truncation: false
+    add_special_tokens: true
+truncation:
+  trigger: token_count_exceeds_max_sequence_length
+  preserve_entity_header: true
+  method_order: frozen_sorted_order
+  method_selection: longest_stable_prefix_within_limit
+  silent_truncation_forbidden: true
+  record_truncated_method_count: true
+semantic_input_schema:
+  - subject
+  - class_id
+  - class_name
+  - kind
+  - superclass_present
+  - semantic_text
+  - method_count
+  - annotation_count
+  - interface_count
+  - truncated_method_count
+  - input_hash
 input_variant: class_declaration
 include:
   kind_keyword: true
