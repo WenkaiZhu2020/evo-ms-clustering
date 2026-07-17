@@ -3,7 +3,7 @@
   "analysis_type": "paired_stage2_vs_stage3_frozen_results",
   "generated_at_utc": "2026-07-17T19:46:23Z",
   "analysis_start_commit": "1d8975aca7327959823e7b9b5c52d983d3b4036b",
-  "analysis_final_commit": null,
+  "analysis_final_commit": "b6ada928cb97db71e866d35469aaa1c95b61f557",
   "subjects": [
     "jpetstore",
     "daytrader",
