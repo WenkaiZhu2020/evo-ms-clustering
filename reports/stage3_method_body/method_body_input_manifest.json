@@ -1,0 +1,115 @@
+{
+  "aggregate_input_sha256": {
+    "daytrader": "da53d434b820e3c25bc69df63ced807cd0113d412fa36acc9694d1a97631d655",
+    "jpetstore": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+    "xerces": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3"
+  },
+  "artifact_paths": {
+    "input_hashes": "reports/stage3_method_body/method_body_input_hashes.csv",
+    "report_root": "reports/stage3_method_body/",
+    "semantic_text_root": "data/semantic_text/declaration_method_body/"
+  },
+  "body_evidence_types": [
+    "invoked_method_simple_names",
+    "field_simple_names",
+    "permitted_local_identifiers",
+    "exception_simple_names",
+    "controlled_operation_words",
+    "filtered_string_literal_tokens"
+  ],
+  "body_token_budget": 256,
+  "class_order": "class_id lexicographic",
+  "declaration_source": "frozen Stage 3A semantic_text bytes from data/semantic_inputs/*.csv",
+  "declaration_truncated": false,
+  "downstream_unchanged": [
+    "embedding",
+    "graph",
+    "objective",
+    "NSGA-II",
+    "seeds",
+    "evaluation"
+  ],
+  "expected_class_counts": {
+    "daytrader": 53,
+    "jpetstore": 24,
+    "xerces": 814
+  },
+  "experiment_name": "stage3_declaration_method_body",
+  "extraction_version": "soot_shimple_method_body_v1",
+  "generated_at_utc": "2026-07-17T21:01:18Z",
+  "generated_code_policy": "retain all classes; record compiler synthetic-method evidence; no downstream filtering",
+  "method_order": "method_name then method_signature lexicographic",
+  "normalization": {
+    "generic_method_stopwords": [
+      "clinit",
+      "equals",
+      "hashCode",
+      "init",
+      "main",
+      "run",
+      "toString"
+    ],
+    "getter_setter_policy": "drop leading get/set/is and retain remaining meaningful words",
+    "identifier_splitting": [
+      "camelCase",
+      "PascalCase",
+      "acronym",
+      "snake_case",
+      "kebab-case"
+    ],
+    "lowercase": true,
+    "minimum_token_length": 2,
+    "repeated_token_cap": 2,
+    "token_pattern": "[a-z][a-z0-9]*",
+    "unicode": "NFKC"
+  },
+  "representation_id": "declaration_method_body_v1",
+  "status": "post_hoc_exploratory",
+  "string_literal_policy": "deterministic 2-80 character lexical filter; reject URL/path/UUID/hash/numeric/encoded/boilerplate values",
+  "structural_exclusions": [
+    "package_paths",
+    "fully_qualified_names",
+    "invocation_owners",
+    "declaring_classes",
+    "source_paths",
+    "imports",
+    "dependency_edges",
+    "caller_callee_pairs",
+    "jvm_descriptors",
+    "raw_signatures",
+    "line_numbers",
+    "bytecode_offsets",
+    "jimple_labels",
+    "soot_identifiers",
+    "synthetic_locals",
+    "type_context_after_new_instanceof_cast"
+  ],
+  "tokenizer": {
+    "add_special_tokens": true,
+    "max_sequence_length": 32768,
+    "name": "nomic-ai/nomic-embed-code",
+    "revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+    "truncation": false
+  },
+  "truncation_priority": [
+    "complete_declaration",
+    "unique_high_information_body_tokens",
+    "lower_priority_body_tokens"
+  ],
+  "unavailable_evidence_types": [
+    "reliable_source_level_local_metadata",
+    "source_file_paths",
+    "raw_jimple_statements"
+  ],
+  "validated_at_utc": "2026-07-17T21:01:22Z",
+  "validation_gates": {
+    "declaration_preservation": true,
+    "deterministic_regeneration": "see input_reproducibility_summary.md",
+    "exact_scope": true,
+    "focused_tests": "see test results",
+    "no_structural_leakage": true,
+    "soot_extractor_tests": "see Maven test results",
+    "zero_declaration_truncation": true
+  },
+  "validation_status": "passed"
+}

@@ -1,0 +1,16 @@
+subject,feature,accepted_token_count,classes_with_feature,availability,unavailable_reason
+jpetstore,invoked_method,514,17,source_available,
+jpetstore,field,674,17,source_available,
+jpetstore,local,3,2,source_local_metadata_not_reliable,synthetic locals rejected
+jpetstore,exception,4,1,source_available,
+jpetstore,string,120,8,source_available,
+daytrader,invoked_method,1725,48,source_available,
+daytrader,field,2171,42,source_available,
+daytrader,local,105,15,source_local_metadata_not_reliable,synthetic locals rejected
+daytrader,exception,178,10,source_available,
+daytrader,string,2418,37,source_available,
+xerces,invoked_method,19477,648,source_available,
+xerces,field,73789,595,source_available,
+xerces,local,9342,267,source_local_metadata_not_reliable,synthetic locals rejected
+xerces,exception,8442,228,source_available,
+xerces,string,10008,279,source_available,
