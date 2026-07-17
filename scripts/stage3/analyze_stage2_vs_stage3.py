@@ -29,6 +29,11 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from evo_ms.evaluation.partition_metrics import partition_similarity
+from evo_ms.evaluation.reference_metrics import (
+    calculate_reference_metrics,
+    load_reference_mapping,
+    reference_mapping_diagnostics,
+)
 
 
 SUBJECTS = ("jpetstore", "daytrader", "xerces")
@@ -92,6 +97,21 @@ EXTERNAL_METRICS = (
     "nmi_vs_reference",
     "reference_coverage_ratio",
 )
+EXTERNAL_INFERENTIAL_METRICS = tuple(metric for metric in EXTERNAL_METRICS if metric != "reference_coverage_ratio")
+METRIC_SPECS = METRIC_SPECS + tuple(
+    {
+        "name": metric,
+        "stage2": f"stage2_{metric}",
+        "stage3": f"stage3_{metric}",
+        "direction": "higher",
+        "family": "secondary",
+        "statistical": True,
+    }
+    for metric in EXTERNAL_INFERENTIAL_METRICS
+)
+REFERENCE_PATHS = {
+    "daytrader": ROOT / "data/references/daytrader_reference_services.csv",
+}
 
 
 def utc_now() -> str:
@@ -293,6 +313,63 @@ def _load_bounds(storage_subject: str) -> dict[str, Any]:
     return bounds
 
 
+def load_reference_for_subject(subject: str, class_nodes: pd.DataFrame) -> tuple[pd.DataFrame | None, dict[str, Any]]:
+    """Load only the repository's frozen reference, with an explicit status."""
+    path = REFERENCE_PATHS.get(subject)
+    if path is None:
+        return None, {
+            "status": "unavailable",
+            "reason": "no frozen external reference mapping is registered for this subject",
+            "path": None,
+            "source": None,
+            "coverage": None,
+            "unmatched_extracted_classes": [],
+            "reference_classes_not_found": [],
+        }
+    if not path.exists():
+        return None, {
+            "status": "unavailable",
+            "reason": f"frozen reference mapping is missing: {relative(path)}",
+            "path": relative(path),
+            "source": "repository domain-informed proxy reference",
+            "coverage": None,
+            "unmatched_extracted_classes": [],
+            "reference_classes_not_found": [],
+        }
+    mapping = load_reference_mapping(path)
+    diagnostics = reference_mapping_diagnostics(class_nodes, mapping)
+    unmatched = diagnostics["unmapped_extracted_classes"]["class_name"].astype(str).tolist()
+    reference_not_found = diagnostics["reference_classes_not_found"]["class_name"].astype(str).tolist()
+    coverage = float(diagnostics["reference_coverage_ratio"])
+    if coverage != 1.0 or unmatched or reference_not_found:
+        return None, {
+            "status": "unavailable",
+            "reason": "reference class scope is not complete for the frozen subject scope",
+            "path": relative(path),
+            "source": "repository domain-informed proxy reference",
+            "coverage": coverage,
+            "unmatched_extracted_classes": unmatched,
+            "reference_classes_not_found": reference_not_found,
+        }
+    return mapping, {
+        "status": "available",
+        "reason": "complete frozen reference coverage",
+        "path": relative(path),
+        "source": "repository domain-informed proxy reference; not ground truth",
+        "coverage": coverage,
+        "unmatched_extracted_classes": [],
+        "reference_classes_not_found": [],
+    }
+
+
+def evaluate_external_metrics(class_nodes: pd.DataFrame, partition: pd.DataFrame, mapping: pd.DataFrame | None) -> dict[str, float]:
+    """Evaluate the saved partition with the existing validated implementation."""
+    if mapping is None:
+        return {metric: float("nan") for metric in EXTERNAL_METRICS}
+    values = calculate_reference_metrics(class_nodes, partition, mapping)
+    return {metric: _finite_or_nan(values.get(metric)) for metric in EXTERNAL_METRICS}
+
+
 def recompute_stage2_hv(front: pd.DataFrame, bounds: dict[str, Any]) -> float:
     columns = ["coupling", "pymoo_f1_negative_cohesion", "imbalance"]
     if any(column not in front.columns for column in columns):
@@ -325,7 +402,12 @@ def _finite_or_nan(value: Any) -> float:
     return result if np.isfinite(result) else float("nan")
 
 
-def _selected_metrics(stage2_selected: pd.Series, stage3_selected: dict[str, Any]) -> dict[str, float]:
+def _selected_metrics(
+    stage2_selected: pd.Series,
+    stage3_selected: dict[str, Any],
+    stage2_external: dict[str, float] | None = None,
+    stage3_external: dict[str, float] | None = None,
+) -> dict[str, float]:
     four = stage3_selected["selected_four_objective_row"]
     posthoc = stage3_selected["selected_posthoc_metrics"]
     values: dict[str, float] = {}
@@ -337,8 +419,10 @@ def _selected_metrics(stage2_selected: pd.Series, stage3_selected: dict[str, Any
         values[f"stage2_{metric}"] = _finite_or_nan(stage2_selected.get(metric))
         values[f"stage3_{metric}"] = _finite_or_nan(posthoc.get(metric))
     for metric in EXTERNAL_METRICS:
-        values[f"stage2_{metric}"] = _finite_or_nan(stage2_selected.get(metric))
-        values[f"stage3_{metric}"] = float("nan")
+        values[f"stage2_{metric}"] = _finite_or_nan(
+            (stage2_external or {}).get(metric, stage2_selected.get(metric))
+        )
+        values[f"stage3_{metric}"] = _finite_or_nan((stage3_external or {}).get(metric))
     return values
 
 
@@ -376,6 +460,7 @@ def load_paired_outputs() -> tuple[pd.DataFrame, pd.DataFrame, dict[str, Any]]:
         context = STAGE3.load_context(subject)
         if len(context["class_nodes"]) != CLASS_COUNTS[subject]:
             raise ValueError(f"{subject}: class scope count mismatch")
+        reference_mapping, reference_info = load_reference_for_subject(subject, context["class_nodes"])
         bounds = _load_bounds(STORAGE_SUBJECT[subject])
         if s2_manifest["normalization_bounds"] != {"lower_bounds": bounds["lower_bounds"], "upper_bounds": bounds["upper_bounds"]}:
             raise ValueError(f"{subject}: Stage 2 saved bounds do not match frozen bounds config")
@@ -388,6 +473,7 @@ def load_paired_outputs() -> tuple[pd.DataFrame, pd.DataFrame, dict[str, Any]]:
             "generations": context["generations"],
             "stage2_git_commit": s2_manifest.get("git_commit"),
             "stage3_seed_count": 0,
+            "reference": reference_info,
             "input_file_hashes": {
                 "stage2_robustness_manifest": sha256_file(s2_dir / "robustness_manifest.json"),
                 "class_nodes": sha256_file(context["extracted_dir"] / "class_nodes.csv"),
@@ -423,7 +509,16 @@ def load_paired_outputs() -> tuple[pd.DataFrame, pd.DataFrame, dict[str, Any]]:
             saved_stage3_semantic = float(s3_selected["selected_four_objective_row"]["f_semantic"])
             if not np.isclose(stage3_semantic, saved_stage3_semantic, rtol=0.0, atol=HV_TOLERANCE):
                 raise ValueError(f"{subject} seed {seed}: Stage 3 semantic objective round-trip mismatch")
-            values = _selected_metrics(s2_selected, s3_selected)
+            stage2_external = evaluate_external_metrics(context["class_nodes"], s2_partition, reference_mapping)
+            stage3_external = evaluate_external_metrics(context["class_nodes"], s3_partition, reference_mapping)
+            if reference_mapping is not None:
+                saved_external = {metric: _finite_or_nan(s2_selected.get(metric)) for metric in EXTERNAL_METRICS}
+                for metric in EXTERNAL_METRICS:
+                    if not np.isclose(stage2_external[metric], saved_external[metric], rtol=0.0, atol=HV_TOLERANCE):
+                        raise ValueError(
+                            f"{subject} seed {seed}: saved Stage 2 {metric} disagrees with evaluation-only recomputation"
+                        )
+            values = _selected_metrics(s2_selected, s3_selected, stage2_external, stage3_external)
             redundancy_path = s3_seed / "objective_redundancy.json"
             redundancy = json.loads(redundancy_path.read_text(encoding="utf-8"))
             rho = _finite_or_nan(redundancy.get("rho"))
@@ -441,6 +536,8 @@ def load_paired_outputs() -> tuple[pd.DataFrame, pd.DataFrame, dict[str, Any]]:
                 "stage3_selected_semantic_cut": stage3_semantic,
                 "delta_semantic_cut": stage3_semantic - stage2_semantic,
                 "stage3_coupling_semantic_rho": rho,
+                "reference_status": reference_info["status"],
+                "reference_path": reference_info["path"] or "",
             }
             row.update(values)
             for spec in METRIC_SPECS:
@@ -480,8 +577,14 @@ def _metric_vector(frame: pd.DataFrame, column: str, subject: str) -> np.ndarray
 def make_descriptive_summary(paired: pd.DataFrame) -> pd.DataFrame:
     rows: list[dict[str, Any]] = []
     all_specs = list(METRIC_SPECS) + [
-        {"name": metric, "stage2": f"stage2_{metric}", "stage3": f"stage3_{metric}", "direction": "higher", "family": "external", "statistical": False}
-        for metric in EXTERNAL_METRICS
+        {
+            "name": "reference_coverage_ratio",
+            "stage2": "stage2_reference_coverage_ratio",
+            "stage3": "stage3_reference_coverage_ratio",
+            "direction": "higher",
+            "family": "external_descriptive",
+            "statistical": False,
+        }
     ]
     for subject in SUBJECTS:
         subject_frame = paired.loc[paired["subject"] == subject]
@@ -527,6 +630,29 @@ def make_descriptive_summary(paired: pd.DataFrame) -> pd.DataFrame:
                 "availability": "available" if len(delta) == len(subject_frame) else "not_consistently_available",
                 "unavailable_reason": "" if len(delta) == len(subject_frame) else "Stage 3 saved representative does not contain this reference-dependent metric",
             })
+    return pd.DataFrame(rows)
+
+
+def make_external_evaluation(paired: pd.DataFrame, validation: dict[str, Any]) -> pd.DataFrame:
+    """Create an auditable evaluation-only record for all saved partitions."""
+    rows: list[dict[str, Any]] = []
+    for record in paired.to_dict("records"):
+        subject = str(record["subject"])
+        info = validation[subject]["reference"]
+        row: dict[str, Any] = {
+            "subject": subject,
+            "seed": int(record["seed"]),
+            "reference_status": info["status"],
+            "reference_path": info["path"] or "",
+            "reference_source": info["source"] or "",
+            "reference_coverage": info["coverage"],
+            "evaluation_policy": "existing calculate_reference_metrics; saved partitions only; no reselection",
+        }
+        for metric in EXTERNAL_METRICS:
+            row[f"stage2_{metric}"] = record[f"stage2_{metric}"]
+            row[f"stage3a_{metric}"] = record[f"stage3_{metric}"]
+            row[f"delta_{metric}"] = record.get(f"delta_{metric}", float("nan"))
+        rows.append(row)
     return pd.DataFrame(rows)
 
 
@@ -657,7 +783,22 @@ def write_report(output_dir: Path, paired: pd.DataFrame, partitions: pd.DataFram
         lines.append(f"| {subject} | {_format(d_hv['stage2_mean'])} | {_format(d_hv['stage3_mean'])} | {_format(d_hv['delta_mean_stage3_minus_stage2'])} | {int(s_hv['wins'])}/{int(s_hv['ties'])}/{int(s_hv['losses'])} | {_format(s_hv['rank_biserial'])} | [{_format(s_hv['bootstrap_mean_delta_ci_low'])}, {_format(s_hv['bootstrap_mean_delta_ci_high'])}] | {_format(d_mojo['delta_mean_stage3_minus_stage2'])} | {_format(d_f1['delta_mean_stage3_minus_stage2'])} | {_format(d_sem['delta_mean_stage3_minus_stage2'])} | {_format(ari)} | {_format(rho)} |")
     lines.extend([
         "",
-        "External-quality deltas are N/A because the saved Stage 3 representative outputs do not contain consistently scoped reference-dependent metrics; no values were invented or used for reselection.",
+        "External-quality metrics below are evaluation-only calculations on the saved representatives. Subjects without a complete frozen reference remain N/A; no values were invented or used for reselection.",
+        "",
+        "## External-reference evaluation",
+        "",
+        "| subject | reference status | reference path | MoJoFM mean delta | Pairwise F1 mean delta | reference ARI mean delta | reference NMI mean delta |",
+        "|---|---|---|---:|---:|---:|---:|",
+    ])
+    for subject in SUBJECTS:
+        info = validation[subject]["reference"]
+        values = []
+        for metric in ("mojofm_vs_reference", "pairwise_f1", "ari_vs_reference", "nmi_vs_reference"):
+            row = descriptive.loc[(descriptive["subject"] == subject) & (descriptive["metric"] == metric)].iloc[0]
+            values.append(_format(row["delta_mean_stage3_minus_stage2"]))
+        lines.append(f"| {subject} | {info['status']} | {info['path'] or 'N/A'} | {values[0]} | {values[1]} | {values[2]} | {values[3]} |")
+    lines.extend([
+        "",
         "",
         "## Semantic-cut evaluation",
         "",
@@ -688,7 +829,7 @@ def write_report(output_dir: Path, paired: pd.DataFrame, partitions: pd.DataFram
         "",
         "See `stage2_vs_stage3_paired_descriptive_summary.csv` and `stage2_vs_stage3_paired_statistical_tests.csv` for all structural metrics, directions, paired sample sizes, bootstrap intervals, wins/ties/losses, proportions improved, and corrected values. Secondary inferential tests use Holm correction over all eligible non-degenerate secondary tests. Cluster count and size summaries are descriptive only.",
         "",
-        "Reference-dependent metrics (MoJoFM, pairwise precision/recall/F1, ARI/NMI against an external reference) are not consistently available in the saved Stage 3 representative outputs and are therefore reported as unavailable rather than imputed.",
+        "Reference-dependent metrics are available only for DayTrader because it has the complete frozen proxy reference. JPetStore and Xerces remain unavailable with explicit reasons in the manifest and external-evaluation CSV; no values were imputed.",
         "",
         "## Statistical-analysis contract",
         "",
@@ -704,6 +845,7 @@ def write_report(output_dir: Path, paired: pd.DataFrame, partitions: pd.DataFram
         "- `stage2_vs_stage3_partition_change.csv` — paired partition-change diagnostics.",
         "- `stage2_vs_stage3_paired_descriptive_summary.csv` — paired descriptive metrics.",
         "- `stage2_vs_stage3_paired_statistical_tests.csv` — two-sided paired tests and corrections.",
+        "- `stage2_vs_stage3_external_metric_evaluation.csv` — evaluation-only external metrics for saved partitions.",
     ])
     report = "\n".join(lines) + "\n"
     (output_dir / "stage2_vs_stage3_paired_analysis.md").write_text(report, encoding="utf-8")
@@ -718,15 +860,18 @@ def run(output_dir: Path) -> dict[str, Any]:
         raise ValueError("authoritative paired dataset schema or row count is invalid")
     descriptive = make_descriptive_summary(paired)
     stats = make_statistical_tests(paired)
+    external = make_external_evaluation(paired, validation)
     output_dir.mkdir(parents=True, exist_ok=True)
     paired_path = output_dir / "stage2_vs_stage3_paired_seed_metrics.csv"
     partition_path = output_dir / "stage2_vs_stage3_partition_change.csv"
     descriptive_path = output_dir / "stage2_vs_stage3_paired_descriptive_summary.csv"
     stats_path = output_dir / "stage2_vs_stage3_paired_statistical_tests.csv"
+    external_path = output_dir / "stage2_vs_stage3_external_metric_evaluation.csv"
     paired.to_csv(paired_path, index=False, float_format="%.17g")
     partitions.to_csv(partition_path, index=False, float_format="%.17g")
     descriptive.to_csv(descriptive_path, index=False, float_format="%.17g")
     stats.to_csv(stats_path, index=False, float_format="%.17g")
+    external.to_csv(external_path, index=False, float_format="%.17g")
     report = write_report(output_dir, paired, partitions, descriptive, stats, validation)
     manifest = {
         "schema_version": 1,
@@ -764,7 +909,9 @@ def run(output_dir: Path) -> dict[str, Any]:
             "minimum_sample_rule": "all exact paired seeds are retained; Wilcoxon is undefined for all-zero differences and no p-value is fabricated",
         },
         "validation": validation,
-        "external_metric_policy": {metric: "unavailable in Stage 3 saved representative output; no imputation" for metric in EXTERNAL_METRICS},
+        "external_reference_evaluation": {
+            subject: validation[subject]["reference"] for subject in SUBJECTS
+        },
         "result_paths": {
             subject: {
                 "stage2": relative(stage2_root(subject)),
@@ -779,6 +926,7 @@ def run(output_dir: Path) -> dict[str, Any]:
             "partition_change": {"path": relative(partition_path), "sha256": sha256_file(partition_path), "rows": len(partitions)},
             "descriptive_summary": {"path": relative(descriptive_path), "sha256": sha256_file(descriptive_path), "rows": len(descriptive)},
             "statistical_tests": {"path": relative(stats_path), "sha256": sha256_file(stats_path), "rows": len(stats)},
+            "external_metric_evaluation": {"path": relative(external_path), "sha256": sha256_file(external_path), "rows": len(external)},
             "report": {"path": relative(output_dir / "stage2_vs_stage3_paired_analysis.md"), "sha256": sha256_file(output_dir / "stage2_vs_stage3_paired_analysis.md")},
         },
     }
