@@ -12,14 +12,18 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from scripts.stage3 import validate_xerces_formal as formal
 
 
-ROOT = formal.ROOT
 SUBJECT_CONFIG = formal.SUBJECT_CONFIG
 FROZEN_ALGORITHM_FINGERPRINT = (
     "c8d68cdadd19e61b576e487136ec78b8f16f50ef85e4e1bafb732c325818fb3c"
