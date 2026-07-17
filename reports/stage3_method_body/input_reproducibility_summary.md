@@ -11,8 +11,8 @@ Run 1 extraction and output were temporary evidence plus the accepted
 repository output. Run 2 used:
 
 * extraction: `/tmp/stage3b-method-body-run2.zHl9f6`
-* semantic input destination: `/tmp/stage3b-semantic-commit-run2.UU5Jz8`
-* report destination: `/tmp/stage3b-reports-commit-run2.xUSGv8`
+* semantic input destination: `/tmp/stage3b-semantic-final3-run2.u3sWj7`
+* report destination: `/tmp/stage3b-reports-final3-run2.xNR1LD`
 
 For every subject, the following files were compared byte-for-byte:
 

@@ -19,6 +19,8 @@
   ],
   "body_token_budget": 256,
   "class_order": "class_id lexicographic",
+  "config_sha256": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+  "contract_sha256": "836aa335f18670b58e88b280d4830ead038fde7b36a133009c3461a718ab0aee",
   "declaration_source": "frozen Stage 3A semantic_text bytes from data/semantic_inputs/*.csv",
   "declaration_truncated": false,
   "downstream_unchanged": [
@@ -36,7 +38,7 @@
   },
   "experiment_name": "stage3_declaration_method_body",
   "extraction_version": "soot_shimple_method_body_v1",
-  "generated_at_utc": "2026-07-17T21:01:18Z",
+  "generated_at_utc": "2026-07-17T21:03:18Z",
   "generated_code_policy": "retain all classes; record compiler synthetic-method evidence; no downstream filtering",
   "method_order": "method_name then method_signature lexicographic",
   "normalization": {
@@ -64,6 +66,8 @@
     "unicode": "NFKC"
   },
   "representation_id": "declaration_method_body_v1",
+  "source_commit": "8cf2c0170a5503a9b2f4832e79f943ab00a8074d",
+  "stage3a_source_manifest": "reports/stage3_method_body/stage3a_declaration_source_manifest.json",
   "status": "post_hoc_exploratory",
   "string_literal_policy": "deterministic 2-80 character lexical filter; reject URL/path/UUID/hash/numeric/encoded/boilerplate values",
   "structural_exclusions": [
@@ -101,7 +105,7 @@
     "source_file_paths",
     "raw_jimple_statements"
   ],
-  "validated_at_utc": "2026-07-17T21:01:22Z",
+  "validated_at_utc": "2026-07-17T21:03:22Z",
   "validation_gates": {
     "declaration_preservation": true,
     "deterministic_regeneration": "see input_reproducibility_summary.md",
