@@ -7,6 +7,7 @@ import argparse
 import csv
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import shlex
 import subprocess
@@ -21,7 +22,7 @@ from scripts.stage3_method_body.isolation import (
     EXPERIMENT_ID,
     REPRESENTATION_ID,
     assert_declaration_source,
-    assert_stage3b_write_path,
+    assert_stage3b_temporary_path,
 )
 
 
@@ -43,7 +44,7 @@ def _replace_arg(args: list[str], name: str, value: str) -> list[str]:
 
 def extract_subject(subject: str, output_root: Path, maven: str) -> dict[str, object]:
     isolated = output_root / subject
-    assert_stage3b_write_path(isolated, kind="method-body extraction")
+    assert_stage3b_temporary_path(isolated)
     isolated.mkdir(parents=True, exist_ok=True)
     extractor_args = load_extraction_cli_args(ROOT, subject)
     extractor_args = _replace_arg(extractor_args, "--out-dir", str(isolated))
@@ -62,7 +63,14 @@ def extract_subject(subject: str, output_root: Path, maven: str) -> dict[str, ob
         "-Dexec.mainClass=org.evomicro.sootextractor.SootExtractorCli",
         f"-Dexec.args={shlex.join(extractor_args)}",
     ]
-    subprocess.run(command, cwd=ROOT, check=True)
+    environment = os.environ.copy()
+    if Path("/usr/libexec/java_home").is_file():
+        environment["JAVA_HOME"] = subprocess.check_output(
+            ["/usr/libexec/java_home", "-v", "17"], text=True
+        ).strip()
+    if environment.get("JAVA_HOME"):
+        environment["PATH"] = str(Path(environment["JAVA_HOME"]) / "bin") + os.pathsep + environment.get("PATH", "")
+    subprocess.run(command, cwd=ROOT, check=True, env=environment)
 
     declaration_path = isolated / "class_declarations.csv"
     body_path = isolated / "method_bodies.csv"
@@ -86,11 +94,15 @@ def extract_subject(subject: str, output_root: Path, maven: str) -> dict[str, ob
         for row in expected_declaration_rows
     }:
         raise RuntimeError(f"{subject}: isolated declaration scope differs from frozen Stage 3A scope")
+    try:
+        output_directory = str(isolated.relative_to(ROOT))
+    except ValueError:
+        output_directory = str(isolated)
     return {
         "subject": subject,
         "class_count": count,
         "method_body_row_count": len(body_rows),
-        "output_directory": str(isolated.relative_to(ROOT)),
+        "output_directory": output_directory,
         "command": command,
     }
 

@@ -107,6 +107,19 @@ def assert_stage3b_write_path(path: Path, *, kind: str | None = None) -> Path:
     return candidate
 
 
+def assert_stage3b_temporary_path(path: Path) -> Path:
+    """Allow disposable extractor intermediates while rejecting frozen paths."""
+    candidate = _resolved(path)
+    if _inside(candidate, STAGE3A_REPORT_ROOT):
+        raise Stage3BIsolationError(f"temporary Stage 3B path is under Stage 3A reports: {candidate}")
+    for subject in SUBJECTS:
+        if _inside(candidate, ROOT / "results" / subject / STAGE3A_RESULT_PART):
+            raise Stage3BIsolationError(f"temporary Stage 3B path is under Stage 3A results: {candidate}")
+    if _inside(candidate, ROOT / "data/semantic_inputs"):
+        raise Stage3BIsolationError(f"temporary Stage 3B path is under frozen inputs: {candidate}")
+    return candidate
+
+
 def assert_representation(metadata: Mapping[str, Any]) -> None:
     actual = metadata.get("representation_id")
     if actual != REPRESENTATION_ID:

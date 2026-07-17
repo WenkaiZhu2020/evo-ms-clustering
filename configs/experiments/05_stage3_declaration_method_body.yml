@@ -10,7 +10,7 @@ input:
   declaration_source_policy: explicit_frozen_stage3a_declaration_csv_only
   declaration_source_root: data/semantic_inputs
   semantic_text_root: data/semantic_text/declaration_method_body
-  semantic_text_filename_template: "{subject}_semantic_inputs.csv"
+  semantic_text_filename_template: "{subject}/class_semantic_inputs.csv"
   semantic_text_column: semantic_text
 
 outputs:
