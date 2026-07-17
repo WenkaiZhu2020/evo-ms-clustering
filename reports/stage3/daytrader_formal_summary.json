@@ -1,0 +1,112 @@
+{
+  "subject": "daytrader",
+  "class_count": 53,
+  "valid_seed_count": 30,
+  "seed_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "aggregate_seed_artifact_sha256": "8e85ab937ee84436de8b43feea15bc2c15defabc0f5286c2514121a6c2ed45a1",
+  "algorithm_fingerprints": [
+    "50f71a17345aef815fe354d2c0c83cccd896936d6a0199cc088ed2bb138663cb",
+    "c8d68cdadd19e61b576e487136ec78b8f16f50ef85e4e1bafb732c325818fb3c",
+    "dcc6034374ace8742c01f4114d55fc81ac041900a3629fc108dc46693d5316fe"
+  ],
+  "front_4d_size": {
+    "min": 98.0,
+    "mean": 99.93333333333334,
+    "median": 100.0,
+    "std_population": 0.3590109871423003,
+    "max": 100.0
+  },
+  "projected_front_size": {
+    "min": 56.0,
+    "mean": 69.83333333333333,
+    "median": 70.0,
+    "std_population": 5.09956425153714,
+    "max": 80.0
+  },
+  "projected_hypervolume": {
+    "min": 0.1489109468883811,
+    "mean": 0.18318025691465264,
+    "median": 0.1821837440341624,
+    "std_population": 0.01933115705065854,
+    "max": 0.22550181137079145
+  },
+  "selected_cluster_count_distribution": {
+    "6": 1,
+    "8": 2,
+    "9": 13,
+    "10": 9,
+    "11": 4,
+    "15": 1
+  },
+  "f_semantic_across_all_4d_rows": {
+    "min": 0.40552206727936513,
+    "mean": 0.6855530694871204,
+    "median": 0.6819854944785627,
+    "std_population": 0.11845719414867617,
+    "max": 0.9705341791515171
+  },
+  "spearman_rho": {
+    "method": "spearman",
+    "source": "final_stage3_4d_pareto_front",
+    "n_valid": 30,
+    "n_undefined": 0,
+    "distribution": {
+      "min": 0.2923039995409889,
+      "mean": 0.7479467124824792,
+      "median": 0.7830505265446924,
+      "std_population": 0.14022746497716737,
+      "max": 0.924487089543137
+    },
+    "undefined": false
+  },
+  "runtime_seconds": {
+    "min": 9.687392916996032,
+    "mean": 14.176618458369436,
+    "median": 14.377009416522924,
+    "std_population": 0.8626831258438462,
+    "max": 14.68107566703111
+  },
+  "failure_count": 0,
+  "partial_count": 0,
+  "provenance_ambiguous_count": 0,
+  "validation": {
+    "four_dimensional_non_dominance": true,
+    "projected_three_dimensional_non_dominance": true,
+    "projected_hypervolume_recomputed": true,
+    "semantic_objective_non_constancy": true,
+    "representative_selection_reproducibility": true,
+    "class_partition_integrity": true,
+    "provenance_validation": true
+  }
+}

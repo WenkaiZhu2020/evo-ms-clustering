@@ -1,0 +1,67 @@
+{
+  "subjects": [
+    {
+      "subject": "jpetstore",
+      "expected": 30,
+      "valid": 30,
+      "missing": 0,
+      "extra": 0,
+      "failed": 0,
+      "partial": 0,
+      "ambiguous": 0
+    },
+    {
+      "subject": "daytrader",
+      "expected": 30,
+      "valid": 30,
+      "missing": 0,
+      "extra": 0,
+      "failed": 0,
+      "partial": 0,
+      "ambiguous": 0
+    },
+    {
+      "subject": "xerces",
+      "expected": 30,
+      "valid": 30,
+      "missing": 0,
+      "extra": 0,
+      "failed": 0,
+      "partial": 0,
+      "ambiguous": 0
+    }
+  ],
+  "seed_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "all_pass": true
+}
