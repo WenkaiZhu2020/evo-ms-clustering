@@ -1,0 +1,191 @@
+{
+  "selected_solution_id": "seed27_solution000",
+  "selected_projected_row": {
+    "subject": "jpetstore",
+    "seed": 27,
+    "solution_id": "seed27_solution000",
+    "original_solution_id": "seed27_solution000",
+    "coupling": 0.2518518518518518,
+    "cohesion": 5.477380952380952,
+    "imbalance": 0.20412414523193148,
+    "original_f_semantic": 0.598785638479621,
+    "pymoo_f0_coupling": 0.2518518518518518,
+    "pymoo_f1_negative_cohesion": -5.477380952380952,
+    "pymoo_f2_imbalance": 0.20412414523193148,
+    "feasible": true,
+    "is_injected_seed": true,
+    "label_vector": "[0, 1, 1, 2, 1, 3, 0, 2, 3, 0, 2, 2, 3, 3, 2, 3, 0, 2, 3, 0, 0, 1, 2, 0]",
+    "selection_rule": "highest_weighted_modularity_among_feasible_pareto_solutions",
+    "selected_weighted_modularity": 0.44206980643194654,
+    "selected_cluster_count": 4,
+    "selected_max_cluster_ratio": 0.2916666666666667,
+    "selected_singleton_ratio": 0.0
+  },
+  "selected_four_objective_row": {
+    "subject": "jpetstore",
+    "seed": 27,
+    "solution_id": "seed27_solution000",
+    "coupling": 0.2518518518518518,
+    "cohesion": 5.477380952380952,
+    "imbalance": 0.20412414523193148,
+    "f_semantic": 0.598785638479621,
+    "pymoo_f0_coupling": 0.2518518518518518,
+    "pymoo_f1_negative_cohesion": -5.477380952380952,
+    "pymoo_f2_imbalance": 0.20412414523193148,
+    "pymoo_f3_f_semantic": 0.598785638479621,
+    "feasible": true,
+    "is_injected_seed": true,
+    "injected_seed_name": "raw_leiden",
+    "injected_seed_category": "raw_leiden",
+    "label_vector": "[0, 1, 1, 2, 1, 3, 0, 2, 3, 0, 2, 2, 3, 3, 2, 3, 0, 2, 3, 0, 0, 1, 2, 0]"
+  },
+  "selected_posthoc_metrics": {
+    "subject": "jpetstore",
+    "seed": 27,
+    "solution_id": "seed27_solution000",
+    "weighted_modularity": 0.44206980643194654,
+    "internal_edge_weight_ratio": 0.7481481481481481,
+    "internal_external_edge_ratio": 2.9705882352941178,
+    "cluster_count": 4,
+    "average_cluster_size": 6.0,
+    "max_cluster_size": 7,
+    "min_cluster_size": 4,
+    "max_cluster_ratio": 0.2916666666666667,
+    "singleton_ratio": 0.0,
+    "cluster_size_cv": 0.20412414523193148,
+    "cluster_size_distribution": "{\"4\": 1, \"6\": 1, \"7\": 2}"
+  },
+  "selected_partition": [
+    {
+      "class_id": "org.mybatis.jpetstore.domain.Account",
+      "class_name": "org.mybatis.jpetstore.domain.Account",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.domain.Cart",
+      "class_name": "org.mybatis.jpetstore.domain.Cart",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.domain.CartItem",
+      "class_name": "org.mybatis.jpetstore.domain.CartItem",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.domain.Category",
+      "class_name": "org.mybatis.jpetstore.domain.Category",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.domain.Item",
+      "class_name": "org.mybatis.jpetstore.domain.Item",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.domain.LineItem",
+      "class_name": "org.mybatis.jpetstore.domain.LineItem",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.domain.Order",
+      "class_name": "org.mybatis.jpetstore.domain.Order",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.domain.Product",
+      "class_name": "org.mybatis.jpetstore.domain.Product",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.domain.Sequence",
+      "class_name": "org.mybatis.jpetstore.domain.Sequence",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.mapper.AccountMapper",
+      "class_name": "org.mybatis.jpetstore.mapper.AccountMapper",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.mapper.CategoryMapper",
+      "class_name": "org.mybatis.jpetstore.mapper.CategoryMapper",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.mapper.ItemMapper",
+      "class_name": "org.mybatis.jpetstore.mapper.ItemMapper",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.mapper.LineItemMapper",
+      "class_name": "org.mybatis.jpetstore.mapper.LineItemMapper",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.mapper.OrderMapper",
+      "class_name": "org.mybatis.jpetstore.mapper.OrderMapper",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.mapper.ProductMapper",
+      "class_name": "org.mybatis.jpetstore.mapper.ProductMapper",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.mapper.SequenceMapper",
+      "class_name": "org.mybatis.jpetstore.mapper.SequenceMapper",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.service.AccountService",
+      "class_name": "org.mybatis.jpetstore.service.AccountService",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.service.CatalogService",
+      "class_name": "org.mybatis.jpetstore.service.CatalogService",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.service.OrderService",
+      "class_name": "org.mybatis.jpetstore.service.OrderService",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.web.actions.AbstractActionBean",
+      "class_name": "org.mybatis.jpetstore.web.actions.AbstractActionBean",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.web.actions.AccountActionBean",
+      "class_name": "org.mybatis.jpetstore.web.actions.AccountActionBean",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.web.actions.CartActionBean",
+      "class_name": "org.mybatis.jpetstore.web.actions.CartActionBean",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.web.actions.CatalogActionBean",
+      "class_name": "org.mybatis.jpetstore.web.actions.CatalogActionBean",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.mybatis.jpetstore.web.actions.OrderActionBean",
+      "class_name": "org.mybatis.jpetstore.web.actions.OrderActionBean",
+      "cluster_id": 0
+    }
+  ],
+  "selection_input_schema": [
+    "solution_id",
+    "feasible",
+    "coupling",
+    "cohesion",
+    "imbalance",
+    "is_injected_seed",
+    "label_vector"
+  ],
+  "selection_implementation": "experiments/02_stage2_nsga_structure_only/run.py:_select_solution",
+  "semantic_objective_used_for_selection": false
+}
