@@ -132,11 +132,18 @@ def test_true_cosine_rejects_zero_norm_input() -> None:
         true_cosine_similarity(np.asarray([[0.0, 0.0], [1.0, 0.0]], dtype=np.float32))
 
 
-def test_manifest_preserves_inputs_and_leaves_graph_hashes_null() -> None:
+def test_manifest_preserves_inputs_and_backfills_graph_hashes() -> None:
     manifest = yaml.safe_load((ROOT / "reports/stage3/formal_run_manifest.json").read_text(encoding="utf-8"))
     for subject, expected_hash in EXPECTED_INPUT_HASHES.items():
         assert manifest["input_hashes"][subject]["aggregate_sha256"] == expected_hash
-    assert manifest["semantic_graph_hashes"] == {"jpetstore": None, "daytrader": None, "xerces": None}
+    assert {
+        subject: value["aggregate_sha256"]
+        for subject, value in manifest["semantic_graph_hashes"].items()
+    } == {
+        "jpetstore": "8a51077ba7f852eae7a7fe9d8f5393bed9aef9eb8e5ca269fc01e6b96f2cb275",
+        "daytrader": "699f3d1f4df32c44f9c30954e1a1cc144127d4ce7a9d8d99608478d562fa6590",
+        "xerces": "ab6fc959bfe41ce46fbcfcbbec083a89b7db9d7d302b96877183ff3c8c2a3be9",
+    }
     assert set(manifest["embedding_hashes"]) == set(EXPECTED_INPUT_HASHES)
 
 

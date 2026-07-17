@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "evaluated_at_utc": "2026-07-17T13:43:06Z",
+  "threshold_source": {
+    "path": "configs/experiments/04_stage3_semantic.yml",
+    "sha256": "d7382db3e975176fe6eb50e2d91299abe2fff29224ca3a3811feb235759efbde"
+  },
+  "subjects": {
+    "jpetstore": {
+      "technical_criteria": {
+        "embedding_coverage": {
+          "observed": 1.0,
+          "operator": "==",
+          "expected": 1.0,
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/embeddings/class_ids.csv"
+        },
+        "embedding_nan_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "embedding_inf_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "embedding_all_zero_vector_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "semantic_graph_total_weight": {
+          "observed": 32.61718195030124,
+          "operator": ">",
+          "expected": 0.0,
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "node_coverage": {
+          "observed": 1.0,
+          "operator": ">=",
+          "expected": 0.95,
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/diagnostics/graph_structure.json"
+        },
+        "isolated_node_ratio": {
+          "observed": 0.0,
+          "operator": "<=",
+          "expected": 0.05,
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/diagnostics/graph_structure.json"
+        },
+        "class_scope_exact_match": {
+          "observed": true,
+          "operator": "==",
+          "expected": true,
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/embeddings/class_ids.csv"
+        },
+        "graph_source_embedding_hash_match": {
+          "observed": "0ae28938fef7b0c0295a5b1d33527708af7493b4f43d524436ffbf258db8802a",
+          "operator": "==",
+          "expected": "0ae28938fef7b0c0295a5b1d33527708af7493b4f43d524436ffbf258db8802a",
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "graph_construction_provenance_test": {
+          "observed": true,
+          "operator": "==",
+          "expected": true,
+          "pass": true,
+          "evidence_source": "tests/test_stage3_semantic_graph.py"
+        },
+        "graph_construction_excludes_diagnostic_and_structural_data": {
+          "observed": "embeddings.npy + class_ids.csv only",
+          "operator": "==",
+          "expected": "formal source contract",
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "no_self_loop_or_duplicate_semantic_edge": {
+          "observed": {
+            "self_loops": 0,
+            "duplicate_edges": 0
+          },
+          "operator": "==",
+          "expected": {
+            "self_loops": 0,
+            "duplicate_edges": 0
+          },
+          "pass": true,
+          "evidence_source": "results/jpetstore/04_stage3_semantic/graph/semantic_edges.csv"
+        }
+      },
+      "technical_pass": true,
+      "novelty": {
+        "observed": 0.5833333333333334,
+        "threshold": 0.2,
+        "operator": ">=",
+        "pass": true,
+        "evidence_source": "results/jpetstore/04_stage3_semantic/diagnostics/novelty_alignment.json"
+      },
+      "random_baseline": {
+        "baseline_code_path": "scripts/stage3/random_graph_baseline.py",
+        "repetitions": 1000,
+        "structural_overlap_observed": 0.4166666666666667,
+        "structural_overlap_p50": 0.1875,
+        "structural_overlap_p95": 0.2916666666666667,
+        "structural_overlap_valid_random_values": 1000,
+        "structural_overlap_strict_gt_p95": true,
+        "same_reference_observed": null,
+        "same_reference_p50": null,
+        "same_reference_p95": null,
+        "same_reference_valid_random_values": 0,
+        "same_reference_strict_gt_p95": false,
+        "pass": true,
+        "evidence_source": "results/jpetstore/04_stage3_semantic/diagnostics/random_baseline_summary.json"
+      }
+    },
+    "daytrader": {
+      "technical_criteria": {
+        "embedding_coverage": {
+          "observed": 1.0,
+          "operator": "==",
+          "expected": 1.0,
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/embeddings/class_ids.csv"
+        },
+        "embedding_nan_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "embedding_inf_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "embedding_all_zero_vector_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "semantic_graph_total_weight": {
+          "observed": 63.84736648489945,
+          "operator": ">",
+          "expected": 0.0,
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "node_coverage": {
+          "observed": 1.0,
+          "operator": ">=",
+          "expected": 0.95,
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/diagnostics/graph_structure.json"
+        },
+        "isolated_node_ratio": {
+          "observed": 0.0,
+          "operator": "<=",
+          "expected": 0.05,
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/diagnostics/graph_structure.json"
+        },
+        "class_scope_exact_match": {
+          "observed": true,
+          "operator": "==",
+          "expected": true,
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/embeddings/class_ids.csv"
+        },
+        "graph_source_embedding_hash_match": {
+          "observed": "c7d2cbeec9d4c6ff5f9054b7d66563e98cffc6774771d5727030248299b7756e",
+          "operator": "==",
+          "expected": "c7d2cbeec9d4c6ff5f9054b7d66563e98cffc6774771d5727030248299b7756e",
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "graph_construction_provenance_test": {
+          "observed": true,
+          "operator": "==",
+          "expected": true,
+          "pass": true,
+          "evidence_source": "tests/test_stage3_semantic_graph.py"
+        },
+        "graph_construction_excludes_diagnostic_and_structural_data": {
+          "observed": "embeddings.npy + class_ids.csv only",
+          "operator": "==",
+          "expected": "formal source contract",
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "no_self_loop_or_duplicate_semantic_edge": {
+          "observed": {
+            "self_loops": 0,
+            "duplicate_edges": 0
+          },
+          "operator": "==",
+          "expected": {
+            "self_loops": 0,
+            "duplicate_edges": 0
+          },
+          "pass": true,
+          "evidence_source": "results/daytrader/04_stage3_semantic/graph/semantic_edges.csv"
+        }
+      },
+      "technical_pass": true,
+      "novelty": {
+        "observed": 0.6216216216216216,
+        "threshold": 0.2,
+        "operator": ">=",
+        "pass": true,
+        "evidence_source": "results/daytrader/04_stage3_semantic/diagnostics/novelty_alignment.json"
+      },
+      "random_baseline": {
+        "baseline_code_path": "scripts/stage3/random_graph_baseline.py",
+        "repetitions": 1000,
+        "structural_overlap_observed": 0.3783783783783784,
+        "structural_overlap_p50": 0.11711711711711711,
+        "structural_overlap_p95": 0.16216216216216217,
+        "structural_overlap_valid_random_values": 1000,
+        "structural_overlap_strict_gt_p95": true,
+        "same_reference_observed": 0.45045045045045046,
+        "same_reference_p50": 0.12612612612612611,
+        "same_reference_p95": 0.1891891891891892,
+        "same_reference_valid_random_values": 1000,
+        "same_reference_strict_gt_p95": true,
+        "pass": true,
+        "evidence_source": "results/daytrader/04_stage3_semantic/diagnostics/random_baseline_summary.json"
+      }
+    },
+    "xerces": {
+      "technical_criteria": {
+        "embedding_coverage": {
+          "observed": 1.0,
+          "operator": "==",
+          "expected": 1.0,
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/embeddings/class_ids.csv"
+        },
+        "embedding_nan_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "embedding_inf_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "embedding_all_zero_vector_count": {
+          "observed": 0,
+          "operator": "==",
+          "expected": 0,
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/embeddings/embedding_metadata.json"
+        },
+        "semantic_graph_total_weight": {
+          "observed": 1225.551553681053,
+          "operator": ">",
+          "expected": 0.0,
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "node_coverage": {
+          "observed": 1.0,
+          "operator": ">=",
+          "expected": 0.95,
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/diagnostics/graph_structure.json"
+        },
+        "isolated_node_ratio": {
+          "observed": 0.0,
+          "operator": "<=",
+          "expected": 0.05,
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/diagnostics/graph_structure.json"
+        },
+        "class_scope_exact_match": {
+          "observed": true,
+          "operator": "==",
+          "expected": true,
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/embeddings/class_ids.csv"
+        },
+        "graph_source_embedding_hash_match": {
+          "observed": "9504e21bb305a60cdfce58421b64240d1af893fd549b40b9441a00bf0fee8cb1",
+          "operator": "==",
+          "expected": "9504e21bb305a60cdfce58421b64240d1af893fd549b40b9441a00bf0fee8cb1",
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "graph_construction_provenance_test": {
+          "observed": true,
+          "operator": "==",
+          "expected": true,
+          "pass": true,
+          "evidence_source": "tests/test_stage3_semantic_graph.py"
+        },
+        "graph_construction_excludes_diagnostic_and_structural_data": {
+          "observed": "embeddings.npy + class_ids.csv only",
+          "operator": "==",
+          "expected": "formal source contract",
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/graph/graph_metadata.json"
+        },
+        "no_self_loop_or_duplicate_semantic_edge": {
+          "observed": {
+            "self_loops": 0,
+            "duplicate_edges": 0
+          },
+          "operator": "==",
+          "expected": {
+            "self_loops": 0,
+            "duplicate_edges": 0
+          },
+          "pass": true,
+          "evidence_source": "results/xerces/04_stage3_semantic/graph/semantic_edges.csv"
+        }
+      },
+      "technical_pass": true,
+      "novelty": {
+        "observed": 0.630005977286312,
+        "threshold": 0.2,
+        "operator": ">=",
+        "pass": true,
+        "evidence_source": "results/xerces/04_stage3_semantic/diagnostics/novelty_alignment.json"
+      },
+      "random_baseline": {
+        "baseline_code_path": "scripts/stage3/random_graph_baseline.py",
+        "repetitions": 1000,
+        "structural_overlap_observed": 0.369994022713688,
+        "structural_overlap_p50": 0.011356843992827256,
+        "structural_overlap_p95": 0.016138673042438732,
+        "structural_overlap_valid_random_values": 1000,
+        "structural_overlap_strict_gt_p95": true,
+        "same_reference_observed": null,
+        "same_reference_p50": null,
+        "same_reference_p95": null,
+        "same_reference_valid_random_values": 0,
+        "same_reference_strict_gt_p95": false,
+        "pass": true,
+        "evidence_source": "results/xerces/04_stage3_semantic/diagnostics/random_baseline_summary.json"
+      }
+    }
+  },
+  "cross_subject_evidence": {
+    "all_subjects_novelty_pass": true,
+    "random_baseline_subject_pass_count": 3,
+    "required_random_baseline_subject_pass_count": 2,
+    "pass": true
+  },
+  "overall_technical_pass": true,
+  "overall_evidence_pass": true,
+  "overall_status": "GO",
+  "same_leiden_cluster_ratio": "diagnostic_only"
+}
