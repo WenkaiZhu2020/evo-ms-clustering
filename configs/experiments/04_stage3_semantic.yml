@@ -203,6 +203,8 @@ random_graph_baseline:
     required_subject_pass_count: 2
 semantic_objective:
   name: semantic_cut_ratio
+  column_name: f_semantic
+  pymoo_position: 3
   formula: "f_sem = 1 - S(P); S(P) = intra_cluster_semantic_weight / total_semantic_weight"
   expanded_formula: "f_sem = 1 - (sum of weights of semantic edges whose endpoints share a cluster) / (sum of all semantic-edge weights)"
   range:
@@ -211,6 +213,24 @@ semantic_objective:
   direction: minimize
   empty_graph_value: 1.0
   empty_graph_policy: pipeline_failure_before_formal_run
+stage3_objective_order:
+  report_columns:
+    - coupling
+    - cohesion
+    - imbalance
+    - f_semantic
+  pymoo_columns:
+    - coupling
+    - negative_cohesion
+    - imbalance
+    - f_semantic
+redundancy_diagnostic:
+  method: spearman
+  semantic_objective: f_semantic
+  structural_objective: coupling
+  structural_objective_index: 0
+  source: final_stage3_4d_pareto_front
+  diagnostic_only: true
 selection_rule:
   semantic_in_search: true
   semantic_in_selection: false

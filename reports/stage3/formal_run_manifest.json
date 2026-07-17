@@ -98,6 +98,28 @@
     "down_weight_duplicate_edges": false,
     "rationale": "Identical declaration texts represent representation-induced equivalence. They remain ordinary candidates during top-k selection. Exact cosine ties are resolved using ascending lexicographic class_id order."
   },
+  "stage3_objective_order": {
+    "report_columns": [
+      "coupling",
+      "cohesion",
+      "imbalance",
+      "f_semantic"
+    ],
+    "pymoo_columns": [
+      "coupling",
+      "negative_cohesion",
+      "imbalance",
+      "f_semantic"
+    ]
+  },
+  "redundancy_diagnostic": {
+    "method": "spearman",
+    "semantic_objective": "f_semantic",
+    "structural_objective": "coupling",
+    "structural_objective_index": 0,
+    "source": "final_stage3_4d_pareto_front",
+    "diagnostic_only": true
+  },
   "random_graph_baseline": {
     "status": "preregistered_before_semantic_graph_generation",
     "purpose": "Test whether observed semantic alignment exceeds arbitrary edge placement.",
