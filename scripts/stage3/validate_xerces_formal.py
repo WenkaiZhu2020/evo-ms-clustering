@@ -47,6 +47,11 @@ LAUNCH_REPORT_PATH = ROOT / "reports/stage3/xerces_formal_launch.md"
 EXPECTED_CLASS_COUNT = 814
 EXPECTED_POPULATION = 100
 EXPECTED_GENERATIONS = 100
+SUBJECT_CONFIG = {
+    "jpetstore": {"storage_subject": "jpetstore", "class_count": 24},
+    "daytrader": {"storage_subject": "daytrader", "class_count": 53},
+    "xerces": {"storage_subject": "xerces-j", "class_count": 814},
+}
 REPORT_OBJECTIVES = ["coupling", "cohesion", "imbalance", "f_semantic"]
 PYMOO_OBJECTIVES = [
     "pymoo_f0_coupling",
@@ -291,9 +296,14 @@ def current_frozen_hashes(context: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def _assert_scope(group: pd.DataFrame, expected_class_ids: set[str], label: str) -> dict[str, int]:
+def _assert_scope(
+    group: pd.DataFrame,
+    expected_class_ids: set[str],
+    label: str,
+    expected_class_count: int = EXPECTED_CLASS_COUNT,
+) -> dict[str, int]:
     class_ids = group["class_id"].astype(str)
-    if len(class_ids) != EXPECTED_CLASS_COUNT or class_ids.duplicated().any() or set(class_ids) != expected_class_ids:
+    if len(class_ids) != expected_class_count or class_ids.duplicated().any() or set(class_ids) != expected_class_ids:
         raise ValidationFailure(f"class scope mismatch for {label}")
     return dict(zip(class_ids, group["cluster_id"].astype(int), strict=True))
 
@@ -373,9 +383,17 @@ def validate_projected_front(projected: pd.DataFrame, front: pd.DataFrame, seed:
     return recomputed_hv
 
 
-def _validate_metadata(metadata: dict[str, Any], seed: int, expected_config_sha: str, expected_graph_sha: str, expected_raw_edge_hash: str) -> None:
-    if metadata.get("subject") != "xerces":
-        raise ValidationFailure(f"seed {seed}: subject is not xerces")
+def _validate_metadata(
+    metadata: dict[str, Any],
+    seed: int,
+    expected_config_sha: str,
+    expected_graph_sha: str,
+    expected_raw_edge_hash: str,
+    subject: str = "xerces",
+    storage_subject: str = "xerces-j",
+) -> None:
+    if metadata.get("subject") != subject:
+        raise ValidationFailure(f"seed {seed}: subject is not {subject}")
     if int(metadata.get("seed", -1)) != seed:
         raise ValidationFailure(f"seed {seed}: metadata seed mismatch")
     expected_run_type = "validation" if seed == 0 else "formal"
@@ -398,13 +416,23 @@ def _validate_metadata(metadata: dict[str, Any], seed: int, expected_config_sha:
         raise ValidationFailure(f"seed {seed}: G_raw loader mismatch")
     if provenance.get("builder") != "src/evo_ms/graph/raw_graph_builder.py":
         raise ValidationFailure(f"seed {seed}: G_raw builder mismatch")
-    if provenance.get("class_nodes_path") != "data/extracted/xerces-j/class_nodes.csv" or provenance.get("structural_dependencies_path") != "data/extracted/xerces-j/structural_dependencies.csv":
+    if provenance.get("class_nodes_path") != f"data/extracted/{storage_subject}/class_nodes.csv" or provenance.get("structural_dependencies_path") != f"data/extracted/{storage_subject}/structural_dependencies.csv":
         raise ValidationFailure(f"seed {seed}: G_raw source paths mismatch")
     if provenance.get("raw_edge_hash") != expected_raw_edge_hash:
         raise ValidationFailure(f"seed {seed}: G_raw hash mismatch")
 
 
-def validate_seed(seed: int, source: Path, context: dict[str, Any], expected_config_sha: str, expected_graph_sha: str, expected_raw_edge_hash: str) -> dict[str, Any]:
+def validate_seed(
+    seed: int,
+    source: Path,
+    context: dict[str, Any],
+    expected_config_sha: str,
+    expected_graph_sha: str,
+    expected_raw_edge_hash: str,
+    subject: str = "xerces",
+    storage_subject: str = "xerces-j",
+    expected_class_count: int = EXPECTED_CLASS_COUNT,
+) -> dict[str, Any]:
     failures: list[str] = []
     for name in REQUIRED_ARTIFACTS:
         if not (source / name).is_file():
@@ -413,12 +441,20 @@ def validate_seed(seed: int, source: Path, context: dict[str, Any], expected_con
         raise ValidationFailure(f"seed {seed}: " + "; ".join(failures))
 
     metadata = load_json(source / "run_metadata.json")
-    _validate_metadata(metadata, seed, expected_config_sha, expected_graph_sha, expected_raw_edge_hash)
+    _validate_metadata(
+        metadata,
+        seed,
+        expected_config_sha,
+        expected_graph_sha,
+        expected_raw_edge_hash,
+        subject=subject,
+        storage_subject=storage_subject,
+    )
     validate_run_log(source / "run.log")
 
     front = pd.read_csv(source / "pareto_front_4d.csv")
     validate_four_dimensional_front(front, seed)
-    if set(front["subject"]) != {"xerces"} or set(front["seed"].astype(int)) != {seed}:
+    if set(front["subject"]) != {subject} or set(front["seed"].astype(int)) != {seed}:
         raise ValidationFailure(f"seed {seed}: four-dimensional subject/seed columns mismatch")
     nd4 = stage3_runner._nondominated_indices(front.loc[:, PYMOO_OBJECTIVES].to_numpy(dtype=float))
     if len(nd4) != len(front):
@@ -426,7 +462,7 @@ def validate_seed(seed: int, source: Path, context: dict[str, Any], expected_con
 
     projected = pd.read_csv(source / "projected_front_3d.csv")
     recomputed_hv = validate_projected_front(projected, front, seed, context["bounds"])
-    if set(projected["subject"]) != {"xerces"} or set(projected["seed"].astype(int)) != {seed}:
+    if set(projected["subject"]) != {subject} or set(projected["seed"].astype(int)) != {seed}:
         raise ValidationFailure(f"seed {seed}: projected subject/seed columns mismatch")
     stored_hv = load_json(source / "projected_hypervolume.json")
     if not np.isclose(recomputed_hv, float(stored_hv["stored_value"]), rtol=0.0, atol=1e-12):
@@ -438,7 +474,12 @@ def validate_seed(seed: int, source: Path, context: dict[str, Any], expected_con
         raise ValidationFailure(f"seed {seed}: partition solution IDs mismatch")
     label_groups = {}
     for solution_id, group in labels.groupby("solution_id", sort=False):
-        label_groups[solution_id] = _assert_scope(group, expected_class_ids, f"seed {seed}/{solution_id}")
+        label_groups[solution_id] = _assert_scope(
+            group,
+            expected_class_ids,
+            f"seed {seed}/{solution_id}",
+            expected_class_count=expected_class_count,
+        )
 
     # Recompute every saved 4D row from its reloaded partition.
     for row in front.to_dict("records"):
@@ -470,7 +511,7 @@ def validate_seed(seed: int, source: Path, context: dict[str, Any], expected_con
         group = labels.loc[labels["solution_id"] == row["solution_id"]]
         clusters = group.loc[:, ["class_id", "class_name", "cluster_id"]]
         posthoc_rows.append(stage2._partition_metrics_row(
-            subject="xerces", seed=seed, solution_id=row["solution_id"],
+            subject=subject, seed=seed, solution_id=row["solution_id"],
             class_nodes=context["class_nodes"], clusters=clusters,
             raw_edges=context["raw_edges"],
             cluster_by_class=label_groups[row["solution_id"]], reference_mapping=None,
@@ -484,7 +525,12 @@ def validate_seed(seed: int, source: Path, context: dict[str, Any], expected_con
         raise ValidationFailure(f"seed {seed}: independent representative selection mismatch")
 
     selected_partition = pd.read_csv(source / "selected_partition.csv")
-    selected_mapping = _assert_scope(selected_partition, expected_class_ids, f"seed {seed}/selected_partition")
+    selected_mapping = _assert_scope(
+        selected_partition,
+        expected_class_ids,
+        f"seed {seed}/selected_partition",
+        expected_class_count=expected_class_count,
+    )
     if selected_mapping != label_groups[selected_id]:
         raise ValidationFailure(f"seed {seed}: selected partition mapping mismatch")
     selected_values = evaluate_four_objective_values(
