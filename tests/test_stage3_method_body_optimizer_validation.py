@@ -69,3 +69,14 @@ def test_stage3b_four_objective_evaluation_is_finite_and_semantic_is_bounded() -
     )
     assert np.isfinite(np.asarray(values, dtype=float)).all()
     assert 0.0 <= values[3] <= 1.0
+
+
+@pytest.mark.parametrize("subject", MODULE.SUBJECTS)
+def test_saved_seed_zero_front_hypervolume_and_selector_are_valid(subject: str) -> None:
+    from scripts.stage3_method_body import validate_seed00_optimizer as validator
+
+    context = MODULE.load_context(subject)
+    _, front, projected, labels, selected = validator.load_output(subject)
+    assert validator.front_validation(context, subject, front, projected, labels, selected)["pass"] is True
+    assert validator.hv_validation(subject, context, projected)["pass"] is True
+    assert validator.selector_validation(subject, context, projected, selected)["pass"] is True
