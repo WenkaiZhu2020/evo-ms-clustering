@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "validation_seed": 0,
+  "implementation_commit": "d819b2d0c0418a7c0e5de427f55879d9c8fb7aef",
+  "subjects": {
+    "jpetstore": {
+      "class_count": 24,
+      "runtime_seconds": 7.642406125087291,
+      "four_objective_front_size": 100,
+      "projected_front_size": 44,
+      "f_semantic_min": 0.1495535819266704,
+      "f_semantic_max": 0.8472035270726366,
+      "projected_hypervolume": 0.38086979683420186,
+      "selected_solution_id": "seed0_solution000",
+      "structural_objective_invariance": true,
+      "validation_pass": true
+    },
+    "daytrader": {
+      "class_count": 53,
+      "runtime_seconds": 9.687392916996032,
+      "four_objective_front_size": 100,
+      "projected_front_size": 70,
+      "f_semantic_min": 0.4838083585329629,
+      "f_semantic_max": 0.9373256686075778,
+      "projected_hypervolume": 0.2054342578862389,
+      "selected_solution_id": "seed0_solution028",
+      "structural_objective_invariance": true,
+      "validation_pass": true
+    },
+    "xerces": {
+      "class_count": 814,
+      "runtime_seconds": 70.86065641592722,
+      "four_objective_front_size": 100,
+      "projected_front_size": 76,
+      "f_semantic_min": 0.3810772659641821,
+      "f_semantic_max": 0.9438728742067516,
+      "projected_hypervolume": 0.14399716267130458,
+      "selected_solution_id": "seed0_solution014",
+      "structural_objective_invariance": true,
+      "validation_pass": true
+    }
+  },
+  "all_subjects_pass": true,
+  "model_weights_loaded": false,
+  "embeddings_generated": false,
+  "semantic_graph_generated": false
+}
