@@ -1,0 +1,4 @@
+subject,stage3a_edge_count,stage3b_edge_count,shared_edge_count,stage3a_only_edge_count,stage3b_only_edge_count,edge_set_jaccard,stage3b_new_edge_share,shared_edge_weight_correlation,mean_neighbour_retention,median_neighbour_retention,zero_retention_class_count,all_retained_class_count
+jpetstore,48,47,38,10,9,0.6666666666666666,0.19148936170212766,0.8471314436992986,0.8333333333333334,0.8333333333333333,0,12
+daytrader,111,112,81,30,31,0.5704225352112676,0.2767857142857143,0.921334487739241,0.7421383647798742,0.6666666666666666,1,20
+xerces,1673,1681,1274,399,407,0.6125,0.24211778703152886,0.915279131205668,0.7563472563472564,0.6666666666666666,9,333
