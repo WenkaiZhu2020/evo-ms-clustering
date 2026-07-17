@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "subject": "daytrader",
+  "generated_at_utc": "2026-07-17T13:39:26Z",
+  "baseline_code_path": "scripts/stage3/random_graph_baseline.py",
+  "model": "uniform_simple_undirected_gnm",
+  "repetitions": 1000,
+  "subject_seed_base": 52000,
+  "repetition_seed_rule": "subject_seed_base + repetition_index, repetition_index=0..999",
+  "sampling_rule": "uniformly select exactly m distinct unordered pairs without replacement from all i<j pairs",
+  "degree_distribution_preserved": false,
+  "quantile_method": "numpy.quantile(method='higher')",
+  "edge_count": 111,
+  "valid_random_values_by_metric": {
+    "structural_overlap": 1000,
+    "same_reference_service_ratio": 1000,
+    "same_leiden_cluster_ratio": 1000
+  },
+  "metrics": {
+    "structural_overlap": {
+      "observed": 0.3783783783783784,
+      "random_min": 0.04504504504504504,
+      "random_mean": 0.11654954954954955,
+      "random_p50": 0.11711711711711711,
+      "random_p95": 0.16216216216216217,
+      "random_max": 0.21621621621621623,
+      "valid_random_value_count": 1000,
+      "percentile_implementation": "numpy.quantile",
+      "percentile_method": "higher",
+      "observed_strictly_greater_than_p95": true
+    },
+    "same_reference_service_ratio": {
+      "observed": 0.45045045045045046,
+      "random_min": 0.04504504504504504,
+      "random_mean": 0.13089189189189188,
+      "random_p50": 0.12612612612612611,
+      "random_p95": 0.1891891891891892,
+      "random_max": 0.23423423423423423,
+      "valid_random_value_count": 1000,
+      "percentile_implementation": "numpy.quantile",
+      "percentile_method": "higher",
+      "observed_strictly_greater_than_p95": true
+    },
+    "same_leiden_cluster_ratio": {
+      "observed": 0.3963963963963964,
+      "random_min": 0.04504504504504504,
+      "random_mean": 0.1455045045045045,
+      "random_p50": 0.14414414414414414,
+      "random_p95": 0.1981981981981982,
+      "random_max": 0.25225225225225223,
+      "valid_random_value_count": 1000,
+      "percentile_implementation": "numpy.quantile",
+      "percentile_method": "higher",
+      "observed_strictly_greater_than_p95": true
+    }
+  },
+  "runtime_seconds": 0.07023991597816348
+}

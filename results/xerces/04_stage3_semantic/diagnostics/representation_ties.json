@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "subject": "xerces",
+  "generated_at_utc": "2026-07-17T13:39:38Z",
+  "duplicate_text_group_count": 11,
+  "duplicate_text_group_sizes": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+  ],
+  "duplicate_text_groups": [
+    {
+      "members": [
+        "org.apache.xerces.dom.ObjectFactory",
+        "org.apache.xerces.impl.dv.ObjectFactory",
+        "org.apache.xerces.parsers.ObjectFactory",
+        "org.apache.xerces.xinclude.ObjectFactory",
+        "org.apache.xml.serialize.ObjectFactory"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.ObjectFactory$ConfigurationError",
+        "org.apache.xerces.impl.dv.ObjectFactory$ConfigurationError",
+        "org.apache.xerces.parsers.ObjectFactory$ConfigurationError",
+        "org.apache.xerces.xinclude.ObjectFactory$ConfigurationError",
+        "org.apache.xml.serialize.ObjectFactory$ConfigurationError"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport",
+        "org.apache.xerces.impl.dv.SecuritySupport",
+        "org.apache.xerces.parsers.SecuritySupport",
+        "org.apache.xerces.xinclude.SecuritySupport",
+        "org.apache.xml.serialize.SecuritySupport"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$1",
+        "org.apache.xerces.impl.dv.SecuritySupport$1",
+        "org.apache.xerces.parsers.SecuritySupport$1",
+        "org.apache.xerces.xinclude.SecuritySupport$1",
+        "org.apache.xml.serialize.SecuritySupport$1"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$2",
+        "org.apache.xerces.impl.dv.SecuritySupport$2",
+        "org.apache.xerces.parsers.SecuritySupport$2",
+        "org.apache.xerces.xinclude.SecuritySupport$2",
+        "org.apache.xml.serialize.SecuritySupport$2"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$3",
+        "org.apache.xerces.impl.dv.SecuritySupport$3",
+        "org.apache.xerces.parsers.SecuritySupport$3",
+        "org.apache.xerces.xinclude.SecuritySupport$3",
+        "org.apache.xml.serialize.SecuritySupport$3"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$4",
+        "org.apache.xerces.impl.dv.SecuritySupport$4",
+        "org.apache.xerces.parsers.SecuritySupport$4",
+        "org.apache.xerces.xinclude.SecuritySupport$4",
+        "org.apache.xml.serialize.SecuritySupport$4"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$5",
+        "org.apache.xerces.impl.dv.SecuritySupport$5",
+        "org.apache.xerces.parsers.SecuritySupport$5",
+        "org.apache.xerces.xinclude.SecuritySupport$5",
+        "org.apache.xml.serialize.SecuritySupport$5"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$6",
+        "org.apache.xerces.impl.dv.SecuritySupport$6",
+        "org.apache.xerces.parsers.SecuritySupport$6",
+        "org.apache.xerces.xinclude.SecuritySupport$6",
+        "org.apache.xml.serialize.SecuritySupport$6"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$7",
+        "org.apache.xerces.impl.dv.SecuritySupport$7",
+        "org.apache.xerces.parsers.SecuritySupport$7",
+        "org.apache.xerces.xinclude.SecuritySupport$7",
+        "org.apache.xml.serialize.SecuritySupport$7"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$8",
+        "org.apache.xerces.impl.dv.SecuritySupport$8",
+        "org.apache.xerces.parsers.SecuritySupport$8",
+        "org.apache.xerces.xinclude.SecuritySupport$8",
+        "org.apache.xml.serialize.SecuritySupport$8"
+      ],
+      "group_size": 5,
+      "possible_intra_group_undirected_edge_count": 10,
+      "actual_final_intra_group_semantic_edges": 9,
+      "directed_intra_group_selections": 15,
+      "top_k_slots_occupied_by_intra_group_selections": 15
+    }
+  ],
+  "duplicate_text_class_count": 55,
+  "duplicate_text_class_ratio": 0.06756756756756757,
+  "identical_embedding_group_count": 11,
+  "identical_embedding_class_count": 55,
+  "identical_embedding_groups": [
+    {
+      "members": [
+        "org.apache.xerces.dom.ObjectFactory",
+        "org.apache.xerces.impl.dv.ObjectFactory",
+        "org.apache.xerces.parsers.ObjectFactory",
+        "org.apache.xerces.xinclude.ObjectFactory",
+        "org.apache.xml.serialize.ObjectFactory"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.ObjectFactory$ConfigurationError",
+        "org.apache.xerces.impl.dv.ObjectFactory$ConfigurationError",
+        "org.apache.xerces.parsers.ObjectFactory$ConfigurationError",
+        "org.apache.xerces.xinclude.ObjectFactory$ConfigurationError",
+        "org.apache.xml.serialize.ObjectFactory$ConfigurationError"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport",
+        "org.apache.xerces.impl.dv.SecuritySupport",
+        "org.apache.xerces.parsers.SecuritySupport",
+        "org.apache.xerces.xinclude.SecuritySupport",
+        "org.apache.xml.serialize.SecuritySupport"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$1",
+        "org.apache.xerces.impl.dv.SecuritySupport$1",
+        "org.apache.xerces.parsers.SecuritySupport$1",
+        "org.apache.xerces.xinclude.SecuritySupport$1",
+        "org.apache.xml.serialize.SecuritySupport$1"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$2",
+        "org.apache.xerces.impl.dv.SecuritySupport$2",
+        "org.apache.xerces.parsers.SecuritySupport$2",
+        "org.apache.xerces.xinclude.SecuritySupport$2",
+        "org.apache.xml.serialize.SecuritySupport$2"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$3",
+        "org.apache.xerces.impl.dv.SecuritySupport$3",
+        "org.apache.xerces.parsers.SecuritySupport$3",
+        "org.apache.xerces.xinclude.SecuritySupport$3",
+        "org.apache.xml.serialize.SecuritySupport$3"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$4",
+        "org.apache.xerces.impl.dv.SecuritySupport$4",
+        "org.apache.xerces.parsers.SecuritySupport$4",
+        "org.apache.xerces.xinclude.SecuritySupport$4",
+        "org.apache.xml.serialize.SecuritySupport$4"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$5",
+        "org.apache.xerces.impl.dv.SecuritySupport$5",
+        "org.apache.xerces.parsers.SecuritySupport$5",
+        "org.apache.xerces.xinclude.SecuritySupport$5",
+        "org.apache.xml.serialize.SecuritySupport$5"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$6",
+        "org.apache.xerces.impl.dv.SecuritySupport$6",
+        "org.apache.xerces.parsers.SecuritySupport$6",
+        "org.apache.xerces.xinclude.SecuritySupport$6",
+        "org.apache.xml.serialize.SecuritySupport$6"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$7",
+        "org.apache.xerces.impl.dv.SecuritySupport$7",
+        "org.apache.xerces.parsers.SecuritySupport$7",
+        "org.apache.xerces.xinclude.SecuritySupport$7",
+        "org.apache.xml.serialize.SecuritySupport$7"
+      ],
+      "group_size": 5
+    },
+    {
+      "members": [
+        "org.apache.xerces.dom.SecuritySupport$8",
+        "org.apache.xerces.impl.dv.SecuritySupport$8",
+        "org.apache.xerces.parsers.SecuritySupport$8",
+        "org.apache.xerces.xinclude.SecuritySupport$8",
+        "org.apache.xml.serialize.SecuritySupport$8"
+      ],
+      "group_size": 5
+    }
+  ],
+  "directed_identical_text_selection_count": 165,
+  "directed_exact_cosine_one_selection_count": 90,
+  "nodes_with_identical_text_top3_neighbour_count": 55,
+  "nodes_with_identical_text_top3_neighbour_ratio": 0.06756756756756757,
+  "identical_text_undirected_edge_count": 99,
+  "edges_involving_duplicate_text_group_class_count": 106,
+  "edges_involving_duplicate_text_group_class_ratio": 0.06335923490735207,
+  "policy": "representation-induced equivalence; no duplicate filtering, merging, down-weighting, or forced edges",
+  "xerces_expected_duplicate_groups": 11
+}

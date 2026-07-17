@@ -1,0 +1,11 @@
+rank,class_id_a,class_name_a,class_id_b,class_name_b,weight,selected_by,overlaps_G_raw,same_package,same_Leiden_cluster,same_reference_service,duplicate_text_pair
+1,com.ibm.websphere.samples.daytrader.TradeAction,TradeAction,com.ibm.websphere.samples.daytrader.TradeServices,TradeServices,0.88510737884310564,both,true,true,false,true,false
+2,com.ibm.websphere.samples.daytrader.entities.AccountDataBean,AccountDataBean,com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean,AccountProfileDataBean,0.8735390664435394,both,true,true,true,true,false
+3,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal,TradeSLSBLocal,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote,TradeSLSBRemote,0.85053413029234015,both,false,true,false,true,false
+4,com.ibm.websphere.samples.daytrader.ejb3.DTBroker3MDB,DTBroker3MDB,com.ibm.websphere.samples.daytrader.ejb3.DTStreamer3MDB,DTStreamer3MDB,0.83183289783766978,both,false,true,true,false,false
+5,com.ibm.websphere.samples.daytrader.util.KeyBlock,KeyBlock,com.ibm.websphere.samples.daytrader.util.KeyBlock$KeyBlockIterator,KeyBlock$KeyBlockIterator,0.81327601661828264,both,true,true,true,true,false
+6,com.ibm.websphere.samples.daytrader.TradeAction,TradeAction,com.ibm.websphere.samples.daytrader.direct.TradeDirect,TradeDirect,0.80676137116021041,both,true,false,true,false,false
+7,com.ibm.websphere.samples.daytrader.TradeServices,TradeServices,com.ibm.websphere.samples.daytrader.direct.TradeDirect,TradeDirect,0.80395515982694621,both,true,false,false,false,false
+8,com.ibm.websphere.samples.daytrader.web.websocket.JsonDecoder,JsonDecoder,com.ibm.websphere.samples.daytrader.web.websocket.JsonEncoder,JsonEncoder,0.78278246146333363,both,false,true,true,true,false
+9,com.ibm.websphere.samples.daytrader.entities.AccountDataBean,AccountDataBean,com.ibm.websphere.samples.daytrader.entities.OrderDataBean,OrderDataBean,0.77922262289217936,both,true,true,true,false,false
+10,com.ibm.websphere.samples.daytrader.web.websocket.ActionDecoder,ActionDecoder,com.ibm.websphere.samples.daytrader.web.websocket.JsonDecoder,JsonDecoder,0.77577578285854487,both,false,true,false,true,false

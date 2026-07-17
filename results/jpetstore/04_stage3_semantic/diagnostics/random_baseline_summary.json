@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "subject": "jpetstore",
+  "generated_at_utc": "2026-07-17T13:39:26Z",
+  "baseline_code_path": "scripts/stage3/random_graph_baseline.py",
+  "model": "uniform_simple_undirected_gnm",
+  "repetitions": 1000,
+  "subject_seed_base": 42000,
+  "repetition_seed_rule": "subject_seed_base + repetition_index, repetition_index=0..999",
+  "sampling_rule": "uniformly select exactly m distinct unordered pairs without replacement from all i<j pairs",
+  "degree_distribution_preserved": false,
+  "quantile_method": "numpy.quantile(method='higher')",
+  "edge_count": 48,
+  "valid_random_values_by_metric": {
+    "structural_overlap": 1000,
+    "same_reference_service_ratio": 0,
+    "same_leiden_cluster_ratio": 1000
+  },
+  "metrics": {
+    "structural_overlap": {
+      "observed": 0.4166666666666667,
+      "random_min": 0.041666666666666664,
+      "random_mean": 0.19345833333333334,
+      "random_p50": 0.1875,
+      "random_p95": 0.2916666666666667,
+      "random_max": 0.375,
+      "valid_random_value_count": 1000,
+      "percentile_implementation": "numpy.quantile",
+      "percentile_method": "higher",
+      "observed_strictly_greater_than_p95": true
+    },
+    "same_reference_service_ratio": {
+      "observed": null,
+      "random_min": null,
+      "random_mean": null,
+      "random_p50": null,
+      "random_p95": null,
+      "random_max": null,
+      "valid_random_value_count": 0,
+      "percentile_implementation": "numpy.quantile",
+      "percentile_method": "higher",
+      "observed_strictly_greater_than_p95": false
+    },
+    "same_leiden_cluster_ratio": {
+      "observed": 0.3958333333333333,
+      "random_min": 0.0625,
+      "random_mean": 0.22922916666666668,
+      "random_p50": 0.22916666666666666,
+      "random_p95": 0.3333333333333333,
+      "random_max": 0.4583333333333333,
+      "valid_random_value_count": 1000,
+      "percentile_implementation": "numpy.quantile",
+      "percentile_method": "higher",
+      "observed_strictly_greater_than_p95": true
+    }
+  },
+  "runtime_seconds": 0.03063304105307907
+}

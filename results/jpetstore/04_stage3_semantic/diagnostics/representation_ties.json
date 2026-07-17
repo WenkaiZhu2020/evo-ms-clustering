@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "subject": "jpetstore",
+  "generated_at_utc": "2026-07-17T13:39:26Z",
+  "duplicate_text_group_count": 0,
+  "duplicate_text_group_sizes": [],
+  "duplicate_text_groups": [],
+  "duplicate_text_class_count": 0,
+  "duplicate_text_class_ratio": 0.0,
+  "identical_embedding_group_count": 0,
+  "identical_embedding_class_count": 0,
+  "identical_embedding_groups": [],
+  "directed_identical_text_selection_count": 0,
+  "directed_exact_cosine_one_selection_count": 0,
+  "nodes_with_identical_text_top3_neighbour_count": 0,
+  "nodes_with_identical_text_top3_neighbour_ratio": 0.0,
+  "identical_text_undirected_edge_count": 0,
+  "edges_involving_duplicate_text_group_class_count": 0,
+  "edges_involving_duplicate_text_group_class_ratio": 0.0,
+  "policy": "representation-induced equivalence; no duplicate filtering, merging, down-weighting, or forced edges",
+  "xerces_expected_duplicate_groups": null
+}

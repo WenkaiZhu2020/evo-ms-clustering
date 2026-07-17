@@ -1,0 +1,11 @@
+rank,class_id_a,class_name_a,class_id_b,class_name_b,weight,selected_by,overlaps_G_raw,same_package,same_Leiden_cluster,same_reference_service,duplicate_text_pair
+1,org.apache.xerces.dom.SecuritySupport,SecuritySupport,org.apache.xerces.impl.dv.SecuritySupport,SecuritySupport,1,both,false,false,false,,true
+2,org.apache.xerces.dom.SecuritySupport,SecuritySupport,org.apache.xerces.parsers.SecuritySupport,SecuritySupport,1,both,false,false,false,,true
+3,org.apache.xerces.dom.SecuritySupport,SecuritySupport,org.apache.xerces.xinclude.SecuritySupport,SecuritySupport,1,both,false,false,false,,true
+4,org.apache.xerces.dom.SecuritySupport,SecuritySupport,org.apache.xml.serialize.SecuritySupport,SecuritySupport,1,b,false,false,false,,true
+5,org.apache.xerces.dom.SecuritySupport$1,SecuritySupport$1,org.apache.xerces.impl.dv.SecuritySupport$1,SecuritySupport$1,1,both,false,false,false,,true
+6,org.apache.xerces.dom.SecuritySupport$1,SecuritySupport$1,org.apache.xerces.parsers.SecuritySupport$1,SecuritySupport$1,1,both,false,false,false,,true
+7,org.apache.xerces.dom.SecuritySupport$1,SecuritySupport$1,org.apache.xerces.xinclude.SecuritySupport$1,SecuritySupport$1,1,both,false,false,false,,true
+8,org.apache.xerces.dom.SecuritySupport$1,SecuritySupport$1,org.apache.xml.serialize.SecuritySupport$1,SecuritySupport$1,1,b,false,false,false,,true
+9,org.apache.xerces.dom.SecuritySupport$3,SecuritySupport$3,org.apache.xerces.impl.dv.SecuritySupport$3,SecuritySupport$3,1,both,false,false,false,,true
+10,org.apache.xerces.dom.SecuritySupport$3,SecuritySupport$3,org.apache.xerces.parsers.SecuritySupport$3,SecuritySupport$3,1,both,false,false,false,,true
