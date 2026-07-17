@@ -1,0 +1,1117 @@
+subject,class_id,class_name,kind,superclass_present,semantic_text,method_count,annotation_count,interface_count,truncated_method_count,input_hash,experiment_name,representation_id,stage3a_source_path,stage3a_source_file_sha256,stage3a_declaration_hash,declaration_exact_match,declaration_token_count,raw_body_candidate_count,filtered_body_token_count_before_budget,appended_body_token_count,body_model_token_count,total_token_count,body_tokens_truncated,declaration_truncated,body_empty,extracted_concrete_method_count,normalized_method_count,synthetic_method_count,generated_code_status,accepted_invoked_method_tokens,accepted_field_tokens,accepted_local_tokens,accepted_exception_tokens,accepted_operation_tokens,accepted_string_tokens,accepted_literals,rejected_token_count,body_hash
+daytrader,com.ibm.websphere.samples.daytrader.TradeAction,TradeAction,class,false,"[DECLARATION]
+public class TradeAction implements TradeServices {
+    OrderDataBean buy(String, String, double, int);
+    void cancelOrder(Integer, boolean);
+    OrderDataBean completeOrder(Integer, boolean);
+    QuoteDataBean createQuote(String, String, BigDecimal);
+    void createTrade();
+    AccountDataBean getAccountData(String);
+    AccountProfileDataBean getAccountProfileData(String);
+    Collection getAllQuotes();
+    Collection getClosedOrders(String);
+    HoldingDataBean getHolding(Integer);
+    Collection getHoldings(String);
+    MarketSummaryDataBean getMarketSummary();
+    MarketSummaryDataBean getMarketSummaryInternal();
+    Collection getOrders(String);
+    QuoteDataBean getQuote(String);
+    AccountDataBean login(String, String);
+    void logout(String);
+    void orderCompleted(String, Integer);
+    void queueOrder(Integer, boolean);
+    AccountDataBean register(String, String, String, String, String, String, BigDecimal);
+    AccountDataBean register(String, String, String, String, String, String, String);
+    RunStatsDataBean resetTrade(boolean);
+    OrderDataBean sell(String, Integer, int);
+    OrderDataBean sell(String, int, int);
+    AccountProfileDataBean updateAccountProfile(AccountProfileDataBean);
+    QuoteDataBean updateQuotePriceVolume(String, BigDecimal, double);
+}
+[METHOD_BODY]
+print trace create invoke branch jump market summary lock next cached msdb trade remote shared cache mode jpa enabled none disabled unable determine create trade invoke branch jump trace buy update quote price volume cancel order unsupported operation exception method not supported complete order unsupported operation exception method not supported quote print remote creation ejb failed direct account data account profile data all quotes closed orders holding holdings market summary cached msdb next lock ejb3 using singleton bean cmp entermonitor exitmonitor internal orders zero primitive workload invalid symbol login logout completed queue register register reset sell sell update price volume cancelled profile
+",26,0,1,0,9ceaa56547c07baa78d4bdf6b484a3a9946e0c2f975f5fde2e4c12e1238a5fba,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,033fdf6c2fa49a51a305fe52789247c81b8e17bbf41f418a3ea98b0dfa191659,true,264,476,102,102,110,383,0,false,false,29,29,0,not_detected,91,99,12,18,260,117,39,1251,67332a3603d5e1b4c4c7d8418167a79a5376248ac7794ab5fcb8b0bc0cfbc520
+daytrader,com.ibm.websphere.samples.daytrader.TradeServices,TradeServices,interface,false,"[DECLARATION]
+public interface TradeServices {
+    OrderDataBean buy(String, String, double, int);
+    void cancelOrder(Integer, boolean);
+    OrderDataBean completeOrder(Integer, boolean);
+    QuoteDataBean createQuote(String, String, BigDecimal);
+    AccountDataBean getAccountData(String);
+    AccountProfileDataBean getAccountProfileData(String);
+    Collection getAllQuotes();
+    Collection getClosedOrders(String);
+    HoldingDataBean getHolding(Integer);
+    Collection getHoldings(String);
+    MarketSummaryDataBean getMarketSummary();
+    Collection getOrders(String);
+    QuoteDataBean getQuote(String);
+    AccountDataBean login(String, String);
+    void logout(String);
+    void orderCompleted(String, Integer);
+    void queueOrder(Integer, boolean);
+    AccountDataBean register(String, String, String, String, String, String, BigDecimal);
+    RunStatsDataBean resetTrade(boolean);
+    OrderDataBean sell(String, Integer, int);
+    AccountProfileDataBean updateAccountProfile(AccountProfileDataBean);
+    QuoteDataBean updateQuotePriceVolume(String, BigDecimal, double);
+}
+[METHOD_BODY]
+<EMPTY>
+",22,0,0,0,2e5c99ac18edf6b99445dee5d1f4e1faacb80a2de37fcbc55ba20c3fe0fc47f6,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,79faebc4f5a70102505410ea8714fc1c26baa036aa637175132dd4a55b1b8f40,true,216,0,0,0,3,227,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+daytrader,com.ibm.websphere.samples.daytrader.beans.MarketSummaryDataBean,MarketSummaryDataBean,class,false,"[DECLARATION]
+public class MarketSummaryDataBean implements Serializable {
+    BigDecimal getGainPercent();
+    BigDecimal getOpenTSIA();
+    MarketSummaryDataBean getRandomInstance();
+    Date getSummaryDate();
+    BigDecimal getTSIA();
+    Collection getTopGainers();
+    Collection getTopLosers();
+    double getVolume();
+    void print();
+    void setOpenTSIA(BigDecimal);
+    void setSummaryDate(Date);
+    void setTSIA(BigDecimal);
+    void setTopGainers(Collection);
+    void setTopLosers(Collection);
+    void setVolume(double);
+    String toHTML();
+    JsonObject toJSON();
+    String toString();
+}
+[METHOD_BODY]
+invoke gain percent compute gain percent invoke create compute branch jump open tsia random instance create branch jump summary date tsia top gainers top losers volume print log open summary date gainers losers volume html current json build gainer stock price change loser string market current
+",18,0,1,0,4a765f7d3fadf646d0e28002fc19879802b4a1737798462df7beb5913419d3a9,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,c0e0176c877f840828c4caa0ca1603ddb7225b66f53d5b840fb0c003f3294a71,true,122,372,46,46,51,182,0,false,false,20,20,0,not_detected,38,43,0,0,242,27,22,982,764099e8ebc1aca2366a410c66e782e4035c8f0d3155755730c0e8a151db20f4
+daytrader,com.ibm.websphere.samples.daytrader.beans.RunStatsDataBean,RunStatsDataBean,class,false,"[DECLARATION]
+public class RunStatsDataBean implements Serializable {
+    int getBuyOrderCount();
+    int getCancelledOrderCount();
+    int getDeletedOrderCount();
+    int getHoldingCount();
+    int getNewUserCount();
+    int getOpenOrderCount();
+    int getOrderCount();
+    int getSellOrderCount();
+    int getSumLoginCount();
+    int getSumLogoutCount();
+    int getTradeStockCount();
+    int getTradeUserCount();
+    void setBuyOrderCount(int);
+    void setCancelledOrderCount(int);
+    void setDeletedOrderCount(int);
+    void setHoldingCount(int);
+    void setNewUserCount(int);
+    void setOpenOrderCount(int);
+    void setOrderCount(int);
+    void setSellOrderCount(int);
+    void setSumLoginCount(int);
+    void setSumLogoutCount(int);
+    void setTradeStockCount(int);
+    void setTradeUserCount(int);
+    String toString();
+}
+[METHOD_BODY]
+invoke buy order count cancelled order count deleted holding user open sell sum login sum logout trade stock trade user buy cancelled deleted holding open sell login logout stock string create invoke
+",25,0,1,0,f1b4f274157ac2b7450e3b183d693713b07a328003e954702b16c0d55dbc8259,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,b6e55ef211e1bcc9532314cbe4d459af83d96d462127bc2abdd9ec76b8570a8d,true,190,117,32,32,32,231,0,false,false,26,26,0,not_detected,68,66,0,0,41,19,11,427,7c26af4a1ece6ac9738f44460e6a5264148fee9294c24e7ac33971158e3cdde8
+daytrader,com.ibm.websphere.samples.daytrader.direct.KeySequenceDirect,KeySequenceDirect,class,false,"[DECLARATION]
+public class KeySequenceDirect {
+    Collection allocNewBlock(Connection, String, boolean, boolean);
+    Integer getNextID(Connection, String, boolean, boolean);
+}
+[METHOD_BODY]
+create invoke key map invoke alloc block branch jump create keyblocksize key map exception select keygenejb kg where keyname update insert into keyval values set next id trace branch jump sequence pk entity
+",2,0,0,0,8c4d35240bd9c35be4c5bafba133d6e9d2a006335e44cd3806b7a23980f13d2d,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,7b6aafd7330dd4b826621f1e857114857f540c5b2d7441420d524b5e9c4318c6,true,32,125,33,33,39,80,0,false,false,4,4,0,not_detected,5,12,0,2,80,47,9,338,1d6b65f506e761b3589acc7ff009a48ca03c9dcb2273c5ff8096f7b15a356dd2
+daytrader,com.ibm.websphere.samples.daytrader.direct.TradeDirect,TradeDirect,class,false,"[DECLARATION]
+public class TradeDirect implements TradeServices {
+    OrderDataBean buy(String, String, double, int);
+    void cancelOrder(Connection, Integer);
+    void cancelOrder(Integer, boolean);
+    String checkDBProductName();
+    void commit(Connection);
+    OrderDataBean completeOrder(Connection, Integer);
+    OrderDataBean completeOrder(Integer, boolean);
+    HoldingDataBean createHolding(Connection, int, String, double, BigDecimal);
+    OrderDataBean createOrder(Connection, AccountDataBean, QuoteDataBean, HoldingDataBean, String, double);
+    QuoteDataBean createQuote(String, String, BigDecimal);
+    void creditAccountBalance(Connection, AccountDataBean, BigDecimal);
+    void destroy();
+    AccountDataBean getAccountData(Connection, String);
+    AccountDataBean getAccountData(String);
+    AccountDataBean getAccountData(int);
+    AccountDataBean getAccountData(int, Connection);
+    AccountDataBean getAccountDataFromResultSet(ResultSet);
+    AccountProfileDataBean getAccountProfileData(Connection, Integer);
+    AccountProfileDataBean getAccountProfileData(Connection, String);
+    AccountProfileDataBean getAccountProfileData(String);
+    AccountProfileDataBean getAccountProfileDataFromResultSet(ResultSet);
+    Collection getAllQuotes();
+    Collection getClosedOrders(String);
+    Connection getConn();
+    Connection getConnPublic();
+    void getDataSource();
+    HoldingDataBean getHolding(Integer);
+    HoldingDataBean getHoldingData(Connection, int);
+    HoldingDataBean getHoldingData(int);
+    HoldingDataBean getHoldingDataFromResultSet(ResultSet);
+    Collection getHoldings(String);
+    boolean getInGlobalTxn();
+    MarketSummaryDataBean getMarketSummary();
+    OrderDataBean getOrderData(Connection, int);
+    OrderDataBean getOrderDataFromResultSet(ResultSet);
+    Collection getOrders(String);
+    QuoteDataBean getQuote(Connection, String);
+    QuoteDataBean getQuote(String);
+    QuoteDataBean getQuoteData(Connection, String);
+    QuoteDataBean getQuoteDataFromResultSet(ResultSet);
+    QuoteDataBean getQuoteForUpdate(Connection, String);
+    PreparedStatement getStatement(Connection, String);
+    PreparedStatement getStatement(Connection, String, int, int);
+    void init();
+    AccountDataBean login(String, String);
+    void logout(String);
+    void orderCompleted(String, Integer);
+    void publishQuotePriceChange(QuoteDataBean, BigDecimal, BigDecimal, double);
+    void queueOrder(Integer, boolean);
+    boolean recreateDBTables(Object[], PrintWriter);
+    AccountDataBean register(String, String, String, String, String, String, BigDecimal);
+    void releaseConn(Connection);
+    void removeHolding(Connection, int, int);
+    RunStatsDataBean resetTrade(boolean);
+    void rollBack(Connection, Exception);
+    OrderDataBean sell(String, Integer, int);
+    void setInGlobalTxn(boolean);
+    AccountProfileDataBean updateAccountProfile(AccountProfileDataBean);
+    void updateAccountProfile(Connection, AccountProfileDataBean);
+    void updateHoldingStatus(Connection, Integer, String);
+    void updateOrderHolding(Connection, int, int);
+    void updateOrderStatus(Connection, Integer, String);
+    QuoteDataBean updateQuotePriceVolume(String, BigDecimal, double);
+    void updateQuotePriceVolume(Connection, String, BigDecimal, double, double);
+    QuoteDataBean updateQuotePriceVolumeInt(String, BigDecimal, double, boolean);
+}
+[METHOD_BODY]
+create invoke datasource ds name zero conn count lock initialized invoke branch jump global txn session initialized branch jump global txn session buy create context trade failed queue order committing transaction error rolling back cancel order trade error cancelling cancel update status cancelled check db product name commit complete completing complete completed processing mode exception select orderejb where orderid internal unable find alertcompleted cancelled account id attempt already quote symbol holding buy completing sell sold closed holding data data open quote creating credit account balance close update accountejb set where accountid destroy getting close select accountejb accountid exception getting result set cannot find id login count logout last creation date balance open profile user profile result user passwd full address email credit card all quotes quoteejb closed orders completed conn trace datasource lock connection isolation entermonitor exitmonitor source lookup context ds holdingejb holdingid no results quantity purchase price date symbol holdings holings market summary zero quoteejb change1 desc tsia total volume logging orderejb orderid no results type status completion quantity price fee orders failure could not company volume open1 low high change1 failure statement prepare statement prepare trace factory broker queue streamer topic initializing init login finder passwd cannot incorrect password logging logout out unsupported operation method not supported publish change add suppressed factory streamer topic publishing mdb command company old low high factor shares traded time stock add suppressed broker command neworder two phase direct publish time runtime recreate db tables measure drop thrown executing foll sql register registering release connection failed entermonitor exitmonitor remove
+",65,0,1,0,123a2035996086de8fa8175eaa16db45a0f3933bade8118e2de6a2f59dd7865c,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,13e953a2da53b4570061f31d0a9e42f4b1125bbc41935c9ed16dff71dfa99ef1,true,678,3098,287,256,288,975,31,false,false,68,68,0,not_detected,215,153,14,24,1713,617,222,7709,aa39a12b9df0961531e3cd990964d27f8beba4ceb1aa96e9ede299f0bcebc9ef
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.DTBroker3MDB,DTBroker3MDB,class,false,"[DECLARATION]
+@MessageDriven
+@TransactionAttribute
+@TransactionManagement
+public class DTBroker3MDB implements MessageListener {
+    TradeServices getTrade(boolean);
+    void onMessage(Message);
+}
+[METHOD_BODY]
+instance invoke branch jump stat interval mdb stats dt broker3 trade branch jump create invoke slsb message rollback only create mdb stats stat interval mdc trade received command dt broker3 following jms was redelivered due neworder ping order id two phase direct publish time completing processed stock trading orders total process exception test messages count unknown request error rolling back transaction
+",2,3,1,0,7ef4a576343bb419e12bc614eccf03f10f1ab81e66a39dc5c60eab7410375f93,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,4912385984127e955b6c0d849843e4f4f52283377581b1410b6de9a3bba22757,true,36,199,61,61,69,114,0,false,false,3,3,0,not_detected,6,28,5,0,161,95,32,578,8e3578ccf2891df4c20074f36452faa6e7c1a43a74207e8fd2bab7fbc59f04af
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.DTStreamer3MDB,DTStreamer3MDB,class,false,"[DECLARATION]
+@MessageDriven
+@TransactionAttribute
+@TransactionManagement
+public class DTStreamer3MDB implements MessageListener {
+    void onMessage(Message);
+}
+[METHOD_BODY]
+instance invoke branch jump stat interval mdb stats dt streamer3 message rollback only invoke branch jump create mdb stats stat interval jms event mdc command dt streamer3 received update quote ping publish time symbol current price old prices total count messages unknown request exception cmpg
+",1,3,1,0,a3d6c95dfce0bf665e08638c4e4f5597cc03a158fd63fe905000919ce98da1a4,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,2418cc2f34f28cce50e44343c2514a1659b9a3455a18ea6f45f4b3f3f217290f,true,29,171,45,45,52,90,0,false,false,2,2,0,not_detected,4,25,5,0,146,85,34,532,b045b03e25278dcfb8095030c71e429c2b0e12acc3dfd58b5ba901ead6d22417
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.MarketSummarySingleton,MarketSummarySingleton,class,false,"[DECLARATION]
+@Singleton
+public class MarketSummarySingleton {
+    MarketSummaryDataBean getMarketSummaryDataBean();
+    void setMarketSummaryDataBean(MarketSummaryDataBean);
+    void setup();
+    void updateMarketSummary();
+}
+[METHOD_BODY]
+invoke market summary data bean market summary data bean setup update invoke update branch jump create measure entity manager zero updating not ejb3 so change1
+",4,1,0,0,1c4fbd59711a41a7d2c50472d00e2b0ac8a0e4b58957a2128fa33a6886254ffe,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,c89e34e1575247704b611fd1b4991a46cc4da1f138e95b64c3262e0008131459,true,44,137,25,25,28,81,0,false,false,5,5,0,not_detected,19,16,0,0,65,17,3,323,427bf07452904ae6299e094de177efdb0536b2bb3d8f2095c110e0e62270672d
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean,TradeSLSBBean,class,false,"[DECLARATION]
+@Stateless
+@TransactionAttribute
+@TransactionManagement
+public class TradeSLSBBean implements TradeSLSBLocal, TradeSLSBRemote {
+    OrderDataBean buy(String, String, double, int);
+    void cancelOrder(Integer, boolean);
+    OrderDataBean completeOrder(Integer, boolean);
+    HoldingDataBean createHolding(AccountDataBean, QuoteDataBean, double, BigDecimal);
+    OrderDataBean createOrder(AccountDataBean, QuoteDataBean, HoldingDataBean, String, double);
+    QuoteDataBean createQuote(String, String, BigDecimal);
+    AccountDataBean getAccountData(String);
+    AccountProfileDataBean getAccountProfileData(String);
+    Collection getAllQuotes();
+    Collection getClosedOrders(String);
+    HoldingDataBean getHolding(Integer);
+    Collection getHoldings(String);
+    MarketSummaryDataBean getMarketSummary();
+    Collection getOrders(String);
+    QuoteDataBean getQuote(String);
+    double investmentReturn(double, double);
+    AccountDataBean login(String, String);
+    void logout(String);
+    void orderCompleted(String, Integer);
+    QuoteDataBean pingTwoPhase(String);
+    void postConstruct();
+    void publishQuotePriceChange(QuoteDataBean, BigDecimal, BigDecimal, double);
+    void queueOrder(Integer, boolean);
+    AccountDataBean register(String, String, String, String, String, String, BigDecimal);
+    RunStatsDataBean resetTrade(boolean);
+    OrderDataBean sell(String, Integer, int);
+    AccountProfileDataBean updateAccountProfile(AccountProfileDataBean);
+    QuoteDataBean updateQuotePriceVolume(String, BigDecimal, double);
+}
+[METHOD_BODY]
+trace invoke branch jump trade slsb create jndi lookups ejb jms resources buy invoke branch jump create entity manager ejb exception trade slsb failed cancel order entity manager two complete order completed exception two attempt already bean completing account quote holding closed unable sell sold holding persist open quote creating account data profile id profile data find all quotes result list quoteejb closed orders status user id userid completed bean get error find holdings result list user userid market summary singleton getting orders investment trace login no such success logout success unsupported operation method not supported ping phase queue connection factory broker command publish time caught post construct update publish price price change topic connection factory streamer publishing command update symbol company old open low high volume factor shares traded time stock queue managed thread broker neworder phase runtime register persist failed already exists reset sell attempted which has been sold cancelled merge volume change penny stock maximum recovery miracle multiplier split context quoteejb
+",28,3,2,0,460c3d5a913a77fae8b055076c0df320746c80407806ed2de6da679f9fe076b2,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,afe397d01db1e331390f5a45f3c9ee5e0718f8e0c4786528e82a9a96a041ebbf,true,323,946,164,164,178,510,0,false,false,29,29,0,not_detected,85,158,9,50,687,271,115,2931,bab746908d2b8c669eea76586a0ac4d2b5256bd63e27d987417bc756e717dac2
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBBean$quotePriceComparator,TradeSLSBBean$quotePriceComparator,class,false,"[DECLARATION]
+class TradeSLSBBean$quotePriceComparator implements Comparator {
+    int compare(Object, Object);
+}
+[METHOD_BODY]
+invoke compare invoke create
+",1,0,1,0,e4057b3306b87ab1fd54c1f75d9245218f619182ebd74f8a93208f3d27c7f122,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,0f30e2856083ce7809ae33a44b890c6c8ea99f7964d06f567693cbe9834acc7d,true,21,12,4,4,4,34,0,false,false,2,2,0,not_detected,2,0,0,0,7,0,0,39,1bb35271fc145d82a4cac60f01b2094c8899176757270ecb21320eca93dbe95a
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal,TradeSLSBLocal,interface,false,"[DECLARATION]
+@Local
+public interface TradeSLSBLocal extends TradeServices {
+    double investmentReturn(double, double);
+    QuoteDataBean pingTwoPhase(String);
+    void publishQuotePriceChange(QuoteDataBean, BigDecimal, BigDecimal, double);
+}
+[METHOD_BODY]
+<EMPTY>
+",3,1,1,0,330ee5d97b95d34d91c65fd3e5496954ee19996fec4ee992a76c708d29dae5fa,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,ebb0a71ae821572211f9108ae470bb16755bf374a203a0cabed519823f207842,true,49,0,0,0,3,60,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+daytrader,com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote,TradeSLSBRemote,interface,false,"[DECLARATION]
+@Remote
+public interface TradeSLSBRemote extends TradeServices {
+    double investmentReturn(double, double);
+    QuoteDataBean pingTwoPhase(String);
+    void publishQuotePriceChange(QuoteDataBean, BigDecimal, BigDecimal, double);
+}
+[METHOD_BODY]
+<EMPTY>
+",3,1,1,0,468e5076710d5c6529ad9e1cb8c4ee067c6f07ce361998475269bd51580137d5,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,3f95dc954e38484462053beb3b05e249e536f1db830393b557d7ccb93dea5c3c,true,49,0,0,0,3,60,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+daytrader,com.ibm.websphere.samples.daytrader.entities.AccountDataBean,AccountDataBean,class,false,"[DECLARATION]
+@Entity
+@Table
+public class AccountDataBean implements Serializable {
+    boolean equals(Object);
+    Integer getAccountID();
+    BigDecimal getBalance();
+    Date getCreationDate();
+    Collection getHoldings();
+    Date getLastLogin();
+    int getLoginCount();
+    int getLogoutCount();
+    BigDecimal getOpenBalance();
+    Collection getOrders();
+    AccountProfileDataBean getProfile();
+    String getProfileID();
+    AccountDataBean getRandomInstance();
+    int hashCode();
+    void login(String);
+    void logout();
+    void print();
+    void setAccountID(Integer);
+    void setBalance(BigDecimal);
+    void setCreationDate(Date);
+    void setHoldings(Collection);
+    void setLastLogin(Date);
+    void setLoginCount(int);
+    void setLogoutCount(int);
+    void setOpenBalance(BigDecimal);
+    void setOrders(Collection);
+    void setProfile(AccountProfileDataBean);
+    void setProfileID(String);
+    String toHTML();
+    String toString();
+}
+[METHOD_BODY]
+invoke profile id invoke profile id branch jump account account balance creation date holdings last login login count logout count open balance orders random instance create hash code branch jump create ejb exception failure incorrect password logout print log creation date holdings last open orders html string data string data
+",30,2,1,0,366e371d0cef0aa11cf309e6182470e782fad152ab0fff29ec8bf24a018277b8,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,fe52a5446d2684cc6bf34f902d2639c2b5cf29d2cf0d2697f2738fc0ee50e0c8,true,192,264,50,50,51,252,0,false,false,33,33,0,not_detected,57,50,0,4,142,15,11,773,1d59df5f26e13b048010610d0955490b8a4071fbee78be13664c338f399acd35
+daytrader,com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean,AccountProfileDataBean,class,false,"[DECLARATION]
+@Entity
+@Table
+public class AccountProfileDataBean implements Serializable {
+    boolean equals(Object);
+    AccountDataBean getAccount();
+    String getAddress();
+    String getCreditCard();
+    String getEmail();
+    String getFullName();
+    String getPassword();
+    AccountProfileDataBean getRandomInstance();
+    String getUserID();
+    int hashCode();
+    void print();
+    void setAccount(AccountDataBean);
+    void setAddress(String);
+    void setCreditCard(String);
+    void setEmail(String);
+    void setFullName(String);
+    void setPassword(String);
+    void setUserID(String);
+    String toHTML();
+    String toString();
+}
+[METHOD_BODY]
+invoke credit card invoke branch jump user id account address credit card email full name password passwd random instance create user id hash code branch jump print log account address email full name password passwd html string create profile data string profile data
+",20,2,1,0,aa0f0435351ae07e3618c9cf4d98df5f16e37231cc46dbff55f1cbb492adcb03,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,26bf5ddd5afd93758bea2f0ec580c37da14b40090c1eb538ff4f5f803064b02c,true,121,156,43,43,43,173,0,false,false,22,22,0,not_detected,33,34,0,0,75,9,4,428,c34a1843380b80b3fce6ea6907d4bf9364750f06137761b5f3f953bdb59ddce6
+daytrader,com.ibm.websphere.samples.daytrader.entities.HoldingDataBean,HoldingDataBean,class,false,"[DECLARATION]
+@Entity
+@Table
+public class HoldingDataBean implements Serializable {
+    boolean equals(Object);
+    AccountDataBean getAccount();
+    Integer getHoldingID();
+    Date getPurchaseDate();
+    BigDecimal getPurchasePrice();
+    double getQuantity();
+    QuoteDataBean getQuote();
+    String getQuoteID();
+    HoldingDataBean getRandomInstance();
+    int hashCode();
+    void print();
+    void setAccount(AccountDataBean);
+    void setHoldingID(Integer);
+    void setPurchaseDate(Date);
+    void setPurchasePrice(BigDecimal);
+    void setQuantity(double);
+    void setQuote(QuoteDataBean);
+    void setQuoteID(String);
+    String toHTML();
+    String toString();
+}
+[METHOD_BODY]
+invoke quote invoke quote id branch jump holding id account holding purchase date purchase price quantity symbol branch jump random instance create hash code print log account date price quantity html string create data string data
+",20,2,1,0,a49a857d20acff3b8171f032b82ef9893fec8f36acf0f5b43fb791a7fa37decf,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,70d9a4e6f0264fe8807e68d1a19767fe1293b6160bd82ed88e8d97a461a283e7,true,138,167,36,36,36,183,0,false,false,23,23,0,not_detected,37,40,0,0,79,6,5,476,721df1fbb43a91ec51fa19e179832723d3e5fc1cbc7d412f561a23995348f4d9
+daytrader,com.ibm.websphere.samples.daytrader.entities.OrderDataBean,OrderDataBean,class,false,"[DECLARATION]
+@Entity
+@NamedQueries
+@Table
+public class OrderDataBean implements Serializable {
+    void cancel();
+    boolean equals(Object);
+    AccountDataBean getAccount();
+    Date getCompletionDate();
+    HoldingDataBean getHolding();
+    Date getOpenDate();
+    BigDecimal getOrderFee();
+    Integer getOrderID();
+    String getOrderStatus();
+    String getOrderType();
+    BigDecimal getPrice();
+    double getQuantity();
+    QuoteDataBean getQuote();
+    OrderDataBean getRandomInstance();
+    String getSymbol();
+    int hashCode();
+    boolean isBuy();
+    boolean isCancelled();
+    boolean isCompleted();
+    boolean isOpen();
+    boolean isSell();
+    void print();
+    void setAccount(AccountDataBean);
+    void setCompletionDate(Date);
+    void setHolding(HoldingDataBean);
+    void setOpenDate(Date);
+    void setOrderFee(BigDecimal);
+    void setOrderID(Integer);
+    void setOrderStatus(String);
+    void setOrderType(String);
+    void setPrice(BigDecimal);
+    void setQuantity(double);
+    void setQuote(QuoteDataBean);
+    void setSymbol(String);
+    String toHTML();
+    String toString();
+}
+[METHOD_BODY]
+invoke symbol invoke holding cancel order status cancelled branch jump order id account completion date holding open date fee id status type price quantity quote random instance create branch jump sell buy open symbol quote hash code buy compare ignore cancelled compare ignore completed alertcompleted processing sell print log account completion fee type price quantity html string create string
+",36,3,1,0,ca9c10552e06baa78005e4210e312efb9da81cea6a7fc9e00ca782d4482f5319,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,ae0f42373042008c9575a3bf38f5a99e0721d4ef93cf23666a5c7fec29de466c,true,228,306,59,59,60,297,0,false,false,39,39,0,not_detected,68,53,0,0,150,19,19,837,7fbc4a8d872bc782a175b95e2efd965de275e134211b6a8c73faed35f2789a0d
+daytrader,com.ibm.websphere.samples.daytrader.entities.QuoteDataBean,QuoteDataBean,class,false,"[DECLARATION]
+@Entity
+@NamedNativeQueries
+@NamedQueries
+@Table
+public class QuoteDataBean implements Serializable {
+    boolean equals(Object);
+    double getChange();
+    String getCompanyName();
+    BigDecimal getHigh();
+    BigDecimal getLow();
+    BigDecimal getOpen();
+    BigDecimal getPrice();
+    QuoteDataBean getRandomInstance();
+    String getSymbol();
+    double getVolume();
+    int hashCode();
+    void print();
+    void setChange(double);
+    void setCompanyName(String);
+    void setHigh(BigDecimal);
+    void setLow(BigDecimal);
+    void setOpen(BigDecimal);
+    void setPrice(BigDecimal);
+    void setSymbol(String);
+    void setVolume(double);
+    String toHTML();
+    String toString();
+}
+[METHOD_BODY]
+invoke symbol invoke change branch jump symbol change change1 company name high low open open1 price random instance create incorporated volume hash code branch jump print log change1 company name high low open open1 price volume html string create data string quote data
+",22,4,1,0,7efc8b2fdb74cf7ccde439f5ad68ed19473249d45ef2aa355608c79cd641a98b,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,d97a597b2ca04fc97d5f53c0f0470038c74fad862840cc1e56aad74a5391db40,true,137,186,43,43,47,193,0,false,false,25,25,0,not_detected,31,25,0,0,97,6,5,524,7ff260b2998ab4f5293ff2a01b4fc4c3e7baf28c9bb7f94113ae85129b436736
+daytrader,com.ibm.websphere.samples.daytrader.util.CompleteOrderThread,CompleteOrderThread,class,false,"[DECLARATION]
+public class CompleteOrderThread implements Runnable {
+    void run();
+}
+[METHOD_BODY]
+invoke order id two phase invoke create branch jump order id two phase ejb exception
+",1,0,1,0,78501454689062a7c3b7b6b2535cd9ac39fef9f579d351796fe84eb0b1bd921f,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,b427c2f5f157730fc86ef980d45f643a647c07f814fdab3314fcb1e42a37f531,true,13,55,15,15,16,38,0,false,false,2,2,0,not_detected,0,8,0,12,24,0,0,115,8c836ebaa1185377470bd27de1a4becb80014e5601861b5a38d1a2f4556f156e
+daytrader,com.ibm.websphere.samples.daytrader.util.FinancialUtils,FinancialUtils,class,false,"[DECLARATION]
+public class FinancialUtils {
+    BigDecimal computeGain(BigDecimal, BigDecimal);
+    BigDecimal computeGainPercent(BigDecimal, BigDecimal);
+    BigDecimal computeHoldingsTotal(Collection);
+    String printChangeHTML(double);
+    String printGainHTML(BigDecimal);
+    String printGainPercentHTML(BigDecimal);
+    String printQuoteLink(String);
+}
+[METHOD_BODY]
+scale create invoke zero one hundred invoke compute gain scale compute gain percent multiply branch jump zero one hundred cmpl holdings total create branch jump print change html string arrowdown gif arrowup cmpg print html string arrowdown gif arrowup cmpg percent quote link
+",7,0,0,0,03bab7e5f97f91b4eb323ec3a3db06a2b0ece0b65cc71ffc523722f02ddd0e9c,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,2dad4285e08e95ea31d66fcdc09ed215a0fb63a657a79681e349b320c8281737,true,60,165,43,43,50,119,0,false,false,9,9,0,not_detected,29,6,4,0,88,12,6,394,94f5ef1a07fd1e06a3b4dd0a86b82ff30261a23d0c7b214b4041dfb5ce33490e
+daytrader,com.ibm.websphere.samples.daytrader.util.KeyBlock,KeyBlock,class,true,"[DECLARATION]
+public class KeyBlock extends AbstractSequentialList {
+    ListIterator listIterator(int);
+    int size();
+}
+[METHOD_BODY]
+invoke min max index invoke min max index list iterator create size
+",2,0,0,0,8a96ed0cc3c0eb2b98f7c39e2883725a40a860f73ef42b87d11e2941f8bca520,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,64a09d222de48169dff2cfb960584f599f85341ad2addcc5b0e197ea8f0a5c55,true,21,25,12,12,12,42,0,false,false,9,4,5,compiler_synthetic_evidence,3,15,0,0,4,0,0,65,c2f8a0c358abdd1a8b7a5209343cef47035f1c37d3b549fa31a05e99abbe317a
+daytrader,com.ibm.websphere.samples.daytrader.util.KeyBlock$KeyBlockIterator,KeyBlock$KeyBlockIterator,class,false,"[DECLARATION]
+class KeyBlock$KeyBlockIterator implements ListIterator {
+    void add(Object);
+    boolean hasNext();
+    boolean hasPrevious();
+    Object next();
+    int nextIndex();
+    Object previous();
+    int previousIndex();
+    void remove();
+    void set(Object);
+}
+[METHOD_BODY]
+invoke add create invoke unsupported operation exception key not supported has next branch jump has previous branch jump next create runtime exception key error block depleted index access previous index unsupported operation not supported remove
+",9,0,1,0,31894df8b9f44bc97da97bad095aec80ae15fab346efc139561992d99685f0c2,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,a5582bf8911a310d1794168c8370f56d7720253dacdcf48ac5bb01fef9160dbf,true,53,87,35,35,35,97,0,false,false,10,10,0,not_detected,19,0,0,22,28,15,4,194,a1e7dd96aa6a936054856d182934390d6c3bac38ff830fe158e49c1f4c43b833
+daytrader,com.ibm.websphere.samples.daytrader.util.Log,Log,class,false,"[DECLARATION]
+public class Log {
+    void debug(String);
+    boolean doActionTrace();
+    boolean doDebug();
+    boolean doStat();
+    boolean doTrace();
+    void error(String);
+    void error(String, String, String, Throwable);
+    void error(String, String, Throwable);
+    void error(String, Throwable);
+    void error(Throwable, String);
+    void error(Throwable, String, String);
+    void error(Throwable, String, String, String);
+    boolean getActionTrace();
+    boolean getTrace();
+    void log(String);
+    void log(String, String);
+    void log(String, String, String);
+    void print(String);
+    void printCollection(Collection);
+    void printCollection(String, Collection);
+    void printObject(Object);
+    void setActionTrace(boolean);
+    void setTrace(boolean);
+    void stat(String);
+    void trace(String);
+    void trace(String, Object);
+    void trace(String, Object, Object);
+    void trace(String, Object, Object, Object);
+    void trace(String, Object, Object, Object, Object);
+    void trace(String, Object, Object, Object, Object, Object);
+    void trace(String, Object, Object, Object, Object, Object, Object);
+    void trace(String, Object, Object, Object, Object, Object, Object, Object);
+    void traceEnter(String);
+    void traceExit(String);
+}
+[METHOD_BODY]
+logger invoke log daytrader invoke debug log info action trace branch jump debug stat trace error severe create error create print out print out action info collection collection branch jump complete object stat fine thread enter fine method exit method
+",34,0,0,0,bddeecb04368daf52ffe0416dce49dc16b75388150207edee746e2586de6d645,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,5c88d85e0f49968d803f52175b628c4d465c7d7348b050bedb8c66252dbf3aba,true,273,359,40,40,42,324,0,false,false,36,36,0,not_detected,80,14,0,0,235,18,7,1015,5e3c121ade0e4dbfd979e224bcbf575b0e1b3072115519d2212c73da9a4e2027
+daytrader,com.ibm.websphere.samples.daytrader.util.MDBStats,MDBStats,class,true,"[DECLARATION]
+public class MDBStats extends HashMap {
+    TimerStat addTiming(String, long, long);
+    MDBStats getInstance();
+    void reset();
+}
+[METHOD_BODY]
+mdb stats invoke add timing invoke branch jump create entermonitor cmpl cmpg exitmonitor instance branch jump create mdb stats reset clear
+",3,0,0,0,6fb66f27ee63f22e6760976d5145c6e217a47f535df2da0da285f99e8d169ab7,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,3cf888238d2f47f057ddc8a187c5a4e3a5b4d5615adb164ce99408b0a9f50ed5,true,28,66,21,21,25,62,0,false,false,5,5,0,not_detected,6,10,5,0,24,0,0,144,3a99f735f184a5ff3012fd50d83fe90115485e399c84b77777cc0050bcaa2e36
+daytrader,com.ibm.websphere.samples.daytrader.util.TimerStat,TimerStat,class,false,"[DECLARATION]
+public class TimerStat {
+    double getAvgSecs();
+    int getCount();
+    double getMax();
+    double getMaxSecs();
+    double getMin();
+    double getMinSecs();
+    double getTotalTime();
+    void setCount(int);
+    void setMax(double);
+    void setMin(double);
+    void setTotalTime(double);
+}
+[METHOD_BODY]
+invoke min max total time avg secs count invoke count max secs min total time
+",11,0,0,0,795f3cc76733435ef13b29ea49df396c69a32c39f1a2cba6cbfd04bbbf5f4b86,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,69d7f98dab546a408a5670d85feec4ea45c3b2c941cd2e197665e4370bc7ab9f,true,69,40,15,15,15,93,0,false,false,12,12,0,not_detected,17,16,0,0,3,0,0,117,22af54e1e040bb19bf299f564a775b0de968e2097a6d0060e72f01965359450a
+daytrader,com.ibm.websphere.samples.daytrader.util.TradeConfig,TradeConfig,class,false,"[DECLARATION]
+public class TradeConfig {
+    int getAccessMode();
+    boolean getActionTrace();
+    boolean getDisplayOrderAlerts();
+    String getHostname();
+    boolean getJDBCDriverNeedsGlobalTransation();
+    boolean getLongRun();
+    int getMAX_HOLDINGS();
+    int getMAX_QUOTES();
+    int getMAX_USERS();
+    int getMarketSummaryInterval();
+    String getNextUserIDFromDeck();
+    BigDecimal getOrderFee(String);
+    int getOrderProcessingMode();
+    String[] getOrderProcessingModeNames();
+    String getPage(int);
+    int getPercentSentToWebsocket();
+    int getPrimIterations();
+    boolean getPublishQuotePriceChange();
+    BigDecimal getRandomPriceChangeFactor();
+    int getRunTimeMode();
+    String[] getRunTimeModeNames();
+    char getScenarioAction(boolean);
+    int getScenarioCount();
+    int[][] getScenarioMixes();
+    boolean getTrace();
+    boolean getUpdateQuotePrices();
+    String getUserID();
+    int getWebInterface();
+    String[] getWebInterfaceNames();
+    void incrementScenarioCount();
+    void incrementSellDeficit();
+    String nextUserID();
+    double random();
+    String rndAddress();
+    String rndBalance();
+    BigDecimal rndBigDecimal(float);
+    boolean rndBoolean();
+    String rndCreditCard();
+    String rndEmail(String);
+    float rndFloat(int);
+    String rndFullName();
+    int rndInt(int);
+    String rndNewUserID();
+    float rndPrice();
+    float rndQuantity();
+    String rndSymbol();
+    String rndSymbols();
+    String rndUserID();
+    void setAccessMode(int);
+    void setActionTrace(boolean);
+    void setConfigParam(String, String);
+    void setDisplayOrderAlerts(boolean);
+    void setJDBCDriverNeedsGlobalTransation(boolean);
+    void setLongRun(boolean);
+    void setMAX_HOLDINGS(int);
+    void setMAX_QUOTES(int);
+    void setMAX_USERS(int);
+    void setMarketSummaryInterval(int);
+    void setOrderProcessingMode(int);
+    void setPercentSentToWebsocket(int);
+    void setPrimIterations(int);
+    void setPublishQuotePriceChange(boolean);
+    void setRunTimeMode(int);
+    void setRunTimeModeNames(String[]);
+    void setScenarioCount(int);
+    void setTrace(boolean);
+    void setUpdateQuotePrices(boolean);
+    void setUseRemoteEJBInterface(boolean);
+    void setWebInterface(int);
+    boolean useRemoteEJBInterface();
+}
+[METHOD_BODY]
+create invoke order processing mode names access web max users quotes jdbc uid pwd ds name driver needs global transation datasource keyblocksize per page rnd user holdings count id semaphore host random number generator trace action update quote prices prim iterations run publish price change percent sent websocket display alerts use remote ejb market summary interval penny stock recovery miracle multiplier maximum split scenario mixes actions sell deficit ui fee cash one deck card full ejb3 direct sync async phase managed thread standard services jsp images invoke access mode action trace display order alerts hostname error branch jump host name exception getting using localhost jdbc driver needs global transation run max holdings quotes users market summary interval next user id deck string branch jump create card fee compare ignore cash buy sell processing names page web ui percent sent websocket prim iterations publish quote price change random factor one cmpg time time scenario increment count mixes actions deficit entermonitor exitmonitor update prices rnd increment next string semaphore entermonitor exitmonitor number generator address oak st balance big decimal scale credit email com value full value quantity symbol symbols per trade trader config param measure trade setting reverting current set minor exception caughttrying revering use remote ejb
+",70,0,0,0,269d7aefb611a8ac4133f8aba9b1db3bf5fe5b7904b8c6457c76b91e7d187a4c,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,e94f37be483cca3b9c8b0bc9d59407688f9d35c2f13aaaeb08c3245d8ba18b52,true,487,899,205,205,222,718,0,false,false,72,72,0,not_detected,196,373,21,0,357,81,37,2422,c32fe48808bd17b32fe6080953aa757795a6af61de5e50c43eed3bef3b160de6
+daytrader,com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage,WebSocketJMSMessage,interface,false,"[DECLARATION]
+@Qualifier
+@Retention
+@Target
+public interface WebSocketJMSMessage extends Annotation {
+}
+[METHOD_BODY]
+<EMPTY>
+",0,3,1,0,623212e7bf56f200f463314b29a8c7fadf2049f1a5fcc6d15011750d8e1fe45a,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,e95b8733d3181d904136f23d47d135939f19ba98573cc973c9f5610fef33a7da,true,19,0,0,0,3,30,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+daytrader,com.ibm.websphere.samples.daytrader.web.OrdersAlertFilter,OrdersAlertFilter,class,false,"[DECLARATION]
+@WebFilter
+public class OrdersAlertFilter implements Filter {
+    void destroy();
+    void doFilter(ServletRequest, ServletResponse, FilterChain);
+    void init(FilterConfig);
+}
+[METHOD_BODY]
+invoke filter config destroy filter config branch jump invoke create action logout login uid bean closed orders order alert user error checking
+",3,1,1,0,a924db1ed6517ba668b9d77bce06b765cc226e0fdd98de849220eefeffb39aa3,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,92772fd1a525dacc0e70f4670f2949914b10b431daada536adc8c55779ef3351,true,36,106,22,22,22,67,0,false,false,4,4,0,not_detected,3,8,0,0,47,19,9,228,b46cae52899916e3ca88acdbfab7827f11d9ea004affa10915dfca8184645589
+daytrader,com.ibm.websphere.samples.daytrader.web.TradeAppServlet,TradeAppServlet,class,true,"[DECLARATION]
+@WebServlet
+public class TradeAppServlet extends HttpServlet {
+    void doGet(HttpServletRequest, HttpServletResponse);
+    void doPost(HttpServletRequest, HttpServletResponse);
+    String getServletInfo();
+    void init(ServletConfig);
+    void performTask(HttpServletRequest, HttpServletResponse);
+}
+[METHOD_BODY]
+invoke get perform task invoke post perform task servlet info trade app provides standard web has more elements branch jump create branch jump out action login register uid passwd user id confirm full name credit card number money email snail mail bean quotes trade app servlet service not logged buy symbols sell symbol quantity portfolio holding no edge logout home account ready update profile mksummary password cpassword fullname address creditcard invalid
+",5,1,0,0,ca5a4a28ef07c15e8dfba851ed462b50d42d32dd8eb0a06a9a5b9d439052b038,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,3d2ab00130a8f8132f5a696c290b47eac5f6a24bcc94ba431756875254fb2dfc,true,46,264,71,71,75,130,0,false,false,6,6,0,not_detected,14,3,0,0,169,84,52,789,7c15013494ed4583b30f8342f8b4990686be61eaab8739a43709fe3cd7aed05f
+daytrader,com.ibm.websphere.samples.daytrader.web.TradeServletAction,TradeServletAction,class,false,"[DECLARATION]
+public class TradeServletAction {
+    void doAccount(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doAccountUpdate(ServletContext, HttpServletRequest, HttpServletResponse, String, String, String, String, String, String, String);
+    void doBuy(ServletContext, HttpServletRequest, HttpServletResponse, String, String, String);
+    void doHome(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doLogin(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doLogout(ServletContext, HttpServletRequest, HttpServletResponse, String);
+    void doMarketSummary(ServletContext, HttpServletRequest, HttpServletResponse, String);
+    void doPortfolio(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doQuotes(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+    void doRegister(ServletContext, HttpServletRequest, HttpServletResponse, String, String, String, String, String, String, String, String);
+    void doSell(ServletContext, HttpServletRequest, HttpServletResponse, String, Integer);
+    void doWelcome(ServletContext, HttpServletRequest, HttpServletResponse, String);
+    void requestDispatch(ServletContext, HttpServletRequest, HttpServletResponse, String, String);
+}
+[METHOD_BODY]
+invoke create action account invoke branch jump create action servlet exception data profile order beans results could not find user id trade illegal information should string account update branch jump servlet exception profile passwords not match please fill all information fields successful invalid check user id database populated results trade illegal should string treating error forwarding page buy request dispatch order processing mode data argument symbol buying stock home request dispatch holding beans check database populated could find finding treating error forwarding page login uid bean session creation date ready finding entered bad username logging password logout logging out fowarding market summary test portfolio your empty holding quote quotes register out registration operation has been created your passwords did match sell processing mode selling welcome include
+",13,0,0,0,0464c1820de7c4d43cda3b860e9622ee26b17d9f808435636ea487b58ee7953d,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,bb55e7f4a209cc8d7ab39fdf0df63b8c7a2bd45561128be5de602098b6fe37e8,true,235,560,126,126,128,372,0,false,false,14,14,0,not_detected,36,26,3,36,359,348,102,1834,8a1a56d3a098ae83ce0d8a437c511e42b3891ebc1225b0898236ca71b5745483
+daytrader,com.ibm.websphere.samples.daytrader.web.TradeWebContextListener,TradeWebContextListener,class,false,"[DECLARATION]
+@WebListener
+public class TradeWebContextListener implements ServletContextListener {
+    void contextDestroyed(ServletContextEvent);
+    void contextInitialized(ServletContextEvent);
+}
+[METHOD_BODY]
+invoke context destroyed trace invoke trade web listener destroy calling context initialized create jump out trade web listener initializing direct settings daytrader runtime mode use remote ejb order processing max users quotes market summary interval prim iterations publish quote price change percent sent websocket display alerts run action trace properties not found
+",2,1,1,0,1e3c3843b0aad60dbe912815d2af1855e875b77ea0698db329b17766a4d7e6a5,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,54c23417abe0ec6d2f80bccd8b6382753c53345c2fcad75ef19fd3535ff56790,true,33,69,52,52,55,97,0,false,false,3,3,0,not_detected,5,2,0,0,60,54,17,180,2c756be8bec9295256e2a6637da1c6745d00ab5ffe39e79965d16253482ff0ea
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.AccountDataJSF,AccountDataJSF,class,false,"[DECLARATION]
+@Named
+@RequestScoped
+public class AccountDataJSF {
+    void doAccountData(AccountDataBean, Collection);
+    Integer getAccountID();
+    OrderData[] getAllOrders();
+    BigDecimal getBalance();
+    OrderData[] getClosedOrders();
+    Date getCreationDate();
+    Date getCurrentTime();
+    BigDecimal getGain();
+    String getGainHTML();
+    BigDecimal getGainPercent();
+    String getGainPercentHTML();
+    BigDecimal getHoldingsTotal();
+    Date getLastLogin();
+    int getLoginCount();
+    int getLogoutCount();
+    Integer getNumberHoldings();
+    Integer getNumberOfOrderRows();
+    Integer getNumberOfOrders();
+    BigDecimal getOpenBalance();
+    String getProfileID();
+    Date getSessionCreationDate();
+    BigDecimal getSumOfCashHoldings();
+    void home();
+    void setAccountID(Integer);
+    void setAllOrders(OrderData[]);
+    void setBalance(BigDecimal);
+    void setClosedOrders(OrderData[]);
+    void setCreationDate(Date);
+    void setCurrentTime(Date);
+    void setGain(BigDecimal);
+    void setGainPercent(BigDecimal);
+    void setHoldingsTotal(BigDecimal);
+    void setLastLogin(Date);
+    void setLoginCount(int);
+    void setLogoutCount(int);
+    void setNumberHoldings(Integer);
+    void setNumberOfOrderRows(Integer);
+    void setNumberOfOrders(Integer);
+    void setOpenBalance(BigDecimal);
+    void setProfileID(String);
+    void setSessionCreationDate(Date);
+    void setSumOfCashHoldings(BigDecimal);
+    void toggleShowAllRows();
+}
+[METHOD_BODY]
+value invoke number orders order rows account data gain percent invoke balance holdings total sum cash open account id all orders balance closed creation date current time gain html print percent html print holdings total last login login count logout count number order rows open profile id session creation date sum cash home branch jump create faces external context trade action uid bean closed data beans session all current time scale last logout profile toggle show
+",43,2,0,0,70ec8a0b5d0d797cc556a16b7b60c5c4073ebee804468636ec6af3e7b857d165,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,cfff56b2a6a4d45897abb39d483bd8221647b52684a93e655e5c2ed620df3c66,true,307,316,76,76,76,392,0,false,false,44,44,0,not_detected,105,112,0,0,110,10,4,887,5ee509cc57e915a2b87fb9d6a4f3381d18271f06200c51b80e6007f3105102bb
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.ExternalContextProducer,ExternalContextProducer,class,false,"[DECLARATION]
+public class ExternalContextProducer {
+    ExternalContext produceFacesExternalContext();
+}
+[METHOD_BODY]
+invoke produce faces external context invoke
+",1,0,0,0,4992eea1f66e18d37b49ce72655adfc2d688a1e03f9969db389a6525b5e600af,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,cf767647279cb1e18a1974b7e25b0ef85cdbe8365b813a1d15750008a1d91a08,true,15,7,6,6,6,30,0,false,false,2,2,0,not_detected,6,0,0,0,3,0,0,14,caeddfea16e1f146a15b304dd49cac5261c4cee9890e6aec82d96b4980674188
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.HoldingData,HoldingData,class,false,"[DECLARATION]
+@Named
+@SessionScoped
+public class HoldingData implements Serializable {
+    BigDecimal getBasis();
+    BigDecimal getGain();
+    String getGainHTML();
+    Integer getHoldingID();
+    BigDecimal getMarketValue();
+    BigDecimal getPrice();
+    Date getPurchaseDate();
+    BigDecimal getPurchasePrice();
+    double getQuantity();
+    String getQuoteID();
+    void setBasis(BigDecimal);
+    void setGain(BigDecimal);
+    void setHoldingID(Integer);
+    void setMarketValue(BigDecimal);
+    void setPrice(BigDecimal);
+    void setPurchaseDate(Date);
+    void setPurchasePrice(BigDecimal);
+    void setQuantity(double);
+    void setQuoteID(String);
+}
+[METHOD_BODY]
+invoke basis gain gain html print invoke holding id market value price purchase date purchase price quantity quote id basis holding market value date quantity quote
+",19,2,1,0,131f1cf1232c928c000bc8040c9a36e9d7d9f3298ee74a78e5e7628be3bec3e5,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,0466b8b5e7e9bbbaec557b72974530d8e3a29c86c3ec24b22f32d026cbd120d4,true,133,61,26,26,26,168,0,false,false,20,20,0,not_detected,33,29,0,0,2,0,0,168,e521a82991a5ed8d8c08a722bf89c7ef7574d0937d74266e513f8e44c9413fd4
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.JSFLoginFilter,JSFLoginFilter,class,false,"[DECLARATION]
+@WebFilter
+public class JSFLoginFilter implements Filter {
+    void destroy();
+    void doFilter(ServletRequest, ServletResponse, FilterChain);
+    void init(FilterConfig);
+}
+[METHOD_BODY]
+invoke filter config destroy filter config branch jump invoke out uid bean home account portfolio quote order market summary jsf service user not logged welcome faces
+",3,1,1,0,797c79a46ea420a34c0d34106f01b02ead86d84f92868898af1a16ee2a715f57,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,215ce11132c1dc52980218c193843844db4457e16138bb64e44a2650e009350b,true,37,51,26,26,27,73,0,false,false,4,4,0,not_detected,3,14,0,0,31,16,9,123,036d8784973341aea0cc02093a54729ccc245992c0f83bcf05ee1fdafd96ddcb
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.LoginValidator,LoginValidator,class,false,"[DECLARATION]
+@FacesValidator
+public class LoginValidator implements Validator {
+    void validate(FacesContext, UIComponent, Object);
+}
+[METHOD_BODY]
+compile invoke login regex pattern invoke validate branch jump create pattern matcher severity error validator exception validating submitted login name username validation failed please provide
+",1,1,1,0,2dc1ea616cebb86e31d4ea5c62a979cbe1a70158779b29c18d998bfe57046225,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,c32c34c8b21acf508805d02f76b762068742452c7c38a20fcdfb1002531a68ca,true,24,39,25,25,25,58,0,false,false,3,3,0,not_detected,2,11,0,4,22,13,3,85,e92eda0a161bd0890a6e98361ec4817e21981156f77f8bc1fbe6f73cc71fbe25
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.MarketSummaryJSF,MarketSummaryJSF,class,false,"[DECLARATION]
+@Named
+@RequestScoped
+public class MarketSummaryJSF {
+    BigDecimal getGainPercent();
+    String getGainPercentHTML();
+    void getMarketSummary();
+    BigDecimal getOpenTSIA();
+    Date getSummaryDate();
+    BigDecimal getTSIA();
+    QuoteData[] getTopGainers();
+    QuoteData[] getTopLosers();
+    double getVolume();
+    void setGainPercent(BigDecimal);
+    void setOpenTSIA(BigDecimal);
+    void setSummaryDate(Date);
+    void setTSIA(BigDecimal);
+    void setTopGainers(QuoteData[]);
+    void setTopLosers(QuoteData[]);
+    void setVolume(double);
+}
+[METHOD_BODY]
+invoke gain percent gain percent html print invoke market summary create branch jump trade action open tsia summary date tsia top gainers top losers volume scale half up open date gainers losers volume
+",16,2,0,0,cc92a6267aedc16fa25f64cc3ce40a1478e5300dd82857588de6f3b23ffb6ab8,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,b993776901ea25956839514f9bc4167f25110ae7ce97e482fed6583815adc7a9,true,130,135,33,33,37,176,0,false,false,17,17,0,not_detected,35,32,0,0,50,0,0,330,6e47ed6f8b2f2e6ffdd13605a685f6206a1480f669593ac2ffadd2398a28215d
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.OrderData,OrderData,class,false,"[DECLARATION]
+public class OrderData {
+    Date getCompletionDate();
+    Date getOpenDate();
+    BigDecimal getOrderFee();
+    Integer getOrderID();
+    String getOrderStatus();
+    String getOrderType();
+    BigDecimal getPrice();
+    double getQuantity();
+    String getSymbol();
+    BigDecimal getTotal();
+    void setCompletionDate(Date);
+    void setOpenDate(Date);
+    void setOrderFee(BigDecimal);
+    void setOrderID(Integer);
+    void setOrderStatus(String);
+    void setOrderType(String);
+    void setPrice(BigDecimal);
+    void setQuantity(double);
+    void setSymbol(String);
+    void setTotal(BigDecimal);
+}
+[METHOD_BODY]
+invoke order id completion date open fee type status quantity symbol multiply invoke create order id completion date open fee type status quantity symbol price total price total
+",20,0,0,0,df4b88ff9aa4e9027502864b45d7850909033472896c96c106717e560275053e,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,f5d70a04f3e76bbc0a742b4be8eaffc786d4f03bb5cfc3bacc2ca4d129020d84,true,121,86,28,28,28,158,0,false,false,22,22,0,not_detected,33,62,0,0,5,0,0,290,88ef0644d62e268276ea6d022e0499b474b359a553baa8fa02badd5f229abfd7
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.OrderDataJSF,OrderDataJSF,class,false,"[DECLARATION]
+@Named
+public class OrderDataJSF {
+    void getAllOrder();
+    OrderData[] getAllOrders();
+    void getOrder();
+    OrderData getOrderData();
+    void setAllOrders(OrderData[]);
+    void setOrderData(OrderData);
+}
+[METHOD_BODY]
+invoke all order invoke branch jump create faces external context trade action uid bean all orders order data branch jump faces external context data orders
+",6,1,0,0,d52cb75cc502a886da2adf280a5804b5ac2fc7a7804f7721ba31bcb0c07c1406,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,6f6185d3d371430468e930cbf320195ff438ce3f8c518b352be7e58534216c13,true,49,98,25,25,25,83,0,false,false,7,7,0,not_detected,14,18,0,0,45,4,2,254,7de12cba91a3040cd2f9af4111277def817df40fa46f2cf7211ba4ee65af68c9
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.PortfolioJSF,PortfolioJSF,class,false,"[DECLARATION]
+@Named
+@RequestScoped
+public class PortfolioJSF {
+    BigDecimal getBalance();
+    HtmlDataTable getDataTable();
+    ArrayList getHoldingDatas();
+    BigDecimal getHoldingsTotal();
+    Integer getNumberHoldings();
+    BigDecimal getOpenBalance();
+    void getPortfolio();
+    BigDecimal getSumOfCashHoldings();
+    BigDecimal getTotalBasis();
+    BigDecimal getTotalGain();
+    BigDecimal getTotalGainPercent();
+    String getTotalGainPercentHTML();
+    BigDecimal getTotalValue();
+    String sell();
+    void setBalance(BigDecimal);
+    void setDataTable(HtmlDataTable);
+    void setHoldingDatas(ArrayList);
+    void setHoldingsTotal(BigDecimal);
+    void setNumberHoldings(Integer);
+    void setOpenBalance(BigDecimal);
+    void setSumOfCashHoldings(BigDecimal);
+    void setTotalBasis(BigDecimal);
+    void setTotalGain(BigDecimal);
+    void setTotalGainPercent(BigDecimal);
+    void setTotalValue(BigDecimal);
+}
+[METHOD_BODY]
+invoke create total gain value basis percent balance data table holding datas holdings total number holdings open balance portfolio print trace invoke branch create jump faces external context trade action number holding datas value basis gain uid bean sum cash percent html print sell attribute jump faces external context data table order processing mode uid bean open sum cash
+",25,2,0,0,0096b3b2d9377d0977aa9a447a1e853a1c2dab57358a0dbf346cb35c7f1b0f60,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,6d99cfe661cf7fb2d5f26e23b40798585d64319d63a530b9067da8b7ce6ea506,true,182,203,59,59,59,250,0,false,false,26,26,0,not_detected,59,99,0,0,85,7,4,593,cc8d7b191fee199b4a6719451ddb0d4c4bb0071fa25ea03df8126fb4018bba91
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.QuoteData,QuoteData,class,false,"[DECLARATION]
+public class QuoteData {
+    double getChange();
+    String getChangeHTML();
+    String getCompanyName();
+    BigDecimal getGain();
+    String getGainHTML();
+    BigDecimal getGainPercent();
+    String getGainPercentHTML();
+    BigDecimal getHigh();
+    BigDecimal getLow();
+    BigDecimal getOpen();
+    BigDecimal getPrice();
+    String getRange();
+    String getSymbol();
+    double getVolume();
+    void setChange(double);
+    void setCompanyName(String);
+    void setGain(BigDecimal);
+    void setGainPercent(BigDecimal);
+    void setHigh(BigDecimal);
+    void setLow(BigDecimal);
+    void setOpen(BigDecimal);
+    void setPrice(BigDecimal);
+    void setRange(String);
+    void setSymbol(String);
+    void setVolume(double);
+}
+[METHOD_BODY]
+value invoke open price symbol change scale invoke create open price symbol high low company name volume change range gain percent html string branch jump create arrowdown gif arrowup cmpg company name gain html print percent print high low range volume scale
+",25,0,0,0,784f7afddc85c9693a5ffe5153db201a0ffca0be85c926d542ae55cad3251af6,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,0f6f6049b9c714e355cf03efbec5f9e2883315049a6506c8fc8bc7ffc40be36d,true,146,147,42,42,45,200,0,false,false,27,27,0,not_detected,44,48,1,0,36,4,2,411,11b2ba965df40eb0dd634231e2452690c8078517b94c99be52b6850fd9a8c399
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.QuoteJSF,QuoteJSF,class,false,"[DECLARATION]
+@Named
+@RequestScoped
+public class QuoteJSF {
+    String buy();
+    void getAllQuotes();
+    HtmlDataTable getDataTable();
+    Integer getQuantity();
+    QuoteData[] getQuotes();
+    String getQuotesBySymbols();
+    String getSymbols();
+    void setDataTable(HtmlDataTable);
+    void setQuantity(Integer);
+    void setQuotes(QuoteData[]);
+    void setSymbols(String);
+}
+[METHOD_BODY]
+value invoke symbols quantity buy print trace invoke create jump faces external context data table trade action quantity order processing mode uid bean all quotes symbols data table quotes branch jump create faces external context trade action
+",11,2,0,0,2bb3b401ad058a8c05d31549135fe0a049a1846a80c017d15df29cce89762278,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,b0c3916f092940e14d25e45ab633463056cf3477245e18d2784f37cfc38c145b,true,80,141,37,37,37,126,0,false,false,12,12,0,not_detected,21,33,0,0,78,12,10,383,688845d4f058395b83119d2912e559c31c83edc4f8b82c6e31fa00d09aaa6588
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.TradeActionProducer,TradeActionProducer,class,false,"[DECLARATION]
+public class TradeActionProducer {
+    TradeAction produceTradeAction();
+}
+[METHOD_BODY]
+invoke produce trade action create invoke
+",1,0,0,0,ed406d161b3901cd21034ca7577df9b8e20a4851eca89a537b68c12b23d4e235,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,4277db18ed7ead0dbd11694747de529e6445a9913d4128db077bbcfc4995751a,true,14,6,6,6,6,29,0,false,false,2,2,0,not_detected,3,0,0,0,3,0,0,10,930044c29415831109b507d2ed04e39c5f38ddde4b0e3dbe4a619303b2d331bf
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.TradeAppJSF,TradeAppJSF,class,false,"[DECLARATION]
+@Named
+@SessionScoped
+public class TradeAppJSF implements Serializable {
+    String getAddress();
+    String getCcn();
+    String getCpassword();
+    String getEmail();
+    String getFullname();
+    String getMoney();
+    String getPassword();
+    String getResults();
+    String getUserID();
+    String login();
+    String logout();
+    String register();
+    void setAddress(String);
+    void setCcn(String);
+    void setCpassword(String);
+    void setEmail(String);
+    void setFullname(String);
+    void setMoney(String);
+    void setPassword(String);
+    void setResults(String);
+    void setUserID(String);
+    String updateProfile();
+}
+[METHOD_BODY]
+invoke user id password xxx address ccn cpassword email fullname money password results user id login results invoke branch jump create trade action faces external context pointer exception uid bean session creation date ready error finding account servlet entered bad username database not populated does exist could find welcome logout error create jump branch faces external context illegal trade servlet action information should exception string treating forwarding page logging out app jsf fowarding welcome request register print trace cpassword fullname address email ccn money registration operation your passwords did not match failed account has been created succeeded update profile print trace passwords match successful go invalid check database populated illegal information should string treating forwarding page
+",22,2,1,0,3fb06c7c383891bdf7aa5294672127e55b994980c62a3e03f4f8f45e89de88b2,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,2543e97405d6998464b4194d8e699a912bba4c764f3df5147a5d5682ada39c19,true,129,253,116,116,123,261,0,false,false,23,23,0,not_detected,31,89,1,6,124,154,44,748,19c70b99d3764d6b068fbb75ca5fa4560e8678decb9d8a6d2fea34a8587a1ab6
+daytrader,com.ibm.websphere.samples.daytrader.web.jsf.TradeConfigJSF,TradeConfigJSF,class,false,"[DECLARATION]
+@Named
+@RequestScoped
+public class TradeConfigJSF {
+    String buildDatabaseTables();
+    int getMarketSummaryInterval();
+    int getMaxQuotes();
+    int getMaxUsers();
+    String getOrderProcessingMode();
+    String[] getOrderProcessingModeList();
+    int getPercentSentToWebsocket();
+    int getPrimIterations();
+    String getResult();
+    String getRuntimeMode();
+    String[] getRuntimeModeList();
+    String getWebInterface();
+    String[] getWebInterfaceList();
+    boolean isActionTrace();
+    boolean isDisplayOrderAlerts();
+    boolean isLongRun();
+    boolean isPublishQuotePriceChange();
+    boolean isTrace();
+    boolean isUseRemoteEJBInterface();
+    String populateDatabase();
+    String resetTrade();
+    void setActionTrace(boolean);
+    void setDisplayOrderAlerts(boolean);
+    void setLongRun(boolean);
+    void setMarketSummaryInterval(int);
+    void setMaxUsers(int);
+    void setOrderProcessingMode(String);
+    void setOrderProcessingModeList(String[]);
+    void setPercentSentToWebsocket(int);
+    void setPrimIterations(int);
+    void setPublishQuotePriceChange(boolean);
+    void setResult(String);
+    void setRuntimeMode(String);
+    void setRuntimeModeList(String[]);
+    void setTrace(boolean);
+    void setUseRemoteEJBInterface(boolean);
+    void setWebInterface(String);
+    void setWebInterfaceList(String[]);
+    void setmaxQuotes(int);
+    void updateConfig();
+}
+[METHOD_BODY]
+trace invoke runtime mode order processing names max users quotes market summary interval web prim iterations percent sent websocket publish quote price change run display alerts use remote ejb action list result build database tables create invoke jump branch result out faces external context trade unable check db product name apache derby oracle ddl file path locate specified market summary interval max quotes users order processing mode list percent sent websocket prim iterations runtime web action trace display alerts run publish quote price change use remote ejb populate database string create jump out trade build day trader built reset error faces external context config completed successfully stats see log details setmax update config branch measure names trying set runtimemode jsf minor exception caught reverting current value configuration primitive streamer mdb trades day trader updated
+",40,2,0,0,f983718dfcb289792d2c8ea863a7ab8de2ecd3cbbf959acccc07197a9ad1babb,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,8ff43f56d896f403f186b666ae271e4414c1a4b52de2fb376f9ab5a24b364ad7,true,295,683,134,134,142,446,0,false,false,41,41,0,not_detected,98,232,3,0,303,125,44,1829,6e35d3efa044676c50f09391eef4b932d8d6851cb4bb8960d1f9a82101edb01f
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.ActionDecoder,ActionDecoder,class,false,"[DECLARATION]
+public class ActionDecoder implements Decoder$Text {
+    ActionMessage decode(String);
+    void destroy();
+    void init(EndpointConfig);
+    boolean willDecode(String);
+}
+[METHOD_BODY]
+invoke decode decoding invoke branch jump create action received destroy will decode
+",4,0,1,0,18cd5247e8e1dce98901450b2c17f75e3fc6345c96f005b580920325ab86ef83,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,4f1ade6b8ee5d528e11a33caab76f938b8f815c0d6abae7de7fee37ec0251965,true,33,25,12,12,12,54,0,false,false,6,5,1,compiler_synthetic_evidence,5,0,0,0,15,2,1,54,5cd42b7a7c47f0c7a72a2669011dfa52a55cb7d57c4123afaf680a7d2c142c57
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage,ActionMessage,class,false,"[DECLARATION]
+public class ActionMessage {
+    void doDecoding(String);
+    String getDecodedAction();
+}
+[METHOD_BODY]
+invoke decoded action decoding trace create invoke branch jump map javax json stream parser event decoded action failed
+",2,0,0,0,63907eb3e128a5a6338c51117b2a66ae6e7ab904d50c6827dde1681a199dd5e5,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,3948a340df804c01c2a4d36caa6994f81fbbb944ad6559b40402a81f8aed7b64,true,20,124,18,18,18,47,0,false,false,3,3,0,not_detected,4,17,1,0,48,15,6,231,fef17b68dc0e366e824978dfbb0fabf99fec393581f403454154863ba1f12b3b
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.ActionMessage$1,ActionMessage$1,class,false,"[DECLARATION]
+class ActionMessage$1 {
+}
+[METHOD_BODY]
+ordinal invoke measure create jump map javax json stream parser event key name value string
+",0,0,0,0,3046ec9f67aca466e214c1767ca7bc48960ce8ae9f67d0a08bed994c7089bf5b,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,57d3596e7f4560971733d7ac639f5f8ee8492847b62455152d3430a62e2994f9,true,7,16,15,15,15,31,0,false,false,1,1,0,not_detected,1,32,0,0,7,0,0,51,ebb54ba35ddb0395f8e3aeeb6519ff667229a120a1663bf0976433e9109501fd
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.JsonDecoder,JsonDecoder,class,false,"[DECLARATION]
+public class JsonDecoder implements Decoder$Text {
+    JsonMessage decode(String);
+    void destroy();
+    void init(EndpointConfig);
+    boolean willDecode(String);
+}
+[METHOD_BODY]
+invoke decode value create invoke key destroy will decode read object create
+",4,0,1,0,9388bc496d5007f16de4ccc69e1fbdda77cc25e651f350192667ddd7fd6cc1be,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,a14ca8dd66bf5ba6c61a10183b4bbe6b10c2380299efc4546a241e5b1b211835,true,33,27,12,12,12,54,0,false,false,6,5,1,compiler_synthetic_evidence,7,0,0,0,15,2,2,62,0a2f90df346ce2a1356c4cc24c13ef21ff699e9f1458d937ac99e607e4efbfdd
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.JsonEncoder,JsonEncoder,class,false,"[DECLARATION]
+public class JsonEncoder implements Encoder$Text {
+    void destroy();
+    String encode(JsonMessage);
+    void init(EndpointConfig);
+}
+[METHOD_BODY]
+invoke destroy encode string invoke key value
+",3,0,1,0,480ba5e8fdbe7ed488b0055e0514637f1febea51755da7a8d9026abef0f0872f,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,8a52a7f6c1e9e8da7cae8cd162c74e475575194bbcf2ba88398274f666631d5b,true,27,16,7,7,7,43,0,false,false,5,4,1,compiler_synthetic_evidence,3,0,0,0,8,2,2,40,11d723818df1096dbcd2fa1d5381e3b90d8fc636544b8f9d691d38f5548b12f1
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage,JsonMessage,class,false,"[DECLARATION]
+public class JsonMessage {
+    String getKey();
+    String getValue();
+    void setKey(String);
+    void setValue(String);
+}
+[METHOD_BODY]
+invoke key value key value
+",4,0,0,0,7e83cd6c22872661d1d1686faf5bd3b85b0e04c90d4b31edf5bacd2f5a1969a8,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,f10472ed6aed19b4467a0a35a2aa3bdd56cd871b00c8e724bfce2026fc86d7a5,true,25,14,5,5,5,39,0,false,false,5,5,0,not_detected,4,4,0,0,1,0,0,34,017c6d20e6d1fc635b1c34ee802ee47e403632110cbadeef1a4f7c2f1328facd
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.MarketSummaryWebSocket,MarketSummaryWebSocket,class,false,"[DECLARATION]
+@ServerEndpoint
+public class MarketSummaryWebSocket {
+    JsonObject mergeJsonObjects(JsonObject, JsonObject);
+    void onClose(Session, CloseReason);
+    void onError(Throwable, Session);
+    void onJMSMessage(Message);
+    void onOpen(Session, EndpointConfig);
+    void sendMarketSummary(ActionMessage, Session);
+    void sendRecentQuotePriceChangeList();
+    void startScheduler();
+}
+[METHOD_BODY]
+parse create invoke sessions scheduler period send recent quote price change list dt ws invoke create latch merge json objects build branch jump close cancel branch jump sessions scheduler market summary web session entermonitor exitmonitor error print trace market summary web session jms message add stock change send recent quote price list open count down latch start entermonitor exitmonitor print trace received update sending has next start schedule fixed rate managed scheduled executor service period seconds
+",8,1,0,0,9bc28b524160b64c6b70149c473a2b4343e3f0cd763b060a97b1054f2a63c207,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,42fefb8b53ecc2359f5423ab59cffee8913b55d5b0d00df1c0ce653deb24cc18,true,77,263,76,76,81,167,0,false,false,11,10,1,compiler_synthetic_evidence,36,42,20,0,176,60,12,630,51f41863e4945ab28e4937eed0d06f63354f2954354406296f3489511cf2dc95
+daytrader,com.ibm.websphere.samples.daytrader.web.websocket.RecentStockChangeList,RecentStockChangeList,class,false,"[DECLARATION]
+public class RecentStockChangeList {
+    void addStockChange(Message);
+    boolean isEmpty();
+    JsonObject stockChangesInJSON();
+}
+[METHOD_BODY]
+list create invoke stock changes invoke add stock change remove branch changes empty json build create branch jump half up change symbol price old
+",3,0,0,0,5071e4f2e055b6e15304f3648f7cce6c3e0031eacf2a937940d46554782d8d2f,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/daytrader_class_declarations.csv,b4860350bc65e6239834b818fd997477629adef4ff8f10d9cd66ff41a1b5b0ac,a6d05df62b71da261fa4f3333e72b68393e336d74865b338eee45d0dfc077202,true,26,96,24,24,24,59,0,false,false,5,5,0,not_detected,11,14,1,0,58,11,10,216,4ac7efd154fbaca36f266a449b29806a552eb6e740ba87e31ac4ff3630d740be
