@@ -118,21 +118,29 @@ def git_head() -> str:
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
 
 
-def output_dir(subject: str, root: Path = ROOT) -> Path:
+def output_dir(subject: str, root: Path = ROOT, seed: int = 0) -> Path:
     if subject not in SUBJECTS:
         raise ValueError(f"unknown subject: {subject}")
-    path = root / "results" / subject / STAGE3B_RESULT_PART / "validation" / "seed_00"
+    if not 0 <= int(seed) <= 29:
+        raise ValueError("Stage 3B formal seed must be in the range 0..29")
+    run_layer = "validation" if int(seed) == 0 else "formal"
+    path = root / "results" / subject / STAGE3B_RESULT_PART / run_layer / f"seed_{int(seed):02d}"
     if root.resolve() == ROOT.resolve():
         assert_stage3b_write_path(path, kind="optimizer result")
     elif path.resolve().is_relative_to(ROOT.resolve()):
         raise ValueError("reproduction output must be outside the repository")
-    if "04_stage3_semantic" in str(path) or "/formal/" in str(path):
+    if "04_stage3_semantic" in str(path):
         raise ValueError(f"Stage 3B output crosses frozen namespace: {path}")
     return path
 
 
-def validate_seed(seed: int) -> None:
-    if int(seed) != 0:
+def validate_seed(seed: int, *, allow_formal: bool = False) -> None:
+    seed = int(seed)
+    if not 0 <= seed <= 29:
+        raise ValueError("Stage 3B seed must be in the range 0..29")
+    if allow_formal and seed == 0:
+        raise ValueError("formal runner refuses to rerun authoritative validation seed 0")
+    if not allow_formal and seed != 0:
         raise ValueError("this adapter is restricted to validation seed 0")
 
 
@@ -347,8 +355,15 @@ def _artifact_hashes(output: Path, identity: dict[str, Any]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def run_seed(subject: str, seed: int, destination: Path, run_type: str = "validation") -> Path:
-    validate_seed(seed)
+def run_seed(
+    subject: str,
+    seed: int,
+    destination: Path,
+    run_type: str = "validation",
+    *,
+    allow_formal: bool = False,
+) -> Path:
+    validate_seed(seed, allow_formal=allow_formal)
     context = load_context(subject)
     destination = Path(destination)
     if destination.exists() and any(destination.iterdir()):
@@ -379,7 +394,7 @@ def run_seed(subject: str, seed: int, destination: Path, run_type: str = "valida
     labels, f_values, constraints, front_diagnostics = stage3a._front_arrays(result)
     pareto_rows, label_rows, posthoc_rows = stage3a._solution_rows(context, seed, labels, f_values, constraints, seed_records)
     if not pareto_rows:
-        raise ValueError(f"{subject}: seed 0 produced an empty four-objective front")
+        raise ValueError(f"{subject}: seed {seed} produced an empty four-objective front")
     projected_rows, selected_list = stage3a._project_front(pareto_rows, posthoc_rows)
     selected = selected_list[0]
     selected_original = next(row for row in pareto_rows if row["solution_id"] == selected["solution_id"])
@@ -480,9 +495,16 @@ def main() -> int:
     parser.add_argument("--subject", required=True, choices=SUBJECTS)
     parser.add_argument("--seed", required=True, type=int)
     parser.add_argument("--output-dir", required=True, type=Path)
+    parser.add_argument("--run-type", default="validation", choices=["validation", "formal"])
     args = parser.parse_args()
-    path = run_seed(args.subject, args.seed, args.output_dir)
-    print(f"Stage 3B seed-0 output: {path}")
+    path = run_seed(
+        args.subject,
+        args.seed,
+        args.output_dir,
+        run_type=args.run_type,
+        allow_formal=args.run_type == "formal",
+    )
+    print(f"Stage 3B {args.run_type} output: {path}")
     return 0
 
 
