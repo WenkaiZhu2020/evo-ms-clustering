@@ -1,0 +1,14 @@
+{
+  "implementation": "experiments/02_stage2_nsga_structure_only/run.py:_hypervolume",
+  "bounds_source": "configs/experiments/stage2_robustness_bounds.yml",
+  "reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "stored_value": 0.1408523919579567,
+  "recomputed_value": 0.14085239195795668,
+  "absolute_difference": 2.7755575615628914e-17,
+  "tolerance": 1e-12,
+  "pass": true
+}

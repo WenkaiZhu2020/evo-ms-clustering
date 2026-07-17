@@ -1,0 +1,4141 @@
+{
+  "selected_solution_id": "seed3_solution009",
+  "selected_projected_row": {
+    "subject": "xerces",
+    "seed": 3,
+    "solution_id": "seed3_solution009",
+    "original_solution_id": "seed3_solution009",
+    "coupling": 0.20879942487419123,
+    "cohesion": 8.068765336183423,
+    "imbalance": 1.314526165589089,
+    "original_f_semantic": 0.3839798991466712,
+    "pymoo_f0_coupling": 0.20879942487419123,
+    "pymoo_f1_negative_cohesion": -8.068765336183423,
+    "pymoo_f2_imbalance": 1.314526165589089,
+    "feasible": true,
+    "is_injected_seed": true,
+    "label_vector": "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 6, 0, 0, 0, 5, 5, 5, 1, 1, 7, 0, 8, 7, 7, 7, 7, 7, 1, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 3, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 1, 1, 7, 7, 1, 7, 7, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 3, 7, 1, 1, 7, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 1, 9, 1, 1, 1, 1, 10, 1, 10, 11, 12, 12, 10, 12, 12, 12, 12, 12, 12, 12, 12, 12, 4, 11, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 11, 11, 10, 11, 11, 11, 11, 11, 11, 10, 11, 11, 11, 11, 11, 1, 10, 11, 11, 11, 11, 11, 11, 10, 10, 10, 10, 10, 10, 11, 10, 10, 10, 11, 11, 11, 7, 7, 7, 7, 7, 7, 1, 4, 4, 1, 4, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 4, 4, 3, 4, 10, 10, 10, 10, 10, 10, 2, 15, 10, 10, 10, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 3, 10, 1, 10, 10, 10, 10, 10, 10, 4, 4, 13, 4, 4, 4, 4, 4, 13, 4, 4, 4, 9, 9, 10, 9, 9, 9, 9, 4, 9, 9, 9, 16, 16, 16, 16, 16, 1, 16, 16, 16, 16, 16, 16, 16, 1, 16, 10, 10, 10, 2, 10, 16, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 3, 16, 3, 10, 10, 10, 10, 10, 10, 10, 4, 10, 4, 10, 10, 10, 10, 10, 3, 10, 10, 10, 10, 10, 10, 10, 10, 10, 16, 16, 16, 16, 1, 1, 3, 1, 1, 1, 1, 16, 16, 16, 1, 1, 1, 17, 17, 17, 17, 17, 17, 17, 17, 3, 2, 1, 0, 2, 2, 3, 3, 16, 3, 3, 3, 3, 3, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4, 16, 16, 16, 16, 16, 16, 16, 16, 3, 3, 3, 3, 3, 16, 16, 0, 18, 16, 1, 16, 1, 1, 3, 3, 3, 3, 16, 16, 1, 1, 19, 1, 1, 1, 1, 3, 3, 16, 3, 3, 3, 3, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 3, 3, 16, 3, 3, 16, 1, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 1, 21, 21, 21, 21, 21, 3, 16, 22, 3, 10, 10, 17, 16, 2, 3, 16, 1, 16, 16, 3, 1, 16, 16, 7, 2, 2, 1, 2, 3, 2, 16, 3, 2, 2, 2, 2, 3, 16, 10, 10, 2, 2, 2, 7, 7, 7, 7, 7, 7, 7, 3, 22, 3, 3, 16, 3, 7, 23, 1, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 16, 1, 7, 16, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 3, 1, 3, 16, 16, 1, 2, 2, 2, 2, 1, 16, 1, 1, 1, 1, 2, 1, 1, 4, 4, 4, 3, 16, 4, 4, 10, 10, 10, 10, 10, 25, 10, 4, 10, 10, 4, 3, 3, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 10, 11, 10, 11, 11, 11, 11, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 26, 27, 28, 28, 2, 29, 30, 2, 28, 28, 28, 28, 28, 28, 28, 28, 28, 2, 2, 2, 2, 2, 2, 2]",
+    "selection_rule": "highest_weighted_modularity_among_feasible_pareto_solutions",
+    "selected_weighted_modularity": 0.6615191429343901,
+    "selected_cluster_count": 31,
+    "selected_max_cluster_ratio": 0.14496314496314497,
+    "selected_singleton_ratio": 0.013513513513513514
+  },
+  "selected_four_objective_row": {
+    "subject": "xerces",
+    "seed": 3,
+    "solution_id": "seed3_solution009",
+    "coupling": 0.20879942487419123,
+    "cohesion": 8.068765336183423,
+    "imbalance": 1.314526165589089,
+    "f_semantic": 0.3839798991466712,
+    "pymoo_f0_coupling": 0.20879942487419123,
+    "pymoo_f1_negative_cohesion": -8.068765336183423,
+    "pymoo_f2_imbalance": 1.314526165589089,
+    "pymoo_f3_f_semantic": 0.3839798991466712,
+    "feasible": true,
+    "is_injected_seed": true,
+    "injected_seed_name": "raw_leiden",
+    "injected_seed_category": "raw_leiden",
+    "label_vector": "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 6, 0, 0, 0, 5, 5, 5, 1, 1, 7, 0, 8, 7, 7, 7, 7, 7, 1, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 3, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 1, 1, 7, 7, 1, 7, 7, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 3, 7, 1, 1, 7, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 1, 9, 1, 1, 1, 1, 10, 1, 10, 11, 12, 12, 10, 12, 12, 12, 12, 12, 12, 12, 12, 12, 4, 11, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 11, 11, 10, 11, 11, 11, 11, 11, 11, 10, 11, 11, 11, 11, 11, 1, 10, 11, 11, 11, 11, 11, 11, 10, 10, 10, 10, 10, 10, 11, 10, 10, 10, 11, 11, 11, 7, 7, 7, 7, 7, 7, 1, 4, 4, 1, 4, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 4, 4, 3, 4, 10, 10, 10, 10, 10, 10, 2, 15, 10, 10, 10, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 3, 10, 1, 10, 10, 10, 10, 10, 10, 4, 4, 13, 4, 4, 4, 4, 4, 13, 4, 4, 4, 9, 9, 10, 9, 9, 9, 9, 4, 9, 9, 9, 16, 16, 16, 16, 16, 1, 16, 16, 16, 16, 16, 16, 16, 1, 16, 10, 10, 10, 2, 10, 16, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 3, 16, 3, 10, 10, 10, 10, 10, 10, 10, 4, 10, 4, 10, 10, 10, 10, 10, 3, 10, 10, 10, 10, 10, 10, 10, 10, 10, 16, 16, 16, 16, 1, 1, 3, 1, 1, 1, 1, 16, 16, 16, 1, 1, 1, 17, 17, 17, 17, 17, 17, 17, 17, 3, 2, 1, 0, 2, 2, 3, 3, 16, 3, 3, 3, 3, 3, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4, 16, 16, 16, 16, 16, 16, 16, 16, 3, 3, 3, 3, 3, 16, 16, 0, 18, 16, 1, 16, 1, 1, 3, 3, 3, 3, 16, 16, 1, 1, 19, 1, 1, 1, 1, 3, 3, 16, 3, 3, 3, 3, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 3, 3, 16, 3, 3, 16, 1, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 1, 21, 21, 21, 21, 21, 3, 16, 22, 3, 10, 10, 17, 16, 2, 3, 16, 1, 16, 16, 3, 1, 16, 16, 7, 2, 2, 1, 2, 3, 2, 16, 3, 2, 2, 2, 2, 3, 16, 10, 10, 2, 2, 2, 7, 7, 7, 7, 7, 7, 7, 3, 22, 3, 3, 16, 3, 7, 23, 1, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 16, 1, 7, 16, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 3, 1, 3, 16, 16, 1, 2, 2, 2, 2, 1, 16, 1, 1, 1, 1, 2, 1, 1, 4, 4, 4, 3, 16, 4, 4, 10, 10, 10, 10, 10, 25, 10, 4, 10, 10, 4, 3, 3, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 10, 11, 10, 11, 11, 11, 11, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 26, 27, 28, 28, 2, 29, 30, 2, 28, 28, 28, 28, 28, 28, 28, 28, 28, 2, 2, 2, 2, 2, 2, 2]"
+  },
+  "selected_posthoc_metrics": {
+    "subject": "xerces",
+    "seed": 3,
+    "solution_id": "seed3_solution009",
+    "weighted_modularity": 0.6615191429343901,
+    "internal_edge_weight_ratio": 0.7912005751258088,
+    "internal_external_edge_ratio": 3.789285222421154,
+    "cluster_count": 31,
+    "average_cluster_size": 26.258064516129032,
+    "max_cluster_size": 118,
+    "min_cluster_size": 1,
+    "max_cluster_ratio": 0.14496314496314497,
+    "singleton_ratio": 0.013513513513513514,
+    "cluster_size_cv": 1.314526165589089,
+    "cluster_size_distribution": "{\"1\": 11, \"100\": 1, \"11\": 4, \"112\": 1, \"118\": 1, \"16\": 1, \"2\": 1, \"23\": 1, \"34\": 1, \"4\": 1, \"46\": 2, \"5\": 1, \"55\": 1, \"56\": 1, \"62\": 1, \"71\": 1, \"9\": 1}"
+  },
+  "selected_partition": [
+    {
+      "class_id": "org.apache.xerces.dom.ASDOMImplementationImpl",
+      "class_name": "org.apache.xerces.dom.ASDOMImplementationImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ASModelImpl",
+      "class_name": "org.apache.xerces.dom.ASModelImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.AttrImpl",
+      "class_name": "org.apache.xerces.dom.AttrImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.AttrNSImpl",
+      "class_name": "org.apache.xerces.dom.AttrNSImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.AttributeMap",
+      "class_name": "org.apache.xerces.dom.AttributeMap",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.CDATASectionImpl",
+      "class_name": "org.apache.xerces.dom.CDATASectionImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.CharacterDataImpl",
+      "class_name": "org.apache.xerces.dom.CharacterDataImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.CharacterDataImpl$1",
+      "class_name": "org.apache.xerces.dom.CharacterDataImpl$1",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ChildNode",
+      "class_name": "org.apache.xerces.dom.ChildNode",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.CommentImpl",
+      "class_name": "org.apache.xerces.dom.CommentImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.CoreDOMImplementationImpl",
+      "class_name": "org.apache.xerces.dom.CoreDOMImplementationImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.CoreDOMImplementationImpl$RevalidationHandlerHolder",
+      "class_name": "org.apache.xerces.dom.CoreDOMImplementationImpl$RevalidationHandlerHolder",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.CoreDOMImplementationImpl$XMLDTDLoaderHolder",
+      "class_name": "org.apache.xerces.dom.CoreDOMImplementationImpl$XMLDTDLoaderHolder",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.CoreDocumentImpl",
+      "class_name": "org.apache.xerces.dom.CoreDocumentImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMConfigurationImpl",
+      "class_name": "org.apache.xerces.dom.DOMConfigurationImpl",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMErrorImpl",
+      "class_name": "org.apache.xerces.dom.DOMErrorImpl",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMImplementationImpl",
+      "class_name": "org.apache.xerces.dom.DOMImplementationImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMImplementationListImpl",
+      "class_name": "org.apache.xerces.dom.DOMImplementationListImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMImplementationSourceImpl",
+      "class_name": "org.apache.xerces.dom.DOMImplementationSourceImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMInputImpl",
+      "class_name": "org.apache.xerces.dom.DOMInputImpl",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMLocatorImpl",
+      "class_name": "org.apache.xerces.dom.DOMLocatorImpl",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMMessageFormatter",
+      "class_name": "org.apache.xerces.dom.DOMMessageFormatter",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMNormalizer",
+      "class_name": "org.apache.xerces.dom.DOMNormalizer",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMNormalizer$1",
+      "class_name": "org.apache.xerces.dom.DOMNormalizer$1",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMNormalizer$XMLAttributesProxy",
+      "class_name": "org.apache.xerces.dom.DOMNormalizer$XMLAttributesProxy",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMOutputImpl",
+      "class_name": "org.apache.xerces.dom.DOMOutputImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMStringListImpl",
+      "class_name": "org.apache.xerces.dom.DOMStringListImpl",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DOMXSImplementationSourceImpl",
+      "class_name": "org.apache.xerces.dom.DOMXSImplementationSourceImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeepNodeListImpl",
+      "class_name": "org.apache.xerces.dom.DeepNodeListImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredAttrImpl",
+      "class_name": "org.apache.xerces.dom.DeferredAttrImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredAttrNSImpl",
+      "class_name": "org.apache.xerces.dom.DeferredAttrNSImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredCDATASectionImpl",
+      "class_name": "org.apache.xerces.dom.DeferredCDATASectionImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredCommentImpl",
+      "class_name": "org.apache.xerces.dom.DeferredCommentImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredDOMImplementationImpl",
+      "class_name": "org.apache.xerces.dom.DeferredDOMImplementationImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredDocumentImpl",
+      "class_name": "org.apache.xerces.dom.DeferredDocumentImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredDocumentImpl$IntVector",
+      "class_name": "org.apache.xerces.dom.DeferredDocumentImpl$IntVector",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredDocumentImpl$RefCount",
+      "class_name": "org.apache.xerces.dom.DeferredDocumentImpl$RefCount",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredDocumentTypeImpl",
+      "class_name": "org.apache.xerces.dom.DeferredDocumentTypeImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredElementDefinitionImpl",
+      "class_name": "org.apache.xerces.dom.DeferredElementDefinitionImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredElementImpl",
+      "class_name": "org.apache.xerces.dom.DeferredElementImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredElementNSImpl",
+      "class_name": "org.apache.xerces.dom.DeferredElementNSImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredEntityImpl",
+      "class_name": "org.apache.xerces.dom.DeferredEntityImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredEntityReferenceImpl",
+      "class_name": "org.apache.xerces.dom.DeferredEntityReferenceImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredNode",
+      "class_name": "org.apache.xerces.dom.DeferredNode",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredNotationImpl",
+      "class_name": "org.apache.xerces.dom.DeferredNotationImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredProcessingInstructionImpl",
+      "class_name": "org.apache.xerces.dom.DeferredProcessingInstructionImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DeferredTextImpl",
+      "class_name": "org.apache.xerces.dom.DeferredTextImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DocumentFragmentImpl",
+      "class_name": "org.apache.xerces.dom.DocumentFragmentImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DocumentImpl",
+      "class_name": "org.apache.xerces.dom.DocumentImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DocumentImpl$EnclosingAttr",
+      "class_name": "org.apache.xerces.dom.DocumentImpl$EnclosingAttr",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DocumentImpl$LEntry",
+      "class_name": "org.apache.xerces.dom.DocumentImpl$LEntry",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.DocumentTypeImpl",
+      "class_name": "org.apache.xerces.dom.DocumentTypeImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ElementDefinitionImpl",
+      "class_name": "org.apache.xerces.dom.ElementDefinitionImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ElementImpl",
+      "class_name": "org.apache.xerces.dom.ElementImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ElementNSImpl",
+      "class_name": "org.apache.xerces.dom.ElementNSImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.EntityImpl",
+      "class_name": "org.apache.xerces.dom.EntityImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.EntityReferenceImpl",
+      "class_name": "org.apache.xerces.dom.EntityReferenceImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.LCount",
+      "class_name": "org.apache.xerces.dom.LCount",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.NamedNodeMapImpl",
+      "class_name": "org.apache.xerces.dom.NamedNodeMapImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.NodeImpl",
+      "class_name": "org.apache.xerces.dom.NodeImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.NodeIteratorImpl",
+      "class_name": "org.apache.xerces.dom.NodeIteratorImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.NodeListCache",
+      "class_name": "org.apache.xerces.dom.NodeListCache",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.NotationImpl",
+      "class_name": "org.apache.xerces.dom.NotationImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ObjectFactory",
+      "class_name": "org.apache.xerces.dom.ObjectFactory",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ObjectFactory$ConfigurationError",
+      "class_name": "org.apache.xerces.dom.ObjectFactory$ConfigurationError",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.PSVIAttrNSImpl",
+      "class_name": "org.apache.xerces.dom.PSVIAttrNSImpl",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.dom.PSVIDOMImplementationImpl",
+      "class_name": "org.apache.xerces.dom.PSVIDOMImplementationImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.PSVIDocumentImpl",
+      "class_name": "org.apache.xerces.dom.PSVIDocumentImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.PSVIElementNSImpl",
+      "class_name": "org.apache.xerces.dom.PSVIElementNSImpl",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ParentNode",
+      "class_name": "org.apache.xerces.dom.ParentNode",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ParentNode$1",
+      "class_name": "org.apache.xerces.dom.ParentNode$1",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ParentNode$UserDataRecord",
+      "class_name": "org.apache.xerces.dom.ParentNode$UserDataRecord",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.ProcessingInstructionImpl",
+      "class_name": "org.apache.xerces.dom.ProcessingInstructionImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.RangeExceptionImpl",
+      "class_name": "org.apache.xerces.dom.RangeExceptionImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.RangeImpl",
+      "class_name": "org.apache.xerces.dom.RangeImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport",
+      "class_name": "org.apache.xerces.dom.SecuritySupport",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport$1",
+      "class_name": "org.apache.xerces.dom.SecuritySupport$1",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport$2",
+      "class_name": "org.apache.xerces.dom.SecuritySupport$2",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport$3",
+      "class_name": "org.apache.xerces.dom.SecuritySupport$3",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport$4",
+      "class_name": "org.apache.xerces.dom.SecuritySupport$4",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport$5",
+      "class_name": "org.apache.xerces.dom.SecuritySupport$5",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport$6",
+      "class_name": "org.apache.xerces.dom.SecuritySupport$6",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport$7",
+      "class_name": "org.apache.xerces.dom.SecuritySupport$7",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.SecuritySupport$8",
+      "class_name": "org.apache.xerces.dom.SecuritySupport$8",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.TextImpl",
+      "class_name": "org.apache.xerces.dom.TextImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.TreeWalkerImpl",
+      "class_name": "org.apache.xerces.dom.TreeWalkerImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.events.EventImpl",
+      "class_name": "org.apache.xerces.dom.events.EventImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.events.MouseEventImpl",
+      "class_name": "org.apache.xerces.dom.events.MouseEventImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.events.MutationEventImpl",
+      "class_name": "org.apache.xerces.dom.events.MutationEventImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom.events.UIEventImpl",
+      "class_name": "org.apache.xerces.dom.events.UIEventImpl",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASAttributeDeclaration",
+      "class_name": "org.apache.xerces.dom3.as.ASAttributeDeclaration",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASContentModel",
+      "class_name": "org.apache.xerces.dom3.as.ASContentModel",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASDataType",
+      "class_name": "org.apache.xerces.dom3.as.ASDataType",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASElementDeclaration",
+      "class_name": "org.apache.xerces.dom3.as.ASElementDeclaration",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASEntityDeclaration",
+      "class_name": "org.apache.xerces.dom3.as.ASEntityDeclaration",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASModel",
+      "class_name": "org.apache.xerces.dom3.as.ASModel",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASNamedObjectMap",
+      "class_name": "org.apache.xerces.dom3.as.ASNamedObjectMap",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASNotationDeclaration",
+      "class_name": "org.apache.xerces.dom3.as.ASNotationDeclaration",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASObject",
+      "class_name": "org.apache.xerces.dom3.as.ASObject",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ASObjectList",
+      "class_name": "org.apache.xerces.dom3.as.ASObjectList",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.CharacterDataEditAS",
+      "class_name": "org.apache.xerces.dom3.as.CharacterDataEditAS",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.DOMASBuilder",
+      "class_name": "org.apache.xerces.dom3.as.DOMASBuilder",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.DOMASException",
+      "class_name": "org.apache.xerces.dom3.as.DOMASException",
+      "cluster_id": 6
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.DOMASWriter",
+      "class_name": "org.apache.xerces.dom3.as.DOMASWriter",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.DOMImplementationAS",
+      "class_name": "org.apache.xerces.dom3.as.DOMImplementationAS",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.DocumentAS",
+      "class_name": "org.apache.xerces.dom3.as.DocumentAS",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.DocumentEditAS",
+      "class_name": "org.apache.xerces.dom3.as.DocumentEditAS",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.ElementEditAS",
+      "class_name": "org.apache.xerces.dom3.as.ElementEditAS",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.apache.xerces.dom3.as.NodeEditAS",
+      "class_name": "org.apache.xerces.dom3.as.NodeEditAS",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.apache.xerces.impl.Constants",
+      "class_name": "org.apache.xerces.impl.Constants",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.Constants$ArrayEnumeration",
+      "class_name": "org.apache.xerces.impl.Constants$ArrayEnumeration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.ExternalSubsetResolver",
+      "class_name": "org.apache.xerces.impl.ExternalSubsetResolver",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.RevalidationHandler",
+      "class_name": "org.apache.xerces.impl.RevalidationHandler",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.impl.Version",
+      "class_name": "org.apache.xerces.impl.Version",
+      "cluster_id": 8
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XML11DTDScannerImpl",
+      "class_name": "org.apache.xerces.impl.XML11DTDScannerImpl",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XML11DocumentScannerImpl",
+      "class_name": "org.apache.xerces.impl.XML11DocumentScannerImpl",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XML11EntityScanner",
+      "class_name": "org.apache.xerces.impl.XML11EntityScanner",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XML11NSDocumentScannerImpl",
+      "class_name": "org.apache.xerces.impl.XML11NSDocumentScannerImpl",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XML11NSDocumentScannerImpl$NS11ContentDispatcher",
+      "class_name": "org.apache.xerces.impl.XML11NSDocumentScannerImpl$NS11ContentDispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XML11NamespaceBinder",
+      "class_name": "org.apache.xerces.impl.XML11NamespaceBinder",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDTDScannerImpl",
+      "class_name": "org.apache.xerces.impl.XMLDTDScannerImpl",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentFragmentScannerImpl",
+      "class_name": "org.apache.xerces.impl.XMLDocumentFragmentScannerImpl",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$Dispatcher",
+      "class_name": "org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$Dispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$ElementStack",
+      "class_name": "org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$ElementStack",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher",
+      "class_name": "org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentScannerImpl",
+      "class_name": "org.apache.xerces.impl.XMLDocumentScannerImpl",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentScannerImpl$ContentDispatcher",
+      "class_name": "org.apache.xerces.impl.XMLDocumentScannerImpl$ContentDispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentScannerImpl$DTDDispatcher",
+      "class_name": "org.apache.xerces.impl.XMLDocumentScannerImpl$DTDDispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentScannerImpl$PrologDispatcher",
+      "class_name": "org.apache.xerces.impl.XMLDocumentScannerImpl$PrologDispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentScannerImpl$TrailingMiscDispatcher",
+      "class_name": "org.apache.xerces.impl.XMLDocumentScannerImpl$TrailingMiscDispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLDocumentScannerImpl$XMLDeclDispatcher",
+      "class_name": "org.apache.xerces.impl.XMLDocumentScannerImpl$XMLDeclDispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityDescription",
+      "class_name": "org.apache.xerces.impl.XMLEntityDescription",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityHandler",
+      "class_name": "org.apache.xerces.impl.XMLEntityHandler",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$1",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$1",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$ByteBufferPool",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$ByteBufferPool",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$CharacterBuffer",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$CharacterBuffer",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$CharacterBufferPool",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$CharacterBufferPool",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$EncodingInfo",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$EncodingInfo",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$Entity",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$Entity",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$ExternalEntity",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$ExternalEntity",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$InternalEntity",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$InternalEntity",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$RewindableInputStream",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$RewindableInputStream",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityManager$ScannedEntity",
+      "class_name": "org.apache.xerces.impl.XMLEntityManager$ScannedEntity",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityScanner",
+      "class_name": "org.apache.xerces.impl.XMLEntityScanner",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLEntityScanner$1",
+      "class_name": "org.apache.xerces.impl.XMLEntityScanner$1",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLErrorReporter",
+      "class_name": "org.apache.xerces.impl.XMLErrorReporter",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLErrorReporter$1",
+      "class_name": "org.apache.xerces.impl.XMLErrorReporter$1",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLNSDocumentScannerImpl",
+      "class_name": "org.apache.xerces.impl.XMLNSDocumentScannerImpl",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher",
+      "class_name": "org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLNamespaceBinder",
+      "class_name": "org.apache.xerces.impl.XMLNamespaceBinder",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLScanner",
+      "class_name": "org.apache.xerces.impl.XMLScanner",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.XMLVersionDetector",
+      "class_name": "org.apache.xerces.impl.XMLVersionDetector",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.BalancedDTDGrammar",
+      "class_name": "org.apache.xerces.impl.dtd.BalancedDTDGrammar",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.DTDGrammar",
+      "class_name": "org.apache.xerces.impl.dtd.DTDGrammar",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.DTDGrammar$ChildrenList",
+      "class_name": "org.apache.xerces.impl.dtd.DTDGrammar$ChildrenList",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.DTDGrammar$QNameHashtable",
+      "class_name": "org.apache.xerces.impl.dtd.DTDGrammar$QNameHashtable",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.DTDGrammar$QNameHashtable$PrimeNumberSequenceGenerator",
+      "class_name": "org.apache.xerces.impl.dtd.DTDGrammar$QNameHashtable$PrimeNumberSequenceGenerator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.DTDGrammarBucket",
+      "class_name": "org.apache.xerces.impl.dtd.DTDGrammarBucket",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XML11DTDProcessor",
+      "class_name": "org.apache.xerces.impl.dtd.XML11DTDProcessor",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XML11DTDValidator",
+      "class_name": "org.apache.xerces.impl.dtd.XML11DTDValidator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XML11NSDTDValidator",
+      "class_name": "org.apache.xerces.impl.dtd.XML11NSDTDValidator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLAttributeDecl",
+      "class_name": "org.apache.xerces.impl.dtd.XMLAttributeDecl",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLContentSpec",
+      "class_name": "org.apache.xerces.impl.dtd.XMLContentSpec",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLContentSpec$Provider",
+      "class_name": "org.apache.xerces.impl.dtd.XMLContentSpec$Provider",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLDTDDescription",
+      "class_name": "org.apache.xerces.impl.dtd.XMLDTDDescription",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLDTDLoader",
+      "class_name": "org.apache.xerces.impl.dtd.XMLDTDLoader",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLDTDProcessor",
+      "class_name": "org.apache.xerces.impl.dtd.XMLDTDProcessor",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLDTDValidator",
+      "class_name": "org.apache.xerces.impl.dtd.XMLDTDValidator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLDTDValidatorFilter",
+      "class_name": "org.apache.xerces.impl.dtd.XMLDTDValidatorFilter",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLElementDecl",
+      "class_name": "org.apache.xerces.impl.dtd.XMLElementDecl",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLEntityDecl",
+      "class_name": "org.apache.xerces.impl.dtd.XMLEntityDecl",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLNSDTDValidator",
+      "class_name": "org.apache.xerces.impl.dtd.XMLNSDTDValidator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLNotationDecl",
+      "class_name": "org.apache.xerces.impl.dtd.XMLNotationDecl",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.XMLSimpleType",
+      "class_name": "org.apache.xerces.impl.dtd.XMLSimpleType",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.CMAny",
+      "class_name": "org.apache.xerces.impl.dtd.models.CMAny",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.CMBinOp",
+      "class_name": "org.apache.xerces.impl.dtd.models.CMBinOp",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.CMLeaf",
+      "class_name": "org.apache.xerces.impl.dtd.models.CMLeaf",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.CMNode",
+      "class_name": "org.apache.xerces.impl.dtd.models.CMNode",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.CMStateSet",
+      "class_name": "org.apache.xerces.impl.dtd.models.CMStateSet",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.CMUniOp",
+      "class_name": "org.apache.xerces.impl.dtd.models.CMUniOp",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.ContentModelValidator",
+      "class_name": "org.apache.xerces.impl.dtd.models.ContentModelValidator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.DFAContentModel",
+      "class_name": "org.apache.xerces.impl.dtd.models.DFAContentModel",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.MixedContentModel",
+      "class_name": "org.apache.xerces.impl.dtd.models.MixedContentModel",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dtd.models.SimpleContentModel",
+      "class_name": "org.apache.xerces.impl.dtd.models.SimpleContentModel",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.DTDDVFactory",
+      "class_name": "org.apache.xerces.impl.dv.DTDDVFactory",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.DVFactoryException",
+      "class_name": "org.apache.xerces.impl.dv.DVFactoryException",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.DatatypeException",
+      "class_name": "org.apache.xerces.impl.dv.DatatypeException",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.DatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.DatatypeValidator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.InvalidDatatypeFacetException",
+      "class_name": "org.apache.xerces.impl.dv.InvalidDatatypeFacetException",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.InvalidDatatypeValueException",
+      "class_name": "org.apache.xerces.impl.dv.InvalidDatatypeValueException",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.ObjectFactory",
+      "class_name": "org.apache.xerces.impl.dv.ObjectFactory",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.ObjectFactory$ConfigurationError",
+      "class_name": "org.apache.xerces.impl.dv.ObjectFactory$ConfigurationError",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SchemaDVFactory",
+      "class_name": "org.apache.xerces.impl.dv.SchemaDVFactory",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport$1",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport$1",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport$2",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport$2",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport$3",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport$3",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport$4",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport$4",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport$5",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport$5",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport$6",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport$6",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport$7",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport$7",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.SecuritySupport$8",
+      "class_name": "org.apache.xerces.impl.dv.SecuritySupport$8",
+      "cluster_id": 12
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.ValidatedInfo",
+      "class_name": "org.apache.xerces.impl.dv.ValidatedInfo",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.ValidationContext",
+      "class_name": "org.apache.xerces.impl.dv.ValidationContext",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.XSFacets",
+      "class_name": "org.apache.xerces.impl.dv.XSFacets",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.XSSimpleType",
+      "class_name": "org.apache.xerces.impl.dv.XSSimpleType",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.DTDDVFactoryImpl",
+      "class_name": "org.apache.xerces.impl.dv.dtd.DTDDVFactoryImpl",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.ENTITYDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.ENTITYDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.IDDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.IDDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.IDREFDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.IDREFDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.ListDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.ListDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.NMTOKENDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.NMTOKENDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.NOTATIONDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.NOTATIONDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.StringDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.StringDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.XML11DTDDVFactoryImpl",
+      "class_name": "org.apache.xerces.impl.dv.dtd.XML11DTDDVFactoryImpl",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.XML11IDDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.XML11IDDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.XML11IDREFDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.XML11IDREFDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.dtd.XML11NMTOKENDatatypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.dtd.XML11NMTOKENDatatypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.util.Base64",
+      "class_name": "org.apache.xerces.impl.dv.util.Base64",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.util.ByteListImpl",
+      "class_name": "org.apache.xerces.impl.dv.util.ByteListImpl",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.util.HexBin",
+      "class_name": "org.apache.xerces.impl.dv.util.HexBin",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.AbstractDateTimeDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.AbstractDateTimeDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.AbstractDateTimeDV$DateTimeData",
+      "class_name": "org.apache.xerces.impl.dv.xs.AbstractDateTimeDV$DateTimeData",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.AnyAtomicDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.AnyAtomicDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.AnySimpleDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.AnySimpleDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.AnyURIDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.AnyURIDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.Base64BinaryDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.Base64BinaryDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.Base64BinaryDV$XBase64",
+      "class_name": "org.apache.xerces.impl.dv.xs.Base64BinaryDV$XBase64",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.BaseDVFactory",
+      "class_name": "org.apache.xerces.impl.dv.xs.BaseDVFactory",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.BaseSchemaDVFactory",
+      "class_name": "org.apache.xerces.impl.dv.xs.BaseSchemaDVFactory",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.BooleanDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.BooleanDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DateDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.DateDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DateTimeDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.DateTimeDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DayDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.DayDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DayTimeDurationDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.DayTimeDurationDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DecimalDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.DecimalDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DecimalDV$XDecimal",
+      "class_name": "org.apache.xerces.impl.dv.xs.DecimalDV$XDecimal",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DoubleDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.DoubleDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DoubleDV$XDouble",
+      "class_name": "org.apache.xerces.impl.dv.xs.DoubleDV$XDouble",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.DurationDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.DurationDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.EntityDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.EntityDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.ExtendedSchemaDVFactoryImpl",
+      "class_name": "org.apache.xerces.impl.dv.xs.ExtendedSchemaDVFactoryImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.FloatDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.FloatDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.FloatDV$XFloat",
+      "class_name": "org.apache.xerces.impl.dv.xs.FloatDV$XFloat",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.FullDVFactory",
+      "class_name": "org.apache.xerces.impl.dv.xs.FullDVFactory",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.HexBinaryDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.HexBinaryDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.HexBinaryDV$XHex",
+      "class_name": "org.apache.xerces.impl.dv.xs.HexBinaryDV$XHex",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.IDDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.IDDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.IDREFDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.IDREFDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.IntegerDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.IntegerDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.ListDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.ListDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.ListDV$ListData",
+      "class_name": "org.apache.xerces.impl.dv.xs.ListDV$ListData",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.MonthDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.MonthDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.MonthDayDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.MonthDayDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.PrecisionDecimalDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.PrecisionDecimalDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.PrecisionDecimalDV$XPrecisionDecimal",
+      "class_name": "org.apache.xerces.impl.dv.xs.PrecisionDecimalDV$XPrecisionDecimal",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.QNameDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.QNameDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.QNameDV$XQName",
+      "class_name": "org.apache.xerces.impl.dv.xs.QNameDV$XQName",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.SchemaDVFactoryImpl",
+      "class_name": "org.apache.xerces.impl.dv.xs.SchemaDVFactoryImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.SchemaDateTimeException",
+      "class_name": "org.apache.xerces.impl.dv.xs.SchemaDateTimeException",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.StringDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.StringDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.TimeDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.TimeDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.TypeValidator",
+      "class_name": "org.apache.xerces.impl.dv.xs.TypeValidator",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.TypeValidator$1",
+      "class_name": "org.apache.xerces.impl.dv.xs.TypeValidator$1",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.UnionDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.UnionDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$1",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$1",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$2",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$2",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$3",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$3",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$4",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$4",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$AbstractObjectList",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$AbstractObjectList",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$ValidationContextImpl",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$ValidationContextImpl",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$XSFacetImpl",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$XSFacetImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$XSMVFacetImpl",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl$XSMVFacetImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDelegate",
+      "class_name": "org.apache.xerces.impl.dv.xs.XSSimpleTypeDelegate",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.YearDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.YearDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.YearMonthDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.YearMonthDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.dv.xs.YearMonthDurationDV",
+      "class_name": "org.apache.xerces.impl.dv.xs.YearMonthDurationDV",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.impl.io.ASCIIReader",
+      "class_name": "org.apache.xerces.impl.io.ASCIIReader",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.io.Latin1Reader",
+      "class_name": "org.apache.xerces.impl.io.Latin1Reader",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.io.MalformedByteSequenceException",
+      "class_name": "org.apache.xerces.impl.io.MalformedByteSequenceException",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.io.UCSReader",
+      "class_name": "org.apache.xerces.impl.io.UCSReader",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.io.UTF16Reader",
+      "class_name": "org.apache.xerces.impl.io.UTF16Reader",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.io.UTF8Reader",
+      "class_name": "org.apache.xerces.impl.io.UTF8Reader",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.impl.msg.XMLMessageFormatter",
+      "class_name": "org.apache.xerces.impl.msg.XMLMessageFormatter",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.validation.ConfigurableValidationState",
+      "class_name": "org.apache.xerces.impl.validation.ConfigurableValidationState",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.validation.EntityState",
+      "class_name": "org.apache.xerces.impl.validation.EntityState",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.validation.ValidationManager",
+      "class_name": "org.apache.xerces.impl.validation.ValidationManager",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.validation.ValidationState",
+      "class_name": "org.apache.xerces.impl.validation.ValidationState",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPath",
+      "class_name": "org.apache.xerces.impl.xpath.XPath",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPath$1",
+      "class_name": "org.apache.xerces.impl.xpath.XPath$1",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPath$Axis",
+      "class_name": "org.apache.xerces.impl.xpath.XPath$Axis",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPath$LocationPath",
+      "class_name": "org.apache.xerces.impl.xpath.XPath$LocationPath",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPath$NodeTest",
+      "class_name": "org.apache.xerces.impl.xpath.XPath$NodeTest",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPath$Scanner",
+      "class_name": "org.apache.xerces.impl.xpath.XPath$Scanner",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPath$Step",
+      "class_name": "org.apache.xerces.impl.xpath.XPath$Step",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPath$Tokens",
+      "class_name": "org.apache.xerces.impl.xpath.XPath$Tokens",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.XPathException",
+      "class_name": "org.apache.xerces.impl.xpath.XPathException",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.BMPattern",
+      "class_name": "org.apache.xerces.impl.xpath.regex.BMPattern",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.CaseInsensitiveMap",
+      "class_name": "org.apache.xerces.impl.xpath.regex.CaseInsensitiveMap",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Match",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Match",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Op",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Op",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Op$CharOp",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Op$CharOp",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Op$ChildOp",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Op$ChildOp",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Op$ConditionOp",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Op$ConditionOp",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Op$ModifierOp",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Op$ModifierOp",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Op$RangeOp",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Op$RangeOp",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Op$StringOp",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Op$StringOp",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Op$UnionOp",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Op$UnionOp",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.ParseException",
+      "class_name": "org.apache.xerces.impl.xpath.regex.ParseException",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.ParserForXMLSchema",
+      "class_name": "org.apache.xerces.impl.xpath.regex.ParserForXMLSchema",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.REUtil",
+      "class_name": "org.apache.xerces.impl.xpath.regex.REUtil",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RangeToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RangeToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegexParser",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegexParser",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegexParser$ReferencePosition",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegexParser$ReferencePosition",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegularExpression",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegularExpression",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegularExpression$CharArrayTarget",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegularExpression$CharArrayTarget",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegularExpression$CharacterIteratorTarget",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegularExpression$CharacterIteratorTarget",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegularExpression$ClosureContext",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegularExpression$ClosureContext",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegularExpression$Context",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegularExpression$Context",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegularExpression$ExpressionTarget",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegularExpression$ExpressionTarget",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.RegularExpression$StringTarget",
+      "class_name": "org.apache.xerces.impl.xpath.regex.RegularExpression$StringTarget",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$CharToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$CharToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$ClosureToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$ClosureToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$ConcatToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$ConcatToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$ConditionToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$ConditionToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$FixedStringContainer",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$FixedStringContainer",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$ModifierToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$ModifierToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$ParenToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$ParenToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$StringToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$StringToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xpath.regex.Token$UnionToken",
+      "class_name": "org.apache.xerces.impl.xpath.regex.Token$UnionToken",
+      "cluster_id": 14
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.AttributePSVImpl",
+      "class_name": "org.apache.xerces.impl.xs.AttributePSVImpl",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.ElementPSVImpl",
+      "class_name": "org.apache.xerces.impl.xs.ElementPSVImpl",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.FilePathToURI",
+      "class_name": "org.apache.xerces.impl.xs.FilePathToURI",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.PSVIErrorList",
+      "class_name": "org.apache.xerces.impl.xs.PSVIErrorList",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SchemaGrammar",
+      "class_name": "org.apache.xerces.impl.xs.SchemaGrammar",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SchemaGrammar$BuiltinAttrDecl",
+      "class_name": "org.apache.xerces.impl.xs.SchemaGrammar$BuiltinAttrDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SchemaGrammar$BuiltinSchemaGrammar",
+      "class_name": "org.apache.xerces.impl.xs.SchemaGrammar$BuiltinSchemaGrammar",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SchemaGrammar$Schema4Annotations",
+      "class_name": "org.apache.xerces.impl.xs.SchemaGrammar$Schema4Annotations",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SchemaGrammar$XSAnyType",
+      "class_name": "org.apache.xerces.impl.xs.SchemaGrammar$XSAnyType",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SchemaNamespaceSupport",
+      "class_name": "org.apache.xerces.impl.xs.SchemaNamespaceSupport",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SchemaNamespaceSupport$SchemaRootContext",
+      "class_name": "org.apache.xerces.impl.xs.SchemaNamespaceSupport$SchemaRootContext",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SchemaSymbols",
+      "class_name": "org.apache.xerces.impl.xs.SchemaSymbols",
+      "cluster_id": 15
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SubstitutionGroupHandler",
+      "class_name": "org.apache.xerces.impl.xs.SubstitutionGroupHandler",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.SubstitutionGroupHandler$OneSubGroup",
+      "class_name": "org.apache.xerces.impl.xs.SubstitutionGroupHandler$OneSubGroup",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaException",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaException",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaLoader",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaLoader",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaLoader$LocationArray",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaLoader$LocationArray",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$KeyRefValueStore",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$KeyRefValueStore",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$KeyValueStore",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$KeyValueStore",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$LocalIDKey",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$LocalIDKey",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$ShortVector",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$ShortVector",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$UniqueValueStore",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$UniqueValueStore",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$ValueStoreBase",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$ValueStoreBase",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$ValueStoreCache",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$ValueStoreCache",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$XPathMatcherStack",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$XPathMatcherStack",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XMLSchemaValidator$XSIErrorReporter",
+      "class_name": "org.apache.xerces.impl.xs.XMLSchemaValidator$XSIErrorReporter",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSAnnotationImpl",
+      "class_name": "org.apache.xerces.impl.xs.XSAnnotationImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSAttributeDecl",
+      "class_name": "org.apache.xerces.impl.xs.XSAttributeDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSAttributeGroupDecl",
+      "class_name": "org.apache.xerces.impl.xs.XSAttributeGroupDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSAttributeUseImpl",
+      "class_name": "org.apache.xerces.impl.xs.XSAttributeUseImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSComplexTypeDecl",
+      "class_name": "org.apache.xerces.impl.xs.XSComplexTypeDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSConstraints",
+      "class_name": "org.apache.xerces.impl.xs.XSConstraints",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSConstraints$1",
+      "class_name": "org.apache.xerces.impl.xs.XSConstraints$1",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSDDescription",
+      "class_name": "org.apache.xerces.impl.xs.XSDDescription",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSDeclarationPool",
+      "class_name": "org.apache.xerces.impl.xs.XSDeclarationPool",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSElementDecl",
+      "class_name": "org.apache.xerces.impl.xs.XSElementDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSElementDeclHelper",
+      "class_name": "org.apache.xerces.impl.xs.XSElementDeclHelper",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSGrammarBucket",
+      "class_name": "org.apache.xerces.impl.xs.XSGrammarBucket",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSGroupDecl",
+      "class_name": "org.apache.xerces.impl.xs.XSGroupDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSImplementationImpl",
+      "class_name": "org.apache.xerces.impl.xs.XSImplementationImpl",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSLoaderImpl",
+      "class_name": "org.apache.xerces.impl.xs.XSLoaderImpl",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSLoaderImpl$XSGrammarMerger",
+      "class_name": "org.apache.xerces.impl.xs.XSLoaderImpl$XSGrammarMerger",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSMessageFormatter",
+      "class_name": "org.apache.xerces.impl.xs.XSMessageFormatter",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSModelGroupImpl",
+      "class_name": "org.apache.xerces.impl.xs.XSModelGroupImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSModelImpl",
+      "class_name": "org.apache.xerces.impl.xs.XSModelImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSModelImpl$XSNamespaceItemListIterator",
+      "class_name": "org.apache.xerces.impl.xs.XSModelImpl$XSNamespaceItemListIterator",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSNotationDecl",
+      "class_name": "org.apache.xerces.impl.xs.XSNotationDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSParticleDecl",
+      "class_name": "org.apache.xerces.impl.xs.XSParticleDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.XSWildcardDecl",
+      "class_name": "org.apache.xerces.impl.xs.XSWildcardDecl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.Field",
+      "class_name": "org.apache.xerces.impl.xs.identity.Field",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.Field$Matcher",
+      "class_name": "org.apache.xerces.impl.xs.identity.Field$Matcher",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.Field$XPath",
+      "class_name": "org.apache.xerces.impl.xs.identity.Field$XPath",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.FieldActivator",
+      "class_name": "org.apache.xerces.impl.xs.identity.FieldActivator",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.IdentityConstraint",
+      "class_name": "org.apache.xerces.impl.xs.identity.IdentityConstraint",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.KeyRef",
+      "class_name": "org.apache.xerces.impl.xs.identity.KeyRef",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.Selector",
+      "class_name": "org.apache.xerces.impl.xs.identity.Selector",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.Selector$Matcher",
+      "class_name": "org.apache.xerces.impl.xs.identity.Selector$Matcher",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.Selector$XPath",
+      "class_name": "org.apache.xerces.impl.xs.identity.Selector$XPath",
+      "cluster_id": 13
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.UniqueOrKey",
+      "class_name": "org.apache.xerces.impl.xs.identity.UniqueOrKey",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.ValueStore",
+      "class_name": "org.apache.xerces.impl.xs.identity.ValueStore",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.identity.XPathMatcher",
+      "class_name": "org.apache.xerces.impl.xs.identity.XPathMatcher",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.CMBuilder",
+      "class_name": "org.apache.xerces.impl.xs.models.CMBuilder",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.CMNodeFactory",
+      "class_name": "org.apache.xerces.impl.xs.models.CMNodeFactory",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSAllCM",
+      "class_name": "org.apache.xerces.impl.xs.models.XSAllCM",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSCMBinOp",
+      "class_name": "org.apache.xerces.impl.xs.models.XSCMBinOp",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSCMLeaf",
+      "class_name": "org.apache.xerces.impl.xs.models.XSCMLeaf",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSCMRepeatingLeaf",
+      "class_name": "org.apache.xerces.impl.xs.models.XSCMRepeatingLeaf",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSCMUniOp",
+      "class_name": "org.apache.xerces.impl.xs.models.XSCMUniOp",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSCMValidator",
+      "class_name": "org.apache.xerces.impl.xs.models.XSCMValidator",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSDFACM",
+      "class_name": "org.apache.xerces.impl.xs.models.XSDFACM",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSDFACM$Occurence",
+      "class_name": "org.apache.xerces.impl.xs.models.XSDFACM$Occurence",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.models.XSEmptyCM",
+      "class_name": "org.apache.xerces.impl.xs.models.XSEmptyCM",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.AttrImpl",
+      "class_name": "org.apache.xerces.impl.xs.opti.AttrImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.DefaultDocument",
+      "class_name": "org.apache.xerces.impl.xs.opti.DefaultDocument",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.DefaultElement",
+      "class_name": "org.apache.xerces.impl.xs.opti.DefaultElement",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.DefaultNode",
+      "class_name": "org.apache.xerces.impl.xs.opti.DefaultNode",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.DefaultText",
+      "class_name": "org.apache.xerces.impl.xs.opti.DefaultText",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.DefaultXMLDocumentHandler",
+      "class_name": "org.apache.xerces.impl.xs.opti.DefaultXMLDocumentHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.ElementImpl",
+      "class_name": "org.apache.xerces.impl.xs.opti.ElementImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.NamedNodeMapImpl",
+      "class_name": "org.apache.xerces.impl.xs.opti.NamedNodeMapImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.NodeImpl",
+      "class_name": "org.apache.xerces.impl.xs.opti.NodeImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.SchemaDOM",
+      "class_name": "org.apache.xerces.impl.xs.opti.SchemaDOM",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.SchemaDOMImplementation",
+      "class_name": "org.apache.xerces.impl.xs.opti.SchemaDOMImplementation",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.SchemaDOMParser",
+      "class_name": "org.apache.xerces.impl.xs.opti.SchemaDOMParser",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.SchemaDOMParser$BooleanStack",
+      "class_name": "org.apache.xerces.impl.xs.opti.SchemaDOMParser$BooleanStack",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.SchemaParsingConfig",
+      "class_name": "org.apache.xerces.impl.xs.opti.SchemaParsingConfig",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.opti.TextImpl",
+      "class_name": "org.apache.xerces.impl.xs.opti.TextImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.Container",
+      "class_name": "org.apache.xerces.impl.xs.traversers.Container",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.LargeContainer",
+      "class_name": "org.apache.xerces.impl.xs.traversers.LargeContainer",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.OneAttr",
+      "class_name": "org.apache.xerces.impl.xs.traversers.OneAttr",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.SchemaContentHandler",
+      "class_name": "org.apache.xerces.impl.xs.traversers.SchemaContentHandler",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.SmallContainer",
+      "class_name": "org.apache.xerces.impl.xs.traversers.SmallContainer",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.StAXSchemaParser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.StAXSchemaParser",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSAnnotationInfo",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSAnnotationInfo",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSAttributeChecker",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSAttributeChecker",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDAbstractIDConstraintTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDAbstractIDConstraintTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDAbstractParticleTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDAbstractParticleTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDAbstractParticleTraverser$ParticleArray",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDAbstractParticleTraverser$ParticleArray",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDAbstractTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDAbstractTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDAbstractTraverser$FacetInfo",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDAbstractTraverser$FacetInfo",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDAttributeGroupTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDAttributeGroupTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDAttributeTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDAttributeTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDComplexTypeTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDComplexTypeTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDComplexTypeTraverser$ComplexTypeRecoverableError",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDComplexTypeTraverser$ComplexTypeRecoverableError",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDElementTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDElementTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDGroupTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDGroupTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDHandler",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDHandler",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDHandler$1",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDHandler$1",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDHandler$SAX2XNIUtil",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDHandler$SAX2XNIUtil",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDHandler$XSAnnotationGrammarPool",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDHandler$XSAnnotationGrammarPool",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDHandler$XSDKey",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDHandler$XSDKey",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDKeyrefTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDKeyrefTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDNotationTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDNotationTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDSimpleTypeTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDSimpleTypeTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDUniqueOrKeyTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDUniqueOrKeyTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDWildcardTraverser",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDWildcardTraverser",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.traversers.XSDocumentInfo",
+      "class_name": "org.apache.xerces.impl.xs.traversers.XSDocumentInfo",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.LSInputListImpl",
+      "class_name": "org.apache.xerces.impl.xs.util.LSInputListImpl",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.ObjectListImpl",
+      "class_name": "org.apache.xerces.impl.xs.util.ObjectListImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.ShortListImpl",
+      "class_name": "org.apache.xerces.impl.xs.util.ShortListImpl",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.SimpleLocator",
+      "class_name": "org.apache.xerces.impl.xs.util.SimpleLocator",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.StringListImpl",
+      "class_name": "org.apache.xerces.impl.xs.util.StringListImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XInt",
+      "class_name": "org.apache.xerces.impl.xs.util.XInt",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XIntPool",
+      "class_name": "org.apache.xerces.impl.xs.util.XIntPool",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XS10TypeHelper",
+      "class_name": "org.apache.xerces.impl.xs.util.XS10TypeHelper",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSGrammarPool",
+      "class_name": "org.apache.xerces.impl.xs.util.XSGrammarPool",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSInputSource",
+      "class_name": "org.apache.xerces.impl.xs.util.XSInputSource",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSNamedMap4Types",
+      "class_name": "org.apache.xerces.impl.xs.util.XSNamedMap4Types",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSNamedMapImpl",
+      "class_name": "org.apache.xerces.impl.xs.util.XSNamedMapImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSNamedMapImpl$1",
+      "class_name": "org.apache.xerces.impl.xs.util.XSNamedMapImpl$1",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSNamedMapImpl$1$1",
+      "class_name": "org.apache.xerces.impl.xs.util.XSNamedMapImpl$1$1",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSNamedMapImpl$XSNamedMapEntry",
+      "class_name": "org.apache.xerces.impl.xs.util.XSNamedMapImpl$XSNamedMapEntry",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSObjectListImpl",
+      "class_name": "org.apache.xerces.impl.xs.util.XSObjectListImpl",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSObjectListImpl$1",
+      "class_name": "org.apache.xerces.impl.xs.util.XSObjectListImpl$1",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.impl.xs.util.XSObjectListImpl$XSObjectListIterator",
+      "class_name": "org.apache.xerces.impl.xs.util.XSObjectListImpl$XSObjectListIterator",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.DefaultValidationErrorHandler",
+      "class_name": "org.apache.xerces.jaxp.DefaultValidationErrorHandler",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl",
+      "class_name": "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.DocumentBuilderImpl",
+      "class_name": "org.apache.xerces.jaxp.DocumentBuilderImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.JAXPConstants",
+      "class_name": "org.apache.xerces.jaxp.JAXPConstants",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.JAXPValidatorComponent",
+      "class_name": "org.apache.xerces.jaxp.JAXPValidatorComponent",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.JAXPValidatorComponent$1",
+      "class_name": "org.apache.xerces.jaxp.JAXPValidatorComponent$1",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.JAXPValidatorComponent$2",
+      "class_name": "org.apache.xerces.jaxp.JAXPValidatorComponent$2",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.JAXPValidatorComponent$3",
+      "class_name": "org.apache.xerces.jaxp.JAXPValidatorComponent$3",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.JAXPValidatorComponent$DraconianErrorHandler",
+      "class_name": "org.apache.xerces.jaxp.JAXPValidatorComponent$DraconianErrorHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.JAXPValidatorComponent$SAX2XNI",
+      "class_name": "org.apache.xerces.jaxp.JAXPValidatorComponent$SAX2XNI",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.JAXPValidatorComponent$XNI2SAX",
+      "class_name": "org.apache.xerces.jaxp.JAXPValidatorComponent$XNI2SAX",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.SAXParserFactoryImpl",
+      "class_name": "org.apache.xerces.jaxp.SAXParserFactoryImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.SAXParserImpl",
+      "class_name": "org.apache.xerces.jaxp.SAXParserImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.SAXParserImpl$JAXPSAXParser",
+      "class_name": "org.apache.xerces.jaxp.SAXParserImpl$JAXPSAXParser",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.SchemaValidatorConfiguration",
+      "class_name": "org.apache.xerces.jaxp.SchemaValidatorConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.TeeXMLDocumentFilterImpl",
+      "class_name": "org.apache.xerces.jaxp.TeeXMLDocumentFilterImpl",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.UnparsedEntityHandler",
+      "class_name": "org.apache.xerces.jaxp.UnparsedEntityHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.datatype.DatatypeFactoryImpl",
+      "class_name": "org.apache.xerces.jaxp.datatype.DatatypeFactoryImpl",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.datatype.DurationImpl",
+      "class_name": "org.apache.xerces.jaxp.datatype.DurationImpl",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.datatype.SerializedDuration",
+      "class_name": "org.apache.xerces.jaxp.datatype.SerializedDuration",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.datatype.SerializedXMLGregorianCalendar",
+      "class_name": "org.apache.xerces.jaxp.datatype.SerializedXMLGregorianCalendar",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl",
+      "class_name": "org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl$1",
+      "class_name": "org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl$1",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl$DaysInMonth",
+      "class_name": "org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl$DaysInMonth",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl$Parser",
+      "class_name": "org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl$Parser",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.AbstractXMLSchema",
+      "class_name": "org.apache.xerces.jaxp.validation.AbstractXMLSchema",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.DOMDocumentHandler",
+      "class_name": "org.apache.xerces.jaxp.validation.DOMDocumentHandler",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.DOMResultAugmentor",
+      "class_name": "org.apache.xerces.jaxp.validation.DOMResultAugmentor",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.DOMResultBuilder",
+      "class_name": "org.apache.xerces.jaxp.validation.DOMResultBuilder",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.DOMValidatorHelper",
+      "class_name": "org.apache.xerces.jaxp.validation.DOMValidatorHelper",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.DOMValidatorHelper$DOMNamespaceContext",
+      "class_name": "org.apache.xerces.jaxp.validation.DOMValidatorHelper$DOMNamespaceContext",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.DraconianErrorHandler",
+      "class_name": "org.apache.xerces.jaxp.validation.DraconianErrorHandler",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.EmptyXMLSchema",
+      "class_name": "org.apache.xerces.jaxp.validation.EmptyXMLSchema",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.JAXPValidationMessageFormatter",
+      "class_name": "org.apache.xerces.jaxp.validation.JAXPValidationMessageFormatter",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.ReadOnlyGrammarPool",
+      "class_name": "org.apache.xerces.jaxp.validation.ReadOnlyGrammarPool",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.SimpleXMLSchema",
+      "class_name": "org.apache.xerces.jaxp.validation.SimpleXMLSchema",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.SoftReferenceGrammarPool",
+      "class_name": "org.apache.xerces.jaxp.validation.SoftReferenceGrammarPool",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.SoftReferenceGrammarPool$Entry",
+      "class_name": "org.apache.xerces.jaxp.validation.SoftReferenceGrammarPool$Entry",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.SoftReferenceGrammarPool$SoftGrammarReference",
+      "class_name": "org.apache.xerces.jaxp.validation.SoftReferenceGrammarPool$SoftGrammarReference",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXDocumentHandler",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXDocumentHandler",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXEventResultBuilder",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXEventResultBuilder",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXEventResultBuilder$1",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXEventResultBuilder$1",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXEventResultBuilder$AttributeIterator",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXEventResultBuilder$AttributeIterator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXEventResultBuilder$NamespaceIterator",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXEventResultBuilder$NamespaceIterator",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXStreamResultBuilder",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXStreamResultBuilder",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXValidatorHelper",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXValidatorHelper",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXValidatorHelper$EventHelper",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXValidatorHelper$EventHelper",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXValidatorHelper$StreamHelper",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXValidatorHelper$StreamHelper",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StAXValidatorHelper$XMLStreamReaderLocation",
+      "class_name": "org.apache.xerces.jaxp.validation.StAXValidatorHelper$XMLStreamReaderLocation",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.StreamValidatorHelper",
+      "class_name": "org.apache.xerces.jaxp.validation.StreamValidatorHelper",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.Util",
+      "class_name": "org.apache.xerces.jaxp.validation.Util",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.ValidatorHandlerImpl",
+      "class_name": "org.apache.xerces.jaxp.validation.ValidatorHandlerImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.ValidatorHandlerImpl$1",
+      "class_name": "org.apache.xerces.jaxp.validation.ValidatorHandlerImpl$1",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.ValidatorHandlerImpl$ResolutionForwarder",
+      "class_name": "org.apache.xerces.jaxp.validation.ValidatorHandlerImpl$ResolutionForwarder",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.ValidatorHandlerImpl$XMLSchemaTypeInfoProvider",
+      "class_name": "org.apache.xerces.jaxp.validation.ValidatorHandlerImpl$XMLSchemaTypeInfoProvider",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.ValidatorHelper",
+      "class_name": "org.apache.xerces.jaxp.validation.ValidatorHelper",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.ValidatorImpl",
+      "class_name": "org.apache.xerces.jaxp.validation.ValidatorImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.WeakReferenceXMLSchema",
+      "class_name": "org.apache.xerces.jaxp.validation.WeakReferenceXMLSchema",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.XMLSchema",
+      "class_name": "org.apache.xerces.jaxp.validation.XMLSchema",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.XMLSchemaFactory",
+      "class_name": "org.apache.xerces.jaxp.validation.XMLSchemaFactory",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.XMLSchemaFactory$XMLGrammarPoolImplExtension",
+      "class_name": "org.apache.xerces.jaxp.validation.XMLSchemaFactory$XMLGrammarPoolImplExtension",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.XMLSchemaFactory$XMLGrammarPoolWrapper",
+      "class_name": "org.apache.xerces.jaxp.validation.XMLSchemaFactory$XMLGrammarPoolWrapper",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.XMLSchemaValidatorComponentManager",
+      "class_name": "org.apache.xerces.jaxp.validation.XMLSchemaValidatorComponentManager",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.jaxp.validation.XSGrammarPoolContainer",
+      "class_name": "org.apache.xerces.jaxp.validation.XSGrammarPoolContainer",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.AbstractDOMParser",
+      "class_name": "org.apache.xerces.parsers.AbstractDOMParser",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.AbstractDOMParser$Abort",
+      "class_name": "org.apache.xerces.parsers.AbstractDOMParser$Abort",
+      "cluster_id": 18
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.AbstractSAXParser",
+      "class_name": "org.apache.xerces.parsers.AbstractSAXParser",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.AbstractSAXParser$AttributesProxy",
+      "class_name": "org.apache.xerces.parsers.AbstractSAXParser$AttributesProxy",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.AbstractSAXParser$LocatorProxy",
+      "class_name": "org.apache.xerces.parsers.AbstractSAXParser$LocatorProxy",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.AbstractXMLDocumentParser",
+      "class_name": "org.apache.xerces.parsers.AbstractXMLDocumentParser",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.BasicParserConfiguration",
+      "class_name": "org.apache.xerces.parsers.BasicParserConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.CachingParserPool",
+      "class_name": "org.apache.xerces.parsers.CachingParserPool",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.CachingParserPool$ShadowedGrammarPool",
+      "class_name": "org.apache.xerces.parsers.CachingParserPool$ShadowedGrammarPool",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.CachingParserPool$SynchronizedGrammarPool",
+      "class_name": "org.apache.xerces.parsers.CachingParserPool$SynchronizedGrammarPool",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.DOMASBuilderImpl",
+      "class_name": "org.apache.xerces.parsers.DOMASBuilderImpl",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.DOMParser",
+      "class_name": "org.apache.xerces.parsers.DOMParser",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.DOMParserImpl",
+      "class_name": "org.apache.xerces.parsers.DOMParserImpl",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.DOMParserImpl$1",
+      "class_name": "org.apache.xerces.parsers.DOMParserImpl$1",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.DOMParserImpl$AbortHandler",
+      "class_name": "org.apache.xerces.parsers.DOMParserImpl$AbortHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.DOMParserImpl$NullLSParserFilter",
+      "class_name": "org.apache.xerces.parsers.DOMParserImpl$NullLSParserFilter",
+      "cluster_id": 19
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.DTDConfiguration",
+      "class_name": "org.apache.xerces.parsers.DTDConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.DTDParser",
+      "class_name": "org.apache.xerces.parsers.DTDParser",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.IntegratedParserConfiguration",
+      "class_name": "org.apache.xerces.parsers.IntegratedParserConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.NonValidatingConfiguration",
+      "class_name": "org.apache.xerces.parsers.NonValidatingConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.ObjectFactory",
+      "class_name": "org.apache.xerces.parsers.ObjectFactory",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.ObjectFactory$ConfigurationError",
+      "class_name": "org.apache.xerces.parsers.ObjectFactory$ConfigurationError",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SAXParser",
+      "class_name": "org.apache.xerces.parsers.SAXParser",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecureProcessingConfiguration",
+      "class_name": "org.apache.xerces.parsers.SecureProcessingConfiguration",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecureProcessingConfiguration$ExternalEntityMonitor",
+      "class_name": "org.apache.xerces.parsers.SecureProcessingConfiguration$ExternalEntityMonitor",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecureProcessingConfiguration$ExternalEntityMonitor$InputStreamMonitor",
+      "class_name": "org.apache.xerces.parsers.SecureProcessingConfiguration$ExternalEntityMonitor$InputStreamMonitor",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecureProcessingConfiguration$ExternalEntityMonitor$ReaderMonitor",
+      "class_name": "org.apache.xerces.parsers.SecureProcessingConfiguration$ExternalEntityMonitor$ReaderMonitor",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecureProcessingConfiguration$InternalEntityMonitor",
+      "class_name": "org.apache.xerces.parsers.SecureProcessingConfiguration$InternalEntityMonitor",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecurityConfiguration",
+      "class_name": "org.apache.xerces.parsers.SecurityConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport$1",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport$1",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport$2",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport$2",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport$3",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport$3",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport$4",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport$4",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport$5",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport$5",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport$6",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport$6",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport$7",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport$7",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SecuritySupport$8",
+      "class_name": "org.apache.xerces.parsers.SecuritySupport$8",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.SoftReferenceSymbolTableConfiguration",
+      "class_name": "org.apache.xerces.parsers.SoftReferenceSymbolTableConfiguration",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.StandardParserConfiguration",
+      "class_name": "org.apache.xerces.parsers.StandardParserConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XIncludeAwareParserConfiguration",
+      "class_name": "org.apache.xerces.parsers.XIncludeAwareParserConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XIncludeParserConfiguration",
+      "class_name": "org.apache.xerces.parsers.XIncludeParserConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XML11Configurable",
+      "class_name": "org.apache.xerces.parsers.XML11Configurable",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XML11Configuration",
+      "class_name": "org.apache.xerces.parsers.XML11Configuration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XML11DTDConfiguration",
+      "class_name": "org.apache.xerces.parsers.XML11DTDConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XML11NonValidatingConfiguration",
+      "class_name": "org.apache.xerces.parsers.XML11NonValidatingConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XMLDocumentParser",
+      "class_name": "org.apache.xerces.parsers.XMLDocumentParser",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XMLGrammarCachingConfiguration",
+      "class_name": "org.apache.xerces.parsers.XMLGrammarCachingConfiguration",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XMLGrammarParser",
+      "class_name": "org.apache.xerces.parsers.XMLGrammarParser",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XMLGrammarPreparser",
+      "class_name": "org.apache.xerces.parsers.XMLGrammarPreparser",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XMLGrammarPreparser$XMLGrammarLoaderContainer",
+      "class_name": "org.apache.xerces.parsers.XMLGrammarPreparser$XMLGrammarLoaderContainer",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XMLParser",
+      "class_name": "org.apache.xerces.parsers.XMLParser",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.parsers.XPointerParserConfiguration",
+      "class_name": "org.apache.xerces.parsers.XPointerParserConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.stax.DefaultNamespaceContext",
+      "class_name": "org.apache.xerces.stax.DefaultNamespaceContext",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.DefaultNamespaceContext$1",
+      "class_name": "org.apache.xerces.stax.DefaultNamespaceContext$1",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.DefaultNamespaceContext$2",
+      "class_name": "org.apache.xerces.stax.DefaultNamespaceContext$2",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.EmptyLocation",
+      "class_name": "org.apache.xerces.stax.EmptyLocation",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.ImmutableLocation",
+      "class_name": "org.apache.xerces.stax.ImmutableLocation",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.XMLEventFactoryImpl",
+      "class_name": "org.apache.xerces.stax.XMLEventFactoryImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.AttributeImpl",
+      "class_name": "org.apache.xerces.stax.events.AttributeImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.CharactersImpl",
+      "class_name": "org.apache.xerces.stax.events.CharactersImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.CommentImpl",
+      "class_name": "org.apache.xerces.stax.events.CommentImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.DTDImpl",
+      "class_name": "org.apache.xerces.stax.events.DTDImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.ElementImpl",
+      "class_name": "org.apache.xerces.stax.events.ElementImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.ElementImpl$NoRemoveIterator",
+      "class_name": "org.apache.xerces.stax.events.ElementImpl$NoRemoveIterator",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.EndDocumentImpl",
+      "class_name": "org.apache.xerces.stax.events.EndDocumentImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.EndElementImpl",
+      "class_name": "org.apache.xerces.stax.events.EndElementImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.EntityDeclarationImpl",
+      "class_name": "org.apache.xerces.stax.events.EntityDeclarationImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.EntityReferenceImpl",
+      "class_name": "org.apache.xerces.stax.events.EntityReferenceImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.NamespaceImpl",
+      "class_name": "org.apache.xerces.stax.events.NamespaceImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.NotationDeclarationImpl",
+      "class_name": "org.apache.xerces.stax.events.NotationDeclarationImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.ProcessingInstructionImpl",
+      "class_name": "org.apache.xerces.stax.events.ProcessingInstructionImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.StartDocumentImpl",
+      "class_name": "org.apache.xerces.stax.events.StartDocumentImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.StartElementImpl",
+      "class_name": "org.apache.xerces.stax.events.StartElementImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.StartElementImpl$1",
+      "class_name": "org.apache.xerces.stax.events.StartElementImpl$1",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.stax.events.XMLEventImpl",
+      "class_name": "org.apache.xerces.stax.events.XMLEventImpl",
+      "cluster_id": 20
+    },
+    {
+      "class_id": "org.apache.xerces.util.AttributesProxy",
+      "class_name": "org.apache.xerces.util.AttributesProxy",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.util.AugmentationsImpl",
+      "class_name": "org.apache.xerces.util.AugmentationsImpl",
+      "cluster_id": 21
+    },
+    {
+      "class_id": "org.apache.xerces.util.AugmentationsImpl$AugmentationsItemsContainer",
+      "class_name": "org.apache.xerces.util.AugmentationsImpl$AugmentationsItemsContainer",
+      "cluster_id": 21
+    },
+    {
+      "class_id": "org.apache.xerces.util.AugmentationsImpl$LargeContainer",
+      "class_name": "org.apache.xerces.util.AugmentationsImpl$LargeContainer",
+      "cluster_id": 21
+    },
+    {
+      "class_id": "org.apache.xerces.util.AugmentationsImpl$SmallContainer",
+      "class_name": "org.apache.xerces.util.AugmentationsImpl$SmallContainer",
+      "cluster_id": 21
+    },
+    {
+      "class_id": "org.apache.xerces.util.AugmentationsImpl$SmallContainer$SmallContainerKeyEnumeration",
+      "class_name": "org.apache.xerces.util.AugmentationsImpl$SmallContainer$SmallContainerKeyEnumeration",
+      "cluster_id": 21
+    },
+    {
+      "class_id": "org.apache.xerces.util.DOMEntityResolverWrapper",
+      "class_name": "org.apache.xerces.util.DOMEntityResolverWrapper",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.DOMErrorHandlerWrapper",
+      "class_name": "org.apache.xerces.util.DOMErrorHandlerWrapper",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.DOMErrorHandlerWrapper$DOMErrorTypeMap",
+      "class_name": "org.apache.xerces.util.DOMErrorHandlerWrapper$DOMErrorTypeMap",
+      "cluster_id": 22
+    },
+    {
+      "class_id": "org.apache.xerces.util.DOMInputSource",
+      "class_name": "org.apache.xerces.util.DOMInputSource",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.DOMUtil",
+      "class_name": "org.apache.xerces.util.DOMUtil",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.util.DOMUtil$ThrowableMethods",
+      "class_name": "org.apache.xerces.util.DOMUtil$ThrowableMethods",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.util.DatatypeMessageFormatter",
+      "class_name": "org.apache.xerces.util.DatatypeMessageFormatter",
+      "cluster_id": 17
+    },
+    {
+      "class_id": "org.apache.xerces.util.DefaultErrorHandler",
+      "class_name": "org.apache.xerces.util.DefaultErrorHandler",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.EncodingMap",
+      "class_name": "org.apache.xerces.util.EncodingMap",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.EntityResolver2Wrapper",
+      "class_name": "org.apache.xerces.util.EntityResolver2Wrapper",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.EntityResolverWrapper",
+      "class_name": "org.apache.xerces.util.EntityResolverWrapper",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.ErrorHandlerProxy",
+      "class_name": "org.apache.xerces.util.ErrorHandlerProxy",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.util.ErrorHandlerWrapper",
+      "class_name": "org.apache.xerces.util.ErrorHandlerWrapper",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.ErrorHandlerWrapper$1",
+      "class_name": "org.apache.xerces.util.ErrorHandlerWrapper$1",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.HTTPInputSource",
+      "class_name": "org.apache.xerces.util.HTTPInputSource",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.IntStack",
+      "class_name": "org.apache.xerces.util.IntStack",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.util.JAXPNamespaceContextWrapper",
+      "class_name": "org.apache.xerces.util.JAXPNamespaceContextWrapper",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.LocatorProxy",
+      "class_name": "org.apache.xerces.util.LocatorProxy",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.MessageFormatter",
+      "class_name": "org.apache.xerces.util.MessageFormatter",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.NamespaceSupport",
+      "class_name": "org.apache.xerces.util.NamespaceSupport",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.NamespaceSupport$Prefixes",
+      "class_name": "org.apache.xerces.util.NamespaceSupport$Prefixes",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.ParserConfigurationSettings",
+      "class_name": "org.apache.xerces.util.ParserConfigurationSettings",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.util.PrimeNumberSequenceGenerator",
+      "class_name": "org.apache.xerces.util.PrimeNumberSequenceGenerator",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.SAXInputSource",
+      "class_name": "org.apache.xerces.util.SAXInputSource",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.SAXLocatorWrapper",
+      "class_name": "org.apache.xerces.util.SAXLocatorWrapper",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.SAXMessageFormatter",
+      "class_name": "org.apache.xerces.util.SAXMessageFormatter",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.SecurityManager",
+      "class_name": "org.apache.xerces.util.SecurityManager",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.ShadowedSymbolTable",
+      "class_name": "org.apache.xerces.util.ShadowedSymbolTable",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.SoftReferenceSymbolTable",
+      "class_name": "org.apache.xerces.util.SoftReferenceSymbolTable",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.SoftReferenceSymbolTable$SREntry",
+      "class_name": "org.apache.xerces.util.SoftReferenceSymbolTable$SREntry",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.SoftReferenceSymbolTable$SREntryData",
+      "class_name": "org.apache.xerces.util.SoftReferenceSymbolTable$SREntryData",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.StAXInputSource",
+      "class_name": "org.apache.xerces.util.StAXInputSource",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.StAXLocationWrapper",
+      "class_name": "org.apache.xerces.util.StAXLocationWrapper",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.SymbolHash",
+      "class_name": "org.apache.xerces.util.SymbolHash",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.util.SymbolHash$Entry",
+      "class_name": "org.apache.xerces.util.SymbolHash$Entry",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.util.SymbolTable",
+      "class_name": "org.apache.xerces.util.SymbolTable",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.SymbolTable$Entry",
+      "class_name": "org.apache.xerces.util.SymbolTable$Entry",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.SynchronizedSymbolTable",
+      "class_name": "org.apache.xerces.util.SynchronizedSymbolTable",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.util.URI",
+      "class_name": "org.apache.xerces.util.URI",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.URI$MalformedURIException",
+      "class_name": "org.apache.xerces.util.URI$MalformedURIException",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.XML11Char",
+      "class_name": "org.apache.xerces.util.XML11Char",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLAttributesImpl",
+      "class_name": "org.apache.xerces.util.XMLAttributesImpl",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLAttributesImpl$Attribute",
+      "class_name": "org.apache.xerces.util.XMLAttributesImpl$Attribute",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLCatalogResolver",
+      "class_name": "org.apache.xerces.util.XMLCatalogResolver",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLChar",
+      "class_name": "org.apache.xerces.util.XMLChar",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLEntityDescriptionImpl",
+      "class_name": "org.apache.xerces.util.XMLEntityDescriptionImpl",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLErrorCode",
+      "class_name": "org.apache.xerces.util.XMLErrorCode",
+      "cluster_id": 22
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLGrammarPoolImpl",
+      "class_name": "org.apache.xerces.util.XMLGrammarPoolImpl",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLGrammarPoolImpl$Entry",
+      "class_name": "org.apache.xerces.util.XMLGrammarPoolImpl$Entry",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLLocatorWrapper",
+      "class_name": "org.apache.xerces.util.XMLLocatorWrapper",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLResourceIdentifierImpl",
+      "class_name": "org.apache.xerces.util.XMLResourceIdentifierImpl",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLStringBuffer",
+      "class_name": "org.apache.xerces.util.XMLStringBuffer",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.util.XMLSymbols",
+      "class_name": "org.apache.xerces.util.XMLSymbols",
+      "cluster_id": 23
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.MultipleScopeNamespaceSupport",
+      "class_name": "org.apache.xerces.xinclude.MultipleScopeNamespaceSupport",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.ObjectFactory",
+      "class_name": "org.apache.xerces.xinclude.ObjectFactory",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.ObjectFactory$ConfigurationError",
+      "class_name": "org.apache.xerces.xinclude.ObjectFactory$ConfigurationError",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport$1",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport$1",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport$2",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport$2",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport$3",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport$3",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport$4",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport$4",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport$5",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport$5",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport$6",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport$6",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport$7",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport$7",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.SecuritySupport$8",
+      "class_name": "org.apache.xerces.xinclude.SecuritySupport$8",
+      "cluster_id": 24
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.XInclude11TextReader",
+      "class_name": "org.apache.xerces.xinclude.XInclude11TextReader",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.XIncludeHandler",
+      "class_name": "org.apache.xerces.xinclude.XIncludeHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.XIncludeHandler$Notation",
+      "class_name": "org.apache.xerces.xinclude.XIncludeHandler$Notation",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.XIncludeHandler$UnparsedEntity",
+      "class_name": "org.apache.xerces.xinclude.XIncludeHandler$UnparsedEntity",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.XIncludeMessageFormatter",
+      "class_name": "org.apache.xerces.xinclude.XIncludeMessageFormatter",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.XIncludeNamespaceSupport",
+      "class_name": "org.apache.xerces.xinclude.XIncludeNamespaceSupport",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xinclude.XIncludeTextReader",
+      "class_name": "org.apache.xerces.xinclude.XIncludeTextReader",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.Augmentations",
+      "class_name": "org.apache.xerces.xni.Augmentations",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.NamespaceContext",
+      "class_name": "org.apache.xerces.xni.NamespaceContext",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.QName",
+      "class_name": "org.apache.xerces.xni.QName",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XMLAttributes",
+      "class_name": "org.apache.xerces.xni.XMLAttributes",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XMLDTDContentModelHandler",
+      "class_name": "org.apache.xerces.xni.XMLDTDContentModelHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XMLDTDHandler",
+      "class_name": "org.apache.xerces.xni.XMLDTDHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XMLDocumentFragmentHandler",
+      "class_name": "org.apache.xerces.xni.XMLDocumentFragmentHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XMLDocumentHandler",
+      "class_name": "org.apache.xerces.xni.XMLDocumentHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XMLLocator",
+      "class_name": "org.apache.xerces.xni.XMLLocator",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XMLResourceIdentifier",
+      "class_name": "org.apache.xerces.xni.XMLResourceIdentifier",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XMLString",
+      "class_name": "org.apache.xerces.xni.XMLString",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.xni.XNIException",
+      "class_name": "org.apache.xerces.xni.XNIException",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.xni.grammars.Grammar",
+      "class_name": "org.apache.xerces.xni.grammars.Grammar",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.grammars.XMLDTDDescription",
+      "class_name": "org.apache.xerces.xni.grammars.XMLDTDDescription",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.grammars.XMLGrammarDescription",
+      "class_name": "org.apache.xerces.xni.grammars.XMLGrammarDescription",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.grammars.XMLGrammarLoader",
+      "class_name": "org.apache.xerces.xni.grammars.XMLGrammarLoader",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.grammars.XMLGrammarPool",
+      "class_name": "org.apache.xerces.xni.grammars.XMLGrammarPool",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.grammars.XMLSchemaDescription",
+      "class_name": "org.apache.xerces.xni.grammars.XMLSchemaDescription",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.grammars.XSGrammar",
+      "class_name": "org.apache.xerces.xni.grammars.XSGrammar",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLComponent",
+      "class_name": "org.apache.xerces.xni.parser.XMLComponent",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLComponentManager",
+      "class_name": "org.apache.xerces.xni.parser.XMLComponentManager",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLConfigurationException",
+      "class_name": "org.apache.xerces.xni.parser.XMLConfigurationException",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLDTDContentModelFilter",
+      "class_name": "org.apache.xerces.xni.parser.XMLDTDContentModelFilter",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLDTDContentModelSource",
+      "class_name": "org.apache.xerces.xni.parser.XMLDTDContentModelSource",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLDTDFilter",
+      "class_name": "org.apache.xerces.xni.parser.XMLDTDFilter",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLDTDScanner",
+      "class_name": "org.apache.xerces.xni.parser.XMLDTDScanner",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLDTDSource",
+      "class_name": "org.apache.xerces.xni.parser.XMLDTDSource",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLDocumentFilter",
+      "class_name": "org.apache.xerces.xni.parser.XMLDocumentFilter",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLDocumentScanner",
+      "class_name": "org.apache.xerces.xni.parser.XMLDocumentScanner",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLDocumentSource",
+      "class_name": "org.apache.xerces.xni.parser.XMLDocumentSource",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLEntityResolver",
+      "class_name": "org.apache.xerces.xni.parser.XMLEntityResolver",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLErrorHandler",
+      "class_name": "org.apache.xerces.xni.parser.XMLErrorHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLInputSource",
+      "class_name": "org.apache.xerces.xni.parser.XMLInputSource",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLParseException",
+      "class_name": "org.apache.xerces.xni.parser.XMLParseException",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLParserConfiguration",
+      "class_name": "org.apache.xerces.xni.parser.XMLParserConfiguration",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.xni.parser.XMLPullParserConfiguration",
+      "class_name": "org.apache.xerces.xni.parser.XMLPullParserConfiguration",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.ElementSchemePointer",
+      "class_name": "org.apache.xerces.xpointer.ElementSchemePointer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.ElementSchemePointer$1",
+      "class_name": "org.apache.xerces.xpointer.ElementSchemePointer$1",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.ElementSchemePointer$Scanner",
+      "class_name": "org.apache.xerces.xpointer.ElementSchemePointer$Scanner",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.ElementSchemePointer$Tokens",
+      "class_name": "org.apache.xerces.xpointer.ElementSchemePointer$Tokens",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.ShortHandPointer",
+      "class_name": "org.apache.xerces.xpointer.ShortHandPointer",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.XPointerErrorHandler",
+      "class_name": "org.apache.xerces.xpointer.XPointerErrorHandler",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.XPointerHandler",
+      "class_name": "org.apache.xerces.xpointer.XPointerHandler",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.XPointerHandler$1",
+      "class_name": "org.apache.xerces.xpointer.XPointerHandler$1",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.XPointerHandler$Scanner",
+      "class_name": "org.apache.xerces.xpointer.XPointerHandler$Scanner",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.XPointerHandler$Tokens",
+      "class_name": "org.apache.xerces.xpointer.XPointerHandler$Tokens",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.XPointerMessageFormatter",
+      "class_name": "org.apache.xerces.xpointer.XPointerMessageFormatter",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.XPointerPart",
+      "class_name": "org.apache.xerces.xpointer.XPointerPart",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xpointer.XPointerProcessor",
+      "class_name": "org.apache.xerces.xpointer.XPointerProcessor",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xerces.xs.AttributePSVI",
+      "class_name": "org.apache.xerces.xs.AttributePSVI",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.xs.ElementPSVI",
+      "class_name": "org.apache.xerces.xs.ElementPSVI",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.xs.ItemPSVI",
+      "class_name": "org.apache.xerces.xs.ItemPSVI",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.xs.LSInputList",
+      "class_name": "org.apache.xerces.xs.LSInputList",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xs.PSVIProvider",
+      "class_name": "org.apache.xerces.xs.PSVIProvider",
+      "cluster_id": 16
+    },
+    {
+      "class_id": "org.apache.xerces.xs.ShortList",
+      "class_name": "org.apache.xerces.xs.ShortList",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.xs.StringList",
+      "class_name": "org.apache.xerces.xs.StringList",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSAnnotation",
+      "class_name": "org.apache.xerces.xs.XSAnnotation",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSAttributeDeclaration",
+      "class_name": "org.apache.xerces.xs.XSAttributeDeclaration",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSAttributeGroupDefinition",
+      "class_name": "org.apache.xerces.xs.XSAttributeGroupDefinition",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSAttributeUse",
+      "class_name": "org.apache.xerces.xs.XSAttributeUse",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSComplexTypeDefinition",
+      "class_name": "org.apache.xerces.xs.XSComplexTypeDefinition",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSConstants",
+      "class_name": "org.apache.xerces.xs.XSConstants",
+      "cluster_id": 25
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSElementDeclaration",
+      "class_name": "org.apache.xerces.xs.XSElementDeclaration",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSException",
+      "class_name": "org.apache.xerces.xs.XSException",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSFacet",
+      "class_name": "org.apache.xerces.xs.XSFacet",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSIDCDefinition",
+      "class_name": "org.apache.xerces.xs.XSIDCDefinition",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSImplementation",
+      "class_name": "org.apache.xerces.xs.XSImplementation",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSLoader",
+      "class_name": "org.apache.xerces.xs.XSLoader",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSModel",
+      "class_name": "org.apache.xerces.xs.XSModel",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSModelGroup",
+      "class_name": "org.apache.xerces.xs.XSModelGroup",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSModelGroupDefinition",
+      "class_name": "org.apache.xerces.xs.XSModelGroupDefinition",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSMultiValueFacet",
+      "class_name": "org.apache.xerces.xs.XSMultiValueFacet",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSNamedMap",
+      "class_name": "org.apache.xerces.xs.XSNamedMap",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSNamespaceItem",
+      "class_name": "org.apache.xerces.xs.XSNamespaceItem",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSNamespaceItemList",
+      "class_name": "org.apache.xerces.xs.XSNamespaceItemList",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSNotationDeclaration",
+      "class_name": "org.apache.xerces.xs.XSNotationDeclaration",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSObject",
+      "class_name": "org.apache.xerces.xs.XSObject",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSObjectList",
+      "class_name": "org.apache.xerces.xs.XSObjectList",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSParticle",
+      "class_name": "org.apache.xerces.xs.XSParticle",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSSimpleTypeDefinition",
+      "class_name": "org.apache.xerces.xs.XSSimpleTypeDefinition",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSTerm",
+      "class_name": "org.apache.xerces.xs.XSTerm",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSTypeDefinition",
+      "class_name": "org.apache.xerces.xs.XSTypeDefinition",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSValue",
+      "class_name": "org.apache.xerces.xs.XSValue",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.apache.xerces.xs.XSWildcard",
+      "class_name": "org.apache.xerces.xs.XSWildcard",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.datatypes.ByteList",
+      "class_name": "org.apache.xerces.xs.datatypes.ByteList",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.xs.datatypes.ObjectList",
+      "class_name": "org.apache.xerces.xs.datatypes.ObjectList",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.apache.xerces.xs.datatypes.XSDateTime",
+      "class_name": "org.apache.xerces.xs.datatypes.XSDateTime",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.xs.datatypes.XSDecimal",
+      "class_name": "org.apache.xerces.xs.datatypes.XSDecimal",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.xs.datatypes.XSDouble",
+      "class_name": "org.apache.xerces.xs.datatypes.XSDouble",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.xs.datatypes.XSFloat",
+      "class_name": "org.apache.xerces.xs.datatypes.XSFloat",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.apache.xerces.xs.datatypes.XSQName",
+      "class_name": "org.apache.xerces.xs.datatypes.XSQName",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.apache.xml.serialize.BaseMarkupSerializer",
+      "class_name": "org.apache.xml.serialize.BaseMarkupSerializer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.DOMSerializer",
+      "class_name": "org.apache.xml.serialize.DOMSerializer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.DOMSerializerImpl",
+      "class_name": "org.apache.xml.serialize.DOMSerializerImpl",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.DOMSerializerImpl$DocumentMethods",
+      "class_name": "org.apache.xml.serialize.DOMSerializerImpl$DocumentMethods",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.ElementState",
+      "class_name": "org.apache.xml.serialize.ElementState",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.EncodingInfo",
+      "class_name": "org.apache.xml.serialize.EncodingInfo",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.EncodingInfo$CharToByteConverterMethods",
+      "class_name": "org.apache.xml.serialize.EncodingInfo$CharToByteConverterMethods",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.EncodingInfo$CharsetMethods",
+      "class_name": "org.apache.xml.serialize.EncodingInfo$CharsetMethods",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.Encodings",
+      "class_name": "org.apache.xml.serialize.Encodings",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.HTMLSerializer",
+      "class_name": "org.apache.xml.serialize.HTMLSerializer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.HTMLdtd",
+      "class_name": "org.apache.xml.serialize.HTMLdtd",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.IndentPrinter",
+      "class_name": "org.apache.xml.serialize.IndentPrinter",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.LineSeparator",
+      "class_name": "org.apache.xml.serialize.LineSeparator",
+      "cluster_id": 26
+    },
+    {
+      "class_id": "org.apache.xml.serialize.Method",
+      "class_name": "org.apache.xml.serialize.Method",
+      "cluster_id": 27
+    },
+    {
+      "class_id": "org.apache.xml.serialize.ObjectFactory",
+      "class_name": "org.apache.xml.serialize.ObjectFactory",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.ObjectFactory$ConfigurationError",
+      "class_name": "org.apache.xml.serialize.ObjectFactory$ConfigurationError",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.OutputFormat",
+      "class_name": "org.apache.xml.serialize.OutputFormat",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.OutputFormat$DTD",
+      "class_name": "org.apache.xml.serialize.OutputFormat$DTD",
+      "cluster_id": 29
+    },
+    {
+      "class_id": "org.apache.xml.serialize.OutputFormat$Defaults",
+      "class_name": "org.apache.xml.serialize.OutputFormat$Defaults",
+      "cluster_id": 30
+    },
+    {
+      "class_id": "org.apache.xml.serialize.Printer",
+      "class_name": "org.apache.xml.serialize.Printer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport",
+      "class_name": "org.apache.xml.serialize.SecuritySupport",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport$1",
+      "class_name": "org.apache.xml.serialize.SecuritySupport$1",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport$2",
+      "class_name": "org.apache.xml.serialize.SecuritySupport$2",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport$3",
+      "class_name": "org.apache.xml.serialize.SecuritySupport$3",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport$4",
+      "class_name": "org.apache.xml.serialize.SecuritySupport$4",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport$5",
+      "class_name": "org.apache.xml.serialize.SecuritySupport$5",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport$6",
+      "class_name": "org.apache.xml.serialize.SecuritySupport$6",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport$7",
+      "class_name": "org.apache.xml.serialize.SecuritySupport$7",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SecuritySupport$8",
+      "class_name": "org.apache.xml.serialize.SecuritySupport$8",
+      "cluster_id": 28
+    },
+    {
+      "class_id": "org.apache.xml.serialize.Serializer",
+      "class_name": "org.apache.xml.serialize.Serializer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SerializerFactory",
+      "class_name": "org.apache.xml.serialize.SerializerFactory",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.SerializerFactoryImpl",
+      "class_name": "org.apache.xml.serialize.SerializerFactoryImpl",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.TextSerializer",
+      "class_name": "org.apache.xml.serialize.TextSerializer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.XHTMLSerializer",
+      "class_name": "org.apache.xml.serialize.XHTMLSerializer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.XML11Serializer",
+      "class_name": "org.apache.xml.serialize.XML11Serializer",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.apache.xml.serialize.XMLSerializer",
+      "class_name": "org.apache.xml.serialize.XMLSerializer",
+      "cluster_id": 2
+    }
+  ],
+  "selection_input_schema": [
+    "solution_id",
+    "feasible",
+    "coupling",
+    "cohesion",
+    "imbalance",
+    "is_injected_seed",
+    "label_vector"
+  ],
+  "selection_implementation": "experiments/02_stage2_nsga_structure_only/run.py:_select_solution",
+  "semantic_objective_used_for_selection": false
+}
