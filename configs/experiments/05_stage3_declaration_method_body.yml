@@ -1,0 +1,38 @@
+experiment_name: stage3_declaration_method_body
+representation_id: declaration_method_body_v1
+status: post_hoc_exploratory
+
+# This file is an explicit routing layer.  Scientific settings are inherited
+# unchanged from the frozen Stage 3A contract; they are not duplicated here.
+base_experiment_config: configs/experiments/04_stage3_semantic.yml
+
+input:
+  declaration_source_policy: explicit_frozen_stage3a_declaration_csv_only
+  declaration_source_root: data/semantic_inputs
+  semantic_text_root: data/semantic_text/declaration_method_body
+  semantic_text_filename_template: "{subject}_semantic_inputs.csv"
+  semantic_text_column: semantic_text
+
+outputs:
+  report_root: reports/stage3_method_body
+  embedding_root: data/embeddings/declaration_method_body
+  semantic_graph_root: data/semantic_graphs/declaration_method_body
+  result_roots:
+    jpetstore: results/jpetstore/05_stage3_declaration_method_body
+    daytrader: results/daytrader/05_stage3_declaration_method_body
+    xerces: results/xerces/05_stage3_declaration_method_body
+  log_root: reports/stage3_method_body/logs
+
+boundary:
+  stage3a_report_root_read_forbidden: reports/stage3
+  stage3a_result_directory_read_forbidden: 04_stage3_semantic
+  stage3a_write_forbidden: true
+  declaration_read_exception_only: true
+  generic_stage3_fallback_forbidden: true
+
+identity_fields_required_in_every_artifact:
+  - experiment_id
+  - representation_id
+  - subject
+  - input_hash
+  - config_hash

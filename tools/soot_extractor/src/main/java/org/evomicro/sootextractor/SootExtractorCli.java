@@ -53,6 +53,8 @@ public final class SootExtractorCli {
       List.of("source", "target", "dependency_type", "weight", "evidence_kind", "evidence_location");
   static final List<String> SSA_FLOW_COLUMNS =
       List.of("source", "target", "flow_type", "weight", "evidence_method", "evidence_statement");
+  static final List<String> METHOD_BODY_COLUMNS =
+      List.of("class_id", "method_name", "method_signature", "concrete", "synthetic", "body_text");
   static final List<String> SEMANTIC_INPUT_COLUMNS =
       List.of(
           "subject",
@@ -112,6 +114,14 @@ public final class SootExtractorCli {
       writeClassNodes(outDir.resolve("class_nodes.csv"), result.classNodes());
       writeStructuralDependencies(outDir.resolve("structural_dependencies.csv"), result.structuralDependencies());
       writeSsaFlowEdges(outDir.resolve("ssa_flow_edges.csv"), result.ssaFlowEdges());
+      String methodBodyOutput = options.get("--method-body-out");
+      if (methodBodyOutput != null) {
+        Path methodBodyPath = Path.of(methodBodyOutput);
+        if (methodBodyPath.getParent() != null) {
+          Files.createDirectories(methodBodyPath.getParent());
+        }
+        writeMethodBodyEvidence(methodBodyPath, result.methodBodies());
+      }
       writeSemanticInputs(
           semanticOut, options.get("--subject"), result.semanticInputs());
 
@@ -123,6 +133,10 @@ public final class SootExtractorCli {
       System.out.println("application_classes_detected=" + result.classNodes().size());
       System.out.println("structural_dependencies_extracted=" + result.structuralDependencies().size());
       System.out.println("ssa_flow_edges_extracted=" + result.ssaFlowEdges().size());
+      if (methodBodyOutput != null) {
+        System.out.println("method_bodies_extracted=" + result.methodBodies().size());
+        System.out.println("method_body_out=" + methodBodyOutput);
+      }
       System.out.println("class_declarations_extracted=" + result.semanticInputs().size());
       System.out.println("out_dir=" + outDir);
       System.out.println("semantic_out=" + semanticOut);
@@ -157,12 +171,14 @@ public final class SootExtractorCli {
     List<ClassNode> classNodes = new ArrayList<>();
     Set<StructuralDependency> structuralDependencies = new LinkedHashSet<>();
     Set<FlowEdge> ssaFlowEdges = new LinkedHashSet<>();
+    List<MethodBodyEvidence> methodBodies = new ArrayList<>();
     List<ClassDeclaration> semanticInputs = new ArrayList<>();
 
     for (String className : applicationClasses) {
       SootClass sootClass = Scene.v().getSootClass(className);
       classNodes.add(classNode(classesDir, className));
       semanticInputs.add(classDeclaration(sootClass));
+      methodBodies.addAll(extractMethodBodies(sootClass));
       extractTypeDependencies(sootClass, applicationClassSet, structuralDependencies);
       extractCallDependencies(sootClass, applicationClassSet, structuralDependencies);
       extractSsaFlowEdges(sootClass, applicationClassSet, ssaFlowEdges);
@@ -170,7 +186,51 @@ public final class SootExtractorCli {
 
     semanticInputs.sort(java.util.Comparator.comparing(ClassDeclaration::classId));
     return new ExtractionResult(
-        classNodes, new ArrayList<>(structuralDependencies), new ArrayList<>(ssaFlowEdges), semanticInputs);
+        classNodes,
+        new ArrayList<>(structuralDependencies),
+        new ArrayList<>(ssaFlowEdges),
+        methodBodies,
+        semanticInputs);
+  }
+
+  /** Extracts canonical Shimple text for later lexical normalization; no graph evidence is emitted here. */
+  private static List<MethodBodyEvidence> extractMethodBodies(SootClass sootClass) {
+    List<MethodBodyEvidence> extracted = new ArrayList<>();
+    for (SootMethod method : sootClass.getMethods()) {
+      if (!method.isConcrete()) {
+        continue;
+      }
+      Body jimpleBody;
+      try {
+        jimpleBody = method.retrieveActiveBody();
+      } catch (RuntimeException error) {
+        System.err.println("WARNING: could not retrieve Jimple body for method-body evidence " + method.getSignature() + ": " + error.getMessage());
+        continue;
+      }
+      try {
+        ShimpleBody shimpleBody = Shimple.v().newBody(jimpleBody);
+        StringBuilder text = new StringBuilder();
+        for (Unit unit : shimpleBody.getUnits()) {
+          text.append(unit).append('\n');
+        }
+        extracted.add(
+            new MethodBodyEvidence(
+                sootClass.getName(),
+                method.getName(),
+                method.getSignature(),
+                true,
+                Modifier.isSynthetic(method.getModifiers())
+                    || method.getTags().stream().anyMatch(tag -> tag instanceof SyntheticTag),
+                text.toString()));
+      } catch (RuntimeException error) {
+        System.err.println("WARNING: could not convert method body to Shimple for method-body evidence " + method.getSignature() + ": " + error.getMessage());
+      }
+    }
+    extracted.sort(
+        java.util.Comparator.comparing(MethodBodyEvidence::classId)
+            .thenComparing(MethodBodyEvidence::methodName)
+            .thenComparing(MethodBodyEvidence::methodSignature));
+    return extracted;
   }
 
   static ClassDeclaration classDeclaration(SootClass sootClass) {
@@ -764,6 +824,25 @@ public final class SootExtractorCli {
     }
   }
 
+  /** Writes method-body evidence separately from the frozen Stage 1/Stage 2 tables. */
+  static void writeMethodBodyEvidence(Path path, List<MethodBodyEvidence> methodBodies) throws IOException {
+    try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
+      writer.write(String.join(",", METHOD_BODY_COLUMNS));
+      writer.newLine();
+      for (MethodBodyEvidence evidence : methodBodies) {
+        writer.write(
+            csvRow(
+                evidence.classId(),
+                evidence.methodName(),
+                evidence.methodSignature(),
+                Boolean.toString(evidence.concrete()),
+                Boolean.toString(evidence.synthetic()),
+                evidence.bodyText()));
+        writer.newLine();
+      }
+    }
+  }
+
   static void writeSemanticInputs(Path path, String subject, List<ClassDeclaration> declarations) throws IOException {
     List<ClassDeclaration> sorted = declarations.stream()
         .sorted(java.util.Comparator.comparing(ClassDeclaration::classId))
@@ -823,7 +902,16 @@ public final class SootExtractorCli {
       List<ClassNode> classNodes,
       List<StructuralDependency> structuralDependencies,
       List<FlowEdge> ssaFlowEdges,
+      List<MethodBodyEvidence> methodBodies,
       List<ClassDeclaration> semanticInputs) {}
+
+  record MethodBodyEvidence(
+      String classId,
+      String methodName,
+      String methodSignature,
+      boolean concrete,
+      boolean synthetic,
+      String bodyText) {}
 
   record ClassDeclaration(
       String classId,
