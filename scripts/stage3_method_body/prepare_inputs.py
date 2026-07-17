@@ -561,6 +561,10 @@ def main() -> int:
         "experiment_name": EXPERIMENT_ID,
         "representation_id": REPRESENTATION_ID,
         "extraction_version": EXTRACTION_VERSION,
+        "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "stage3a_source_manifest": report_path(report_root / "stage3a_declaration_source_manifest.json"),
+        "config_sha256": config_hash,
+        "contract_sha256": contract_hash,
         "declaration_source": "frozen Stage 3A semantic_text bytes from data/semantic_inputs/*.csv",
         "body_evidence_types": [
             "invoked_method_simple_names", "field_simple_names", "permitted_local_identifiers",
