@@ -249,7 +249,12 @@ def _nondominated_indices(objectives: np.ndarray) -> np.ndarray:
 
 def _write_stage3_csv(frame: pd.DataFrame, path: Path) -> None:
     """Persist numeric objectives losslessly enough for later dominance checks."""
-    frame.to_csv(path, index=False, float_format="%.17g")
+    frame.to_csv(path, index=False, float_format="%.20g")
+
+
+def _read_stage3_csv(path: Path) -> pd.DataFrame:
+    """Reload saved objective values with round-trip float parsing."""
+    return pd.read_csv(path, float_precision="round_trip")
 
 
 def _front_arrays(result) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
@@ -354,7 +359,7 @@ def _normalize_projected(matrix: np.ndarray, bounds: dict[str, Any]) -> np.ndarr
 
 
 def _independent_projected_hv(path: Path, bounds: dict[str, Any]) -> tuple[float, int]:
-    frame = pd.read_csv(path)
+    frame = _read_stage3_csv(path)
     objective_columns = ["pymoo_f0_coupling", "pymoo_f1_negative_cohesion", "pymoo_f2_imbalance"]
     matrix = frame.loc[:, objective_columns].to_numpy(dtype=float)
     indices = _nondominated_indices(matrix)
@@ -388,8 +393,8 @@ def _redundancy(rows: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def validate_run_output(output_dir: Path, context: dict[str, Any]) -> dict[str, Any]:
-    front = pd.read_csv(output_dir / "pareto_front_4d.csv")
-    projected = pd.read_csv(output_dir / "projected_front_3d.csv")
+    front = _read_stage3_csv(output_dir / "pareto_front_4d.csv")
+    projected = _read_stage3_csv(output_dir / "projected_front_3d.csv")
     if front.empty or projected.empty:
         raise ValueError("formal Stage 3 front is empty")
     required = ["coupling", "cohesion", "imbalance", "f_semantic", "pymoo_f0_coupling", "pymoo_f1_negative_cohesion", "pymoo_f2_imbalance", "pymoo_f3_f_semantic"]
@@ -414,7 +419,7 @@ def validate_run_output(output_dir: Path, context: dict[str, Any]) -> dict[str, 
     selected = json.loads((output_dir / "selected_solution.json").read_text(encoding="utf-8"))
     if selected["selected_solution_id"] not in set(projected["solution_id"]):
         raise ValueError("selected solution is not in projected front")
-    labels = pd.read_csv(output_dir / "partition_labels.csv")
+    labels = _read_stage3_csv(output_dir / "partition_labels.csv")
     expected_class_ids = set(context["class_nodes"]["class_id"].astype(str))
     for solution_id, group in labels.groupby("solution_id", sort=False):
         observed_class_ids = set(group["class_id"].astype(str))

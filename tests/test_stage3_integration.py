@@ -95,7 +95,7 @@ def test_stage3_csv_writer_preserves_dominance_precision(tmp_path: Path) -> None
     )
     path = tmp_path / "front.csv"
     runner._write_stage3_csv(frame, path)
-    reloaded = pd.read_csv(path)
+    reloaded = runner._read_stage3_csv(path)
     np.testing.assert_allclose(reloaded.iloc[:, 1:].to_numpy(), frame.iloc[:, 1:].to_numpy(), rtol=0.0, atol=1e-15)
     assert len(runner._nondominated_indices(reloaded.iloc[:, 1:].to_numpy())) == 2
 

@@ -150,6 +150,11 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def read_stage3_csv(path: Path) -> pd.DataFrame:
+    """Reload saved numeric artifacts without collapsing adjacent float64s."""
+    return pd.read_csv(path, float_precision="round_trip")
+
+
 def expected_seeds() -> list[int]:
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
     manifest = load_json(MANIFEST_PATH)
@@ -452,7 +457,7 @@ def validate_seed(
     )
     validate_run_log(source / "run.log")
 
-    front = pd.read_csv(source / "pareto_front_4d.csv")
+    front = read_stage3_csv(source / "pareto_front_4d.csv")
     validate_four_dimensional_front(front, seed)
     if set(front["subject"]) != {subject} or set(front["seed"].astype(int)) != {seed}:
         raise ValidationFailure(f"seed {seed}: four-dimensional subject/seed columns mismatch")
@@ -460,7 +465,7 @@ def validate_seed(
     if len(nd4) != len(front):
         raise ValidationFailure(f"seed {seed}: dominated four-dimensional row remains")
 
-    projected = pd.read_csv(source / "projected_front_3d.csv")
+    projected = read_stage3_csv(source / "projected_front_3d.csv")
     recomputed_hv = validate_projected_front(projected, front, seed, context["bounds"])
     if set(projected["subject"]) != {subject} or set(projected["seed"].astype(int)) != {seed}:
         raise ValidationFailure(f"seed {seed}: projected subject/seed columns mismatch")
@@ -468,7 +473,7 @@ def validate_seed(
     if not np.isclose(recomputed_hv, float(stored_hv["stored_value"]), rtol=0.0, atol=1e-12):
         raise ValidationFailure(f"seed {seed}: projected Hypervolume mismatch")
 
-    labels = pd.read_csv(source / "partition_labels.csv")
+    labels = read_stage3_csv(source / "partition_labels.csv")
     expected_class_ids = set(context["class_nodes"]["class_id"].astype(str))
     if set(labels["solution_id"]) != set(front["solution_id"]):
         raise ValidationFailure(f"seed {seed}: partition solution IDs mismatch")
@@ -524,7 +529,7 @@ def validate_seed(
     if independently_selected["solution_id"] != selected_id:
         raise ValidationFailure(f"seed {seed}: independent representative selection mismatch")
 
-    selected_partition = pd.read_csv(source / "selected_partition.csv")
+    selected_partition = read_stage3_csv(source / "selected_partition.csv")
     selected_mapping = _assert_scope(
         selected_partition,
         expected_class_ids,
@@ -619,7 +624,7 @@ def build_summary(records: list[dict[str, Any]], aggregate_hash: str, algorithm:
     ordered = sorted(records, key=lambda row: row["seed"])
     all_front_f = []
     for record in ordered:
-        front = pd.read_csv(ROOT / record["source_directory"] / "pareto_front_4d.csv")
+        front = read_stage3_csv(ROOT / record["source_directory"] / "pareto_front_4d.csv")
         all_front_f.extend(front["f_semantic"].astype(float).tolist())
     runtimes = [row["runtime_seconds"] for row in ordered]
     front_sizes = [row["front_4d_size"] for row in ordered]

@@ -1,0 +1,19 @@
+{
+  "subject": "daytrader",
+  "seed": 3,
+  "status": "invalidated_partial_output",
+  "failure": "The runner stopped while independently checking the saved projected front: saved projected front contains dominated rows.",
+  "evidence_path": "results/daytrader/04_stage3_semantic/invalid/seed_03_projected_front_failure/projected_front_3d.csv",
+  "dominated_solution_id": "seed3_solution084",
+  "dominating_solution_id": "seed3_solution060",
+  "persisted_dominated_vector": [0.7287822878228782, -3.606009070294785, 0.1193312324591841],
+  "persisted_dominating_vector": [0.6199261992619925, -5.966439909297052, 0.1193312324591841],
+  "in_memory_f2_values": {
+    "seed3_solution084": 0.11933123245918412,
+    "seed3_solution060": 0.11933123245918413
+  },
+  "root_cause": "Adjacent float64 objective values differed by approximately one ulp in memory but were collapsed by the writer/parser combination during saved-file validation.",
+  "correction": "Formal objective CSVs now use a 20-significant-digit float format and round-trip float parsing before any saved-file validation.",
+  "scientific_configuration_changed": false,
+  "rerun_required": true
+}
