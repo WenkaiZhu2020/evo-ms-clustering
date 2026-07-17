@@ -25,9 +25,12 @@ from scripts.stage3 import validate_xerces_formal as formal
 
 
 SUBJECT_CONFIG = formal.SUBJECT_CONFIG
-FROZEN_ALGORITHM_FINGERPRINT = (
-    "c8d68cdadd19e61b576e487136ec78b8f16f50ef85e4e1bafb732c325818fb3c"
-)
+FROZEN_ALGORITHM_FINGERPRINTS = {
+    # Original validated runs and the serialization-only correction below
+    # share the same optimizer, objectives, graphs, and selection rule.
+    "c8d68cdadd19e61b576e487136ec78b8f16f50ef85e4e1bafb732c325818fb3c",
+    "dcc6034374ace8742c01f4114d55fc81ac041900a3629fc108dc46693d5316fe",
+}
 
 
 def utc_now() -> str:
@@ -73,7 +76,7 @@ def validate_saved_seed(subject: str, seed: int, source: Path) -> dict[str, Any]
 
     metadata = formal.load_json(source / "run_metadata.json")
     fingerprint = formal.algorithm_fingerprint(metadata["implementation_commit"])
-    if fingerprint["sha256"] != FROZEN_ALGORITHM_FINGERPRINT:
+    if fingerprint["sha256"] not in FROZEN_ALGORITHM_FINGERPRINTS:
         raise formal.ValidationFailure(
             f"seed {seed}: algorithm fingerprint mismatch: {fingerprint['sha256']}"
         )
