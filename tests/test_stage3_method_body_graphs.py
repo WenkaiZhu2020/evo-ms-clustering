@@ -1,4 +1,5 @@
 from pathlib import Path
+import inspect
 
 import numpy as np
 import pytest
@@ -9,8 +10,10 @@ from scripts.stage3_method_body.build_semantic_graphs import (
     REPRESENTATION_ID,
     STAGE3B_GRAPH_ROOT,
     assert_empty_output,
+    frozen_build_graph_from_embeddings,
     graph_config,
     load_stage3b_inputs,
+    write_subject_artifacts,
 )
 from scripts.stage3_method_body.validate_semantic_graphs import (
     compare_reproducibility,
@@ -75,6 +78,31 @@ def test_graph_reproducibility_is_byte_identical() -> None:
     assert all(row["passed"] == "true" for row in rows)
 
 
-def test_stage3b_graph_task_has_no_optimization_output() -> None:
-    assert not (ROOT / "results" / "jpetstore" / "05_stage3_declaration_method_body").exists()
+def test_graph_generation_adapter_is_independent_of_optimizer_and_result_paths(tmp_path: Path) -> None:
+    """Graph construction remains graph-only after formal result creation."""
+    import scripts.stage3_method_body.build_semantic_graphs as graph_builder
+
+    source = inspect.getsource(graph_builder)
+    assert "pymoo" not in source
+    assert "run_seed00_optimizer" not in source
+
+    vectors, mapping, embedding_source = load_stage3b_inputs("jpetstore")
+    small_mapping = mapping[:4]
+    class_ids = [row["class_id"] for row in small_mapping]
+    directed, edges = frozen_build_graph_from_embeddings(class_ids, vectors[:4], 3)
+    result = write_subject_artifacts(
+        "jpetstore",
+        small_mapping,
+        directed,
+        edges,
+        embedding_source,
+        "graph-test-config",
+        "graph-test-source",
+        tmp_path / "graph-only-output",
+    )
+
+    assert result["output_dir"] == tmp_path / "graph-only-output" / "jpetstore"
+    assert (result["output_dir"] / "semantic_edges.csv").is_file()
+    assert not (tmp_path / "results").exists()
+    assert not (ROOT / "results" / "jpetstore" / "05_stage3_declaration_method_body" / "formal").exists()
     assert not (ROOT / "data" / "semantic_graphs" / "declaration_method_body" / "optimization").exists()
