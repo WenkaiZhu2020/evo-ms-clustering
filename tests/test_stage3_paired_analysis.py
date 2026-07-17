@@ -110,3 +110,17 @@ def test_saved_stage3_semantic_round_trip_and_hv_compatibility_pass():
     assert paired["stage3_selected_semantic_cut"].notna().all()
     assert paired["stage2_hv"].notna().all()
     assert paired["stage3_projected_hv"].notna().all()
+
+
+def test_saved_partition_external_evaluation_uses_only_complete_reference_scope():
+    paired, _, validation = analysis.load_paired_outputs()
+    assert validation["daytrader"]["reference"]["status"] == "available"
+    assert validation["daytrader"]["reference"]["coverage"] == 1.0
+    assert validation["jpetstore"]["reference"]["status"] == "unavailable"
+    assert validation["xerces"]["reference"]["status"] == "unavailable"
+    day = paired.loc[paired["subject"] == "daytrader"]
+    assert day["stage2_mojofm_vs_reference"].notna().all()
+    assert day["stage3_mojofm_vs_reference"].notna().all()
+    assert day["stage2_pairwise_f1"].notna().all()
+    assert day["stage3_pairwise_f1"].notna().all()
+    assert paired.loc[paired["subject"] != "daytrader", "stage3_mojofm_vs_reference"].isna().all()
