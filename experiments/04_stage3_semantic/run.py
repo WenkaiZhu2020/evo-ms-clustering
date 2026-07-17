@@ -247,6 +247,11 @@ def _nondominated_indices(objectives: np.ndarray) -> np.ndarray:
     return stage2._nondominated_indices(np.asarray(objectives, dtype=float))
 
 
+def _write_stage3_csv(frame: pd.DataFrame, path: Path) -> None:
+    """Persist numeric objectives losslessly enough for later dominance checks."""
+    frame.to_csv(path, index=False, float_format="%.17g")
+
+
 def _front_arrays(result) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
     pop_x, pop_f, pop_g = _population_arrays(result.pop)
     if len(pop_x) == 0:
@@ -503,13 +508,13 @@ def run_seed(subject: str, seed: int, output_dir: Path, run_type: str = "validat
     selected_original = next(row for row in pareto_rows if row["solution_id"] == selected["solution_id"])
     selected_posthoc = next(row for row in posthoc_rows if row["solution_id"] == selected["solution_id"])
     projected_path = output_dir / "projected_front_3d.csv"
-    pd.DataFrame(projected_rows).to_csv(projected_path, index=False)
+    _write_stage3_csv(pd.DataFrame(projected_rows), projected_path)
     matrix = pd.DataFrame(projected_rows)[["pymoo_f0_coupling", "pymoo_f1_negative_cohesion", "pymoo_f2_imbalance"]].to_numpy(dtype=float)
     normalized = _normalize_projected(matrix, context["bounds"])
     stored_hv = stage2._hypervolume(normalized, REFERENCE_POINT)
     recomputed_hv, _ = _independent_projected_hv(projected_path, context["bounds"])
-    pd.DataFrame(pareto_rows).to_csv(output_dir / "pareto_front_4d.csv", index=False)
-    pd.DataFrame(label_rows).to_csv(output_dir / "partition_labels.csv", index=False)
+    _write_stage3_csv(pd.DataFrame(pareto_rows), output_dir / "pareto_front_4d.csv")
+    _write_stage3_csv(pd.DataFrame(label_rows), output_dir / "partition_labels.csv")
     selected_partition = pd.DataFrame([
         {"class_id": row["class_id"], "class_name": row["class_name"], "cluster_id": row["cluster_id"]}
         for row in label_rows if row["solution_id"] == selected["solution_id"]
@@ -533,7 +538,7 @@ def run_seed(subject: str, seed: int, output_dir: Path, run_type: str = "validat
         "pass": bool(np.isclose(stored_hv, recomputed_hv, rtol=0.0, atol=HV_TOLERANCE)),
     }, indent=2) + "\n", encoding="utf-8")
     (output_dir / "objective_redundancy.json").write_text(json.dumps(_redundancy(pareto_rows), indent=2) + "\n", encoding="utf-8")
-    selected_partition.to_csv(output_dir / "selected_partition.csv", index=False)
+    _write_stage3_csv(selected_partition, output_dir / "selected_partition.csv")
     elapsed = time.perf_counter() - started
     validation = validate_run_output(output_dir, context)
     metadata = {

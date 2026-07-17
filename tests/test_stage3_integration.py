@@ -83,6 +83,23 @@ def test_stage3_direct_evaluation_matches_reported_objective_order() -> None:
     assert values[3] == pytest.approx(1.0 / 3.0)
 
 
+def test_stage3_csv_writer_preserves_dominance_precision(tmp_path: Path) -> None:
+    runner = _load_runner()
+    frame = pd.DataFrame(
+        {
+            "solution_id": ["a", "b"],
+            "pymoo_f0_coupling": [0.5037037037037, 0.5283950617284],
+            "pymoo_f1_negative_cohesion": [-12.8095238095238, -12.5847619047619],
+            "pymoo_f2_imbalance": [0.4823265432109, 0.4823265432108],
+        }
+    )
+    path = tmp_path / "front.csv"
+    runner._write_stage3_csv(frame, path)
+    reloaded = pd.read_csv(path)
+    np.testing.assert_allclose(reloaded.iloc[:, 1:].to_numpy(), frame.iloc[:, 1:].to_numpy(), rtol=0.0, atol=1e-15)
+    assert len(runner._nondominated_indices(reloaded.iloc[:, 1:].to_numpy())) == 2
+
+
 @pytest.mark.parametrize(
     "semantic_edges, expected_message",
     [
