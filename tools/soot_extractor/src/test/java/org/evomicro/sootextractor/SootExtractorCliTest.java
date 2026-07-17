@@ -70,6 +70,37 @@ final class SootExtractorCliTest {
         ssaFlows.stream().anyMatch(line -> line.contains("com.example.B,com.example.C,return_value_flow,3")));
     assertTrue(
         ssaFlows.stream().anyMatch(line -> line.contains("com.example.B,com.example.C,argument_passing_flow,3")));
+    assertTrue(Files.notExists(outDir.resolve("method_bodies.csv")));
+  }
+
+  @Test
+  void writesMethodBodiesOnlyToExplicitIsolatedPath() throws IOException {
+    Path classesDir = compileFixture();
+    Path outDir = tempDir.resolve("out");
+    Path methodBodyOut = tempDir.resolve("stage3b/method_bodies.csv");
+    int exitCode =
+        SootExtractorCli.run(
+            new String[] {
+              "--subject",
+              "fixture",
+              "--classes-dir",
+              classesDir.toString(),
+              "--classpath",
+              classesDir.toString(),
+              "--app-packages",
+              "com.example",
+              "--out-dir",
+              outDir.toString(),
+              "--method-body-out",
+              methodBodyOut.toString()
+            });
+
+    assertEquals(0, exitCode);
+    assertTrue(Files.exists(methodBodyOut));
+    List<String> rows = Files.readAllLines(methodBodyOut);
+    assertEquals(String.join(",", SootExtractorCli.METHOD_BODY_COLUMNS), rows.get(0));
+    assertTrue(rows.size() > 1);
+    assertTrue(Files.notExists(outDir.resolve("method_bodies.csv")));
   }
 
   @Test
