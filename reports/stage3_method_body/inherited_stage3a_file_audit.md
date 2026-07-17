@@ -28,7 +28,7 @@ Major inherited paths:
 
 The audit CSV classifies 2,282 repository files: 1,378 Group A files, 871
 Group B files, 18 Group C files, and 15 Group D files. The path-reference CSV
-contains 1,424 matched references. Its 83 high-risk matches are the known
+contains 1,424 matched references. Its 75 high-risk matches are the known
 hard-coded Stage 3A routes in `experiments/04_stage3_semantic/`,
 `scripts/stage3/`, and the frozen Stage 3A tests/configuration. They are not
 called by the new Stage 3B input layer; later embedding, graph, and optimizer

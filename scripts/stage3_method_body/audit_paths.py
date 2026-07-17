@@ -26,9 +26,6 @@ def repository_files() -> list[Path]:
 
 def classify_file(path: Path) -> tuple[str, str, str, str]:
     rel = path.relative_to(ROOT).as_posix()
-    status = subprocess.check_output(
-        ["git", "status", "--short", "--", rel], cwd=ROOT, text=True
-    ).strip()
     if (
         rel.startswith("scripts/stage3_method_body/")
         or rel == "configs/experiments/05_stage3_declaration_method_body.yml"
@@ -37,7 +34,6 @@ def classify_file(path: Path) -> tuple[str, str, str, str]:
         or (
             rel
             == "tools/soot_extractor/src/main/java/org/evomicro/sootextractor/SootExtractorCli.java"
-            and status
         )
     ):
         return "Group D", "yes", "yes", "continue only under Stage 3B namespace"
@@ -113,7 +109,7 @@ def write_path_reference_audit() -> None:
             for match in PATTERN.finditer(line):
                 matched = match.group(0)
                 source_code = rel.startswith(("scripts/", "experiments/", "src/", "tests/", "configs/"))
-                if rel.startswith(("scripts/stage3_method_body/", "reports/stage3_method_body/")):
+                if rel.startswith(("scripts/stage3_method_body/", "reports/stage3_method_body/")) or rel == "tests/test_stage3_method_body_isolation.py":
                     classification = "intentional Stage 3B boundary/audit reference"
                     risk = "low"
                     action = "retain; these references enforce isolation"

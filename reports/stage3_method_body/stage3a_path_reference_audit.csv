@@ -1,4 +1,10 @@
 path,line,matched_text,classification,stage3b_risk,required_action
+configs/experiments/04_stage3_semantic.yml,1,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
+configs/experiments/04_stage3_semantic.yml,38,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
+configs/experiments/04_stage3_semantic.yml,59,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
+configs/experiments/04_stage3_semantic.yml,106,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
+configs/experiments/04_stage3_semantic.yml,138,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
+configs/experiments/04_stage3_semantic.yml,149,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
 configs/experiments/05_stage3_declaration_method_body.yml,7,04_stage3_semantic,explicit Stage 3B boundary configuration,low,retain; Stage 3A references are declaration-source or forbidden-boundary declarations
 configs/experiments/05_stage3_declaration_method_body.yml,12,semantic_text,explicit Stage 3B boundary configuration,low,retain; Stage 3A references are declaration-source or forbidden-boundary declarations
 configs/experiments/05_stage3_declaration_method_body.yml,12,semantic_text,explicit Stage 3B boundary configuration,low,retain; Stage 3A references are declaration-source or forbidden-boundary declarations
@@ -11,73 +17,6 @@ configs/experiments/05_stage3_declaration_method_body.yml,19,semantic_graph,expl
 configs/experiments/05_stage3_declaration_method_body.yml,24,reports/stage3,explicit Stage 3B boundary configuration,low,retain; Stage 3A references are declaration-source or forbidden-boundary declarations
 configs/experiments/05_stage3_declaration_method_body.yml,27,reports/stage3,explicit Stage 3B boundary configuration,low,retain; Stage 3A references are declaration-source or forbidden-boundary declarations
 configs/experiments/05_stage3_declaration_method_body.yml,28,04_stage3_semantic,explicit Stage 3B boundary configuration,low,retain; Stage 3A references are declaration-source or forbidden-boundary declarations
-reports/stage3_method_body/inherited_stage3a_file_audit.md,6,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,15,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,15,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,23,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,23,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,24,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,25,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,26,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,32,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/inherited_stage3a_file_audit.md,46,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/stage3a_cleanup_candidates.md,11,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/stage3b_artifact_boundary.md,30,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/stage3b_artifact_boundary.md,31,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/stage3b_artifact_boundary.md,36,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/stage3b_artifact_boundary.md,37,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-reports/stage3_method_body/stage3b_artifact_boundary.md,39,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,12,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,14,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,14,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,14,stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,14,semantic_embeddings,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,14,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,14,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,35,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,45,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,46,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,51,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,52,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,110,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,116,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,124,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,124,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,132,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/audit_paths.py,132,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/extract_method_bodies.py,103,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/isolation.py,18,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/isolation.py,20,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/isolation.py,21,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/isolation.py,23,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/isolation.py,25,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/isolation.py,62,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/isolation.py,64,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/method_body_normalization.py,281,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/method_body_normalization.py,285,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/method_body_normalization.py,289,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/method_body_normalization.py,293,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/method_body_normalization.py,296,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/method_body_normalization.py,296,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/method_body_normalization.py,299,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-scripts/stage3_method_body/method_body_normalization.py,300,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
-tests/test_stage3_method_body_isolation.py,30,reports/stage3,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-tests/test_stage3_method_body_isolation.py,32,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
-tests/test_stage3_method_body_isolation.py,32,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
-tests/test_stage3_method_body_isolation.py,41,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-tests/test_stage3_method_body_isolation.py,42,reports/stage3,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-tests/test_stage3_method_body_isolation.py,45,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
-tests/test_stage3_method_body_isolation.py,50,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-tests/test_stage3_method_body_isolation.py,52,reports/stage3,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-tests/test_stage3_method_body_isolation.py,58,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-tests/test_stage3_method_body_isolation.py,98,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-tests/test_stage3_method_body_isolation.py,104,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-configs/experiments/04_stage3_semantic.yml,1,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
-configs/experiments/04_stage3_semantic.yml,38,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
-configs/experiments/04_stage3_semantic.yml,59,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
-configs/experiments/04_stage3_semantic.yml,106,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
-configs/experiments/04_stage3_semantic.yml,138,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
-configs/experiments/04_stage3_semantic.yml,149,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
 data/semantic_inputs/daytrader_class_declarations.csv,1,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
 data/semantic_inputs/jpetstore_class_declarations.csv,1,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
 data/semantic_inputs/xerces-j_class_declarations.csv,1,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
@@ -1014,11 +953,27 @@ reports/stage3/xerces_formal_validation.json,1208,04_stage3_semantic,historical 
 reports/stage3/xerces_formal_validation.json,1213,semantic_graph,historical or documentation-only Stage 3A reference,low,preserve; do not rewrite frozen provenance
 reports/stage3/xerces_formal_validation.json,1245,04_stage3_semantic,historical or documentation-only Stage 3A reference,low,preserve; do not rewrite frozen provenance
 reports/stage3/xerces_formal_validation.json,1250,semantic_graph,historical or documentation-only Stage 3A reference,low,preserve; do not rewrite frozen provenance
+reports/stage3_method_body/inherited_stage3a_file_audit.md,6,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,15,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,15,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,23,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,23,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,24,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,25,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,26,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,32,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/inherited_stage3a_file_audit.md,46,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/stage3a_cleanup_candidates.md,11,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 reports/stage3_method_body/stage3a_pipeline_commit_map.md,10,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 reports/stage3_method_body/stage3a_pipeline_commit_map.md,12,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 reports/stage3_method_body/stage3a_pipeline_commit_map.md,14,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 reports/stage3_method_body/stage3a_pipeline_commit_map.md,17,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 reports/stage3_method_body/stage3a_pipeline_commit_map.md,19,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/stage3b_artifact_boundary.md,30,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/stage3b_artifact_boundary.md,31,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/stage3b_artifact_boundary.md,36,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/stage3b_artifact_boundary.md,37,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+reports/stage3_method_body/stage3b_artifact_boundary.md,39,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 reports/stage3_method_body/stage3b_scope_and_status.md,24,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 reports/stage3_method_body/stage3b_scope_and_status.md,25,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 reports/stage3_method_body/stage3b_scope_and_status.md,27,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
@@ -1390,6 +1345,40 @@ scripts/stage3/write_day4_report.py,66,semantic_graph,reusable semantic concept,
 scripts/stage3/write_day4_report.py,124,reports/stage3,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
 scripts/stage3/write_day4_report.py,125,reports/stage3,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
 scripts/stage3/write_day4_report.py,125,semantic_graph,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
+scripts/stage3_method_body/audit_paths.py,12,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,14,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,14,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,14,stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,14,semantic_embeddings,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,14,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,14,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,32,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,41,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,42,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,47,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,48,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,106,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,112,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,120,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,120,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,128,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/audit_paths.py,128,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/extract_method_bodies.py,103,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/isolation.py,18,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/isolation.py,20,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/isolation.py,21,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/isolation.py,23,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/isolation.py,25,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/isolation.py,62,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/isolation.py,64,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/method_body_normalization.py,281,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/method_body_normalization.py,285,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/method_body_normalization.py,289,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/method_body_normalization.py,293,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/method_body_normalization.py,296,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/method_body_normalization.py,296,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/method_body_normalization.py,299,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+scripts/stage3_method_body/method_body_normalization.py,300,semantic_text,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 tests/test_stage3_class_declaration_input.py,35,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
 tests/test_stage3_class_declaration_input.py,36,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
 tests/test_stage3_class_declaration_input.py,37,semantic_text,reusable semantic concept,review,parameterize only if used as an artifact path
@@ -1417,6 +1406,17 @@ tests/test_stage3_go_no_go.py,39,reports/stage3,dangerous hard-coded Stage 3A ro
 tests/test_stage3_integration.py,21,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
 tests/test_stage3_integration.py,176,04_stage3_semantic,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
 tests/test_stage3_integration.py,177,reports/stage3,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
+tests/test_stage3_method_body_isolation.py,30,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,32,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,32,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,41,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,42,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,45,semantic_graph,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,50,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,52,reports/stage3,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,58,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,98,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
+tests/test_stage3_method_body_isolation.py,104,04_stage3_semantic,intentional Stage 3B boundary/audit reference,low,retain; these references enforce isolation
 tests/test_stage3_paired_analysis.py,29,semantic_graph,reusable semantic concept,review,parameterize only if used as an artifact path
 tests/test_stage3_paired_analysis.py,96,reports/stage3,dangerous hard-coded Stage 3A route,high,route Stage 3B through explicit 05 config and identity guards
 tests/test_stage3_paired_analysis.py,106,stage3_semantic,Stage 3A artifact/config reference,medium,keep read-only or use explicit Stage 3B adapter
