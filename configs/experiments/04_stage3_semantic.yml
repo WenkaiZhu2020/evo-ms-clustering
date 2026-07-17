@@ -104,12 +104,103 @@ rendering:
   implicit_java_lang_enum: exclude
   empty_entity_template: "{annotation_block}{visibility_prefix}{kind} {name}{extends_clause}{interfaces_clause} {\n}\n"
 semantic_graph:
-  method: top_k
   k: 3
-  tie_break: class_id_lexicographic
-  remove_self_loops: true
-  symmetrization: or
-  edge_weight: cosine_similarity
+  candidate_policy: all_non_self_nodes
+  similarity: true_cosine
+  similarity_implementation: scripts/stage3/similarity.py
+  ranking:
+    primary: cosine_descending
+    exact_tie_break: class_id_lexicographic_ascending
+  directed_selection_count_per_node: 3
+  symmetrisation: OR
+  self_loops: forbidden
+  duplicate_edges: forbidden
+  edge_weight: true_cosine
+  edge_weight_threshold: null
+  negative_edges:
+    special_handling: none
+  formal_source:
+    - embeddings.npy
+    - class_ids.csv
+  diagnostic_files_as_input: forbidden
+duplicate_handling:
+  policy: none
+  exclude_duplicate_texts: false
+  exclude_duplicate_vectors: false
+  force_duplicate_edges: false
+  merge_duplicate_nodes: false
+  down_weight_duplicate_edges: false
+  rationale: >-
+    Identical declaration texts represent representation-induced equivalence.
+    They remain ordinary candidates during top-k selection. Exact cosine ties
+    are resolved using ascending lexicographic class_id order.
+random_graph_baseline:
+  status: preregistered_before_semantic_graph_generation
+  purpose: >-
+    Test whether the observed semantic graph aligns with structural,
+    reference-service, or fixed Leiden evidence more strongly than a uniformly
+    sampled simple undirected graph with the same node set and edge count.
+  model: uniform_simple_undirected_gnm
+  repetitions: 1000
+  node_set:
+    source: formal_stage2_subject_scope
+    ordering: class_id_lexicographic_ascending
+  edge_count:
+    source: formal_or_symmetrised_semantic_graph
+    exact_match_required: true
+  candidate_pairs:
+    definition: all_unordered_distinct_node_pairs
+    self_loops: forbidden
+    duplicate_edges: forbidden
+    enumeration: lexicographically_sorted_nodes_with_i_less_than_j
+  sampling:
+    method: uniform_without_replacement
+    every_m_edge_subset_equally_likely: true
+    preserve_degree_distribution: false
+    preserve_connectivity: false
+    preserve_semantic_weights: false
+    use_edge_weights: false
+    condition_on_package: false
+    condition_on_structural_graph: false
+    condition_on_leiden_partition: false
+    condition_on_reference_labels: false
+  rng:
+    implementation: numpy.random.default_rng
+    numpy_version_source: requirements-stage3-lock.txt
+    repetition_index_start: 0
+    repetition_index_end: 999
+    subject_seed_bases:
+      jpetstore: 42000
+      daytrader: 52000
+      xerces: 62000
+    repetition_seed_rule: subject_seed_base_plus_repetition_index
+  metrics:
+    - structural_overlap
+    - same_reference_service_ratio
+    - same_leiden_cluster_ratio
+  denominator_policy:
+    structural_overlap: all_random_edges
+    same_reference_service_ratio: edges_with_both_endpoints_mapped
+    same_leiden_cluster_ratio: edges_with_both_endpoints_mapped
+  unavailable_metric_policy:
+    observed_mapping_denominator_zero: null
+    random_mapping_denominator_zero: null
+    comparison_with_null_observed: false
+    comparison_requires_all_random_repetitions_defined: true
+  quantiles:
+    implementation: numpy.quantile
+    method: higher
+    p50: 0.50
+    p95: 0.95
+  pass_rule:
+    operator: strict_greater_than
+    expression: observed > random_p95
+  go_no_go_usage:
+    same_leiden_cluster_ratio: diagnostic_only
+    subject_pass: >-
+      structural_overlap > structural_overlap_random_p95 OR
+      same_reference_service_ratio > same_reference_service_random_p95
+    required_subject_pass_count: 2
 semantic_objective:
   name: semantic_cut_ratio
   formula: "f_sem = 1 - S(P); S(P) = intra_cluster_semantic_weight / total_semantic_weight"

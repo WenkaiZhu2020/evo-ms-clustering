@@ -2,9 +2,9 @@
 
 ## 1. Purpose
 
-This checkpoint freezes the software environment after deterministic Stage 3
-input generation and before Nomic embedding generation. It does not generate
-model embeddings, semantic graphs, or Stage 3 optimisation results.
+This checkpoint records the pinned environment used for Stage 3 artifacts and
+diagnostics. It does not claim cross-device bit-exact floating-point
+reproduction.
 
 ## 2. Repository state
 
@@ -225,11 +225,13 @@ PYTHONPATH=src python3 -m pytest -q
 
 ## 8. Platform limitations
 
-The validated platform is Apple Silicon `arm64`. PyTorch reports MPS built
-and available; CUDA is unavailable. The runtime probe and smoke test ran on
-MPS; no CUDA or CPU embedding run was performed. Input extraction and input
-hashing are deterministic, but bitwise-identical floating-point embeddings
-across MPS, CUDA, and CPU are not assumed.
+Bit-exact embedding reproduction was demonstrated only under the pinned
+current environment: macOS, Apple Silicon MPS, a float16 runtime, batch size
+8, and the exact locked library versions. Bit-exact equality across CPU,
+CUDA, other hardware, or other library versions is not claimed. Model, input,
+embedding, and graph hashes detect environment or artifact drift. Algorithmic
+rules remain reproducible across platforms, but final floating values may
+differ in their least significant digits.
 
 ## 9. Current Stage 3 status
 
@@ -247,9 +249,6 @@ Completed:
 
 Not yet completed:
 
-- Embedding generation.
-- Nearest-neighbour checks.
-- Semantic graph construction.
 - Semantic objective integration.
 - Stage 3 formal multi-seed runs.
 

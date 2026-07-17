@@ -109,6 +109,45 @@ Option B, a global epsilon or percentile threshold, is rejected as the formal ru
 
 Option C, the symmetrized top-k graph, is selected because every node receives a fixed outgoing neighbour budget and the strongest local semantic relations are retained. One shared `k` supports controlled cross-subject execution. OR symmetrization prevents a valid one-way nearest-neighbour relation from being discarded. The choice does not claim that `k=3` is optimal.
 
+The formal graph is built directly from the saved `embeddings.npy` and
+`class_ids.csv` files. `nearest_neighbors.csv` and other diagnostic files are
+not graph inputs. Duplicate representations receive no special treatment.
+Identical-text neighbours may occupy one or more top-3 positions because they
+are ordinary candidates under the frozen input representation. No post-hoc
+correction is applied after observing Xerces. Their effect is quantified as a
+diagnostic only.
+
+## 6. Duplicate handling and random graph baseline
+
+The duplicate policy is `none`. Duplicate texts and identical vectors are not
+excluded, merged, down-weighted, or forced into edges. Exact cosine ties use
+ascending lexicographic `class_id` order. This policy treats identical
+declaration texts as representation-induced equivalence and preserves the
+formal class scope.
+
+Before semantic graph generation, the random null model was preregistered. It
+is a uniform simple undirected G(n,m) model with 1,000 repetitions. Each
+sample uses the same formal class set and the same number of undirected edges
+as the final OR-symmetrised semantic graph. Candidate pairs are all unordered
+distinct class pairs, enumerated lexicographically, and exactly `m` pairs are
+sampled uniformly without replacement. Self-loops and duplicate edges are
+forbidden.
+
+The null model does not preserve semantic-graph degrees, connectivity, edge
+weights, structural overlap, package membership, Leiden clusters, or reference
+services. It is an edge-count-matched null model, not a degree-preserving null
+model. Sampling uses `numpy.random.default_rng` with subject seed bases 42000,
+52000, and 62000 for JPetStore, DayTrader, and Xerces. Repetition `r` uses
+`subject_seed_base + r` for `r=0..999`.
+
+Random values use `numpy.quantile(values, 0.95, method="higher")` and
+`numpy.quantile(values, 0.50, method="higher")`. A comparison passes only
+when `observed > p95`. JPetStore and Xerces have no expert reference-service
+mapping, so their same-reference observed and random values are null and that
+branch cannot pass. DayTrader uses its existing mapping, with denominators
+limited to edges whose two endpoints have valid labels. Same-Leiden ratio is a
+diagnostic only and is not part of the evidence gate.
+
 ## 7. Semantic objective
 
 For a partition (P), let (E_{\mathrm{sem}}) be the undirected semantic edge set and (w_{ij}) the stored cosine-similarity weight.
