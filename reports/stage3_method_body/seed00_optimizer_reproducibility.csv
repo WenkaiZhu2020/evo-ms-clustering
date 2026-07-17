@@ -1,0 +1,4 @@
+subject,files_compared,byte_identical_files,all_byte_identical,temporary_root_removed
+jpetstore,8,8,True,True
+daytrader,8,8,True,True
+xerces,8,8,True,True

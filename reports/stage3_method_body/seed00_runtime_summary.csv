@@ -1,0 +1,4 @@
+subject,seed,runtime_seconds,evaluations,front_size,projected_front_size,selected_solution_id,implementation_commit
+jpetstore,0,7.488074916996993,10000,100,61,seed0_solution000,e653e2cf6c5e4eb6107d5f5c0ff78512337fc0a2
+daytrader,0,9.407476417021826,10000,100,64,seed0_solution041,e653e2cf6c5e4eb6107d5f5c0ff78512337fc0a2
+xerces,0,70.09879137505777,10000,100,90,seed0_solution018,e653e2cf6c5e4eb6107d5f5c0ff78512337fc0a2

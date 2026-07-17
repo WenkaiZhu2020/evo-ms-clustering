@@ -1,0 +1,4 @@
+subject,front_size,projected_front_size,nondominated_count,all_front_nondominated,unique_solution_ids,exact_class_scope,objective_recomputation_max_abs_difference,selected_in_projected_front,f_semantic_min,f_semantic_max,f_semantic_varies,pass
+jpetstore,100,61,100,True,True,True,0.0,True,0.3562014513514241,0.7842709396752515,True,True
+daytrader,100,64,100,True,True,True,0.0,True,0.4580950857582564,0.9264102162751867,True,True
+xerces,100,90,100,True,True,True,0.0,True,0.38743299874057835,0.962334666962552,True,True
