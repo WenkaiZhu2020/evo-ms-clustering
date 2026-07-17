@@ -11,7 +11,7 @@
   "persisted_dominating_vector": [0.5037037, -12.80952381, 0.48232654],
   "root_cause": "Default pandas CSV serialization rounded close objective values so a distinct in-memory projected point became dominated after reload.",
   "correction": "Formal objective CSVs now use a 20-significant-digit float format and round-trip float parsing before any saved-file validation.",
-  "fix_commit": "pending-second-serialization-fix-commit",
+  "fix_commit": "85db403",
   "scientific_configuration_changed": false,
   "rerun_required": true
 }

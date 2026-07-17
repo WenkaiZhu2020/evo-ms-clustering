@@ -30,6 +30,7 @@ FROZEN_ALGORITHM_FINGERPRINTS = {
     # share the same optimizer, objectives, graphs, and selection rule.
     "c8d68cdadd19e61b576e487136ec78b8f16f50ef85e4e1bafb732c325818fb3c",
     "dcc6034374ace8742c01f4114d55fc81ac041900a3629fc108dc46693d5316fe",
+    "50f71a17345aef815fe354d2c0c83cccd896936d6a0199cc088ed2bb138663cb",
 }
 
 
