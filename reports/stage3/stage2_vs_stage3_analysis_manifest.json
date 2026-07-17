@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "analysis_type": "paired_stage2_vs_stage3_frozen_results",
-  "generated_at_utc": "2026-07-17T19:46:23Z",
-  "analysis_start_commit": "1d8975aca7327959823e7b9b5c52d983d3b4036b",
-  "analysis_final_commit": "b6ada928cb97db71e866d35469aaa1c95b61f557",
+  "generated_at_utc": "2026-07-17T19:58:28Z",
+  "analysis_start_commit": "5ae6d197e4e5bc13d92d726f3f19de3a5fabda94",
+  "analysis_final_commit": null,
   "subjects": [
     "jpetstore",
     "daytrader",
@@ -145,6 +145,15 @@
       "generations": 100,
       "stage2_git_commit": "ecfaa3ccb5a589645b719077abdf026aeb246946",
       "stage3_seed_count": 30,
+      "reference": {
+        "status": "unavailable",
+        "reason": "no frozen external reference mapping is registered for this subject",
+        "path": null,
+        "source": null,
+        "coverage": null,
+        "unmatched_extracted_classes": [],
+        "reference_classes_not_found": []
+      },
       "input_file_hashes": {
         "stage2_robustness_manifest": "e21d59500eb1db729c390229ac6b5647012efdf784302eb25780cf0276432356",
         "class_nodes": "69b59fef4e0cf7feb7402d14beac895b1790db0906b2b6dc11c54743f431e7e0",
@@ -200,6 +209,15 @@
       "generations": 100,
       "stage2_git_commit": "ecfaa3ccb5a589645b719077abdf026aeb246946",
       "stage3_seed_count": 30,
+      "reference": {
+        "status": "available",
+        "reason": "complete frozen reference coverage",
+        "path": "data/references/daytrader_reference_services.csv",
+        "source": "repository domain-informed proxy reference; not ground truth",
+        "coverage": 1.0,
+        "unmatched_extracted_classes": [],
+        "reference_classes_not_found": []
+      },
       "input_file_hashes": {
         "stage2_robustness_manifest": "45d9e89f11a8f50e6674db383dc8d0939031253911770b2835042726d135ff01",
         "class_nodes": "52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd",
@@ -255,6 +273,15 @@
       "generations": 100,
       "stage2_git_commit": "ecfaa3ccb5a589645b719077abdf026aeb246946",
       "stage3_seed_count": 30,
+      "reference": {
+        "status": "unavailable",
+        "reason": "no frozen external reference mapping is registered for this subject",
+        "path": null,
+        "source": null,
+        "coverage": null,
+        "unmatched_extracted_classes": [],
+        "reference_classes_not_found": []
+      },
       "input_file_hashes": {
         "stage2_robustness_manifest": "141e675fcfc75639eeafc3dd1775b5a73a14f5d78168f453f9686d602186afd2",
         "class_nodes": "05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2",
@@ -271,14 +298,34 @@
       }
     }
   },
-  "external_metric_policy": {
-    "mojofm_vs_reference": "unavailable in Stage 3 saved representative output; no imputation",
-    "pairwise_precision": "unavailable in Stage 3 saved representative output; no imputation",
-    "pairwise_recall": "unavailable in Stage 3 saved representative output; no imputation",
-    "pairwise_f1": "unavailable in Stage 3 saved representative output; no imputation",
-    "ari_vs_reference": "unavailable in Stage 3 saved representative output; no imputation",
-    "nmi_vs_reference": "unavailable in Stage 3 saved representative output; no imputation",
-    "reference_coverage_ratio": "unavailable in Stage 3 saved representative output; no imputation"
+  "external_reference_evaluation": {
+    "jpetstore": {
+      "status": "unavailable",
+      "reason": "no frozen external reference mapping is registered for this subject",
+      "path": null,
+      "source": null,
+      "coverage": null,
+      "unmatched_extracted_classes": [],
+      "reference_classes_not_found": []
+    },
+    "daytrader": {
+      "status": "available",
+      "reason": "complete frozen reference coverage",
+      "path": "data/references/daytrader_reference_services.csv",
+      "source": "repository domain-informed proxy reference; not ground truth",
+      "coverage": 1.0,
+      "unmatched_extracted_classes": [],
+      "reference_classes_not_found": []
+    },
+    "xerces": {
+      "status": "unavailable",
+      "reason": "no frozen external reference mapping is registered for this subject",
+      "path": null,
+      "source": null,
+      "coverage": null,
+      "unmatched_extracted_classes": [],
+      "reference_classes_not_found": []
+    }
   },
   "result_paths": {
     "jpetstore": {
@@ -307,7 +354,7 @@
   "output_files": {
     "paired_seed_metrics": {
       "path": "reports/stage3/stage2_vs_stage3_paired_seed_metrics.csv",
-      "sha256": "1031fafd39312838b9c6417cd0e7a70f307cafe6dfd04bbe3d2cd0d5db331073",
+      "sha256": "1dc4df5151a2b271081df7ed73adc850d2b21f10283a7b246ab856a7d24d9276",
       "rows": 90
     },
     "partition_change": {
@@ -317,17 +364,22 @@
     },
     "descriptive_summary": {
       "path": "reports/stage3/stage2_vs_stage3_paired_descriptive_summary.csv",
-      "sha256": "b63e79e0964618e77b528d700943479c1ffbfeb4eff3a0fe89320e22bfaf31a9",
+      "sha256": "59533801a700c21def844736c3d02b118ae83d725d604822fbc1a68b97e4d184",
       "rows": 66
     },
     "statistical_tests": {
       "path": "reports/stage3/stage2_vs_stage3_paired_statistical_tests.csv",
-      "sha256": "1f70a081742801935bd15317e97497459a42c3de1e0b719f35ae736c49b9b36b",
-      "rows": 33
+      "sha256": "e2be988881cc1f025a513cb04454a1441438c381815274e8549f2f278c57138d",
+      "rows": 51
+    },
+    "external_metric_evaluation": {
+      "path": "reports/stage3/stage2_vs_stage3_external_metric_evaluation.csv",
+      "sha256": "828d24408b59b7f8114e3518e83fa65504235315f39b37e1fe8a4baf97808b1d",
+      "rows": 90
     },
     "report": {
       "path": "reports/stage3/stage2_vs_stage3_paired_analysis.md",
-      "sha256": "cee852e303482e89abf98c1c49e1e86040919e85be4643a14c294894934dd764"
+      "sha256": "071a57ed1dc1563293b90c2bb0340a4bc1a6a5309b7207f04ca3bb2e26f4428d"
     }
   }
 }
