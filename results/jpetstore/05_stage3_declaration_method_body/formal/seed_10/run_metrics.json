@@ -1,0 +1,21 @@
+{
+  "class_mapping_sha256": "83c4643fdad9661f2e409563f8e496b792575ecc72ac548ba8c2f13fb46e019f",
+  "config_hash": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+  "embedding_aggregate_sha256": "e7615e77d4f3258df46e499fd94c2dbb59bee03c0d2f6c3bb822c3aff4577139",
+  "embedding_file_sha256": "6ca1abf13b753a89a7f78e93486a3c24ae4367d4a32edfa367306a79e3297b04",
+  "evaluations": 10000,
+  "experiment_id": "stage3_declaration_method_body",
+  "experiment_name": "stage3_declaration_method_body",
+  "front_size": 100,
+  "graph_sha256": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a9214",
+  "input_aggregate_sha256": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+  "input_hash": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+  "projected_front_size": 60,
+  "projected_hypervolume": 0.4078576289609606,
+  "representation_id": "declaration_method_body_v1",
+  "runtime_seconds": 7.891748583060689,
+  "seed": 10,
+  "selected_solution_id": "seed10_solution002",
+  "subject": "jpetstore",
+  "validation_pass": true
+}
