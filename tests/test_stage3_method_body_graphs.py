@@ -89,6 +89,8 @@ def test_graph_generation_adapter_is_independent_of_optimizer_and_result_paths(t
     vectors, mapping, embedding_source = load_stage3b_inputs("jpetstore")
     small_mapping = mapping[:4]
     class_ids = [row["class_id"] for row in small_mapping]
+    formal_result_path = ROOT / "results" / "jpetstore" / "05_stage3_declaration_method_body" / "formal"
+    formal_result_existed_before = formal_result_path.exists()
     directed, edges = frozen_build_graph_from_embeddings(class_ids, vectors[:4], 3)
     result = write_subject_artifacts(
         "jpetstore",
@@ -104,5 +106,5 @@ def test_graph_generation_adapter_is_independent_of_optimizer_and_result_paths(t
     assert result["output_dir"] == tmp_path / "graph-only-output" / "jpetstore"
     assert (result["output_dir"] / "semantic_edges.csv").is_file()
     assert not (tmp_path / "results").exists()
-    assert not (ROOT / "results" / "jpetstore" / "05_stage3_declaration_method_body" / "formal").exists()
+    assert formal_result_path.exists() == formal_result_existed_before
     assert not (ROOT / "data" / "semantic_graphs" / "declaration_method_body" / "optimization").exists()
