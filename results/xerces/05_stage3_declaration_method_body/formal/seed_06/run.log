@@ -1,0 +1,3 @@
+start subject=xerces seed=6 run_type=formal
+implementation_commit=6bbed4acef9af0bd7dd4938938decf99457ef112
+completed runtime_seconds=75.534019 front_size=100 projected_front_size=72
