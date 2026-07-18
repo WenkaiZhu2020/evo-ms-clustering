@@ -1,5 +1,5 @@
 {
-  "analysis_head": "18c80a5f81f6af4cbf0a692e1bb87737d24c4a13",
+  "analysis_head": "71bf2e8a596507720185c781eb50578a454f0e32",
   "baseline": "one frozen raw Leiden partition per subject",
   "branch": "stage3-Declaration+Method-Body",
   "budgets": [
@@ -17,7 +17,7 @@
     "jpetstore": 24,
     "xerces": 814
   },
-  "generated_at_utc": "2026-07-18T00:59:45Z",
+  "generated_at_utc": "2026-07-18T01:03:49Z",
   "integrity_pass": true,
   "limitations": "retained-front capability is not global capability; finite population and evolution constrain the saved candidate set",
   "no_embeddings_regenerated": true,
