@@ -54,8 +54,7 @@ EXPECTED_INPUT_HASHES = {
 INPUT_ROOT = ROOT / "data/semantic_text/declaration_method_body"
 OUTPUT_ROOT = ROOT / "data/embeddings/declaration_method_body"
 REPORT_ROOT = ROOT / "reports/stage3_method_body"
-FORMAL_CONFIG = ROOT / "configs/experiments/04_stage3_semantic.yml"
-FORMAL_MANIFEST = ROOT / "reports/stage3/formal_run_manifest.json"
+FORMAL_CONFIG = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 MAX_NORM_TOLERANCE = (0.999, 1.001)
 
 
@@ -149,10 +148,7 @@ def verify_frozen_inputs(input_root: Path = INPUT_ROOT) -> dict[str, list[dict[s
 
 def load_frozen_runtime() -> tuple[dict[str, Any], dict[str, Any], Any]:
     config = yaml.safe_load(FORMAL_CONFIG.read_text(encoding="utf-8"))
-    manifest = json.loads(FORMAL_MANIFEST.read_text(encoding="utf-8"))
-    from scripts.stage3.generate_embeddings import validate_contract
-
-    runtime_config = validate_contract(config, manifest)
+    runtime_config = dict(config["embedding_runtime"])
     expected = {
         "device": "mps",
         "dtype": "float16",
@@ -161,9 +157,9 @@ def load_frozen_runtime() -> tuple[dict[str, Any], dict[str, Any], Any]:
     }
     for key, value in expected.items():
         if runtime_config.get(key) != value:
-            raise ValueError(f"frozen Stage 3A runtime {key}={runtime_config.get(key)!r}, expected {value!r}")
+            raise ValueError(f"final Stage 3 runtime {key}={runtime_config.get(key)!r}, expected {value!r}")
     if not torch.backends.mps.is_available():
-        raise RuntimeError("frozen Stage 3A runtime requires MPS, but MPS is unavailable")
+        raise RuntimeError("final Stage 3 runtime requires MPS, but MPS is unavailable")
     runtime = {
         "device": runtime_config["device"],
         "device_name": runtime_config["device_name"],

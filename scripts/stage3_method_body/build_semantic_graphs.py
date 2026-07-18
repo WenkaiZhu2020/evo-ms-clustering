@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in __import__("sys").path:
     __import__("sys").path.insert(0, str(ROOT))
 
-from scripts.stage3.build_semantic_graphs import (  # noqa: E402
+from evo_ms.semantic.graph import (  # noqa: E402
     build_graph_from_embeddings as frozen_build_graph_from_embeddings,
     canonical_weight,
 )
