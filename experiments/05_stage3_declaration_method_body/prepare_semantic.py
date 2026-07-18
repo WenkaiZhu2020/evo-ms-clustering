@@ -6,13 +6,17 @@ from __future__ import annotations
 import argparse
 import csv
 from datetime import datetime, timezone
+import difflib
 import hashlib
 import json
+import os
 import platform
 from pathlib import Path
+import shlex
 import subprocess
 import sys
 import time
+from collections.abc import Mapping
 from typing import Any
 
 import numpy as np
@@ -41,7 +45,12 @@ from evo_ms.semantic.inference import (  # noqa: E402
     vector_hash,
 )
 from evo_ms.semantic.graph import build_graph_from_embeddings  # noqa: E402
+from evo_ms.semantic.input_contract import aggregate_input_hash  # noqa: E402
+from evo_ms.semantic.input_contract import canonical_text_hash  # noqa: E402
+from evo_ms.semantic.method_body import MethodBody  # noqa: E402
+from evo_ms.semantic.method_body import compose_semantic_text  # noqa: E402
 from evo_ms.semantic.method_body import extract_declaration_section  # noqa: E402
+from evo_ms.semantic.method_body import normalize_class_bodies  # noqa: E402
 
 
 SUBJECTS = ("jpetstore", "daytrader", "xerces")
@@ -59,6 +68,7 @@ MAX_NORM_TOLERANCE = (0.999, 1.001)
 EXPERIMENT_ID = "stage3_declaration_method_body"
 REPRESENTATION_ID = "declaration_method_body_v1"
 GRAPH_ROOT = ROOT / "data/semantic_graphs/declaration_method_body"
+EXTRACTOR_SUBJECT = {"jpetstore": "jpetstore", "daytrader": "daytrader", "xerces": "xerces-j"}
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -452,19 +462,265 @@ def build_graphs(
     }
 
 
+def _read_rows(path: Path) -> list[dict[str, str]]:
+    with path.open(encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def _subject_project_root(subject: str, source_root: Path) -> Path:
+    configured_name = Path(str(_load_subject_config(subject)["project_root"])).name
+    candidate = source_root / configured_name
+    if candidate.is_dir():
+        return candidate
+    if source_root.is_dir():
+        return source_root
+    raise FileNotFoundError(f"source root does not exist: {source_root}")
+
+
+def _load_subject_config(subject: str) -> dict[str, Any]:
+    extractor_subject = EXTRACTOR_SUBJECT[subject]
+    path = ROOT / "configs/subjects" / f"{extractor_subject}.yml"
+    return yaml.safe_load(path.read_text(encoding="utf-8"))
+
+
+def _source_paths(subject: str, source_root: Path) -> tuple[Path, Path, str, list[str], list[str]]:
+    config = _load_subject_config(subject)
+    project_root = _subject_project_root(subject, source_root)
+    classes_dir = project_root / str(config["classes_dir"])
+    classpath = os.pathsep.join(str(project_root / str(entry)) for entry in config["classpath_entries"])
+    app_packages = [str(value) for value in config["app_packages"]]
+    exclude_packages = [str(value) for value in config.get("exclude_packages", [])]
+    return project_root, classes_dir, classpath, app_packages, exclude_packages
+
+
+def _run_soot_extraction(
+    subject: str,
+    source_root: Path,
+    extraction_root: Path,
+) -> tuple[Path, Path, dict[str, Any]]:
+    project_root, classes_dir, classpath, app_packages, exclude_packages = _source_paths(subject, source_root)
+    if not classes_dir.is_dir():
+        raise FileNotFoundError(
+            f"compiled classes are missing for {subject}: {classes_dir}; "
+            "run the configured subject build before semantic preparation"
+        )
+    out_dir = extraction_root / "soot"
+    semantic_out = extraction_root / "class_declarations.csv"
+    method_body_out = extraction_root / "method_bodies.csv"
+    args = [
+        "--subject", EXTRACTOR_SUBJECT[subject],
+        "--classes-dir", str(classes_dir),
+        "--classpath", classpath,
+        "--app-packages", ",".join(app_packages),
+        "--out-dir", str(out_dir),
+        "--semantic-out", str(semantic_out),
+        "--method-body-out", str(method_body_out),
+    ]
+    if exclude_packages:
+        args.extend(["--exclude-packages", ",".join(exclude_packages)])
+    command = [
+        "mvn", "-q", "-f", str(ROOT / "tools/soot_extractor/pom.xml"),
+        "exec:java", "-Dexec.mainClass=org.evomicro.sootextractor.SootExtractorCli",
+        f"-Dexec.args={shlex.join(args)}",
+    ]
+    subprocess.run(command, cwd=ROOT, check=True)
+    if not semantic_out.is_file() or not method_body_out.is_file():
+        raise RuntimeError(f"Soot did not produce isolated semantic outputs for {subject}")
+    return semantic_out, method_body_out, {
+        "project_root": str(project_root),
+        "classes_dir": str(classes_dir),
+        "command": shlex.join(command),
+        "source_subject": EXTRACTOR_SUBJECT[subject],
+    }
+
+
+def _frozen_rows(subject: str, frozen_root: Path) -> dict[str, dict[str, str]]:
+    path = frozen_root / subject / "class_semantic_inputs.csv"
+    rows = _read_rows(path)
+    return {row["class_id"]: row for row in rows}
+
+
+def _declaration_map(path: Path) -> dict[str, dict[str, str]]:
+    rows = _read_rows(path)
+    return {row["class_id"]: row for row in rows}
+
+
+def _method_map(path: Path) -> dict[str, list[MethodBody]]:
+    result: dict[str, list[MethodBody]] = {}
+    for row in _read_rows(path):
+        result.setdefault(row["class_id"], []).append(
+            MethodBody(
+                class_id=row["class_id"],
+                method_name=row["method_name"],
+                method_signature=row["method_signature"],
+                concrete=row["concrete"].lower() == "true",
+                synthetic=row["synthetic"].lower() == "true",
+                body_text=row["body_text"],
+            )
+        )
+    return result
+
+
+def _declaration_diff(expected: str, observed: str) -> str:
+    return "".join(
+        difflib.unified_diff(
+            expected.splitlines(keepends=True),
+            observed.splitlines(keepends=True),
+            fromfile="frozen_declaration",
+            tofile="generated_declaration",
+        )
+    )
+
+
+def _build_subject_input(
+    subject: str,
+    *,
+    source_root: Path,
+    output_root: Path,
+    frozen_root: Path,
+    verify_against_frozen: bool,
+) -> dict[str, Any]:
+    extraction_root = output_root / ".extraction" / subject
+    extraction_root.mkdir(parents=True, exist_ok=True)
+    semantic_path, method_path, source_metadata = _run_soot_extraction(
+        subject, source_root, extraction_root
+    )
+    declarations = _declaration_map(semantic_path)
+    methods = _method_map(method_path)
+    frozen = _frozen_rows(subject, frozen_root)
+    expected_ids = set(frozen)
+    generated_ids = set(declarations)
+    if generated_ids != expected_ids:
+        missing = sorted(expected_ids - generated_ids)
+        extra = sorted(generated_ids - expected_ids)
+        raise ValueError(f"{subject}: class scope mismatch; missing={missing}; extra={extra}")
+    output_dir = output_root / subject
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_rows: list[dict[str, str]] = []
+    for class_id in sorted(expected_ids):
+        baseline = dict(frozen[class_id])
+        declaration = declarations[class_id]["semantic_text"]
+        frozen_declaration = extract_declaration_section(baseline["semantic_text"])
+        if declaration != frozen_declaration:
+            raise ValueError(
+                f"{subject}/{class_id}: declaration mismatch\n"
+                f"{_declaration_diff(frozen_declaration, declaration)}"
+            )
+        normalized = normalize_class_bodies(methods.get(class_id, []))
+        semantic_text = compose_semantic_text(declaration, normalized.body_text)
+        baseline["semantic_text"] = semantic_text
+        baseline["input_hash"] = canonical_text_hash(semantic_text)
+        baseline["experiment_name"] = EXPERIMENT_ID
+        baseline["representation_id"] = REPRESENTATION_ID
+        baseline["declaration_exact_match"] = "true"
+        baseline["declaration_truncated"] = "false"
+        baseline["body_empty"] = str(normalized.body_text == "<EMPTY>").lower()
+        baseline["body_tokens_truncated"] = str(normalized.tokens_truncated)
+        baseline["raw_body_candidate_count"] = str(normalized.filter_counts.raw_candidate_count)
+        baseline["filtered_body_token_count_before_budget"] = str(len(normalized.tokens_before_budget))
+        baseline["appended_body_token_count"] = str(len(normalized.tokens_after_budget))
+        baseline["extracted_concrete_method_count"] = str(normalized.method_count)
+        baseline["normalized_method_count"] = str(normalized.method_count)
+        baseline["synthetic_method_count"] = str(normalized.filter_counts.skipped_synthetic_methods)
+        baseline["accepted_invoked_method_tokens"] = str(normalized.filter_counts.accepted_invoked_method_tokens)
+        baseline["accepted_field_tokens"] = str(normalized.filter_counts.accepted_field_tokens)
+        baseline["accepted_local_tokens"] = str(normalized.filter_counts.accepted_local_tokens)
+        baseline["accepted_exception_tokens"] = str(normalized.filter_counts.accepted_exception_tokens)
+        baseline["accepted_operation_tokens"] = str(normalized.filter_counts.accepted_operation_tokens)
+        baseline["accepted_string_tokens"] = str(normalized.filter_counts.accepted_string_tokens)
+        baseline["accepted_literals"] = str(normalized.filter_counts.accepted_literals)
+        baseline["rejected_token_count"] = str(sum(normalized.filter_counts.rejected_tokens.values()))
+        baseline["body_hash"] = canonical_text_hash(normalized.body_text)
+        output_rows.append(baseline)
+    fieldnames = list(output_rows[0])
+    with (output_dir / "class_semantic_inputs.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(output_rows)
+    aggregate = aggregate_input_hash(output_rows)
+    manifest = {
+        "experiment_name": EXPERIMENT_ID,
+        "representation_id": REPRESENTATION_ID,
+        "subject": subject,
+        "class_count": len(output_rows),
+        "aggregate_input_sha256": aggregate,
+        "source": source_metadata,
+        "verified_against_frozen": verify_against_frozen,
+        "generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+    write_json(output_dir / "manifest.json", manifest)
+    if verify_against_frozen:
+        frozen_hashes = {class_id: row["input_hash"] for class_id, row in frozen.items()}
+        observed_hashes = {row["class_id"]: row["input_hash"] for row in output_rows}
+        if observed_hashes != frozen_hashes:
+            raise ValueError(f"{subject}: generated semantic input hashes differ from frozen accepted inputs")
+    return manifest
+
+
+def prepare_semantic_inputs(
+    *,
+    subjects: tuple[str, ...],
+    source_root: Path,
+    output_root: Path,
+    frozen_root: Path = INPUT_ROOT,
+    verify_against_frozen: bool = True,
+) -> dict[str, Any]:
+    """Generate isolated final semantic inputs from compiled subject classes."""
+    if output_root.resolve().is_relative_to(ROOT.resolve()):
+        raise ValueError("semantic preparation output must be outside the repository")
+    if output_root.exists() and any(output_root.iterdir()):
+        raise FileExistsError(f"refusing to reuse non-empty semantic output: {output_root}")
+    output_root.mkdir(parents=True, exist_ok=True)
+    return {
+        subject: _build_subject_input(
+            subject,
+            source_root=source_root,
+            output_root=output_root,
+            frozen_root=frozen_root,
+            verify_against_frozen=verify_against_frozen,
+        )
+        for subject in subjects
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--operation", choices=("embeddings", "graphs"), default="embeddings")
+    parser.add_argument("--operation", choices=("input", "embeddings", "graphs"), default="embeddings")
     parser.add_argument("--subject", choices=SUBJECTS)
-    parser.add_argument("--output-root", type=Path, default=OUTPUT_ROOT)
-    parser.add_argument("--repro-output-root", type=Path, required=True)
+    parser.add_argument("--output-root", type=Path)
+    parser.add_argument("--repro-output-root", type=Path)
     parser.add_argument("--report-root", type=Path, default=REPORT_ROOT)
+    parser.add_argument("--source-root", type=Path)
+    parser.add_argument("--frozen-input-root", type=Path, default=INPUT_ROOT)
+    parser.add_argument("--verify-against-frozen", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--embedding-root", type=Path, default=OUTPUT_ROOT)
     args = parser.parse_args()
-    if args.operation == "graphs":
-        subjects = (args.subject,) if args.subject else SUBJECTS
-        print(json.dumps(build_graphs(subjects=subjects), indent=2, default=str))
+    subjects = (args.subject,) if args.subject else SUBJECTS
+    if args.operation == "input":
+        if args.source_root is None:
+            parser.error("input preparation requires --source-root containing the raw project or project parent")
+        if args.output_root is None:
+            parser.error("input preparation requires an explicit temporary --output-root")
+        output_root = args.output_root.expanduser().resolve()
+        frozen_root = args.frozen_input_root.expanduser().resolve()
+        result = prepare_semantic_inputs(
+            subjects=subjects,
+            source_root=args.source_root.expanduser().resolve(),
+            output_root=output_root,
+            frozen_root=frozen_root,
+            verify_against_frozen=args.verify_against_frozen,
+        )
+        print(json.dumps(result, indent=2, default=str))
         return 0
-    output_root = args.output_root if args.output_root.is_absolute() else ROOT / args.output_root
+    if args.operation == "graphs":
+        output_root = (args.output_root or GRAPH_ROOT).expanduser().resolve()
+        embedding_root = args.embedding_root.expanduser().resolve()
+        print(json.dumps(build_graphs(subjects=subjects, embedding_root=embedding_root, output_root=output_root), indent=2, default=str))
+        return 0
+    if args.repro_output_root is None:
+        parser.error("embedding generation requires --repro-output-root")
+    output_root = (args.output_root or OUTPUT_ROOT).expanduser()
+    output_root = output_root if output_root.is_absolute() else ROOT / output_root
     repro_root = args.repro_output_root if args.repro_output_root.is_absolute() else ROOT / args.repro_output_root
     report_root = args.report_root if args.report_root.is_absolute() else ROOT / args.report_root
     assert_empty_output(output_root, canonical=True)
