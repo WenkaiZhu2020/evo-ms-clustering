@@ -36,13 +36,16 @@ external local inputs; a missing source directory is an explicit failure.
 Graph provenance has two layers. Historical source commits and original config
 hashes describe accepted artifact generation. Current regeneration checks the
 normalized scientific contract in
-`reports/stage3/provenance/final_graph_compatibility_contract.json`; current
+`results/cross_subject/05_stage3_declaration_method_body/provenance/final_graph_compatibility_contract.json`; current
 Git HEAD is not compared with the historical graph-generation commit.
 
 Input, embedding, graph, and formal-result manifests record exact hashes,
 configuration identity, model revision, class mapping, source commit, and
-validation status. Reports are organised under `reports/stage3/` by audience:
-tables, figures, analysis, provenance, and validation.
+validation status. Machine-readable reports are organised under
+`results/cross_subject/05_stage3_declaration_method_body/`; human-readable
+findings and thesis figures are under
+`docs/reports/05_stage3_declaration_method_body/`. Historical provenance may
+still contain the original `reports/stage3` path by design.
 
 ## Scientific non-change rule
 

@@ -69,7 +69,7 @@ def test_graph_compatibility_sidecar_digests_are_self_consistent():
     from evo_ms.analysis.provenance import graph_compatibility_digest
 
     sidecar = json.loads(
-        (ROOT / "reports/stage3/provenance/final_graph_compatibility_contract.json").read_text(
+        (ROOT / "results/cross_subject/05_stage3_declaration_method_body/provenance/final_graph_compatibility_contract.json").read_text(
             encoding="utf-8"
         )
     )

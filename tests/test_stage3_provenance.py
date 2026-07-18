@@ -47,7 +47,7 @@ def _rows(subject: str) -> list[dict[str, str]]:
 
 def test_final_config_and_manifest_have_one_runtime_identity() -> None:
     config = yaml.safe_load((ROOT / "configs/experiments/05_stage3_declaration_method_body.yml").read_text(encoding="utf-8"))
-    manifest = json.loads((ROOT / "reports/stage3/provenance/formal_experiment_manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads((ROOT / "results/cross_subject/05_stage3_declaration_method_body/provenance/formal_experiment_manifest.json").read_text(encoding="utf-8"))
     assert config["experiment_name"] == "stage3_declaration_method_body"
     assert config["representation_id"] == REPRESENTATION_ID
     assert "base_experiment_config" not in config
@@ -117,8 +117,8 @@ def test_provenance_validator_rejects_other_representation() -> None:
 
 
 def test_canonical_report_subtrees_are_final_only() -> None:
-    report_root = ROOT / "reports/stage3"
-    for subtree in ("analysis", "tables", "validation"):
+    report_root = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
+    for subtree in ("stage2_vs_stage3", "quality", "validation"):
         for path in (report_root / subtree).rglob("*"):
             if path.is_file():
                 text = path.read_text(encoding="utf-8", errors="replace").lower()
