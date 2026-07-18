@@ -34,7 +34,7 @@ def test_registered_formal_spot_checks_are_byte_identical() -> None:
 
 
 def test_final_experiment_manifest_is_read_only_provenance() -> None:
-    manifest = json.loads(Path("reports/stage3_method_body/formal_experiment_manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads(Path("reports/stage3/provenance/formal_experiment_manifest.json").read_text(encoding="utf-8"))
     assert manifest["representation_id"] == "declaration_method_body_v1"
     assert manifest["optimizer_run"] is False
     assert manifest["semantic_graphs_regenerated"] is False

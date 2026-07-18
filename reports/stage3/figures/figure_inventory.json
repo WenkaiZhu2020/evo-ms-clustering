@@ -1,0 +1,9 @@
+{
+  "source_policy": "saved Stage 2 and final Stage 3 preference tables only",
+  "scientific_artifacts_regenerated": false,
+  "figures": [
+    "stage2_vs_stage3_balance_comparison.pdf",
+    "final_stage3_balance_preference_response.pdf",
+    "final_stage3_semantic_preference_response.pdf"
+  ]
+}

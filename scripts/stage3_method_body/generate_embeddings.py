@@ -22,6 +22,9 @@ from transformers import AutoTokenizer
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 from evo_ms.semantic.inference import (  # noqa: E402
     EXPECTED_DIMENSION,
@@ -52,7 +55,7 @@ EXPECTED_INPUT_HASHES = {
 }
 INPUT_ROOT = ROOT / "data/semantic_text/declaration_method_body"
 OUTPUT_ROOT = ROOT / "data/embeddings/declaration_method_body"
-REPORT_ROOT = ROOT / "reports/stage3_method_body"
+REPORT_ROOT = ROOT / "reports/stage3/provenance"
 FORMAL_CONFIG = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 MAX_NORM_TOLERANCE = (0.999, 1.001)
 

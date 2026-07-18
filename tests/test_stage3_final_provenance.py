@@ -5,17 +5,20 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 import numpy as np
 import pytest
 import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 from evo_ms.semantic.embeddings import load_saved_embeddings, vector_hash
 from evo_ms.semantic.graph import build_graph_from_embeddings, true_cosine_similarity
 from evo_ms.semantic.input_contract import REPRESENTATION_ID, aggregate_input_hash, validate_identity
 
 
-ROOT = Path(__file__).resolve().parents[1]
 SUBJECTS = {"jpetstore": 24, "daytrader": 53, "xerces": 814}
 INPUT_HASHES = {
     "jpetstore": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
@@ -44,7 +47,7 @@ def _rows(subject: str) -> list[dict[str, str]]:
 
 def test_final_config_and_manifest_have_one_runtime_identity() -> None:
     config = yaml.safe_load((ROOT / "configs/experiments/05_stage3_declaration_method_body.yml").read_text(encoding="utf-8"))
-    manifest = json.loads((ROOT / "reports/stage3_method_body/formal_experiment_manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads((ROOT / "reports/stage3/provenance/formal_experiment_manifest.json").read_text(encoding="utf-8"))
     assert config["experiment_name"] == "stage3_declaration_method_body"
     assert config["representation_id"] == REPRESENTATION_ID
     assert "base_experiment_config" not in config
@@ -113,3 +116,13 @@ def test_final_runtime_sources_have_no_legacy_stage3a_reads() -> None:
 def test_provenance_validator_rejects_other_representation() -> None:
     with pytest.raises(ValueError, match="final Stage 3 representation"):
         validate_identity({"representation_id": "stage3a_class_declaration"})
+
+
+def test_canonical_report_subtrees_are_final_only() -> None:
+    report_root = ROOT / "reports/stage3"
+    for subtree in ("analysis", "tables", "validation"):
+        for path in (report_root / subtree).rglob("*"):
+            if path.is_file():
+                text = path.read_text(encoding="utf-8", errors="replace").lower()
+                assert "stage3a" not in text, path
+                assert "stage3b" not in text, path

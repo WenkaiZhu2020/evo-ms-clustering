@@ -1,0 +1,111 @@
+{
+  "baseline": "one frozen raw Leiden partition per subject",
+  "branch": "stage3-Declaration+Method-Body",
+  "budgets": [
+    0.0,
+    0.005,
+    0.01,
+    0.025,
+    0.05,
+    0.1,
+    0.15,
+    0.2
+  ],
+  "canonical_report_root": "reports/stage3/analysis/preference_response",
+  "class_counts": {
+    "daytrader": 53,
+    "jpetstore": 24,
+    "xerces": 814
+  },
+  "generated_at_utc": "2026-07-18T01:03:49Z",
+  "integrity_pass": true,
+  "limitations": "retained-front capability is not global capability; finite population and evolution constrain the saved candidate set",
+  "no_embeddings_regenerated": true,
+  "no_graphs_regenerated": true,
+  "no_new_seed": true,
+  "no_optimizer_run": true,
+  "no_scientific_artifact_modified": true,
+  "objective_orientations": {
+    "stage2": [
+      "coupling_min",
+      "cohesion_max",
+      "imbalance_min"
+    ],
+    "stage3": [
+      "coupling_min",
+      "cohesion_max",
+      "imbalance_min",
+      "f_semantic_min"
+    ]
+  },
+  "reference_status": {
+    "daytrader": {
+      "coverage": 1.0,
+      "path": "data/references/daytrader_reference_services.csv",
+      "reason": "complete frozen reference coverage",
+      "status": "available"
+    },
+    "jpetstore": {
+      "coverage": null,
+      "path": null,
+      "reason": "no frozen complete reference is registered",
+      "status": "unavailable"
+    },
+    "xerces": {
+      "coverage": null,
+      "path": null,
+      "reason": "no frozen complete reference is registered",
+      "status": "unavailable"
+    }
+  },
+  "scientific_artifact_integrity_path": "reports/stage3/provenance/preference_scientific_artifact_integrity.csv",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "selection_rule_unchanged": "highest weighted modularity among eligible feasible candidates; budgeted analyses are post-hoc profiles and do not replace frozen selection",
+  "source_artifact_inventory": "reports/stage3/provenance/preference_source_artifact_inventory.csv",
+  "source_inventory_path": "reports/preference_analysis/source_artifact_inventory.csv",
+  "source_policy": "saved retained final feasible fronts and saved labels only; no optimizer, embedding, graph, or scientific result regeneration",
+  "starting_head": "18c80a5f81f6af4cbf0a692e1bb87737d24c4a13",
+  "subjects": [
+    "jpetstore",
+    "daytrader",
+    "xerces"
+  ],
+  "targets": [
+    0.05,
+    0.1,
+    0.2,
+    0.3
+  ],
+  "task": "Stage 2/final Stage 3 post-hoc preference-response analysis"
+}

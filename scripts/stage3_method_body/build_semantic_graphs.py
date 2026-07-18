@@ -18,6 +18,9 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in __import__("sys").path:
     __import__("sys").path.insert(0, str(ROOT))
+SRC = ROOT / "src"
+if str(SRC) not in __import__("sys").path:
+    __import__("sys").path.insert(0, str(SRC))
 
 from evo_ms.semantic.graph import (  # noqa: E402
     build_graph_from_embeddings as frozen_build_graph_from_embeddings,
@@ -52,9 +55,9 @@ EXPECTED_SOURCE_COMMIT = "33074fe5a2479b9d76605cd6a507c8a66c523a19"
 EXPECTED_GRAPH_SOURCE_COMMIT = "6f595208e1bde1702b7a99f00410b35a225777c8"
 TOP_K = 3
 CONFIG_PATH = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
-FORMAL_MANIFEST_PATH = ROOT / "reports/stage3_method_body/semantic_graph_generation_manifest.json"
-EMBEDDING_MANIFEST_PATH = ROOT / "reports/stage3_method_body/embedding_generation_manifest.json"
-REPORT_ROOT = ROOT / "reports/stage3_method_body"
+FORMAL_MANIFEST_PATH = ROOT / "reports/stage3/provenance/semantic_graph_generation_manifest.json"
+EMBEDDING_MANIFEST_PATH = ROOT / "reports/stage3/provenance/embedding_generation_manifest.json"
+REPORT_ROOT = ROOT / "reports/stage3/provenance"
 RAW_SUBJECT = {"jpetstore": "jpetstore", "daytrader": "daytrader", "xerces": "xerces-j"}
 RAW_ROOT = ROOT / "data/extracted"
 LEIDEN_ROOT = ROOT / "results"

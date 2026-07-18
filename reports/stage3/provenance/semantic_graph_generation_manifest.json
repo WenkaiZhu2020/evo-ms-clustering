@@ -1,0 +1,171 @@
+{
+  "canonical_output_root": "data/semantic_graphs/declaration_method_body",
+  "canonical_report_root": "reports/stage3",
+  "duplicate_edge_rule": "forbidden",
+  "edge_weight_rule": "true_cosine; no threshold",
+  "embedding_validation_status": "passed",
+  "experiment_name": "stage3_declaration_method_body",
+  "generation_command": "python scripts/stage3_method_body/build_semantic_graphs.py --repro-output-root <temporary-outside-repository>",
+  "generation_timestamp_utc": "2026-07-17T22:15:48Z",
+  "go_gate": {
+    "daytrader": true,
+    "jpetstore": true,
+    "xerces": true
+  },
+  "graph_config_path": "configs/experiments/04_stage3_semantic.yml",
+  "graph_config_sha256": "eddbb3674dacabfac2925f4ef6887bb86c9030f629a231230d6a889e1c28cc27",
+  "graph_reproducibility_passed": true,
+  "graphs_generated": true,
+  "optimization_generated": false,
+  "random_baseline": {
+    "model": "uniform_simple_undirected_gnm",
+    "quantile": "numpy.quantile(method='higher')",
+    "repetition_seed_rule": "subject_seed_base + repetition_index, index 0..999",
+    "repetitions": 1000,
+    "sampling": "uniformly select exactly m unordered pairs without replacement",
+    "subject_seed_bases": {
+      "daytrader": 52000,
+      "jpetstore": 42000,
+      "xerces": 62000
+    }
+  },
+  "reciprocal_edge_rule": "retain one undirected edge; mark both when reciprocal",
+  "reports": [
+    "semantic_graph_quality_summary.md",
+    "semantic_graph_quality_per_subject.csv",
+    "semantic_graph_reproducibility_summary.md",
+    "semantic_graph_reproducibility_per_subject.csv",
+    "semantic_structural_overlap.csv",
+    "semantic_graph_random_baseline.csv",
+    "semantic_graph_random_baseline_summary.md",
+    "semantic_graph_random_baseline_summary.csv",
+    "semantic_graph_random_baseline_summary.csv",
+    "semantic_reference_alignment.csv",
+    "empty_vs_nonempty_body_graph_change.csv",
+    "body_evidence_graph_change_diagnostics.csv",
+    "xerces_collision_graph_audit.md",
+    "xerces_collision_graph_edges.csv",
+    "semantic_graph_manual_audit.md",
+    "semantic_graph_artifact_hashes.csv",
+    "semantic_graph_provenance.md"
+  ],
+  "representation_id": "declaration_method_body_v1",
+  "reproducibility_output_root": "/tmp/stage3-graph-repro.graph",
+  "schema_version": 1,
+  "self_loop_rule": "forbidden",
+  "serialization_precision": ".17g with numerical zero canonicalised as 0",
+  "similarity": "true_cosine",
+  "source_commit": "6f595208e1bde1702b7a99f00410b35a225777c8",
+  "subjects": {
+    "daytrader": {
+      "class_mapping_sha256": "6a995ce5caedd3fa567a09491378a629f7cdef61e41107cf25360bbd75d311d1",
+      "directed_neighbour_count": 159,
+      "directed_selection_hash": "011ea7d9161d3dd2704e8dd1c4bea74794f138eed008487d681b7e2933700bd9",
+      "embedding_aggregate_sha256": "db7ef8d78036796c5c5c79cc95f54eb1b9b9974de5e6f035d1929391b415f66c",
+      "embedding_dimension": 3584,
+      "embedding_path": "data/embeddings/declaration_method_body/daytrader/embeddings.npy",
+      "embedding_sha256": "422f35b2dac5ab2c9d80f631cc3154a7ba6ccadc124837c2e795833c3034f61c",
+      "graph_hash": "c7761509fe91acb398ee5bc3a0c71e3a368a34aae316b04c5907d34bced1714d",
+      "graph_output_paths": {
+        "artifact_hashes": "data/semantic_graphs/declaration_method_body/daytrader/artifact_hashes.csv",
+        "directed": "data/semantic_graphs/declaration_method_body/daytrader/directed_topk_neighbours.csv",
+        "edges": "data/semantic_graphs/declaration_method_body/daytrader/semantic_edges.csv",
+        "mapping": "data/semantic_graphs/declaration_method_body/daytrader/class_mapping.csv",
+        "metadata": "data/semantic_graphs/declaration_method_body/daytrader/graph_metadata.json"
+      },
+      "input_aggregate_sha256": "da53d434b820e3c25bc69df63ced807cd0113d412fa36acc9694d1a97631d655",
+      "node_count": 53,
+      "representation_id": "declaration_method_body_v1",
+      "reproducibility_graph_hash": "c7761509fe91acb398ee5bc3a0c71e3a368a34aae316b04c5907d34bced1714d",
+      "structural_graph_provenance": {
+        "fixed_leiden_path": "results/daytrader/01_stage1_leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "fixed_leiden_sha256": "90a727ad67cdb6f3c02b278d77b405b0acd65bb52019939dd3afd822c9132cd6",
+        "reference_mapping_path": "data/references/daytrader_reference_services.csv",
+        "reference_mapping_sha256": "b13e5ee3e18574e8610c0e506b58b49ad1e91893bf1633d73f668be046c637e6",
+        "structural_graph": {
+          "class_nodes_path": "data/extracted/daytrader/class_nodes.csv",
+          "class_nodes_sha256": "52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd",
+          "structural_dependencies_path": "data/extracted/daytrader/structural_dependencies.csv",
+          "structural_dependencies_sha256": "95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0"
+        }
+      },
+      "subject": "daytrader",
+      "undirected_edge_count": 112
+    },
+    "jpetstore": {
+      "class_mapping_sha256": "83c4643fdad9661f2e409563f8e496b792575ecc72ac548ba8c2f13fb46e019f",
+      "directed_neighbour_count": 72,
+      "directed_selection_hash": "c8c9e746939f1f2ad32115e109aabf44c1edd66923f81f6c8527f215c54a0a00",
+      "embedding_aggregate_sha256": "e7615e77d4f3258df46e499fd94c2dbb59bee03c0d2f6c3bb822c3aff4577139",
+      "embedding_dimension": 3584,
+      "embedding_path": "data/embeddings/declaration_method_body/jpetstore/embeddings.npy",
+      "embedding_sha256": "6ca1abf13b753a89a7f78e93486a3c24ae4367d4a32edfa367306a79e3297b04",
+      "graph_hash": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a9214",
+      "graph_output_paths": {
+        "artifact_hashes": "data/semantic_graphs/declaration_method_body/jpetstore/artifact_hashes.csv",
+        "directed": "data/semantic_graphs/declaration_method_body/jpetstore/directed_topk_neighbours.csv",
+        "edges": "data/semantic_graphs/declaration_method_body/jpetstore/semantic_edges.csv",
+        "mapping": "data/semantic_graphs/declaration_method_body/jpetstore/class_mapping.csv",
+        "metadata": "data/semantic_graphs/declaration_method_body/jpetstore/graph_metadata.json"
+      },
+      "input_aggregate_sha256": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+      "node_count": 24,
+      "representation_id": "declaration_method_body_v1",
+      "reproducibility_graph_hash": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a9214",
+      "structural_graph_provenance": {
+        "fixed_leiden_path": "results/jpetstore/01_stage1_leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "fixed_leiden_sha256": "7d48be144ba109eb9029441bc57fd5ab70917333ec9b61fc3063015f73f7b5d5",
+        "reference_mapping_path": null,
+        "reference_mapping_sha256": null,
+        "structural_graph": {
+          "class_nodes_path": "data/extracted/jpetstore/class_nodes.csv",
+          "class_nodes_sha256": "69b59fef4e0cf7feb7402d14beac895b1790db0906b2b6dc11c54743f431e7e0",
+          "structural_dependencies_path": "data/extracted/jpetstore/structural_dependencies.csv",
+          "structural_dependencies_sha256": "b3a22590d19437abaef838eb05f7e4801f2f243cea18f52ab3e592e1f3d765c0"
+        }
+      },
+      "subject": "jpetstore",
+      "undirected_edge_count": 47
+    },
+    "xerces": {
+      "class_mapping_sha256": "7e204d1865c1ddb228cc42f6f61519e280076590a92f0965e4f1fc765b77a4ab",
+      "directed_neighbour_count": 2442,
+      "directed_selection_hash": "65aaf3110bfd47a0f32e0ed3576d17176103543baebfe4afc5c442f50b2bdf65",
+      "embedding_aggregate_sha256": "36bdeca0e1ef32f36631c30ebbf86a1875621490e92f9b4a7fd0860755676236",
+      "embedding_dimension": 3584,
+      "embedding_path": "data/embeddings/declaration_method_body/xerces/embeddings.npy",
+      "embedding_sha256": "d81607ad9e48ef274ecf65a4e3b1b1c7c22163c3b073831ffbb506bac7601bac",
+      "graph_hash": "7d5d45f6e7cc46cdb57c57688bc89b5e90e0ecea7390833a7acb2e8887d935a5",
+      "graph_output_paths": {
+        "artifact_hashes": "data/semantic_graphs/declaration_method_body/xerces/artifact_hashes.csv",
+        "directed": "data/semantic_graphs/declaration_method_body/xerces/directed_topk_neighbours.csv",
+        "edges": "data/semantic_graphs/declaration_method_body/xerces/semantic_edges.csv",
+        "mapping": "data/semantic_graphs/declaration_method_body/xerces/class_mapping.csv",
+        "metadata": "data/semantic_graphs/declaration_method_body/xerces/graph_metadata.json"
+      },
+      "input_aggregate_sha256": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+      "node_count": 814,
+      "representation_id": "declaration_method_body_v1",
+      "reproducibility_graph_hash": "7d5d45f6e7cc46cdb57c57688bc89b5e90e0ecea7390833a7acb2e8887d935a5",
+      "structural_graph_provenance": {
+        "fixed_leiden_path": "results/xerces-j/01_stage1_leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "fixed_leiden_sha256": "d2478f556ca973c25a950bf5341f8a3585e41271cdb4533553da3f181f1d730b",
+        "reference_mapping_path": null,
+        "reference_mapping_sha256": null,
+        "structural_graph": {
+          "class_nodes_path": "data/extracted/xerces-j/class_nodes.csv",
+          "class_nodes_sha256": "05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2",
+          "structural_dependencies_path": "data/extracted/xerces-j/structural_dependencies.csv",
+          "structural_dependencies_sha256": "5e9a30af0b89d61a4aa4d639d9f379f7a50408706b6efad07c9fa028976dd09c"
+        }
+      },
+      "subject": "xerces",
+      "undirected_edge_count": 1681
+    }
+  },
+  "symmetrisation": "OR",
+  "tie_break": "cosine_descending_then_class_id_lexicographic_ascending",
+  "top_k": 3,
+  "validated_at_utc": "2026-07-17T22:17:50Z",
+  "validation_status": "passed"
+}
