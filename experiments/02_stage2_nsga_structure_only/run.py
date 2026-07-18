@@ -30,6 +30,15 @@ from evo_ms.evaluation.reference_metrics import load_reference_mapping
 from evo_ms.extraction.dependency_extractor import load_raw_extracted_subject
 from evo_ms.graph.raw_graph_builder import build_raw_edges
 from evo_ms.optimization import encoding
+from evo_ms.evaluation.partition_ops import partition_metrics_row
+from evo_ms.optimization.fronts import calculate_hypervolume
+from evo_ms.optimization.fronts import hypervolume_reference
+from evo_ms.optimization.fronts import nondominated_indices
+from evo_ms.optimization.fronts import summarize_hypervolume
+from evo_ms.optimization.initialization import build_structure_aware_seed_records
+from evo_ms.optimization.initialization import canonical_label_key
+from evo_ms.optimization.initialization import initialization_rng_seed
+from evo_ms.optimization.selection import select_solution
 from evo_ms.optimization.objectives import evaluate_structural_objectives
 from evo_ms.optimization.problem import build_nsga2_algorithm
 from evo_ms.optimization.problem import build_structural_problem
@@ -353,15 +362,7 @@ def _feasible_mask(constraints: np.ndarray, size: int) -> np.ndarray:
 
 
 def _nondominated_indices(objectives: np.ndarray) -> np.ndarray:
-    if len(objectives) == 0:
-        return np.asarray([], dtype=int)
-    from pymoo.util.nds.non_dominated_sorting import NonDominatedSorting
-
-    indices = NonDominatedSorting().do(
-        np.asarray(objectives, dtype=float),
-        only_non_dominated_front=True,
-    )
-    return np.asarray(sorted(indices.tolist()), dtype=int)
+    return nondominated_indices(objectives)
 
 
 def _objective_key(values: np.ndarray) -> tuple[str, ...]:
@@ -476,41 +477,17 @@ def _partition_metrics_row(
     cluster_by_class: dict[str, int],
     reference_mapping: pd.DataFrame | None = None,
 ) -> dict:
-    sizes = clusters.groupby("cluster_id").size()
-    class_count = int(len(class_nodes))
-    singleton_count = int((sizes == 1).sum()) if not sizes.empty else 0
-    internal_weight, external_weight = _edge_weight_split(
-        raw_edges,
-        cluster_by_class,
-        RAW_WEIGHT_COLUMN,
+    return partition_metrics_row(
+        subject=subject,
+        seed=seed,
+        solution_id=solution_id,
+        class_nodes=class_nodes,
+        clusters=clusters,
+        raw_edges=raw_edges,
+        cluster_by_class=cluster_by_class,
+        reference_mapping=reference_mapping,
+        weight_column=RAW_WEIGHT_COLUMN,
     )
-    total_weight = internal_weight + external_weight
-    row = {
-        "subject": subject,
-        "seed": int(seed),
-        "solution_id": solution_id,
-        "weighted_modularity": _weighted_modularity(raw_edges, cluster_by_class, RAW_WEIGHT_COLUMN),
-        "internal_edge_weight_ratio": 0.0 if total_weight == 0 else float(internal_weight / total_weight),
-        "internal_external_edge_ratio": _safe_internal_external_ratio(
-            internal_weight,
-            external_weight,
-        ),
-        "cluster_count": int(sizes.size),
-        "average_cluster_size": float(sizes.mean()) if not sizes.empty else 0.0,
-        "max_cluster_size": int(sizes.max()) if not sizes.empty else 0,
-        "min_cluster_size": int(sizes.min()) if not sizes.empty else 0,
-        "max_cluster_ratio": 0.0
-        if class_count == 0 or sizes.empty
-        else float(sizes.max() / class_count),
-        "singleton_ratio": 0.0 if class_count == 0 else float(singleton_count / class_count),
-        "cluster_size_cv": 0.0
-        if sizes.empty or float(sizes.mean()) == 0.0
-        else float(sizes.std(ddof=0) / sizes.mean()),
-        "cluster_size_distribution": cluster_size_distribution(clusters),
-    }
-    if reference_mapping is not None:
-        row.update(calculate_reference_metrics(class_nodes, clusters, reference_mapping))
-    return row
 
 
 def _safe_internal_external_ratio(internal_weight: float, external_weight: float) -> float:
@@ -520,36 +497,7 @@ def _safe_internal_external_ratio(internal_weight: float, external_weight: float
 
 
 def _select_solution(posthoc_rows: list[dict], pareto_rows: list[dict]) -> dict:
-    if not posthoc_rows:
-        raise ValueError("cannot select a solution from an empty Pareto front")
-    posthoc_by_id = {row["solution_id"]: row for row in posthoc_rows}
-    candidates = [
-        row
-        for row in pareto_rows
-        if bool(row["feasible"]) and row["solution_id"] in posthoc_by_id
-    ]
-    if not candidates:
-        candidates = [row for row in pareto_rows if row["solution_id"] in posthoc_by_id]
-    selected = min(
-        candidates,
-        key=lambda row: (
-            -float(posthoc_by_id[row["solution_id"]]["weighted_modularity"]),
-            bool(row["is_injected_seed"]),
-            float(row["coupling"]),
-            -float(row["cohesion"]),
-            float(row["imbalance"]),
-            _label_tuple_from_row(row),
-        ),
-    )
-    metrics = posthoc_by_id[selected["solution_id"]]
-    return {
-        **selected,
-        "selection_rule": "highest_weighted_modularity_among_feasible_pareto_solutions",
-        "selected_weighted_modularity": float(metrics["weighted_modularity"]),
-        "selected_cluster_count": int(metrics["cluster_count"]),
-        "selected_max_cluster_ratio": float(metrics["max_cluster_ratio"]),
-        "selected_singleton_ratio": float(metrics["singleton_ratio"]),
-    }
+    return select_solution(posthoc_rows, pareto_rows)
 
 
 def _clusters_for_solution(label_rows: list[dict], solution_id: str) -> pd.DataFrame:
@@ -663,40 +611,15 @@ def _same_cluster_neighbors(clusters: pd.DataFrame) -> dict[str, set[str]]:
 
 
 def _hypervolume_reference(seed_results: list[dict[str, object]]) -> tuple[np.ndarray, str]:
-    objective_rows = [
-        np.asarray(solution["F"], dtype=float)
-        for seed_result in seed_results
-        for solution in seed_result["solutions"]
-    ]
-    if not objective_rows:
-        reference = np.asarray([1.1, 0.1, 1.1], dtype=float)
-        return reference, "fallback_reference_for_empty_front"
-    matrix = np.vstack(objective_rows)
-    ideal = np.min(matrix, axis=0)
-    nadir = np.max(matrix, axis=0)
-    span = np.maximum(nadir - ideal, 1e-6)
-    reference = nadir + np.maximum(0.1 * span, 1e-6)
-    return reference.astype(float), "nadir_plus_10_percent_observed_span"
+    return hypervolume_reference(seed_results)
 
 
 def _hypervolume(objectives: np.ndarray, reference: np.ndarray) -> float:
-    if objectives.size == 0:
-        return 0.0
-    from pymoo.indicators.hv import HV
-
-    return float(HV(ref_point=np.asarray(reference, dtype=float))(np.asarray(objectives, dtype=float)))
+    return calculate_hypervolume(objectives, reference)
 
 
 def _hypervolume_summary(subject: str, hv_rows: list[dict]) -> dict:
-    values = np.asarray([row["hypervolume"] for row in hv_rows], dtype=float)
-    return {
-        "subject": subject,
-        "seed_count": int(len(values)),
-        "hypervolume_mean": float(np.mean(values)) if len(values) else 0.0,
-        "hypervolume_std": float(np.std(values, ddof=1)) if len(values) > 1 else 0.0,
-        "hypervolume_min": float(np.min(values)) if len(values) else 0.0,
-        "hypervolume_max": float(np.max(values)) if len(values) else 0.0,
-    }
+    return summarize_hypervolume(subject, hv_rows)
 
 
 def _raw_graph_inputs(
@@ -718,56 +641,14 @@ def _seed_initialization_records(
     config: Mapping[str, object],
     max_cluster_ratio: float = 0.4,
 ) -> list[dict[str, object]]:
-    """Build deterministic structure-aware initial labels for one NSGA-II seed."""
-    if not bool(config.get("enabled", True)):
-        return []
-
-    class_ids = class_nodes["class_id"].astype(str).tolist()
-    index_by_id = {class_id: index for index, class_id in enumerate(class_ids)}
-    raw_leiden_by_class = dict(
-        zip(
-            raw_leiden_clusters["class_id"].astype(str),
-            raw_leiden_clusters["cluster_id"].astype(int),
-            strict=True,
-        )
+    return build_structure_aware_seed_records(
+        class_nodes=class_nodes,
+        raw_edges=raw_edges,
+        raw_leiden_clusters=raw_leiden_clusters,
+        seed=seed,
+        config=config,
+        max_cluster_ratio=max_cluster_ratio,
     )
-    raw_leiden_labels = encoding.canonical_relabel(
-        np.asarray([raw_leiden_by_class[class_id] for class_id in class_ids], dtype=int)
-    )
-    rng = np.random.default_rng(_initialization_rng_seed(seed))
-    records: list[dict[str, object]] = []
-
-    if bool(config.get("include_raw_leiden", True)):
-        records.append(
-            {
-                "name": "raw_leiden",
-                "category": "raw_leiden",
-                "labels": repair_labels(raw_leiden_labels, len(class_ids), max_cluster_ratio),
-            }
-        )
-
-    records.extend(
-        _perturbed_leiden_records(
-            raw_leiden_labels=raw_leiden_labels,
-            class_ids=class_ids,
-            raw_edges=raw_edges,
-            index_by_id=index_by_id,
-            rng=rng,
-            config=config,
-            max_cluster_ratio=max_cluster_ratio,
-        )
-    )
-    records.extend(
-        _graph_grouping_records(
-            class_count=len(class_ids),
-            raw_edges=raw_edges,
-            index_by_id=index_by_id,
-            raw_leiden_cluster_count=len(set(raw_leiden_labels.tolist())),
-            config=config,
-            max_cluster_ratio=max_cluster_ratio,
-        )
-    )
-    return _deduplicate_seed_records(records, len(class_ids), max_cluster_ratio)
 
 
 def _perturbed_leiden_records(
@@ -933,8 +814,7 @@ def _deduplicate_seed_records(
 
 
 def _label_key(labels: np.ndarray) -> tuple[int, ...]:
-    canonical = encoding.canonical_relabel(labels)
-    return tuple(int(value) for value in canonical.tolist())
+    return canonical_label_key(labels)
 
 
 def _label_tuple_from_row(row: Mapping[str, object]) -> tuple[int, ...]:
@@ -955,7 +835,7 @@ def _category_counts(records: list[dict[str, object]]) -> dict[str, int]:
 
 
 def _initialization_rng_seed(seed: int) -> int:
-    return 10_000 + int(seed)
+    return initialization_rng_seed(seed)
 
 
 def _frozen_raw_leiden_baseline(
