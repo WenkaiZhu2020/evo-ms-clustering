@@ -65,6 +65,7 @@ EXPECTED_INPUT_HASHES = {
 INPUT_ROOT = ROOT / "data/semantic_text/declaration_method_body"
 OUTPUT_ROOT = ROOT / "data/embeddings/declaration_method_body"
 REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body/provenance"
+INPUT_PROVENANCE_ROOT = REPORT_ROOT / "inputs"
 FORMAL_CONFIG = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 MAX_NORM_TOLERANCE = (0.999, 1.001)
 EXPERIMENT_ID = "stage3_declaration_method_body"
@@ -122,8 +123,8 @@ def source_commit() -> str:
 
 def verify_frozen_inputs(input_root: Path = INPUT_ROOT) -> dict[str, list[dict[str, str]]]:
     """Verify Stage 3B input rows and both independent aggregate-hash records."""
-    global_manifest = json.loads((REPORT_ROOT / "method_body_input_manifest.json").read_text(encoding="utf-8"))
-    hash_rows = read_csv(REPORT_ROOT / "method_body_input_hashes.csv")
+    global_manifest = json.loads((INPUT_PROVENANCE_ROOT / "method_body_input_manifest.json").read_text(encoding="utf-8"))
+    hash_rows = read_csv(INPUT_PROVENANCE_ROOT / "method_body_input_hashes.csv")
     rows_by_subject: dict[str, list[dict[str, str]]] = {}
     for subject in SUBJECTS:
         path = input_root / subject / "class_semantic_inputs.csv"

@@ -3,11 +3,45 @@ experiment_id: stage3_declaration_method_body
 representation_id: declaration_method_body_v1
 source_root: reports/stage3
 machine_result_root: results/cross_subject/05_stage3_declaration_method_body
-human_report_root: docs/reports/05_stage3_declaration_method_body
+human_report_root: docs/stage3/results
 content_policy: byte_preserving_move
 scientific_regeneration: forbidden
 historical_paths_in_frozen_evidence: preserve
 first_pass_filename_renames: forbidden
+
+inventory_summary:
+  source_effective_file_count: 80
+  source_tracked_file_count: 79
+  preserved_byte_identical_artifact_count: 78
+  rewritten_human_readme_count: 1
+  deleted_empty_ignored_log_count: 1
+  note: "78 + 1 + 1 = 80"
+
+protected_inventory_scope:
+  core_audit:
+    file_count: 2179
+    inventory_sha256: b3e3d1a36484807fd67a850a34383657c34ea41e13662cd5fd3e2a4c0a41a058
+    roots:
+      - data/semantic_text
+      - data/embeddings
+      - data/semantic_graphs
+      - results/jpetstore/05_stage3_declaration_method_body
+      - results/daytrader/05_stage3_declaration_method_body
+      - results/xerces/05_stage3_declaration_method_body
+      - results/jpetstore/03_stage2_nsga
+      - results/daytrader/03_stage2_nsga
+  historical_full_inventory:
+    file_count: 2582
+    inventory_sha256: aa739b4dffb2f6a4f8d059ebccf57f461d8c476bc4f8b7c5e4faac0e11277d3a
+    source: /tmp/stage3-pre-refactor-hashes-20260718.json
+  excluded_from_core_audit:
+    - path: results/cross_subject/03_stage2_nsga
+      file_count: 21
+    - path: results/xerces-j/03_stage2_nsga
+      file_count: 379
+    - path: data/references
+      file_count: 3
+  count_difference: 403
 
 categories:
   formal_statistics:
@@ -34,13 +68,15 @@ categories:
     source_globs:
       - figures/*.pdf
       - figures/figure_inventory.json
-    target: docs/reports/05_stage3_declaration_method_body/figures
+    machine_inventory_target: results/cross_subject/05_stage3_declaration_method_body/figures
+    human_figure_target: docs/stage3/results/figures
   provenance:
     source_globs:
       - provenance/*.json
       - provenance/*.csv
       - provenance/*.md
     target: results/cross_subject/05_stage3_declaration_method_body/provenance
+    input_subdirectory: inputs
   validation:
     source_globs:
       - validation/*
@@ -50,4 +86,3 @@ legacy_exceptions:
   - frozen configuration snapshots
   - historical provenance path fields
   - external pre-refactor hash inventories
-

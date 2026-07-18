@@ -22,7 +22,7 @@ def test_final_config_is_self_contained():
     assert config["input"]["stage3a_input_required"] is False
     assert all("05_stage3_declaration_method_body" in value for value in config["outputs"]["result_roots"].values())
     assert config["input"]["semantic_text_filename_template"] == "class_semantic_inputs.csv"
-    assert config["outputs"]["report_root"] == "reports/stage3"
+    assert config["outputs"]["report_root"] == "results/cross_subject/05_stage3_declaration_method_body"
     assert config["semantic_graph"]["similarity_implementation"] == "evo_ms.semantic.graph.true_cosine_similarity"
 
 

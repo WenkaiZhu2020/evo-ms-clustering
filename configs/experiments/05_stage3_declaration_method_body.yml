@@ -363,7 +363,7 @@ input:
   stage3a_input_required: false
 
 outputs:
-  report_root: reports/stage3
+  report_root: results/cross_subject/05_stage3_declaration_method_body
   embedding_root: data/embeddings/declaration_method_body
   semantic_graph_root: data/semantic_graphs/declaration_method_body
   result_roots:

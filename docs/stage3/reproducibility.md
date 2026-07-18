@@ -44,7 +44,7 @@ configuration identity, model revision, class mapping, source commit, and
 validation status. Machine-readable reports are organised under
 `results/cross_subject/05_stage3_declaration_method_body/`; human-readable
 findings and thesis figures are under
-`docs/reports/05_stage3_declaration_method_body/`. Historical provenance may
+`docs/stage3/results/`. Historical provenance may
 still contain the original `reports/stage3` path by design.
 
 ## Scientific non-change rule

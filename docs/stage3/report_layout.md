@@ -5,7 +5,7 @@ The final Stage 3 experiment uses three ownership layers:
 * `results/cross_subject/05_stage3_declaration_method_body/` stores generated
   machine-readable tables, analysis data, hashes, manifests, inventories, and
   validation evidence;
-* `docs/reports/05_stage3_declaration_method_body/` stores human-readable
+* `docs/stage3/results/` stores human-readable
   findings, explanations, reproducibility guidance, and thesis figures;
 * `reports/stage3/` is a legacy mixed root and is retired only after the
   migration manifest, byte-level checks, and all active path references pass.
@@ -13,6 +13,11 @@ The final Stage 3 experiment uses three ownership layers:
 Subject-specific formal results remain under
 `results/<subject>/05_stage3_declaration_method_body/`. Scientific inputs and
 intermediate artifacts remain under `data/`.
+
+The current configuration's `outputs.report_root` is a layout-only output
+location and now points to the machine-readable result root. Frozen per-run
+configuration snapshots and historical manifest config hashes retain the
+original values and are not rewritten.
 
 ## Historical paths
 
@@ -45,7 +50,7 @@ results/cross_subject/05_stage3_declaration_method_body/
 ## Current human-readable root
 
 ```text
-docs/reports/05_stage3_declaration_method_body/
+docs/stage3/results/
   README.md
   main_findings.md
   formal_results.md
@@ -55,4 +60,3 @@ docs/reports/05_stage3_declaration_method_body/
   reproducibility.md
   figures/
 ```
-

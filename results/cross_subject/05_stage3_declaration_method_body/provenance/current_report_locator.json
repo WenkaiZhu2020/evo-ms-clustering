@@ -3,9 +3,11 @@
   "experiment_id": "stage3_declaration_method_body",
   "representation_id": "declaration_method_body_v1",
   "machine_result_root": "results/cross_subject/05_stage3_declaration_method_body",
-  "human_report_root": "docs/reports/05_stage3_declaration_method_body",
+  "human_report_root": "docs/stage3/results",
   "legacy_mixed_root": "reports/stage3",
   "legacy_root_status": "retired_after_migration",
   "historical_paths_are_immutable": true,
+  "purpose": "current_location_only",
+  "runtime_write_configuration": false,
   "content_policy": "byte_preserving_move"
 }
