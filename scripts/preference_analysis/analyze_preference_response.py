@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-"""Canonical final Stage 3 preference-analysis entry point.
-
-The implementation is intentionally delegated to the final-only analysis
-module.  Stage 3A is historical provenance, not a runtime comparison stage.
-"""
+"""Canonical final Stage 3 preference-analysis entry point."""
 
 from __future__ import annotations
 
-from scripts.preference_analysis.final_preference import main
+from scripts.preference_analysis.final_preference import *  # noqa: F401,F403
+from scripts.preference_analysis.final_preference import _dominates, main
 
 
 if __name__ == "__main__":

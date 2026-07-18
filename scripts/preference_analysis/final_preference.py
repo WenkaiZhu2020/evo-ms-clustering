@@ -11,8 +11,28 @@ import argparse
 import json
 from pathlib import Path
 
+from evo_ms.analysis.preference import (  # noqa: F401
+    BOOTSTRAP_RESAMPLES,
+    BUDGETS,
+    CLASS_COUNTS,
+    FINAL_STAGE_LABELS,
+    KEY_BUDGETS,
+    SEEDS,
+    STORAGE_SUBJECT,
+    SUBJECTS,
+    TARGETS,
+    TOL,
+    _dominates,
+    canonical_partition_key,
+    loss_q,
+    relative_gain,
+    select_candidate,
+    validate_stage_labels,
+    vector_partition,
+)
+
 ROOT = Path(__file__).resolve().parents[2]
-STAGES = ("stage2", "stage3")
+STAGES = FINAL_STAGE_LABELS
 REPRESENTATION_ID = "declaration_method_body_v1"
 
 

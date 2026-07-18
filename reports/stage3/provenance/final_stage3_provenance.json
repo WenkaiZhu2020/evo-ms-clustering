@@ -1,0 +1,30 @@
+{
+  "experiment_name": "stage3_declaration_method_body",
+  "representation_id": "declaration_method_body_v1",
+  "runtime_namespace": "final_stage3_only",
+  "subjects": {
+    "jpetstore": {
+      "class_count": 24,
+      "input_aggregate_sha256": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+      "embedding_aggregate_sha256": "e7615e77d4f3258df46e499fd94c2dbb59bee03c0d2f6c3bb822c3aff4577139",
+      "graph_sha256": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a921"
+    },
+    "daytrader": {
+      "class_count": 53,
+      "input_aggregate_sha256": "da53d434b820e3c25bc69df63ced807cd0113d412fa36acc9694d1a97631d655",
+      "embedding_aggregate_sha256": "db7ef8d78036796c5c5c79cc95f54eb1b9b9974de5e6f035d1929391b415f66c",
+      "graph_sha256": "c7761509fe91acb398ee5bc3a0c71e3a368a34aae316b04c5907d34bced1714d"
+    },
+    "xerces": {
+      "class_count": 814,
+      "input_aggregate_sha256": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+      "embedding_aggregate_sha256": "36bdeca0e1ef32f36631c30ebbf86a1875621490e92f9b4a7fd0860755676236",
+      "graph_sha256": "7d5d45f6e7cc46cdb57c57688bc89b5e90e0ecea7390833a7acb2e8887d935a5"
+    }
+  },
+  "optimizer_rerun_in_this_restructure": false,
+  "embedding_regeneration_in_this_restructure": false,
+  "graph_regeneration_in_this_restructure": false,
+  "external_pre_refactor_inventory": "/tmp/stage3-pre-refactor-hashes-20260718.json",
+  "external_pre_refactor_inventory_sha256": "2b68f4a4fd872b53219a0b5a1a85cb0220c0b23c54c889021aa05a6b82e02f2c"
+}

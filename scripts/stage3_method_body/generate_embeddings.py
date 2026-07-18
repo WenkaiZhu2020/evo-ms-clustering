@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate isolated Stage 3B embeddings with the frozen Stage 3A runtime."""
+"""Generate isolated embeddings for the final Stage 3 representation."""
 
 from __future__ import annotations
 
@@ -9,7 +9,6 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
-import platform
 import subprocess
 import sys
 import time
@@ -24,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.stage3.generate_embeddings import (  # noqa: E402
+from evo_ms.semantic.inference import (  # noqa: E402
     EXPECTED_DIMENSION,
     EXPECTED_MODEL,
     MAX_SEQUENCE_LENGTH,

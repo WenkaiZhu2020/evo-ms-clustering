@@ -23,9 +23,9 @@ from evo_ms.semantic.graph import (  # noqa: E402
     build_graph_from_embeddings as frozen_build_graph_from_embeddings,
     canonical_weight,
 )
+from evo_ms.semantic.inference import EXPECTED_DIMENSION  # noqa: E402
 from scripts.stage3_method_body.generate_embeddings import (  # noqa: E402
     canonical_class_mapping_hash,
-    EXPECTED_DIMENSION,
     EXPECTED_INPUT_HASHES,
     read_csv,
     sha256_bytes,
@@ -52,7 +52,7 @@ EXPECTED_SOURCE_COMMIT = "33074fe5a2479b9d76605cd6a507c8a66c523a19"
 EXPECTED_GRAPH_SOURCE_COMMIT = "6f595208e1bde1702b7a99f00410b35a225777c8"
 TOP_K = 3
 CONFIG_PATH = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
-FORMAL_MANIFEST_PATH = ROOT / "reports/stage3/formal_run_manifest.json"
+FORMAL_MANIFEST_PATH = ROOT / "reports/stage3_method_body/semantic_graph_generation_manifest.json"
 EMBEDDING_MANIFEST_PATH = ROOT / "reports/stage3_method_body/embedding_generation_manifest.json"
 REPORT_ROOT = ROOT / "reports/stage3_method_body"
 RAW_SUBJECT = {"jpetstore": "jpetstore", "daytrader": "daytrader", "xerces": "xerces-j"}
@@ -122,9 +122,9 @@ def graph_config() -> tuple[dict[str, Any], str]:
             raise ValueError(f"final Stage 3 graph config mismatch for {key}: {graph.get(key)!r} != {expected!r}")
     if graph.get("diagnostic_files_as_input") != "forbidden":
         raise ValueError("diagnostic files must not be graph inputs")
-    formal_manifest = read_json(FORMAL_MANIFEST_PATH)
-    if formal_manifest.get("semantic_graph", {}).get("k") != TOP_K:
-        raise ValueError("formal graph manifest does not freeze top_k=3")
+    graph_manifest = read_json(FORMAL_MANIFEST_PATH)
+    if graph_manifest.get("top_k") != TOP_K:
+        raise ValueError("final graph manifest does not freeze top_k=3")
     return graph, sha256_file(CONFIG_PATH)
 
 
