@@ -71,7 +71,7 @@ def formal_output_dir(subject: str, seed: int) -> Path:
         raise ValueError(f"formal Stage 3B runner accepts seeds 1..29 only, got {seed}")
     path = adapter.output_dir(subject, seed=seed)
     expected = ROOT / "results" / subject / "05_stage3_declaration_method_body" / "formal" / f"seed_{seed:02d}"
-    if path.resolve() != expected.resolve() or "04_stage3_semantic" in str(path) or "validation" in str(path):
+    if path.resolve() != expected.resolve() or "validation" in str(path):
         raise ValueError(f"formal output path isolation failure: {path}")
     return path
 
@@ -227,7 +227,7 @@ def validate_formal_seed(subject: str, seed: int, output: Path) -> dict[str, Any
     log_text = (output / "run.log").read_text(encoding="utf-8")
     if f"completed runtime_seconds=" not in log_text:
         raise ValueError(f"{subject} seed {seed}: completion marker missing from run log")
-    adapter.stage3a.validate_run_output(output, context)
+    adapter.runtime.validate_run_output(output, context)
     return {
         "subject": subject, "seed": seed, "path": str(output.relative_to(ROOT)),
         "representation_id": metadata["representation_id"], "graph_hash": metadata["graph_sha256"],

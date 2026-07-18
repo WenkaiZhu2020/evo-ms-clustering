@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Run the isolated Stage 3B seed-0 optimizer validation.
 
-The optimizer contract is inherited from the frozen Stage 3A runner.  This
-module replaces only the semantic graph and result namespace; all structural
-objectives, initialization, operators, projection, Hypervolume, and selection
-helpers come from the frozen Stage 2/Stage 3 implementation.
+The optimizer contract uses the frozen Stage 2 runner and the final Stage 3
+Declaration + Method Body graph. Structural objectives, initialization,
+operators, projection, Hypervolume, and selection remain unchanged.
 """
 
 from __future__ import annotations
@@ -62,11 +61,11 @@ def _load_module(name: str, path: Path):
     return module
 
 
-stage3a = _load_module(
-    "stage3a_optimizer_contract_for_stage3b",
-    ROOT / "experiments/04_stage3_semantic/run.py",
+runtime = _load_module(
+    "stage3_final_optimizer_runtime",
+    ROOT / "experiments/05_stage3_declaration_method_body/run.py",
 )
-stage2 = stage3a.stage2
+stage2 = runtime.stage2
 
 SUBJECTS = ("jpetstore", "daytrader", "xerces")
 STORAGE_SUBJECT = {"jpetstore": "jpetstore", "daytrader": "daytrader", "xerces": "xerces-j"}
@@ -97,7 +96,6 @@ EXPECTED_EMBEDDING_SOURCE_COMMIT = "33074fe5a2479b9d76605cd6a507c8a66c523a19"
 GRAPH_ROOT = ROOT / "data/semantic_graphs/declaration_method_body"
 STAGE2_CONFIG_PATH = ROOT / "configs/experiments/02_stage2_nsga_structure_only.yml"
 BOUNDS_PATH = ROOT / "configs/experiments/stage2_robustness_bounds.yml"
-STAGE3A_CONFIG_PATH = ROOT / "configs/experiments/04_stage3_semantic.yml"
 REFERENCE_POINT = np.full(3, 1.1, dtype=float)
 HV_TOLERANCE = 1e-12
 
@@ -130,7 +128,7 @@ def output_dir(subject: str, root: Path = ROOT, seed: int = 0) -> Path:
     elif path.resolve().is_relative_to(ROOT.resolve()):
         raise ValueError("reproduction output must be outside the repository")
     if "04_stage3_semantic" in str(path):
-        raise ValueError(f"Stage 3B output crosses frozen namespace: {path}")
+        raise ValueError(f"Stage 3B output crosses obsolete namespace: {path}")
     return path
 
 
@@ -178,8 +176,6 @@ def _load_stage3b_config() -> dict[str, Any]:
         raise ValueError("Stage 3B experiment identity mismatch")
     if config.get("representation_id") != REPRESENTATION_ID:
         raise ValueError("Stage 3B representation identity mismatch")
-    if config.get("base_experiment_config") != "configs/experiments/04_stage3_semantic.yml":
-        raise ValueError("Stage 3B base experiment config is not the frozen Stage 3A contract")
     roots = config.get("outputs", {}).get("result_roots", {})
     for subject in SUBJECTS:
         expected = f"results/{subject}/{STAGE3B_RESULT_PART}"
@@ -264,14 +260,14 @@ def load_context(subject: str) -> dict[str, Any]:
         raise ValueError(f"{subject}: raw class scope count mismatch")
     semantic_edges, semantic_metadata, provenance = _load_stage3b_graph(subject, class_nodes)
     stage1 = stage2._frozen_raw_leiden_baseline(ROOT, storage_subject, class_nodes)
-    bounds = stage3a.load_stage2_bounds(subject)
+    bounds = runtime.load_stage2_bounds(subject)
     return {
         "subject": subject,
         "storage_subject": storage_subject,
         "stage2_config": stage2_config,
         "stage2_config_path": STAGE2_CONFIG_PATH,
-        "config": yaml.safe_load(STAGE3A_CONFIG_PATH.read_text(encoding="utf-8")),
-        "config_path": STAGE3A_CONFIG_PATH,
+        "config": yaml.safe_load(STAGE3B_CONFIG.read_text(encoding="utf-8")),
+        "config_path": STAGE3B_CONFIG,
         "stage3b_config": yaml.safe_load(STAGE3B_CONFIG.read_text(encoding="utf-8")),
         "stage3b_config_path": STAGE3B_CONFIG,
         "subject_config": subject_config,
@@ -288,7 +284,7 @@ def load_context(subject: str) -> dict[str, Any]:
         "generations": int(stage2_config["nsga"]["generations"]),
         "initialization_config": stage2_config["initialization"],
         "max_cluster_ratio": stage2.resolve_max_cluster_ratio(stage2_config),
-        "stage2_hv": stage3a.stage2_hypervolume_lookup(subject),
+        "stage2_hv": runtime.stage2_hypervolume_lookup(subject),
     }
 
 
@@ -304,7 +300,7 @@ def structural_invariance_checks(context: dict[str, Any]) -> dict[str, Any]:
         labels = encoding.canonical_relabel(labels)
         mapping = encoding.to_cluster_by_class(labels, class_nodes)
         stage2_values = stage2.evaluate_structural_objectives(context["raw_edges"], mapping, "raw_weight")
-        stage3_values = stage3a.evaluate_four_objective_values(
+        stage3_values = runtime.evaluate_four_objective_values(
             context["raw_edges"], context["semantic_edges"], mapping, "raw_weight",
             float(context["semantic_graph_metadata"]["total_edge_weight"]),
         )[:3]
@@ -391,11 +387,11 @@ def run_seed(
     )
     from pymoo.optimize import minimize
     result = minimize(problem, algorithm, termination=("n_gen", context["generations"]), seed=int(seed), verbose=False, save_history=False)
-    labels, f_values, constraints, front_diagnostics = stage3a._front_arrays(result)
-    pareto_rows, label_rows, posthoc_rows = stage3a._solution_rows(context, seed, labels, f_values, constraints, seed_records)
+    labels, f_values, constraints, front_diagnostics = runtime._front_arrays(result)
+    pareto_rows, label_rows, posthoc_rows = runtime._solution_rows(context, seed, labels, f_values, constraints, seed_records)
     if not pareto_rows:
         raise ValueError(f"{subject}: seed {seed} produced an empty four-objective front")
-    projected_rows, selected_list = stage3a._project_front(pareto_rows, posthoc_rows)
+    projected_rows, selected_list = runtime._project_front(pareto_rows, posthoc_rows)
     selected = selected_list[0]
     selected_original = next(row for row in pareto_rows if row["solution_id"] == selected["solution_id"])
     selected_posthoc = next(row for row in posthoc_rows if row["solution_id"] == selected["solution_id"])
@@ -425,9 +421,9 @@ def run_seed(
     _write_json(destination / "selected_solution.json", selected_json)
     projected_path = destination / "projected_front_3d.csv"
     matrix = pd.DataFrame(projected_rows)[["pymoo_f0_coupling", "pymoo_f1_negative_cohesion", "pymoo_f2_imbalance"]].to_numpy(dtype=float)
-    normalized = stage3a._normalize_projected(matrix, context["bounds"])
+    normalized = runtime._normalize_projected(matrix, context["bounds"])
     stored_hv = stage2._hypervolume(normalized, REFERENCE_POINT)
-    recomputed_hv, projected_nd = stage3a._independent_projected_hv(projected_path, context["bounds"])
+    recomputed_hv, projected_nd = runtime._independent_projected_hv(projected_path, context["bounds"])
     _write_json(destination / "projected_hypervolume.json", {
         **identity, "implementation": "experiments/02_stage2_nsga_structure_only/run.py:_hypervolume",
         "bounds_source": relative(BOUNDS_PATH), "reference_point": [1.1, 1.1, 1.1],
@@ -436,16 +432,15 @@ def run_seed(
         "projected_nondominated_count": projected_nd,
         "pass": bool(np.isclose(stored_hv, recomputed_hv, rtol=0.0, atol=HV_TOLERANCE)),
     })
-    _write_json(destination / "objective_redundancy.json", {**identity, **stage3a._redundancy(pareto_rows)})
+    _write_json(destination / "objective_redundancy.json", {**identity, **runtime._redundancy(pareto_rows)})
     _write_csv(selected_partition, destination / "selected_partition.csv")
-    validation = stage3a.validate_run_output(destination, context)
+    validation = runtime.validate_run_output(destination, context)
     algorithm_evaluations = int(getattr(getattr(result, "algorithm", None), "evaluator", None).n_eval) if getattr(getattr(result, "algorithm", None), "evaluator", None) is not None else None
     elapsed = time.perf_counter() - started
     metadata = {
         **identity, "schema_version": 2, "storage_subject": context["storage_subject"], "run_type": run_type,
         "implementation_commit": implementation_commit, "execution_head": implementation_commit,
         "config_path": relative(STAGE3B_CONFIG), "config_sha256": sha256_file(STAGE3B_CONFIG),
-        "base_config_path": relative(STAGE3A_CONFIG_PATH), "base_config_sha256": sha256_file(STAGE3A_CONFIG_PATH),
         "stage2_config_path": relative(STAGE2_CONFIG_PATH), "stage2_config_sha256": sha256_file(STAGE2_CONFIG_PATH),
         "representation_id": REPRESENTATION_ID, "experiment_name": EXPERIMENT_ID,
         "semantic_graph_path": relative(context["graph_provenance"]["paths"]["edges"]),

@@ -28,7 +28,7 @@ def test_stage3b_output_path_isolated_from_stage3a_and_formal_namespaces() -> No
     assert str(expected).endswith("results/jpetstore/05_stage3_declaration_method_body/validation/seed_00")
     with pytest.raises(Exception):
         MODULE.output_dir("jpetstore", ROOT / "results/jpetstore/04_stage3_semantic")
-    with pytest.raises(ValueError, match="Stage 3B output crosses frozen namespace"):
+    with pytest.raises(ValueError, match="Stage 3B output crosses obsolete namespace"):
         MODULE.output_dir("jpetstore", Path("/tmp/results/jpetstore/04_stage3_semantic"))
 
 
@@ -36,7 +36,8 @@ def test_stage3b_config_identity_and_frozen_base_contract() -> None:
     config = MODULE._load_stage3b_config()
     assert config["experiment_name"] == "stage3_declaration_method_body"
     assert config["representation_id"] == "declaration_method_body_v1"
-    assert config["base_experiment_config"] == "configs/experiments/04_stage3_semantic.yml"
+    assert "base_experiment_config" not in config
+    assert config["input"]["semantic_text_root"] == "data/semantic_text/declaration_method_body"
 
 
 @pytest.mark.parametrize("subject", MODULE.SUBJECTS)
@@ -60,7 +61,7 @@ def test_stage3b_four_objective_evaluation_is_finite_and_semantic_is_bounded() -
     context = MODULE.load_context("jpetstore")
     labels = MODULE.encoding.canonical_relabel(np.arange(len(context["class_nodes"])) % 2)
     mapping = MODULE.encoding.to_cluster_by_class(labels, context["class_nodes"])
-    values = MODULE.stage3a.evaluate_four_objective_values(
+    values = MODULE.runtime.evaluate_four_objective_values(
         context["raw_edges"],
         context["semantic_edges"],
         mapping,

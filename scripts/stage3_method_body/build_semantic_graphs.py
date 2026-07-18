@@ -51,7 +51,7 @@ EXPECTED_REVISION = "9a0457648f060c4279d4a3982d2d27a4df6fac59"
 EXPECTED_SOURCE_COMMIT = "33074fe5a2479b9d76605cd6a507c8a66c523a19"
 EXPECTED_GRAPH_SOURCE_COMMIT = "6f595208e1bde1702b7a99f00410b35a225777c8"
 TOP_K = 3
-CONFIG_PATH = ROOT / "configs/experiments/04_stage3_semantic.yml"
+CONFIG_PATH = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 FORMAL_MANIFEST_PATH = ROOT / "reports/stage3/formal_run_manifest.json"
 EMBEDDING_MANIFEST_PATH = ROOT / "reports/stage3_method_body/embedding_generation_manifest.json"
 REPORT_ROOT = ROOT / "reports/stage3_method_body"
@@ -105,7 +105,7 @@ def graph_config() -> tuple[dict[str, Any], str]:
         "k": TOP_K,
         "candidate_policy": "all_non_self_nodes",
         "similarity": "true_cosine",
-        "similarity_implementation": "scripts/stage3/similarity.py",
+        "similarity_implementation": "scripts/stage3_method_body/build_semantic_graphs.py",
         "ranking": {
             "primary": "cosine_descending",
             "exact_tie_break": "class_id_lexicographic_ascending",
@@ -119,7 +119,7 @@ def graph_config() -> tuple[dict[str, Any], str]:
     }
     for key, expected in checks.items():
         if graph.get(key) != expected:
-            raise ValueError(f"frozen Stage 3A graph config mismatch for {key}: {graph.get(key)!r} != {expected!r}")
+            raise ValueError(f"final Stage 3 graph config mismatch for {key}: {graph.get(key)!r} != {expected!r}")
     if graph.get("diagnostic_files_as_input") != "forbidden":
         raise ValueError("diagnostic files must not be graph inputs")
     formal_manifest = read_json(FORMAL_MANIFEST_PATH)
