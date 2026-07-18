@@ -1,5 +1,6 @@
 {
-  "analysis_commit": "6f52e6e64d57467f0546079cee4d3969f12417f1",
+  "analysis_commit": "649c7d129b0a97ddfaaebd7c2b461aa6a4e945a8",
+  "report_commit": "bb56d0a84d54dc66a07ee75e033e2b00c411a572",
   "analysis_elapsed_seconds": 157.72976395802107,
   "class_counts": {
     "daytrader": 53,
