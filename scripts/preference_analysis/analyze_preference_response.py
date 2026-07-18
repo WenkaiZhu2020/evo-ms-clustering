@@ -805,20 +805,37 @@ def profile_comparison(candidates: dict[tuple[str, str, int], pd.DataFrame], con
 def external_report(profile_result: pd.DataFrame, contexts: dict[str, Any], references: dict[str, Any], baselines: dict[tuple[str, str], dict[str, Any]]) -> None:
     rows=[]
     keep_profiles={"conservative","budgeted_balance_0.050","budgeted_semantic_0.050","knee_native","extreme_balance","extreme_semantic"}
+    metric_names=("mojofm_vs_reference","pairwise_precision","pairwise_recall","pairwise_f1","ari_vs_reference","nmi_vs_reference","reference_coverage_ratio")
     for record in profile_result.loc[profile_result.profile.isin(keep_profiles)].to_dict("records"):
         ref, info=references[record["subject"]]
         if record["status"] == "selected":
             part=selected_partition(contexts[record["subject"]][record["stage"]],record)
             values=external_metrics(contexts[record["subject"]][record["stage"]]["class_nodes"],part,ref)
         else:
-            values={name:float("nan") for name in ("mojofm_vs_reference","pairwise_precision","pairwise_recall","pairwise_f1","ari_vs_reference","nmi_vs_reference","reference_coverage_ratio")}
-        rows.append({**{key:record.get(key) for key in ("stage","subject","seed","profile","status","realised_modularity_loss","gain_imbalance","gain_semantic","cluster_count")},"reference_status":info["status"],"reference_path":info["path"],"evaluation_policy":"post-hoc only; external metrics did not influence selection",**values})
+            values={name:float("nan") for name in metric_names}
+        baseline_part=baselines[(record["stage"],record["subject"])] ["partition"]
+        baseline_values=external_metrics(contexts[record["subject"]][record["stage"]]["class_nodes"],baseline_part,ref)
+        conservative_rows=profile_result.loc[(profile_result.stage==record["stage"])&(profile_result.subject==record["subject"])&(profile_result.seed==record["seed"])&(profile_result.profile=="conservative")]
+        conservative_values={name:float("nan") for name in metric_names}
+        if len(conservative_rows) and conservative_rows.iloc[0]["status"] == "selected":
+            conservative_values=external_metrics(contexts[record["subject"]][record["stage"]]["class_nodes"],selected_partition(contexts[record["subject"]][record["stage"]],conservative_rows.iloc[0].to_dict()),ref)
+        deltas={}
+        for name in metric_names:
+            deltas[f"{name}_delta_vs_leiden"]=values[name]-baseline_values[name] if np.isfinite(values[name]) and np.isfinite(baseline_values[name]) else float("nan")
+            deltas[f"{name}_delta_vs_conservative"]=values[name]-conservative_values[name] if np.isfinite(values[name]) and np.isfinite(conservative_values[name]) else float("nan")
+        rows.append({**{key:record.get(key) for key in ("stage","subject","seed","profile","status","realised_modularity_loss","gain_imbalance","gain_semantic","cluster_count")},"reference_status":info["status"],"reference_path":info["path"],"evaluation_policy":"post-hoc only; external metrics did not influence selection",**values,**deltas})
     per=pd.DataFrame(rows); write_df(REPORT_ROOT / "preference_external_metrics_per_seed.csv",per)
     rows=[]
     for keys,group in per.groupby(["stage","subject","profile"],sort=True):
-        for metric in ("mojofm_vs_reference","pairwise_precision","pairwise_recall","pairwise_f1","ari_vs_reference","nmi_vs_reference","reference_coverage_ratio"):
+        for metric in metric_names:
             values=group[metric].to_numpy(float); values=values[np.isfinite(values)]
-            rows.append({"stage":keys[0],"subject":keys[1],"profile":keys[2],"metric":metric,"reference_status":group.reference_status.iloc[0],"available_n":len(values),"median":float(np.median(values)) if len(values) else float("nan"),"mean":float(np.mean(values)) if len(values) else float("nan"),"iqr":float(np.percentile(values,75)-np.percentile(values,25)) if len(values) else float("nan")})
+            delta_leiden=group[f"{metric}_delta_vs_leiden"].to_numpy(float); delta_leiden=delta_leiden[np.isfinite(delta_leiden)]
+            delta_conservative=group[f"{metric}_delta_vs_conservative"].to_numpy(float); delta_conservative=delta_conservative[np.isfinite(delta_conservative)]
+            row={"stage":keys[0],"subject":keys[1],"profile":keys[2],"metric":metric,"reference_status":group.reference_status.iloc[0],"available_n":len(values),"median":float(np.median(values)) if len(values) else float("nan"),"mean":float(np.mean(values)) if len(values) else float("nan"),"iqr":float(np.percentile(values,75)-np.percentile(values,25)) if len(values) else float("nan"),"median_delta_vs_leiden":float(np.median(delta_leiden)) if len(delta_leiden) else float("nan"),"mean_delta_vs_leiden":float(np.mean(delta_leiden)) if len(delta_leiden) else float("nan"),"median_delta_vs_conservative":float(np.median(delta_conservative)) if len(delta_conservative) else float("nan"),"mean_delta_vs_conservative":float(np.mean(delta_conservative)) if len(delta_conservative) else float("nan")}
+            for reference_stage in ("stage2","stage3a","stage3b"):
+                ref_rows=per.loc[(per.subject==keys[1])&(per.stage==reference_stage)&(per.profile=="conservative"),metric].to_numpy(float); ref_rows=ref_rows[np.isfinite(ref_rows)]
+                row[f"mean_delta_vs_{reference_stage}_conservative"]=float(np.mean(values)-np.mean(ref_rows)) if len(values) and len(ref_rows) else float("nan")
+            rows.append(row)
     write_df(REPORT_ROOT / "preference_external_metrics_summary.csv",pd.DataFrame(rows))
 
 
@@ -860,7 +877,9 @@ def five_percent_report(profile_result: pd.DataFrame, baseline: dict[tuple[str,s
         if record["status"] != "selected": continue
         rows.append({"stage":record["stage"],"subject":record["subject"],"seed":record["seed"],"profile":record["profile"],"availability":"selected","realised_modularity_loss":record["realised_modularity_loss"],"imbalance_improvement":record["gain_imbalance"],"semantic_improvement":record["gain_semantic"],"coupling_change":record["coupling"]-baseline[(record["stage"],record["subject"])] ["coupling"],"cohesion_change":record["cohesion"]-baseline[(record["stage"],record["subject"])] ["cohesion"],"cluster_count_change":record["cluster_count"]-baseline[(record["stage"],record["subject"])] ["cluster_count"],"singleton_ratio_change":record["singleton_ratio"]-baseline[(record["stage"],record["subject"])] ["singleton_ratio"],"equals_leiden":record["equals_leiden"],"equals_conservative":record["equals_conservative"],"statement":"Under a maximum 5% modularity-loss budget; realised loss may be lower than 5%."})
     frame=pd.DataFrame(rows); write_df(REPORT_ROOT / "five_percent_operating_profile.csv",frame)
-    summary=frame.groupby(["stage","subject","profile"],sort=True).agg(availability=("seed","count"),median_realised_loss=("realised_modularity_loss","median"),median_imbalance_improvement=("imbalance_improvement","median"),median_semantic_improvement=("semantic_improvement","median"),median_coupling_change=("coupling_change","median"),median_cohesion_change=("cohesion_change","median"),median_cluster_count_change=("cluster_count_change","median"),median_singleton_ratio_change=("singleton_ratio_change","median"),equals_leiden_rate=("equals_leiden","mean"),equals_conservative_rate=("equals_conservative","mean")).reset_index()
+    summary=frame.groupby(["stage","subject","profile"],sort=True).agg(eligible_seed_count=("seed","count"),median_realised_loss=("realised_modularity_loss","median"),median_imbalance_improvement=("imbalance_improvement","median"),median_semantic_improvement=("semantic_improvement","median"),median_coupling_change=("coupling_change","median"),median_cohesion_change=("cohesion_change","median"),median_cluster_count_change=("cluster_count_change","median"),median_singleton_ratio_change=("singleton_ratio_change","median"),equals_leiden_rate=("equals_leiden","mean"),equals_conservative_rate=("equals_conservative","mean")).reset_index()
+    summary["availability_rate"] = summary["eligible_seed_count"] / 30.0
+    summary["unavailable_seed_count"] = 30 - summary["eligible_seed_count"]
     write_md(REPORT_ROOT / "five_percent_operating_profile_summary.md", "# Five-percent operating profile\n\nUnder a maximum 5% modularity-loss budget, the following post-hoc profiles are available within the saved retained fronts. The 5% figure is a permitted maximum, not necessarily the realised loss.\n\n" + summary.to_csv(index=False))
 
 
@@ -942,7 +961,15 @@ def manifest(inventory: pd.DataFrame, integrity: pd.DataFrame, references: dict[
 
 def run() -> None:
     global frozen_contexts, global_profile_result, START_HEAD
-    START_HEAD=git_head(); frozen_contexts, inventory, integrity_before, references=load_sources()
+    prior_manifest = REPORT_ROOT / "preference_analysis_manifest.json"
+    prior_start = None
+    if prior_manifest.is_file():
+        try:
+            prior_start = json.loads(prior_manifest.read_text(encoding="utf-8")).get("starting_head")
+        except (OSError, json.JSONDecodeError):
+            prior_start = None
+    START_HEAD = str(prior_start or git_head())
+    frozen_contexts, inventory, integrity_before, references=load_sources()
     REPORT_ROOT.mkdir(parents=True,exist_ok=True)
     write_df(REPORT_ROOT / "source_artifact_inventory.csv",inventory)
     baselines=baseline_report(frozen_contexts,references)
