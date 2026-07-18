@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import inspect
 
-from scripts.preference_analysis import final_preference as analysis
+from evo_ms.analysis import preference as analysis
 
 
 def test_preference_stage_labels_are_final_only() -> None:

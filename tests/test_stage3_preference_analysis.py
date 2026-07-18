@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from scripts.preference_analysis import final_preference as preference
+from evo_ms.analysis import preference
 
 
 def test_final_preference_boundary_accepts_only_stage2_and_final_stage3() -> None:
@@ -21,4 +21,3 @@ def test_final_preference_selection_is_deterministic() -> None:
         {"solution_id": "a", "imbalance": 0.1, "weighted_modularity": 0.8, "q_loss": 0.01},
     ])
     assert preference.select_candidate(frame, "balance", 0.02)["solution_id"] == "a"
-

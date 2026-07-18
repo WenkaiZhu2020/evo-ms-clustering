@@ -17,3 +17,14 @@ def ensure_final_stages(stages: Iterable[str]) -> tuple[str, ...]:
 
 def ordered_rows(rows: Iterable[Mapping[str, object]], keys: tuple[str, ...] = ("subject", "seed")) -> list[Mapping[str, object]]:
     return sorted(rows, key=lambda row: tuple(str(row.get(key, "")) for key in keys))
+
+
+def availability(rows: Iterable[Mapping[str, object]], field: str) -> dict[str, int]:
+    """Count present and missing values for one saved-artifact field."""
+    present = missing = 0
+    for row in rows:
+        if row.get(field) in (None, ""):
+            missing += 1
+        else:
+            present += 1
+    return {"present": present, "missing": missing, "total": present + missing}

@@ -17,9 +17,15 @@ from typing import Any
 
 import pandas as pd
 
+from evo_ms.analysis.stage3 import availability
+from evo_ms.analysis.statistics import deterministic_rows
+
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 def _load_experiment_module(filename: str, name: str):
     path = ROOT / "experiments/05_stage3_declaration_method_body" / filename
@@ -85,12 +91,15 @@ def formal_inventory() -> pd.DataFrame:
                 "selected_solution_id": json.loads((stage3_dir(subject, seed) / "selected_solution.json").read_text(encoding="utf-8")).get("selected_solution_id"),
                 "completion_status": metadata.get("completion_status"),
             })
-    return pd.DataFrame(rows).sort_values(["subject", "seed"], ignore_index=True)
+    return pd.DataFrame(deterministic_rows(rows))
 
 
 def validate_inventory() -> pd.DataFrame:
     rows = [validate_final_seed(subject, seed) for subject in SUBJECTS for seed in SEEDS]
-    frame = pd.DataFrame(rows).sort_values(["subject", "seed"], ignore_index=True)
+    ordered = deterministic_rows(rows)
+    if availability(ordered, "representation_id")["missing"]:
+        raise ValueError("final Stage 3 inventory contains missing representation metadata")
+    frame = pd.DataFrame(ordered)
     if set(frame["representation_id"]) != {adapter.REPRESENTATION_ID}:
         raise ValueError("final Stage 3 inventory contains an unexpected representation")
     return frame
