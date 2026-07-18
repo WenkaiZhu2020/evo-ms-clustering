@@ -9,11 +9,14 @@ directory, regenerates an embedding, or rebuilds a semantic graph.
 from __future__ import annotations
 
 import argparse
+import fcntl
 import hashlib
 import json
 import math
+import os
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -94,23 +97,94 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _atomic_write(path: Path, payload: bytes) -> None:
+    """Replace one report atomically, keeping the temporary file local."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+
+class AnalysisLock:
+    """Process lock for one preference-analysis output root."""
+
+    def __init__(self, path: Path):
+        self.path = path
+        self.handle = None
+
+    def __enter__(self):
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        if self.path.exists():
+            try:
+                prior = json.loads(self.path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                raise RuntimeError(f"preference-analysis lock is unreadable: {self.path}") from exc
+            pid = int(prior.get("pid", 0) or 0)
+            current_branch = subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip()
+            current_command = " ".join(sys.argv)
+            if prior.get("branch") not in {None, current_branch}:
+                raise RuntimeError(f"preference-analysis lock belongs to another branch: {self.path}")
+            if prior.get("command") and str(prior["command"]).split()[0:1] != current_command.split()[0:1]:
+                raise RuntimeError(f"preference-analysis lock belongs to another command: {self.path}")
+            if pid > 0:
+                try:
+                    os.kill(pid, 0)
+                except ProcessLookupError:
+                    pass
+                except PermissionError as exc:
+                    raise RuntimeError(f"cannot verify preference-analysis lock owner {pid}") from exc
+                else:
+                    raise RuntimeError(f"preference-analysis lock owner {pid} is still present: {self.path}")
+        self.handle = self.path.open("a+", encoding="utf-8")
+        try:
+            fcntl.flock(self.handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise RuntimeError(f"another preference analysis is active: {self.path}") from exc
+        self.handle.seek(0)
+        self.handle.truncate()
+        metadata = {
+            "pid": os.getpid(),
+            "command": " ".join(sys.argv),
+            "branch": subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip(),
+            "head": git_head(),
+            "started_at_utc": utc_now(),
+            "working_directory": str(ROOT),
+            "output_directory": str(self.path.parent.resolve()),
+            "hostname": os.uname().nodename,
+        }
+        self.handle.write(json.dumps(metadata, sort_keys=True) + "\n")
+        self.handle.flush()
+        os.fsync(self.handle.fileno())
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.handle is not None:
+            fcntl.flock(self.handle.fileno(), fcntl.LOCK_UN)
+            self.handle.close()
+        self.path.unlink(missing_ok=True)
+
+
 def git_head() -> str:
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
 
 
 def write_df(path: Path, frame: pd.DataFrame) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    frame.to_csv(path, index=False, float_format="%.17g", lineterminator="\n")
+    _atomic_write(path, frame.to_csv(index=False, float_format="%.17g", lineterminator="\n").encode("utf-8"))
 
 
 def write_json(path: Path, value: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
+    _atomic_write(path, (json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8"))
 
 
 def write_md(path: Path, text: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text.rstrip() + "\n", encoding="utf-8")
+    _atomic_write(path, (text.rstrip() + "\n").encode("utf-8"))
 
 
 def stage2_dir(subject: str, seed: int) -> Path:
@@ -227,12 +301,60 @@ def metric_row(context: dict[str, Any], partition: pd.DataFrame) -> dict[str, fl
     }
 
 
+def reference_metric_row(context: dict[str, Any], partition: pd.DataFrame) -> dict[str, float]:
+    """Slow, direct reference implementation for audit equivalence checks.
+
+    This deliberately delegates the frozen structural formulas to the original
+    Stage 2 implementation.  It is not used by production report generation;
+    its purpose is to provide an independently readable oracle for the
+    vectorised ``metric_row`` implementation above.
+    """
+    mapping = dict(zip(partition["class_id"].astype(str), partition["cluster_id"].astype(int), strict=True))
+    coupling, cohesion, imbalance = frozen.STAGE2.evaluate_structural_objectives(
+        context["raw_edges"], mapping, "raw_weight"
+    )
+    posthoc = frozen.STAGE2._partition_metrics_row(
+        subject="audit",
+        seed=0,
+        solution_id="audit",
+        class_nodes=context["class_nodes"],
+        clusters=partition,
+        raw_edges=context["raw_edges"],
+        cluster_by_class=mapping,
+        reference_mapping=None,
+    )
+    return {
+        "weighted_modularity": float(posthoc["weighted_modularity"]),
+        "internal_edge_weight_ratio": float(posthoc["internal_edge_weight_ratio"]),
+        "internal_external_edge_ratio": float(posthoc["internal_external_edge_ratio"]),
+        "cluster_count": int(posthoc["cluster_count"]),
+        "average_cluster_size": float(posthoc["average_cluster_size"]),
+        "max_cluster_size": int(posthoc["max_cluster_size"]),
+        "min_cluster_size": int(posthoc["min_cluster_size"]),
+        "max_cluster_ratio": float(posthoc["max_cluster_ratio"]),
+        "singleton_ratio": float(posthoc["singleton_ratio"]),
+        "cluster_size_cv": float(posthoc["cluster_size_cv"]),
+        "coupling": float(coupling),
+        "cohesion": float(cohesion),
+        "imbalance": float(imbalance),
+    }
+
+
 def semantic_value(context: dict[str, Any], partition: pd.DataFrame) -> float:
     mapping = dict(zip(partition["class_id"].astype(str), partition["cluster_id"].astype(int), strict=True))
     labels = np.asarray([mapping[str(value)] for value in context["class_nodes"]["class_id"]], dtype=int)
     fast = context["_fast_semantic"]
     inside = labels[fast["source"]] == labels[fast["target"]]
     return float(1.0 - float(fast["weights"][inside].sum()) / float(fast["total"]))
+
+
+def reference_semantic_value(context: dict[str, Any], partition: pd.DataFrame) -> float:
+    """Slow direct semantic-objective oracle used only by the audit."""
+    mapping = dict(zip(partition["class_id"].astype(str), partition["cluster_id"].astype(int), strict=True))
+    return float(frozen.b_adapter.evaluate_semantic_objective(
+        context["semantic_edges"], mapping,
+        total_weight=float(context["semantic_graph_metadata"]["total_edge_weight"]),
+    ))
 
 
 def prepare_fast_context(context: dict[str, Any]) -> None:
@@ -959,7 +1081,7 @@ def manifest(inventory: pd.DataFrame, integrity: pd.DataFrame, references: dict[
     write_json(REPORT_ROOT / "preference_analysis_manifest.json",value)
 
 
-def run() -> None:
+def _run_unlocked() -> None:
     global frozen_contexts, global_profile_result, START_HEAD
     prior_manifest = REPORT_ROOT / "preference_analysis_manifest.json"
     prior_start = None
@@ -1013,8 +1135,25 @@ def run() -> None:
     print(json.dumps({"status":"PASS","starting_head":START_HEAD,"subjects":list(SUBJECTS),"seeds":30,"artifact_integrity":bool(integrity.unchanged.all()),"reports":str(REPORT_ROOT)},indent=2))
 
 
+def run(lock_path: Path | None = None) -> None:
+    """Run the saved-artifact analysis under an exclusive lifecycle lock."""
+    with AnalysisLock((lock_path or (REPORT_ROOT / ".preference_analysis.lock")).resolve()):
+        _run_unlocked()
+
+
 def main() -> int:
-    parser=argparse.ArgumentParser(description=__doc__); parser.parse_args(); run(); return 0
+    global REPORT_ROOT
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--report-root",
+        type=Path,
+        default=REPORT_ROOT,
+        help="isolated report destination; defaults to the accepted report directory",
+    )
+    args = parser.parse_args()
+    REPORT_ROOT = args.report_root.resolve()
+    run()
+    return 0
 
 
 if __name__ == "__main__":
