@@ -1,0 +1,3 @@
+value_label,source,statistic,status,reason
+23.55072463768116,recomputed saved Stage 2 selected partitions seeds 0..29; accepted stage2 comparison reports,mean,authoritative,"complete seed inventory, frozen evaluator, frozen reference, explicit direction and coverage"
+23.41,no exact DayTrader Stage 2 occurrence found in reachable working tree or Git history,unknown,superseded/unverifiable,"no provenance for seed set, partition source, evaluator, direction, or aggregation; nearby 23.405797 is Stage3A knee median"

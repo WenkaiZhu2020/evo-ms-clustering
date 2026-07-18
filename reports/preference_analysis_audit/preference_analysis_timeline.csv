@@ -1,0 +1,11 @@
+milestone,source_commit,source_date,classification,confidence,evidence
+Stage 2 formal completion,16e7444631dd52e53eeb76c105e45f9034e772f6,2026-07-13T19:30:08+01:00,pre-specified before preference analysis,high,Git commit finalised Stage 2 provenance and formal outputs
+Stage 3A formal completion,bf42a01,recorded in Git history; exact commit date retained by Git,pre-specified before preference analysis,high,Stage 3A formal comparison/report history precedes preference framework
+Stage 3B formal completion,18c80a5f81f6af4cbf0a692e1bb87737d24c4a13,2026-07-18T01:24:00+01:00,pre-specified before preference analysis,high,formal provenance commit immediately precedes preference framework
+conservative selector,5dccd735cde540ede86a18d79a9c8131ce2972dd,2026-07-18T01:16:30+01:00,designed before preference analysis; inherited frozen formal rule,high,formal robustness analysis and saved conservative selections
+first selected equals Leiden mechanism,356d02a50779ab0a90fe61b8ce3c1b9a83ec28ed,2026-07-18T02:00:03+01:00,post-hoc diagnostic,high,first preference-analysis framework commit introduced mechanism report
+first selected-to-best-semantic gap,356d02a50779ab0a90fe61b8ce3c1b9a83ec28ed,2026-07-18T02:00:03+01:00,post-hoc exploratory,high,semantic preference profiles first appear in the framework
+first conservative/budgeted/knee/extreme proposal,356d02a50779ab0a90fe61b8ce3c1b9a83ec28ed,2026-07-18T02:00:03+01:00,post-hoc exploratory,high,profile_comparison implementation and budgeted profiles introduced together
+first budget grid,356d02a50779ab0a90fe61b8ce3c1b9a83ec28ed,2026-07-18T02:00:03+01:00,post-hoc sensitivity display,high,BUDGETS constant first introduced in preference framework
+first full preference analysis,48f7d0dac98904dca1238b1b7a5eda28e16af92b,2026-07-18T02:00:10+01:00,post-hoc exploratory,high,accepted report publication commit
+first 5% operating profile,71bf2e8a596507720185c781eb50578a454f0e32,2026-07-18T02:02:02+01:00,post-hoc illustrative,high,operating-profile diagnostic added after initial preference framework

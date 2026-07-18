@@ -1,0 +1,6 @@
+scenario,pass,behaviour
+complete matching report set,True,accepted source hashes and manifest can be recognised
+partial report set,True,rejected by required-file inventory; no mixing
+different source HEAD,True,rejected by manifest provenance check
+different source artifact hashes,True,rejected by source integrity comparison
+stale temporary directory,True,isolated temporary destination is removed after comparison
