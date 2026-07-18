@@ -46,9 +46,9 @@ adapter = _load_run_module()
 
 SUBJECTS = adapter.SUBJECTS
 FORMAL_SEEDS = tuple(range(1, 30))
-REPORT_ROOT = ROOT / "reports/stage3"
-LOG_ROOT = REPORT_ROOT / "logs"
-RUNTIME_ROOT = REPORT_ROOT / "formal_runtime"
+REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
+RUNTIME_ROOT = REPORT_ROOT / "runtime"
+LOG_ROOT = RUNTIME_ROOT / "logs"
 LOCK_ROOT = RUNTIME_ROOT / "locks"
 PID_ROOT = RUNTIME_ROOT / "pids"
 EXPECTED_FILES = {

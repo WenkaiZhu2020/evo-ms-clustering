@@ -50,8 +50,10 @@ from evo_ms.optimization.stage3_problem import (
 CONFIG_PATH = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 STAGE2_CONFIG_PATH = ROOT / "configs/experiments/02_stage2_nsga_structure_only.yml"
 BOUNDS_PATH = ROOT / "configs/experiments/stage2_robustness_bounds.yml"
-MANIFEST_PATH = ROOT / "reports/stage3/provenance/semantic_graph_generation_manifest.json"
-COMPATIBILITY_CONTRACT_PATH = ROOT / "reports/stage3/provenance/final_graph_compatibility_contract.json"
+REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
+PROVENANCE_ROOT = REPORT_ROOT / "provenance"
+MANIFEST_PATH = PROVENANCE_ROOT / "semantic_graph_generation_manifest.json"
+COMPATIBILITY_CONTRACT_PATH = PROVENANCE_ROOT / "final_graph_compatibility_contract.json"
 SEMANTIC_SUBJECTS = ("jpetstore", "daytrader", "xerces")
 SUBJECTS = SEMANTIC_SUBJECTS
 EXPECTED_COUNTS = {"jpetstore": 24, "daytrader": 53, "xerces": 814}

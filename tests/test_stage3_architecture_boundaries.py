@@ -56,6 +56,13 @@ def test_config_has_no_private_stage2_implementation_references():
     assert "experiments/02_stage2_nsga_structure_only/run_robustness.py:" not in config
 
 
+def test_active_stage3_runtime_uses_current_report_root():
+    for path in EXPERIMENT_ROOT.glob("*.py"):
+        text = path.read_text(encoding="utf-8")
+        assert "reports/stage3" not in text, path
+    assert (ROOT / "results/cross_subject/05_stage3_declaration_method_body").is_dir()
+
+
 def test_graph_compatibility_sidecar_digests_are_self_consistent():
     import sys
     sys.path.insert(0, str(SRC_ROOT))

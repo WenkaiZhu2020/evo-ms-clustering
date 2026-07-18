@@ -64,7 +64,7 @@ EXPECTED_INPUT_HASHES = {
 }
 INPUT_ROOT = ROOT / "data/semantic_text/declaration_method_body"
 OUTPUT_ROOT = ROOT / "data/embeddings/declaration_method_body"
-REPORT_ROOT = ROOT / "reports/stage3/provenance"
+REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body/provenance"
 FORMAL_CONFIG = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 MAX_NORM_TOLERANCE = (0.999, 1.001)
 EXPERIMENT_ID = "stage3_declaration_method_body"

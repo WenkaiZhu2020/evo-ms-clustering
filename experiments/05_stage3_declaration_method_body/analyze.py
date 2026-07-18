@@ -45,7 +45,7 @@ SUBJECTS = adapter.SUBJECTS
 SEEDS = tuple(range(30))
 STORAGE_SUBJECT = adapter.STORAGE_SUBJECT
 CLASS_COUNTS = adapter.EXPECTED_COUNTS
-REPORT_ROOT = ROOT / "reports/stage3"
+REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
 STAGE2_CONFIG = adapter.STAGE2_CONFIG_PATH
 STAGE3_CONFIG = adapter.STAGE3_CONFIG
 
