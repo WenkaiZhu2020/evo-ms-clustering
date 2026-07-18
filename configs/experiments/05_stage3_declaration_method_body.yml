@@ -243,8 +243,8 @@ selection_rule:
     - deduplicate_projected_objective_vectors
     - apply_exact_stage2_selection_rule
     - apply_exact_stage2_deterministic_tiebreak
-  stage2_selection_function_reference: experiments/02_stage2_nsga_structure_only/run.py:_select_solution
-  stage2_deterministic_tie_break_reference: experiments/02_stage2_nsga_structure_only/run.py:_select_solution:key=(-weighted_modularity,is_injected_seed,coupling,-cohesion,imbalance,_label_tuple_from_row)
+  selector_contract: evo_ms.optimization.selection.select_solution
+  deterministic_tie_break_contract: "(-weighted_modularity,is_injected_seed,coupling,-cohesion,imbalance,canonical_label_vector)"
 hypervolume:
   hv4d:
     purpose: stage3_internal_diagnostic_only
@@ -257,8 +257,9 @@ hypervolume:
       - use_stage2_theoretical_bounds
       - use_stage2_reference_point
       - calculate_projected_3d_hypervolume
-    stage2_bounds_reference: configs/experiments/stage2_robustness_bounds.yml; experiments/02_stage2_nsga_structure_only/run_robustness.py:generate_theoretical_bounds
-    stage2_reference_point_reference: experiments/02_stage2_nsga_structure_only/run_robustness.py:REFERENCE_POINT=np.full(3,1.1); configs/experiments/stage2_robustness_bounds.yml:reference_point
+    stage2_bounds_reference: configs/experiments/stage2_robustness_bounds.yml
+    stage2_bounds_contract: theoretical_stage2_bounds_v1
+    stage2_reference_point_reference: configs/experiments/stage2_robustness_bounds.yml:reference_point
 go_no_go:
   technical:
     embedding_coverage_required: 1.0
@@ -294,7 +295,7 @@ statistics:
   alpha_adjusted: 0.0125
   secondary_metrics: descriptive_only
 seeds:
-  source: scripts/02_stage2_nsga_structure_only/_common.sh:FORMAL_SEEDS and experiments/02_stage2_nsga_structure_only/run_robustness.py:FORMAL_SEEDS
+  source: "frozen_formal_seed_contract: seeds_1_through_29"
   formal:
     - 0
     - 1

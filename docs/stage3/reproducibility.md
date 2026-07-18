@@ -9,8 +9,9 @@
 - Graph: true-cosine top-3 with lexicographic tie-breaking and OR symmetrisation
 
 The canonical experiment entry points are under
-`experiments/05_stage3_declaration_method_body/`. Reusable semantic and
-analysis logic is under `src/evo_ms/semantic/` and `src/evo_ms/analysis/`.
+`experiments/05_stage3_declaration_method_body/`. Thin shell launchers are
+under `scripts/05_stage3_declaration_method_body/`. Reusable semantic,
+optimization, evaluation, and analysis logic is under `src/evo_ms/`.
 
 ## Reproduction flow
 
@@ -18,13 +19,25 @@ The following commands describe the frozen flow. They are not an instruction
 to regenerate accepted artifacts during repository maintenance:
 
 ```text
-python scripts/stage3/run_stage3.py --help
+scripts/05_stage3_declaration_method_body/prepare_semantic.sh --help
+scripts/05_stage3_declaration_method_body/run_stage3.sh --help
 python experiments/05_stage3_declaration_method_body/run.py --help
-python scripts/stage3/validate_stage3.py --help
-python experiments/05_stage3_declaration_method_body/run_validation.py --help
-python experiments/05_stage3_declaration_method_body/run_formal.py --help
+scripts/05_stage3_declaration_method_body/run_robustness.sh --help
+scripts/05_stage3_declaration_method_body/analyze.sh --help
 python experiments/05_stage3_declaration_method_body/analyze.py --help
 ```
+
+Input preparation is a real command and must use a temporary output directory.
+It invokes the isolated Soot extractor and compares generated declaration and
+semantic-text hashes with the accepted final input. It never overwrites
+accepted semantic text by default. Raw project trees and compiled classes are
+external local inputs; a missing source directory is an explicit failure.
+
+Graph provenance has two layers. Historical source commits and original config
+hashes describe accepted artifact generation. Current regeneration checks the
+normalized scientific contract in
+`reports/stage3/provenance/final_graph_compatibility_contract.json`; current
+Git HEAD is not compared with the historical graph-generation commit.
 
 Input, embedding, graph, and formal-result manifests record exact hashes,
 configuration identity, model revision, class mapping, source commit, and

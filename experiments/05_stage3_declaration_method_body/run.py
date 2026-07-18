@@ -24,6 +24,8 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from evo_ms.optimization import encoding
+from evo_ms.analysis.provenance import graph_compatibility_digest
+from evo_ms.analysis.provenance import normalized_graph_compatibility_contract
 from evo_ms.evaluation.partition_ops import align_clusters
 from evo_ms.evaluation.partition_ops import partition_metrics_row
 from evo_ms.evaluation.reference_metrics import load_reference_mapping
@@ -49,6 +51,7 @@ CONFIG_PATH = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 STAGE2_CONFIG_PATH = ROOT / "configs/experiments/02_stage2_nsga_structure_only.yml"
 BOUNDS_PATH = ROOT / "configs/experiments/stage2_robustness_bounds.yml"
 MANIFEST_PATH = ROOT / "reports/stage3/provenance/semantic_graph_generation_manifest.json"
+COMPATIBILITY_CONTRACT_PATH = ROOT / "reports/stage3/provenance/final_graph_compatibility_contract.json"
 SEMANTIC_SUBJECTS = ("jpetstore", "daytrader", "xerces")
 SUBJECTS = SEMANTIC_SUBJECTS
 EXPECTED_COUNTS = {"jpetstore": 24, "daytrader": 53, "xerces": 814}
@@ -130,12 +133,70 @@ def resolve_max_cluster_ratio(config: dict[str, Any]) -> float:
     return value
 
 
+def current_graph_compatibility_contract(
+    subject: str,
+    graph_metadata: dict[str, Any],
+) -> dict[str, Any]:
+    config = load_stage3_config()
+    embedding_metadata = json.loads(
+        (ROOT / "data/embeddings/declaration_method_body" / subject / "embedding_metadata.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    graph = config["semantic_graph"]
+    values = {
+        "contract_version": 1,
+        "experiment_name": config["experiment_name"],
+        "representation_id": config["representation_id"],
+        "class_scope_digest": graph_metadata["class_mapping_sha256"],
+        "semantic_input_aggregate_sha256": graph_metadata["input_aggregate_sha256"],
+        "embedding_aggregate_sha256": graph_metadata["embedding_aggregate_sha256"],
+        "model_name": embedding_metadata["model_name"],
+        "model_revision": embedding_metadata["model_revision"],
+        "tokenizer_name": config["tokenizer"]["name"],
+        "tokenizer_revision": embedding_metadata["tokenizer_revision"],
+        "tokenizer_max_sequence_length": embedding_metadata["max_sequence_length"],
+        "tokenizer_truncation": embedding_metadata["formal_truncation"],
+        "pooling": embedding_metadata["pooling"],
+        "pooling_source": "pinned_model_repository",
+        "l2_normalize": bool(config["semantic_model"]["l2_normalize"]),
+        "storage_dtype": embedding_metadata["saved_storage_dtype"],
+        "similarity": graph["similarity"],
+        "similarity_implementation": graph["similarity_implementation"],
+        "top_k": graph["k"],
+        "directed_selection_count_per_node": graph["directed_selection_count_per_node"],
+        "candidate_policy": graph["candidate_policy"],
+        "tie_break": "cosine_descending_then_class_id_lexicographic_ascending",
+        "symmetrisation": graph["symmetrisation"],
+        "reciprocal_edge_policy": "retain_one_edge; selected_by=both when reciprocal",
+        "self_loop_policy": graph["self_loops"],
+        "duplicate_edge_policy": graph["duplicate_edges"],
+        "edge_weight_rule": graph["edge_weight"],
+        "edge_weight_threshold": graph["edge_weight_threshold"],
+        "edge_serialization_precision": graph_metadata["canonical_weight_format"],
+    }
+    return normalized_graph_compatibility_contract(values)
+
+
+def validate_graph_compatibility(subject: str, graph_metadata: dict[str, Any]) -> dict[str, Any]:
+    document = json.loads(COMPATIBILITY_CONTRACT_PATH.read_text(encoding="utf-8"))
+    expected = document["subjects"][subject]
+    contract = current_graph_compatibility_contract(subject, graph_metadata)
+    digest = graph_compatibility_digest(contract)
+    if digest != expected["compatibility_contract_sha256"]:
+        raise ValueError(f"{subject}: current graph scientific contract is incompatible with accepted graph")
+    if contract != expected["compatibility_contract"]:
+        raise ValueError(f"{subject}: current graph scientific contract fields differ from accepted contract")
+    return {"compatibility_contract_sha256": digest, "historical_provenance": expected["historical_provenance"]}
+
+
 def subject_paths(subject: str) -> dict[str, Path]:
     storage = STORAGE_SUBJECT[subject]
     graph = ROOT / "data/semantic_graphs/declaration_method_body" / subject
     return {
         "graph_edges": graph / "semantic_edges.csv",
         "graph_metadata": graph / "graph_metadata.json",
+        "graph_mapping": graph / "class_mapping.csv",
         "raw_class_nodes": ROOT / "data/extracted" / storage / "class_nodes.csv",
         "raw_structural_dependencies": ROOT / "data/extracted" / storage / "structural_dependencies.csv",
         "stage1_clusters": ROOT / "results" / storage / "01_stage1_leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
@@ -206,6 +267,7 @@ def load_context(subject: str) -> dict[str, Any]:
     class_ids = set(class_nodes["class_id"].astype(str))
     paths = subject_paths(subject)
     graph_metadata = json.loads(paths["graph_metadata"].read_text(encoding="utf-8"))
+    compatibility = validate_graph_compatibility(subject, graph_metadata)
     graph_manifest = {"aggregate_sha256": graph_metadata["semantic_graph_sha256"], "source": "final_graph_metadata"}
     semantic_edges = load_semantic_edges(paths["graph_edges"], expected_class_ids=class_ids)
     actual_graph_hash = canonical_graph_hash_file(paths["graph_edges"])
@@ -217,6 +279,17 @@ def load_context(subject: str) -> dict[str, Any]:
         raise ValueError(f"{subject}: semantic graph violates non-negative positive-weight contract")
     stage1 = _frozen_raw_leiden_baseline(storage_subject, class_nodes)
     bounds = load_stage2_bounds(subject)
+    graph_provenance = {
+        "embedding_source": {
+            "embedding_aggregate_sha256": graph_metadata["embedding_aggregate_sha256"],
+            "embedding_sha256": graph_metadata["embedding_file_sha256"],
+        },
+        "paths": {
+            "edges": paths["graph_edges"],
+            "metadata": paths["graph_metadata"],
+            "mapping": paths["graph_mapping"],
+        },
+    }
     return {
         "subject": subject,
         "storage_subject": storage_subject,
@@ -231,6 +304,8 @@ def load_context(subject: str) -> dict[str, Any]:
         "stage1_raw_baseline": stage1,
         "semantic_edges": semantic_edges,
         "semantic_graph_metadata": graph_metadata,
+        "graph_compatibility": compatibility,
+        "graph_provenance": graph_provenance,
         "semantic_graph_hash": actual_graph_hash,
         "graph_manifest_entry": graph_manifest,
         "bounds": bounds,

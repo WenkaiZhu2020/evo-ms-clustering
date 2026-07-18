@@ -6,10 +6,10 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 FINAL_RUNTIME_FILES = (
+    ROOT / "experiments/05_stage3_declaration_method_body/prepare_semantic.py",
     ROOT / "experiments/05_stage3_declaration_method_body/run.py",
-    ROOT / "scripts/stage3/final_formal_stage3.py",
-    ROOT / "scripts/stage3/final_analyze.py",
-    ROOT / "scripts/preference_analysis/final_preference.py",
+    ROOT / "experiments/05_stage3_declaration_method_body/run_robustness.py",
+    ROOT / "experiments/05_stage3_declaration_method_body/analyze.py",
 )
 
 

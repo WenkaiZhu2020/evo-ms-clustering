@@ -10,6 +10,11 @@ The pipeline reads the isolated semantic text under
 under `data/semantic_graphs/declaration_method_body/`. The accepted optimizer
 results remain under `results/<subject>/05_stage3_declaration_method_body/`.
 
+The implementation boundary is `experiments/05_stage3_declaration_method_body/`.
+Its only scripts are thin launchers under
+`scripts/05_stage3_declaration_method_body/`; reusable numerical behaviour is
+under `src/evo_ms/`.
+
 The semantic objective is the frozen fourth objective. Structural objectives,
 population, generations, seeds, projected Hypervolume, representative
 selection, and statistical conventions remain unchanged from the formal

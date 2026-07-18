@@ -101,11 +101,9 @@ def test_graph_helper_is_deterministic_and_excludes_self() -> None:
 def test_final_runtime_sources_have_no_legacy_stage3a_reads() -> None:
     paths = [
         ROOT / "experiments/05_stage3_declaration_method_body/run.py",
-        ROOT / "src/evo_ms/optimization/stage3_runtime.py",
-        ROOT / "scripts/stage3/final_generate_embeddings.py",
-        ROOT / "scripts/stage3/final_build_semantic_graphs.py",
-        ROOT / "scripts/stage3/final_analyze.py",
-        ROOT / "scripts/preference_analysis/final_preference.py",
+        ROOT / "experiments/05_stage3_declaration_method_body/prepare_semantic.py",
+        ROOT / "experiments/05_stage3_declaration_method_body/run_robustness.py",
+        ROOT / "experiments/05_stage3_declaration_method_body/analyze.py",
     ]
     forbidden = ("experiments/04_stage3_semantic", "data/semantic_inputs", "reports/stage3/formal_run_manifest")
     for path in paths:

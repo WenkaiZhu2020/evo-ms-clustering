@@ -45,6 +45,8 @@ from evo_ms.semantic.inference import (  # noqa: E402
     vector_hash,
 )
 from evo_ms.semantic.graph import build_graph_from_embeddings  # noqa: E402
+from evo_ms.analysis.provenance import graph_compatibility_digest  # noqa: E402
+from evo_ms.analysis.provenance import normalized_graph_compatibility_contract  # noqa: E402
 from evo_ms.semantic.input_contract import aggregate_input_hash  # noqa: E402
 from evo_ms.semantic.input_contract import canonical_text_hash  # noqa: E402
 from evo_ms.semantic.method_body import MethodBody  # noqa: E402
@@ -419,6 +421,41 @@ def build_graph_once(
         for row in edges:
             writer.writerow({**row, "weight": format(float(row["weight"]), ".17g")})
     graph_hash = _canonical_graph_hash(edges)
+    embedding_metadata = json.loads((embedding_dir / "embedding_metadata.json").read_text(encoding="utf-8"))
+    graph_config = yaml.safe_load((ROOT / "configs/experiments/05_stage3_declaration_method_body.yml").read_text(encoding="utf-8"))
+    graph_settings = graph_config["semantic_graph"]
+    contract_values = {
+        "contract_version": 1,
+        "experiment_name": EXPERIMENT_ID,
+        "representation_id": REPRESENTATION_ID,
+        "class_scope_digest": canonical_class_mapping_hash(class_ids),
+        "semantic_input_aggregate_sha256": embedding_metadata["input_aggregate_hash"],
+        "embedding_aggregate_sha256": embedding_metadata["aggregate_embedding_sha256"],
+        "model_name": embedding_metadata["model_name"],
+        "model_revision": embedding_metadata["model_revision"],
+        "tokenizer_name": embedding_metadata["model_name"],
+        "tokenizer_revision": embedding_metadata["tokenizer_revision"],
+        "tokenizer_max_sequence_length": embedding_metadata["max_sequence_length"],
+        "tokenizer_truncation": embedding_metadata["formal_truncation"],
+        "pooling": embedding_metadata["pooling"],
+        "pooling_source": "pinned_model_repository",
+        "l2_normalize": True,
+        "storage_dtype": embedding_metadata["saved_storage_dtype"],
+        "similarity": graph_settings["similarity"],
+        "similarity_implementation": graph_settings["similarity_implementation"],
+        "top_k": graph_settings["k"],
+        "directed_selection_count_per_node": graph_settings["directed_selection_count_per_node"],
+        "candidate_policy": graph_settings["candidate_policy"],
+        "tie_break": "cosine_descending_then_class_id_lexicographic_ascending",
+        "symmetrisation": graph_settings["symmetrisation"],
+        "reciprocal_edge_policy": "retain_one_edge; selected_by=both when reciprocal",
+        "self_loop_policy": graph_settings["self_loops"],
+        "duplicate_edge_policy": graph_settings["duplicate_edges"],
+        "edge_weight_rule": graph_settings["edge_weight"],
+        "edge_weight_threshold": graph_settings["edge_weight_threshold"],
+        "edge_serialization_precision": ".17g with numerical zero canonicalised as 0",
+    }
+    contract = normalized_graph_compatibility_contract(contract_values)
     metadata = {
         "schema_version": 1,
         "experiment_name": EXPERIMENT_ID,
@@ -439,6 +476,8 @@ def build_graph_once(
         else str((embedding_root / subject / "embeddings.npy").resolve()),
         "class_mapping_sha256": canonical_class_mapping_hash(class_ids),
         "source_commit": source_commit(),
+        "compatibility_contract": contract,
+        "compatibility_contract_sha256": graph_compatibility_digest(contract),
     }
     write_csv(output / "class_mapping.csv", ["row_index", "class_id", "class_name", "input_hash"], mapping)
     write_json(output / "graph_metadata.json", metadata)
