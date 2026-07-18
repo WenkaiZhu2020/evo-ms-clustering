@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.stage3_method_body.validate_seed00_optimizer import main
+from scripts.stage3.final_validate_seed00 import main
 
 
 if __name__ == "__main__":

@@ -5,14 +5,14 @@
   "edge_weight_rule": "true_cosine; no threshold",
   "embedding_validation_status": "passed",
   "experiment_name": "stage3_declaration_method_body",
-  "generation_command": "python scripts/stage3_method_body/build_semantic_graphs.py --repro-output-root <temporary-outside-repository>",
+  "generation_command": "python scripts/stage3/final_build_semantic_graphs.py --repro-output-root <temporary-outside-repository>",
   "generation_timestamp_utc": "2026-07-17T22:15:48Z",
   "go_gate": {
     "daytrader": true,
     "jpetstore": true,
     "xerces": true
   },
-  "graph_config_path": "configs/experiments/04_stage3_semantic.yml",
+  "graph_config_path": "configs/experiments/05_stage3_declaration_method_body.yml",
   "graph_config_sha256": "eddbb3674dacabfac2925f4ef6887bb86c9030f629a231230d6a889e1c28cc27",
   "graph_reproducibility_passed": true,
   "graphs_generated": true,

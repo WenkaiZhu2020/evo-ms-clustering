@@ -13,17 +13,17 @@ def main(argv: list[str] | None = None) -> int:
         parser.print_help()
         return 0
     if args.operation == "input":
-        from scripts.stage3_method_body.prepare_inputs import main as operation
+        parser.error("input preparation is frozen; use the validated semantic-text manifest")
     elif args.operation == "embeddings":
-        from scripts.stage3_method_body.generate_embeddings import main as operation
+        from scripts.stage3.final_generate_embeddings import main as operation
     elif args.operation == "graph":
-        from scripts.stage3_method_body.build_semantic_graphs import main as operation
+        from scripts.stage3.final_build_semantic_graphs import main as operation
     elif args.operation == "validate":
-        from scripts.stage3_method_body.validate_seed00_optimizer import main as operation
+        from scripts.stage3.final_validate_seed00 import main as operation
     elif args.operation == "formal":
-        from scripts.stage3_method_body.run_formal_stage3b import main as operation
+        from scripts.stage3.final_formal_stage3 import main as operation
     else:
-        from scripts.stage3_method_body.analyze_formal_stage3b import main as operation
+        from scripts.stage3.final_analyze import main as operation
     return int(operation(remainder) or 0)
 
 

@@ -1,4 +1,0 @@
-subject,semantic_edge_count,raw_structural_edge_count,overlap_edge_count,novel_edge_count,overlap_proportion,novel_edge_proportion,edge_set_jaccard,node_count,node_coverage,normalization,class_nodes_path,structural_dependencies_path
-jpetstore,47,53,25,22,0.5319148936170213,0.46808510638297873,0.3333333333333333,24,1.0,undirected canonical endpoints; self-loops removed; duplicate pairs merged,data/extracted/jpetstore/class_nodes.csv,data/extracted/jpetstore/structural_dependencies.csv
-daytrader,112,161,49,63,0.4375,0.5625,0.21875,53,1.0,undirected canonical endpoints; self-loops removed; duplicate pairs merged,data/extracted/daytrader/class_nodes.csv,data/extracted/daytrader/structural_dependencies.csv
-xerces,1681,3780,587,1094,0.3491969066032124,0.6508030933967877,0.12043496101764464,814,1.0,undirected canonical endpoints; self-loops removed; duplicate pairs merged,data/extracted/xerces-j/class_nodes.csv,data/extracted/xerces-j/structural_dependencies.csv

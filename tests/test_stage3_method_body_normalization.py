@@ -1,6 +1,10 @@
 from __future__ import annotations
 
-from scripts.stage3_method_body.method_body_normalization import (
+from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from evo_ms.semantic.method_body import (
     EMPTY_BODY,
     MethodBody,
     compose_semantic_text,

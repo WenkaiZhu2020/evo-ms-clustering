@@ -1,4 +1,0 @@
-test,pass,evidence
-atomic_replace,True,same-filesystem os.replace
-partial_temp_not_accepted,True,temporary name is distinguishable
-source_not_half_overwritten,True,complete replacement only

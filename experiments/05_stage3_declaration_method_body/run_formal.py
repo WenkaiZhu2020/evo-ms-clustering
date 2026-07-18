@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.stage3_method_body.run_formal_stage3b import main
+from scripts.stage3.final_formal_stage3 import main
 
 
 if __name__ == "__main__":

@@ -46,9 +46,7 @@ def test_app_packages_and_classpath_are_normalized(tmp_path: Path) -> None:
         ]
     )
     assert args[args.index("--out-dir") + 1] == "data/extracted/fixture"
-    assert args[args.index("--semantic-out") + 1] == str(
-        tmp_path / "data/semantic_inputs/fixture_class_declarations.csv"
-    )
+    assert "--semantic-out" not in args
 
 
 def test_xerces_config_produces_expected_scope() -> None:

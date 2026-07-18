@@ -109,7 +109,7 @@ semantic_graph:
   k: 3
   candidate_policy: all_non_self_nodes
   similarity: true_cosine
-  similarity_implementation: scripts/stage3_method_body/build_semantic_graphs.py
+  similarity_implementation: evo_ms.semantic.graph.true_cosine_similarity
   ranking:
     primary: cosine_descending
     exact_tie_break: class_id_lexicographic_ascending
@@ -356,13 +356,13 @@ historical_provenance:
 
 input:
   semantic_text_root: data/semantic_text/declaration_method_body
-  semantic_text_filename_template: "{subject}_semantic_inputs.csv"
+  semantic_text_filename_template: "class_semantic_inputs.csv"
   semantic_text_column: semantic_text
   source_policy: final_representation_artifacts_only
   stage3a_input_required: false
 
 outputs:
-  report_root: reports/stage3_method_body
+  report_root: reports/stage3
   embedding_root: data/embeddings/declaration_method_body
   semantic_graph_root: data/semantic_graphs/declaration_method_body
   result_roots:

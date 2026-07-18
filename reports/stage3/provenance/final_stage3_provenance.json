@@ -1,13 +1,15 @@
 {
   "experiment_name": "stage3_declaration_method_body",
   "representation_id": "declaration_method_body_v1",
+  "final_config_sha256": "41235283ab090e2e6262cf94962a6d031287dc58ee9a26b018563e64a0ed853e",
   "runtime_namespace": "final_stage3_only",
+  "reference_allowlist": "reports/stage3/provenance/final_reference_allowlist.md",
   "subjects": {
     "jpetstore": {
       "class_count": 24,
       "input_aggregate_sha256": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
       "embedding_aggregate_sha256": "e7615e77d4f3258df46e499fd94c2dbb59bee03c0d2f6c3bb822c3aff4577139",
-      "graph_sha256": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a921"
+      "graph_sha256": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a9214"
     },
     "daytrader": {
       "class_count": 53,

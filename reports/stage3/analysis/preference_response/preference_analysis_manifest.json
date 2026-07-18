@@ -93,7 +93,7 @@
   ],
   "selection_rule_unchanged": "highest weighted modularity among eligible feasible candidates; budgeted analyses are post-hoc profiles and do not replace frozen selection",
   "source_artifact_inventory": "reports/stage3/provenance/preference_source_artifact_inventory.csv",
-  "source_inventory_path": "reports/preference_analysis/source_artifact_inventory.csv",
+  "source_inventory_path": "reports/stage3/provenance/preference_source_artifact_inventory.csv",
   "source_policy": "saved retained final feasible fronts and saved labels only; no optimizer, embedding, graph, or scientific result regeneration",
   "starting_head": "18c80a5f81f6af4cbf0a692e1bb87737d24c4a13",
   "subjects": [

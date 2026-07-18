@@ -1,4 +1,0 @@
-subject,expected_seeds_per_representation,stage3a_valid,stage3b_valid,stage3b_seed0_source,stage3b_formal_seed_range,missing_or_failed,exact_paired_inventory
-jpetstore,30,30,30,validation/seed_00,1..29,0,True
-daytrader,30,30,30,validation/seed_00,1..29,0,True
-xerces,30,30,30,validation/seed_00,1..29,0,True

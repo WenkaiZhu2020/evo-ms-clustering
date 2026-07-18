@@ -38,7 +38,7 @@ REPRESENTATION_ID = "declaration_method_body_v1"
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate the final Stage 2/final Stage 3 preference boundary")
-    parser.add_argument("--report-root", type=Path, default=ROOT / "reports/stage3_method_body")
+    parser.add_argument("--report-root", type=Path, default=ROOT / "reports/stage3/analysis/preference_response")
     args = parser.parse_args()
     if not args.report_root.exists():
         raise FileNotFoundError(args.report_root)

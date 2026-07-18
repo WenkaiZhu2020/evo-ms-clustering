@@ -1,4 +1,0 @@
-subject,mapping_available,reference_path,reference_sha256,eligible_semantic_edges,within_reference_service_edges,stage3b_alignment,random_mean,random_p95,stage3a_alignment
-jpetstore,False,,,0,0,,,,
-daytrader,True,data/references/daytrader_reference_services.csv,b13e5ee3e18574e8610c0e506b58b49ad1e91893bf1633d73f668be046c637e6,112,48,0.42857142857142855,0.1296875,0.17857142857142858,0.45045045045045046
-xerces,False,,,0,0,,,,

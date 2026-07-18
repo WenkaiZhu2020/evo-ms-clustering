@@ -1,7 +1,0 @@
-subject,body_group,class_count,mean_neighbour_retention,median_neighbour_retention,zero_retention_class_count,all_neighbours_retained_class_count,mean_embedding_shift_cosine_distance,mean_degree_change,diagnostic_note
-jpetstore,empty,7,0.8571428571428571,1.0,0,4,0.2078822981912857,0.0,empty-body changes may include section-marker and explicit-empty-template effects
-jpetstore,non_empty,17,0.8235294117647058,0.6666666666666666,0,8,0.20391813525311767,-0.11764705882352941,non-empty body group
-daytrader,empty,4,0.75,0.8333333333333333,0,2,0.12406171958074999,-1.0,empty-body changes may include section-marker and explicit-empty-template effects
-daytrader,non_empty,49,0.7414965986394557,0.6666666666666666,1,18,0.1886881181427551,0.12244897959183673,non-empty body group
-xerces,empty,120,0.7527777777777778,0.6666666666666666,1,44,0.11010501787423334,-0.31666666666666665,empty-body changes may include section-marker and explicit-empty-template effects
-xerces,non_empty,694,0.7569644572526417,0.6666666666666666,8,289,0.19011652320513975,0.07780979827089338,non-empty body group

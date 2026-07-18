@@ -29,7 +29,6 @@ def load_extraction_cli_args(root: Path, subject: str) -> list[str]:
     project_root = Path(_required_text(config, "project_root"))
     classes_dir = _project_path(project_root, _required_text(config, "classes_dir"))
     output_dir = Path(_required_text(config, "extracted_output_path"))
-    semantic_output = root / "data" / "semantic_inputs" / f"{subject}_class_declarations.csv"
     app_packages = _string_list(config, "app_packages", required=True)
     exclude_packages = _string_list(config, "exclude_packages")
     classpath_entries = _string_list(config, "classpath_entries", required=True)
@@ -49,7 +48,11 @@ def load_extraction_cli_args(root: Path, subject: str) -> list[str]:
     ]
     if exclude_packages:
         args.extend(["--exclude-packages", ",".join(exclude_packages)])
-    args.extend(["--out-dir", str(output_dir), "--semantic-out", str(semantic_output)])
+    # The extractor's default semantic output is kept beside its isolated
+    # extraction output.  Representation-specific pipelines own any later
+    # semantic-input copy and must not route generic extraction through a
+    # deleted Stage 3A path.
+    args.extend(["--out-dir", str(output_dir)])
     return args
 
 

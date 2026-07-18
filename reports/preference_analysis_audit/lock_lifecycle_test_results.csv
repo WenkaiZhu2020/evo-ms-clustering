@@ -1,8 +1,0 @@
-test,pass,evidence
-normal_start_and_completion,True,"{""branch"": ""stage3-Declaration+Method-Body"", ""command"": ""scripts/preference_analysis/audit_preference_analysis.py"", ""head"": ""01e10c7454d0c038c766b16b72d4aca4afbad671"", ""hostname"": ""zhuwenkaideMacBook-Air-120.local"", ""output_directory"": ""/private/tmp/preference-lock-audit-2h24987p"", ""pid"": 30317, ""started_at_utc"": ""2026-07-18T10:08:44Z"", ""working_directory"": ""/Users/zhuwenkai/Desktop/evo-ms-clustering-stage2-formal""}"
-dead_stale_lock_removed_after_nonblocking_process_check,True,dead pid
-active_pid_not_mistaken_for_stale,True,current pid remained
-other_branch_lock_not_silently_reused,True,branch mismatch rejected
-handled_exception_cleanup,True,context manager cleanup
-keyboard_interrupt_cleanup,True,context manager cleanup
-unrelated_stage3a_tail_not_touched,True,88676 tail -f results/xerces/04_stage3_semantic/formal/seed_29/run.log

@@ -1,4 +1,4 @@
-from scripts.stage3.random_graph_baseline import (
+from evo_ms.analysis.random_graph_baseline import (
     REPETITIONS,
     baseline_rows,
     candidate_pairs,
@@ -47,6 +47,6 @@ def test_random_quantile_and_full_repetition_determinism():
 
 
 def test_random_baseline_does_not_use_stage2_random_fill():
-    source = Path(__import__("scripts.stage3.random_graph_baseline", fromlist=["__file__"]).__file__).read_text(encoding="utf-8")
+    source = Path(__import__("evo_ms.analysis.random_graph_baseline", fromlist=["__file__"]).__file__).read_text(encoding="utf-8")
     assert "random_fill" not in source
     assert "default_rng" in source

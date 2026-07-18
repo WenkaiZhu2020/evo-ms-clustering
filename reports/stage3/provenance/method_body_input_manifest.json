@@ -5,8 +5,8 @@
     "xerces": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3"
   },
   "artifact_paths": {
-    "input_hashes": "reports/stage3_method_body/method_body_input_hashes.csv",
-    "report_root": "reports/stage3_method_body/",
+    "input_hashes": "reports/stage3/provenance/method_body_input_hashes.csv",
+    "report_root": "reports/stage3/",
     "semantic_text_root": "data/semantic_text/declaration_method_body/"
   },
   "body_evidence_types": [
@@ -21,7 +21,7 @@
   "class_order": "class_id lexicographic",
   "config_sha256": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
   "contract_sha256": "836aa335f18670b58e88b280d4830ead038fde7b36a133009c3461a718ab0aee",
-  "declaration_source": "frozen Stage 3A semantic_text bytes from data/semantic_inputs/*.csv",
+  "declaration_source": "frozen declaration bytes incorporated into the accepted final semantic-text inputs",
   "declaration_truncated": false,
   "downstream_unchanged": [
     "embedding",
@@ -67,7 +67,6 @@
   },
   "representation_id": "declaration_method_body_v1",
   "source_commit": "8cf2c0170a5503a9b2f4832e79f943ab00a8074d",
-  "stage3a_source_manifest": "reports/stage3_method_body/stage3a_declaration_source_manifest.json",
   "status": "post_hoc_exploratory",
   "string_literal_policy": "deterministic 2-80 character lexical filter; reject URL/path/UUID/hash/numeric/encoded/boilerplate values",
   "structural_exclusions": [

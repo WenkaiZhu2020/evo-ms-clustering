@@ -14,9 +14,9 @@ def main(argv: list[str] | None = None) -> int:
         parser.print_help()
         return 0
     if args.seed0:
-        from scripts.stage3_method_body.validate_seed00_optimizer import main as operation
+        from scripts.stage3.final_validate_seed00 import main as operation
     else:
-        from scripts.stage3_method_body.run_formal_stage3b import main as operation
+        from scripts.stage3.final_formal_stage3 import main as operation
     return int(operation(remainder) or 0)
 
 
