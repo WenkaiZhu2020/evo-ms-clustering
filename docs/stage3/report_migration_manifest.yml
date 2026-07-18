@@ -1,0 +1,53 @@
+schema_version: 1
+experiment_id: stage3_declaration_method_body
+representation_id: declaration_method_body_v1
+source_root: reports/stage3
+machine_result_root: results/cross_subject/05_stage3_declaration_method_body
+human_report_root: docs/reports/05_stage3_declaration_method_body
+content_policy: byte_preserving_move
+scientific_regeneration: forbidden
+historical_paths_in_frozen_evidence: preserve
+first_pass_filename_renames: forbidden
+
+categories:
+  formal_statistics:
+    source_globs:
+      - tables/formal_*.csv
+    target: results/cross_subject/05_stage3_declaration_method_body/formal_statistics
+  quality:
+    source_globs:
+      - tables/*quality*
+      - tables/final_body_token_composition*
+    target: results/cross_subject/05_stage3_declaration_method_body/quality
+  stage2_vs_stage3:
+    source_globs:
+      - analysis/stage2_vs_stage3/*.csv
+      - analysis/stage2_vs_stage3/*.md
+    target: results/cross_subject/05_stage3_declaration_method_body/stage2_vs_stage3
+  preference_response:
+    source_globs:
+      - analysis/preference_response/*.csv
+      - analysis/preference_response/*.json
+      - analysis/preference_response/*.md
+    target: results/cross_subject/05_stage3_declaration_method_body/preference_response
+  figures:
+    source_globs:
+      - figures/*.pdf
+      - figures/figure_inventory.json
+    target: docs/reports/05_stage3_declaration_method_body/figures
+  provenance:
+    source_globs:
+      - provenance/*.json
+      - provenance/*.csv
+      - provenance/*.md
+    target: results/cross_subject/05_stage3_declaration_method_body/provenance
+  validation:
+    source_globs:
+      - validation/*
+    target: results/cross_subject/05_stage3_declaration_method_body/validation
+
+legacy_exceptions:
+  - frozen configuration snapshots
+  - historical provenance path fields
+  - external pre-refactor hash inventories
+
