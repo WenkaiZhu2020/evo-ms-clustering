@@ -1,10 +1,20 @@
 # Stage 3: Declaration + Method Body Semantic Extension
 
-This is the canonical final Stage 3 experiment. It uses the frozen
-`declaration_method_body_v1` representation and the accepted semantic inputs,
-embeddings, graphs, and formal results. The runner delegates reusable logic
-to `src/evo_ms`; it does not define a second declaration-only experiment.
+This directory owns the final Stage 3 experiment implementation. The frozen
+representation is `declaration_method_body_v1` and the experiment identifier is
+`stage3_declaration_method_body`.
 
-Validation-only commands read saved artifacts. Embedding, graph, and formal
-generation commands remain explicitly separate and must not overwrite the
-accepted artifact roots.
+The four Python entry points have distinct responsibilities:
+
+- `prepare_semantic.py` prepares semantic inputs and owns embedding/graph
+  orchestration;
+- `run.py` runs one explicit Stage 3 seed and validates its output;
+- `run_robustness.py` owns formal-seed execution and validation;
+- `analyze.py` reads saved Stage 2 and Stage 3 artifacts for analysis.
+
+Reusable numerical behaviour is provided by `src/evo_ms`. No file in this
+directory imports a script or the Stage 2 experiment.
+
+Accepted artifact roots are write-protected by default. Generation commands
+must be given explicit output destinations and must never silently overwrite
+accepted semantic inputs, embeddings, graphs, or results.

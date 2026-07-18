@@ -11,6 +11,7 @@ import argparse
 import csv
 import errno
 import hashlib
+import importlib.util
 import json
 import os
 import shlex
@@ -30,7 +31,17 @@ if str(ROOT) not in sys.path:
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from scripts.stage3 import final_seed00_optimizer as adapter  # noqa: E402
+def _load_run_module():
+    path = ROOT / "experiments/05_stage3_declaration_method_body/run.py"
+    spec = importlib.util.spec_from_file_location("stage3_final_experiment_run", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load Stage 3 experiment runner: {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+adapter = _load_run_module()
 
 
 SUBJECTS = adapter.SUBJECTS
@@ -227,7 +238,7 @@ def validate_formal_seed(subject: str, seed: int, output: Path) -> dict[str, Any
     log_text = (output / "run.log").read_text(encoding="utf-8")
     if f"completed runtime_seconds=" not in log_text:
         raise ValueError(f"{subject} seed {seed}: completion marker missing from run log")
-    adapter.runtime.validate_run_output(output, context)
+    adapter.validate_run_output(output, context)
     return {
         "subject": subject, "seed": seed, "path": str(output.relative_to(ROOT)),
         "representation_id": metadata["representation_id"], "graph_hash": metadata["graph_sha256"],
@@ -241,7 +252,7 @@ def run_one(subject: str, seed: int) -> dict[str, Any]:
         raise ValueError("run_one refuses seed 0; validation seed 0 is authoritative")
     output = formal_output_dir(subject, seed)
     command = " ".join(shlex.quote(value) for value in [
-        sys.executable, str(ROOT / "scripts/stage3/final_formal_stage3.py"),
+        sys.executable, str(ROOT / "experiments/05_stage3_declaration_method_body/run_robustness.py"),
         "--subject", subject, "--seeds", str(seed),
     ])
     LOG_ROOT.mkdir(parents=True, exist_ok=True)

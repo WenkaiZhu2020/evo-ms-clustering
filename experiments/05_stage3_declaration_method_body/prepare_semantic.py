@@ -8,6 +8,7 @@ import csv
 from datetime import datetime, timezone
 import hashlib
 import json
+import platform
 from pathlib import Path
 import subprocess
 import sys
@@ -39,10 +40,7 @@ from evo_ms.semantic.inference import (  # noqa: E402
     validate_vectors,
     vector_hash,
 )
-from scripts.stage3.final_paths import (  # noqa: E402
-    EXPERIMENT_ID,
-    REPRESENTATION_ID,
-)
+from evo_ms.semantic.graph import build_graph_from_embeddings  # noqa: E402
 from evo_ms.semantic.method_body import extract_declaration_section  # noqa: E402
 
 
@@ -58,6 +56,9 @@ OUTPUT_ROOT = ROOT / "data/embeddings/declaration_method_body"
 REPORT_ROOT = ROOT / "reports/stage3/provenance"
 FORMAL_CONFIG = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 MAX_NORM_TOLERANCE = (0.999, 1.001)
+EXPERIMENT_ID = "stage3_declaration_method_body"
+REPRESENTATION_ID = "declaration_method_body_v1"
+GRAPH_ROOT = ROOT / "data/semantic_graphs/declaration_method_body"
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -363,12 +364,106 @@ def generate_once(
     return records
 
 
+def _canonical_graph_hash(rows: list[dict[str, Any]]) -> str:
+    payload = "".join(
+        f"{row['class_id_a']}\t{row['class_id_b']}\t{format(float(row['weight']), '.17g') if float(row['weight']) != 0.0 else '0'}\n"
+        for row in rows
+    ).encode("utf-8")
+    return sha256_bytes(payload)
+
+
+def build_graph_once(
+    subject: str,
+    *,
+    embedding_root: Path,
+    output_root: Path,
+) -> dict[str, Any]:
+    """Build one isolated top-3 graph from already-saved embeddings."""
+    if subject not in SUBJECTS:
+        raise ValueError(f"unknown subject: {subject}")
+    output = output_root / subject
+    if output.exists() and any(output.iterdir()):
+        raise FileExistsError(f"refusing to overwrite graph output: {output}")
+    output.mkdir(parents=True, exist_ok=True)
+    embedding_dir = embedding_root / subject
+    mapping = read_csv(embedding_dir / "class_ids.csv")
+    class_ids = [row["class_id"] for row in sorted(mapping, key=lambda row: int(row["row_index"]))]
+    vectors = np.load(embedding_dir / "embeddings.npy", allow_pickle=False)
+    directed, edges = build_graph_from_embeddings(class_ids, vectors, k=3)
+    with (output / "directed_topk_neighbours.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["source_class_id", "rank", "target_class_id", "weight"],
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        for row in directed:
+            writer.writerow({**row, "weight": format(float(row["weight"]), ".17g")})
+    with (output / "semantic_edges.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["class_id_a", "class_id_b", "weight", "selected_by"],
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        for row in edges:
+            writer.writerow({**row, "weight": format(float(row["weight"]), ".17g")})
+    graph_hash = _canonical_graph_hash(edges)
+    metadata = {
+        "schema_version": 1,
+        "experiment_name": EXPERIMENT_ID,
+        "representation_id": REPRESENTATION_ID,
+        "subject": subject,
+        "node_count": len(class_ids),
+        "top_k": 3,
+        "directed_selection_count": 3,
+        "similarity": "true_cosine",
+        "similarity_implementation": "evo_ms.semantic.graph.true_cosine_similarity",
+        "tie_break": "cosine_descending_then_class_id_lexicographic_ascending",
+        "symmetrisation": "OR",
+        "self_loop_rule": "forbidden",
+        "duplicate_edge_rule": "forbidden",
+        "semantic_graph_sha256": graph_hash,
+        "embedding_path": str((embedding_root / subject / "embeddings.npy").relative_to(ROOT))
+        if embedding_root.resolve().is_relative_to(ROOT.resolve())
+        else str((embedding_root / subject / "embeddings.npy").resolve()),
+        "class_mapping_sha256": canonical_class_mapping_hash(class_ids),
+        "source_commit": source_commit(),
+    }
+    write_csv(output / "class_mapping.csv", ["row_index", "class_id", "class_name", "input_hash"], mapping)
+    write_json(output / "graph_metadata.json", metadata)
+    return metadata
+
+
+def build_graphs(
+    *,
+    subjects: tuple[str, ...] = SUBJECTS,
+    embedding_root: Path = OUTPUT_ROOT,
+    output_root: Path = GRAPH_ROOT,
+) -> dict[str, Any]:
+    """Build isolated graph artifacts from saved embedding arrays."""
+    return {
+        subject: build_graph_once(
+            subject,
+            embedding_root=embedding_root,
+            output_root=output_root,
+        )
+        for subject in subjects
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--operation", choices=("embeddings", "graphs"), default="embeddings")
+    parser.add_argument("--subject", choices=SUBJECTS)
     parser.add_argument("--output-root", type=Path, default=OUTPUT_ROOT)
     parser.add_argument("--repro-output-root", type=Path, required=True)
     parser.add_argument("--report-root", type=Path, default=REPORT_ROOT)
     args = parser.parse_args()
+    if args.operation == "graphs":
+        subjects = (args.subject,) if args.subject else SUBJECTS
+        print(json.dumps(build_graphs(subjects=subjects), indent=2, default=str))
+        return 0
     output_root = args.output_root if args.output_root.is_absolute() else ROOT / args.output_root
     repro_root = args.repro_output_root if args.repro_output_root.is_absolute() else ROOT / args.repro_output_root
     report_root = args.report_root if args.report_root.is_absolute() else ROOT / args.report_root
