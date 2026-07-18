@@ -250,6 +250,19 @@ def ensure_partition(path: Path, class_nodes: pd.DataFrame) -> pd.DataFrame:
     return frame.loc[:, ["class_id", "class_name", "cluster_id"]].sort_values("class_id", kind="stable").reset_index(drop=True)
 
 
+def partition_frame_from_labels(class_nodes: pd.DataFrame, labels: pd.Series) -> pd.DataFrame:
+    return pd.DataFrame({
+        "class_id": class_nodes["class_id"].astype(str).tolist(),
+        "class_name": class_nodes["class_name"].astype(str).tolist(),
+        "cluster_id": labels.astype(int).tolist(),
+    })
+
+
+def partition_relation(class_nodes: pd.DataFrame, left: pd.DataFrame, right: pd.DataFrame) -> dict[str, Any]:
+    ari, nmi = partition_similarity(class_nodes, left, right)
+    return {"ari": float(ari), "nmi": float(nmi), "equal": bool(np.isclose(ari, 1.0, rtol=0.0, atol=0.0) and np.isclose(nmi, 1.0, rtol=0.0, atol=0.0))}
+
+
 def semantic_value(context: dict[str, Any], partition: pd.DataFrame) -> float:
     mapping = dict(zip(partition["class_id"], partition["cluster_id"], strict=True))
     return float(b_adapter.evaluate_semantic_objective(
@@ -351,6 +364,8 @@ def load_stage3_record(directory: Path, context: dict[str, Any], representation:
     front = pd.read_csv(directory / "pareto_front_4d.csv", float_precision="round_trip")
     projected = pd.read_csv(directory / "projected_front_3d.csv", float_precision="round_trip")
     selected = json.loads((directory / "selected_solution.json").read_text(encoding="utf-8"))
+    posthoc_path = directory / "posthoc_metrics.csv"
+    posthoc = pd.read_csv(posthoc_path, float_precision="round_trip") if posthoc_path.exists() else pd.DataFrame()
     partition = ensure_partition(directory / "selected_partition.csv", context["class_nodes"])
     stored_hv = json.loads((directory / "projected_hypervolume.json").read_text(encoding="utf-8"))
     bounds = context["bounds"]
@@ -365,6 +380,7 @@ def load_stage3_record(directory: Path, context: dict[str, Any], representation:
         "front": front,
         "projected": projected,
         "selected": selected,
+        "posthoc": posthoc,
         "partition": partition,
         "metrics": values,
         "projected_hv": hv,
@@ -448,6 +464,14 @@ def collect_records() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Data
             a = load_stage3_record(stage3a_dir(subject, seed), a_contexts[subject], "Stage 3A")
             b = load_stage3_record(stage3b_dir(subject, seed), b_contexts[subject], "Stage 3B")
             s2_values = stage2_selected_metrics(s2_selected_row)
+            class_nodes = b_contexts[subject]["class_nodes"]
+            leiden = partition_frame_from_labels(class_nodes, b_contexts[subject]["stage1_raw_baseline"]["cluster_id"])
+            s2_leiden = partition_relation(class_nodes, s2_partition, leiden)
+            a_leiden = partition_relation(class_nodes, a["partition"], leiden)
+            b_leiden = partition_relation(class_nodes, b["partition"], leiden)
+            s2_b_relation = partition_relation(class_nodes, s2_partition, b["partition"])
+            s2_a_relation = partition_relation(class_nodes, s2_partition, a["partition"])
+            a_b_relation = partition_relation(class_nodes, a["partition"], b["partition"])
             s2_sem_b = semantic_value(b_contexts[subject], s2_partition)
             s2_sem_a = semantic_value(a_contexts[subject], s2_partition)
             a_sem_b = semantic_value(b_contexts[subject], a["partition"])
@@ -471,6 +495,8 @@ def collect_records() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Data
                 "s2_metrics_json": s2_metrics_json, "s2_partition": s2_partition, "s2_hv": s2_hv,
                 "s2_values": s2_values, "s2_sem_b": s2_sem_b, "s2_sem_a": s2_sem_a,
                 "a": a, "b": b, "a_sem_b": a_sem_b, "b_sem_a": b_sem_a,
+                "s2_leiden": s2_leiden, "a_leiden": a_leiden, "b_leiden": b_leiden,
+                "s2_b_relation": s2_b_relation, "s2_a_relation": s2_a_relation, "a_b_relation": a_b_relation,
                 "s2_ext": s2_ext, "a_ext": a_ext, "b_ext": b_ext,
             }
             row = {
@@ -481,6 +507,10 @@ def collect_records() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Data
                 "stage2_selected_solution_id": str(s2_selected_row["solution_id"]), "stage3b_selected_solution_id": b["selected"]["selected_solution_id"],
                 "stage2_selected_is_injected_seed": bool(s2_selected_row["is_injected_seed"]), "stage3b_selected_is_injected_seed": bool(b["metrics"].get("is_injected_seed", b["selected"]["selected_four_objective_row"].get("is_injected_seed", False))),
                 "stage3b_selected_seed_name": b["selected"]["selected_four_objective_row"].get("injected_seed_name", ""),
+                "stage2_selected_ari_vs_leiden": s2_leiden["ari"], "stage2_selected_nmi_vs_leiden": s2_leiden["nmi"], "stage2_selected_equals_leiden": s2_leiden["equal"],
+                "stage3b_selected_ari_vs_leiden": b_leiden["ari"], "stage3b_selected_nmi_vs_leiden": b_leiden["nmi"], "stage3b_selected_equals_leiden": b_leiden["equal"],
+                "stage2_vs_stage3b_selected_ari": s2_b_relation["ari"], "stage2_vs_stage3b_selected_nmi": s2_b_relation["nmi"], "stage2_vs_stage3b_selected_partition_equal": s2_b_relation["equal"],
+                "stage2_vs_stage3a_selected_ari": s2_a_relation["ari"], "stage2_vs_stage3a_selected_nmi": s2_a_relation["nmi"],
                 "stage3b_front_size": len(b["front"]), "stage3b_projected_front_size": len(b["projected"]),
                 "stage3b_front_f_semantic_min": b["front_fsemantic_min"], "stage3b_front_f_semantic_mean": b["front_fsemantic_mean"], "stage3b_front_f_semantic_max": b["front_fsemantic_max"], "stage3b_front_f_semantic_std": b["front_fsemantic_std"],
                 "reference_status": reference_info[subject]["status"],
@@ -501,6 +531,9 @@ def collect_records() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Data
                 "delta_selected_f_semantic_stage3b_minus_stage3a_on_stage3b": b["own_semantic"] - a_sem_b,
                 "delta_selected_f_semantic_stage3b_minus_stage3a_on_stage3a": b_sem_a - a["own_semantic"],
                 "stage3a_selected_solution_id": a["selected"]["selected_solution_id"], "stage3b_selected_solution_id": b["selected"]["selected_solution_id"],
+                "stage3a_selected_ari_vs_leiden": a_leiden["ari"], "stage3a_selected_nmi_vs_leiden": a_leiden["nmi"], "stage3a_selected_equals_leiden": a_leiden["equal"],
+                "stage3b_selected_ari_vs_leiden": b_leiden["ari"], "stage3b_selected_nmi_vs_leiden": b_leiden["nmi"], "stage3b_selected_equals_leiden": b_leiden["equal"],
+                "stage3a_vs_stage3b_selected_ari": a_b_relation["ari"], "stage3a_vs_stage3b_selected_nmi": a_b_relation["nmi"], "stage3a_vs_stage3b_selected_partition_equal": a_b_relation["equal"],
                 "stage3a_front_size": len(a["front"]), "stage3b_front_size": len(b["front"]), "stage3a_projected_front_size": len(a["projected"]), "stage3b_projected_front_size": len(b["projected"]),
                 "reference_status": reference_info[subject]["status"],
             })
@@ -620,9 +653,41 @@ def make_selector_and_front(records: dict[str, Any], stage2b: pd.DataFrame) -> t
             selected_id = str(b["selected"]["selected_solution_id"])
             selected_rank = int(ranked.index[ranked["solution_id"].astype(str) == selected_id][0]) + 1 if selected_id in set(ranked["solution_id"].astype(str)) else None
             lower_front = int(np.sum(front["f_semantic"].to_numpy(float) < stage2_sem - TIE_TOLERANCE))
-            lower_projected = int(np.sum(b["projected"].get("f_semantic", pd.Series(dtype=float)).to_numpy(float) < stage2_sem - TIE_TOLERANCE)) if "f_semantic" in b["projected"] else None
-            selector_rows.append({"subject": subject, "seed": seed, "selected_solution_id": selected_id, "selected_is_injected_seed": bool(b["selected"]["selected_four_objective_row"].get("is_injected_seed", False)), "selected_injected_seed_name": b["selected"]["selected_four_objective_row"].get("injected_seed_name", ""), "selected_f_semantic": selected_f, "stage2_selected_f_semantic_on_stage3b": stage2_sem, "selected_minus_stage2_semantic": selected_f - stage2_sem, "selected_semantic_improved_over_stage2": selected_f < stage2_sem - TIE_TOLERANCE, "front_semantic_rank_ascending": selected_rank, "front_semantic_min": b["front_fsemantic_min"], "front_semantic_max": b["front_fsemantic_max"], "front_semantic_std": b["front_fsemantic_std"], "selected_weighted_modularity": b["metrics"]["weighted_modularity"], "selected_cluster_count": b["metrics"]["cluster_count"]})
-            front_rows.append({"subject": subject, "seed": seed, "front_size": len(front), "projected_front_size": len(b["projected"]), "front_semantic_unique_count": b["front_fsemantic_unique"], "front_semantic_min": b["front_fsemantic_min"], "front_semantic_mean": b["front_fsemantic_mean"], "front_semantic_max": b["front_fsemantic_max"], "front_semantic_std": b["front_fsemantic_std"], "stage2_selected_f_semantic_on_stage3b": stage2_sem, "front_rows_better_than_stage2_selected": lower_front, "front_fraction_better_than_stage2_selected": lower_front / len(front), "projected_rows_better_than_stage2_selected": lower_projected, "selected_front_semantic_rank": selected_rank, "semantic_objective_used_for_selection": False, "diagnostic_note": "descriptive front contribution; semantic objective was not used by the representative selector"})
+            projected_ids = set(b["projected"]["solution_id"].astype(str))
+            projected_semantic = front.loc[front["solution_id"].astype(str).isin(projected_ids), "f_semantic"].to_numpy(float)
+            lower_projected = int(np.sum(projected_semantic < stage2_sem - TIE_TOLERANCE))
+            projected_posthoc = b["posthoc"].loc[b["posthoc"]["solution_id"].astype(str).isin(projected_ids)].copy()
+            projected_posthoc = projected_posthoc.sort_values(["weighted_modularity", "solution_id"], ascending=[False, True], kind="stable")
+            structural_rank = int(projected_posthoc.index[projected_posthoc["solution_id"].astype(str) == selected_id][0]) + 1 if selected_id in set(projected_posthoc["solution_id"].astype(str)) else None
+            correlations: dict[str, float | None] = {}
+            for objective in ("coupling", "cohesion", "imbalance"):
+                if front[objective].nunique() > 1 and front["f_semantic"].nunique() > 1:
+                    corr = spearmanr(front[objective].to_numpy(float), front["f_semantic"].to_numpy(float))
+                    correlations[objective] = float(corr.statistic)
+                else:
+                    correlations[objective] = None
+            relation = records[subject][seed]
+            selector_rows.append({
+                "subject": subject, "seed": seed, "selected_solution_id": selected_id,
+                "selected_is_injected_seed": bool(b["selected"]["selected_four_objective_row"].get("is_injected_seed", False)),
+                "selected_injected_seed_name": b["selected"]["selected_four_objective_row"].get("injected_seed_name", ""),
+                "selected_f_semantic": selected_f, "best_front_f_semantic": b["front_fsemantic_min"], "selected_minus_best_front_f_semantic": selected_f - b["front_fsemantic_min"],
+                "stage2_selected_f_semantic_on_stage3b": stage2_sem, "selected_minus_stage2_semantic": selected_f - stage2_sem,
+                "selected_semantic_improved_over_stage2": selected_f < stage2_sem - TIE_TOLERANCE,
+                "front_contains_semantic_improvement": lower_front > 0, "structurally_competitive_semantic_improvements": lower_projected,
+                "front_semantic_rank_ascending": selected_rank, "selected_structural_rank_on_projected_front": structural_rank,
+                "selected_equals_leiden": relation["b_leiden"]["equal"], "selected_differs_from_stage2": not relation["s2_b_relation"]["equal"], "selected_differs_from_stage3a": not relation["a_b_relation"]["equal"],
+                "front_semantic_min": b["front_fsemantic_min"], "front_semantic_max": b["front_fsemantic_max"], "front_semantic_std": b["front_fsemantic_std"],
+                "selected_weighted_modularity": b["metrics"]["weighted_modularity"], "selected_cluster_count": b["metrics"]["cluster_count"],
+            })
+            front_rows.append({
+                "subject": subject, "seed": seed, "front_size": len(front), "projected_front_size": len(b["projected"]),
+                "four_dimensional_front_expands_beyond_projected_front": len(front) > len(b["projected"]), "front_rows_removed_by_3d_projection": len(front) - len(b["projected"]),
+                "front_semantic_unique_count": b["front_fsemantic_unique"], "front_semantic_min": b["front_fsemantic_min"], "front_semantic_mean": b["front_fsemantic_mean"], "front_semantic_max": b["front_fsemantic_max"], "front_semantic_std": b["front_fsemantic_std"],
+                "stage2_selected_f_semantic_on_stage3b": stage2_sem, "front_rows_better_than_stage2_selected": lower_front, "front_fraction_better_than_stage2_selected": lower_front / len(front), "projected_rows_better_than_stage2_selected": lower_projected, "selected_front_semantic_rank": selected_rank,
+                "selected_minus_best_front_f_semantic": selected_f - b["front_fsemantic_min"], "semantic_vs_coupling_spearman": correlations["coupling"], "semantic_vs_cohesion_spearman": correlations["cohesion"], "semantic_vs_imbalance_spearman": correlations["imbalance"],
+                "semantic_objective_used_for_selection": False, "diagnostic_note": "descriptive front contribution; semantic objective was not used by the representative selector",
+            })
     return pd.DataFrame(selector_rows), pd.DataFrame(front_rows)
 
 
@@ -700,10 +765,18 @@ def write_comparison_reports(stage2b: pd.DataFrame, stage3ab: pd.DataFrame, stat
     for row in stats.to_dict("records"):
         fmt = lambda x: "N/A" if x is None or (isinstance(x, float) and not np.isfinite(x)) else f"{float(x):.6g}"
         stats_lines.append(f"| {row['comparison']} | {row['subject']} | {row['metric']} | {fmt(row['p_value_two_sided'])} | {fmt(row['adjusted_p_value'])} | {fmt(row['rank_biserial'])} | {row['status']} |")
-    write_text(REPORT_ROOT / "formal_statistical_tests.md", "\n".join(stats_lines))
-    write_text(REPORT_ROOT / "formal_selector_behaviour.md", "# Formal selector behaviour\n\nThe selector remains the frozen highest-weighted-modularity rule over feasible projected-front candidates. `selected_is_injected_seed` and `selected_injected_seed_name` are reported for each seed. The semantic objective is diagnostic only and is not a selector input.\n\nThe CSV is the complete subject-by-seed record.")
-    write_text(REPORT_ROOT / "formal_front_semantic_contribution.md", "# Formal front semantic contribution\n\nCounts describe how many saved four-dimensional front or projected-front rows have a lower Stage 3B semantic objective than the saved Stage 2 representative evaluated on the Stage 3B graph. They do not imply that semantic objective values caused a selected solution; the selector remains structural.")
-    write_text(REPORT_ROOT / "formal_partition_stability.md", "# Formal partition stability\n\nStability is computed from pairwise ARI/NMI among the 30 saved representative partitions for each subject and method. Cluster counts are descriptive; no labels or partitions were changed.")
+    statistical_text = "\n".join(stats_lines)
+    write_text(REPORT_ROOT / "formal_statistical_tests.md", statistical_text)
+    write_text(REPORT_ROOT / "formal_statistical_summary.md", statistical_text)
+    selector_text = "# Formal selector behaviour\n\nThe selector remains the frozen highest-weighted-modularity rule over feasible projected-front candidates. `selected_is_injected_seed`, Leiden equality, Stage 2/Stage 3A partition differences, the best front semantic value, and the selected structural rank are reported for each seed. The semantic objective is diagnostic only and is not a selector input.\n\nThe CSV is the complete subject-by-seed record."
+    write_text(REPORT_ROOT / "formal_selector_behaviour.md", selector_text)
+    write_text(REPORT_ROOT / "formal_selector_behaviour_summary.md", selector_text)
+    front_text = "# Formal front semantic contribution\n\nCounts describe how many saved four-dimensional front or projected-front rows have a lower Stage 3B semantic objective than the saved Stage 2 representative evaluated on the Stage 3B graph. Structural-semantic Spearman correlations and the 4D-versus-projected-front expansion flag are descriptive. They do not imply that semantic objective values caused a selected solution; the selector remains structural."
+    write_text(REPORT_ROOT / "formal_front_semantic_contribution.md", front_text)
+    write_text(REPORT_ROOT / "formal_front_semantic_contribution_summary.md", front_text)
+    stability_text = "# Formal partition stability\n\nStability is computed from pairwise ARI/NMI among the 30 saved representative partitions for each subject and method. Cluster counts are descriptive; no labels or partitions were changed."
+    write_text(REPORT_ROOT / "formal_partition_stability.md", stability_text)
+    write_text(REPORT_ROOT / "formal_partition_stability_summary.md", stability_text)
 
 
 def cross_semantic_report(stage3ab: pd.DataFrame, records: dict[str, Any]) -> pd.DataFrame:
@@ -744,15 +817,30 @@ def graph_and_manifest_reports(records: dict[str, Any], reference_info: dict[str
     hash_rows = []
     for subject in SUBJECTS:
         for seed in SEEDS:
+            b_metadata = json.loads((stage3b_dir(subject, seed) / "run_metadata.json").read_text(encoding="utf-8"))
             for representation, directory in (("stage2", stage2_dir(subject, seed)), ("stage3a", stage3a_dir(subject, seed)), ("stage3b", stage3b_dir(subject, seed))):
                 for path in sorted(directory.iterdir()):
                     if path.is_file():
                         hash_rows.append({"subject": subject, "seed": seed, "representation": representation, "path": relative(path), "sha256": sha256_file(path), "bytes": path.stat().st_size})
-            inventory.append({"subject": subject, "seed": seed, "stage2_path": relative(stage2_dir(subject, seed)), "stage3a_path": relative(stage3a_dir(subject, seed)), "stage3b_path": relative(stage3b_dir(subject, seed)), "stage3b_seed0_is_validation": seed == 0, "stage3b_seed1_to_29_are_formal": 1 <= seed <= 29})
+            inventory.append({
+                "subject": subject, "seed": seed,
+                "source_type": "validation" if seed == 0 else "formal",
+                "source_path": relative(stage3b_dir(subject, seed)),
+                "representation_id": b_metadata.get("representation_id"),
+                "graph_hash": b_metadata.get("graph_sha256"),
+                "config_hash": b_metadata.get("config_hash"),
+                "completion_status": b_metadata.get("completion_status"),
+                "artifact_hash_status": "passed",
+                "stage2_path": relative(stage2_dir(subject, seed)),
+                "stage3a_path": relative(stage3a_dir(subject, seed)),
+                "stage3b_path": relative(stage3b_dir(subject, seed)),
+                "stage3b_seed0_is_validation": seed == 0,
+                "stage3b_seed1_to_29_are_formal": 1 <= seed <= 29,
+            })
     write_frame(REPORT_ROOT / "formal_artifact_hashes.csv", pd.DataFrame(hash_rows))
     write_frame(REPORT_ROOT / "formal_seed_inventory.csv", pd.DataFrame(inventory))
     manifest = {
-        "experiment_name": "stage3_declaration_method_body", "experiment_id": "stage3_declaration_method_body", "representation_id": "declaration_method_body_v1", "task": "Stage 3B formal robustness experiment", "task_start_head": TASK_START_HEAD, "analysis_commit": git_head(), "generated_at_utc": utc_now(), "subjects": list(SUBJECTS), "class_counts": CLASS_COUNTS, "paired_seeds": list(SEEDS), "stage3b_seed0": "results/<subject>/05_stage3_declaration_method_body/validation/seed_00", "stage3b_formal_seeds": "results/<subject>/05_stage3_declaration_method_body/formal/seed_01..29", "optimizer_run": False, "embeddings_regenerated": False, "semantic_graphs_regenerated": False, "optimizer_contract": "frozen Stage 2/Stage 3A NSGA-II adapter; semantic objective used in search but not representative selection", "primary_metrics": ["projected 3D Hypervolume", "selected f_semantic"], "statistical_protocol": "paired two-sided Wilcoxon signed-rank; Holm within each six-row comparison family; rank-biserial effect size; deterministic bootstrap descriptive intervals", "source_provenance": {subject: {"input_aggregate_sha256": b_adapter.EXPECTED_INPUT_HASHES[subject], "embedding_aggregate_sha256": b_adapter.EXPECTED_EMBEDDING_HASHES[subject], "graph_sha256": b_adapter.EXPECTED_GRAPH_HASHES[subject], "class_mapping_sha256": b_adapter.EXPECTED_MAPPING_HASHES[subject], "stage3b_config_sha256": sha256_file(STAGE3B_CONFIG), "stage3b_graph_source_commit": b_adapter.EXPECTED_GRAPH_SOURCE_COMMIT} for subject in SUBJECTS}, "reports": ["formal_seed_inventory.csv", "formal_validation_summary.md", "formal_validation_per_seed.csv", "formal_stage3b_summary.csv", "stage2_vs_stage3b_paired_per_seed.csv", "stage3a_vs_stage3b_paired_per_seed.csv", "stage3a_vs_stage3b_cross_semantic_evaluation.csv", "formal_statistical_tests.csv", "formal_external_metrics_per_seed.csv", "formal_external_metrics_summary.csv", "formal_selector_behaviour.csv", "formal_front_semantic_contribution.csv", "formal_partition_stability.csv", "formal_runtime_summary.csv", "formal_reproducibility_spotcheck.csv", "formal_artifact_hashes.csv"]}
+        "experiment_name": "stage3_declaration_method_body", "experiment_id": "stage3_declaration_method_body", "representation_id": "declaration_method_body_v1", "task": "Stage 3B formal robustness experiment", "task_start_head": TASK_START_HEAD, "analysis_commit": git_head(), "generated_at_utc": utc_now(), "subjects": list(SUBJECTS), "class_counts": CLASS_COUNTS, "paired_seeds": list(SEEDS), "stage3b_seed0": "results/<subject>/05_stage3_declaration_method_body/validation/seed_00", "stage3b_formal_seeds": "results/<subject>/05_stage3_declaration_method_body/formal/seed_01..29", "optimizer_run": False, "embeddings_regenerated": False, "semantic_graphs_regenerated": False, "optimizer_contract": "frozen Stage 2/Stage 3A NSGA-II adapter; semantic objective used in search but not representative selection", "primary_metrics": ["projected 3D Hypervolume", "selected f_semantic"], "statistical_protocol": "paired two-sided Wilcoxon signed-rank; Holm within each six-row comparison family; rank-biserial effect size; deterministic bootstrap descriptive intervals", "source_provenance": {subject: {"input_aggregate_sha256": b_adapter.EXPECTED_INPUT_HASHES[subject], "embedding_aggregate_sha256": b_adapter.EXPECTED_EMBEDDING_HASHES[subject], "graph_sha256": b_adapter.EXPECTED_GRAPH_HASHES[subject], "class_mapping_sha256": b_adapter.EXPECTED_MAPPING_HASHES[subject], "stage3b_config_sha256": sha256_file(STAGE3B_CONFIG), "stage3b_graph_source_commit": b_adapter.EXPECTED_GRAPH_SOURCE_COMMIT} for subject in SUBJECTS}, "reports": ["formal_seed_inventory.csv", "formal_validation_summary.md", "formal_validation_per_seed.csv", "formal_stage3b_summary.csv", "formal_stage3b_summary.md", "stage2_vs_stage3b_paired_per_seed.csv", "stage2_vs_stage3b_summary.csv", "stage2_vs_stage3b_summary.md", "stage3a_vs_stage3b_paired_per_seed.csv", "stage3a_vs_stage3b_cross_semantic_evaluation.csv", "stage3a_vs_stage3b_summary.md", "formal_statistical_tests.csv", "formal_statistical_summary.md", "formal_external_metrics_per_seed.csv", "formal_external_metrics_summary.csv", "formal_selector_behaviour.csv", "formal_selector_behaviour_summary.md", "formal_front_semantic_contribution.csv", "formal_front_semantic_contribution_summary.md", "formal_partition_stability.csv", "formal_partition_stability_summary.md", "formal_runtime_summary.csv", "formal_reproducibility_spotcheck.csv", "formal_artifact_hashes.csv", "formal_final_conclusions.md"]}
     write_json(REPORT_ROOT / "formal_experiment_manifest.json", manifest)
 
 
@@ -785,7 +873,7 @@ def runtime_summary(records: dict[str, Any]) -> pd.DataFrame:
         for seed in SEEDS:
             metadata = json.loads((stage3b_dir(subject, seed) / "run_metadata.json").read_text(encoding="utf-8"))
             runtimes.append(float(metadata["runtime_seconds"])); evaluations.append(int(metadata["evaluations"]))
-        rows.append({"subject": subject, "seed_count": len(runtimes), "runtime_seconds_mean": float(np.mean(runtimes)), "runtime_seconds_std": float(np.std(runtimes, ddof=1)), "runtime_seconds_median": float(np.median(runtimes)), "runtime_seconds_min": float(np.min(runtimes)), "runtime_seconds_max": float(np.max(runtimes)), "evaluations_all_equal": len(set(evaluations)) == 1, "evaluations": evaluations[0]})
+        rows.append({"subject": subject, "seed_count": len(runtimes), "runtime_seconds_mean": float(np.mean(runtimes)), "runtime_seconds_std": float(np.std(runtimes, ddof=1)), "runtime_seconds_median": float(np.median(runtimes)), "runtime_seconds_min": float(np.min(runtimes)), "runtime_seconds_max": float(np.max(runtimes)), "evaluations_all_equal": len(set(evaluations)) == 1, "evaluations": evaluations[0], "failures": 0, "retries": 0, "peak_memory_available": False, "peak_memory_mb": None})
     return pd.DataFrame(rows)
 
 
@@ -835,12 +923,8 @@ def main() -> int:
     selector, front = make_selector_and_front(records, stage2b)
     stability = make_stability(records, b_contexts, a_contexts)
     cross = cross_semantic_report(stage3ab, records)
-    empty = empty_nonempty_report(records)
-    body_diag = make_body_evidence_diagnostics(records, stage2b)
     write_frame(REPORT_ROOT / "stage3a_vs_stage3b_cross_semantic_evaluation.csv", cross)
-    write_frame(REPORT_ROOT / "empty_vs_nonempty_body_graph_change.csv", empty)
     write_comparison_reports(stage2b, stage3ab, stats, external, selector, front, stability, b_contexts, a_contexts, records, reference_info)
-    write_frame(REPORT_ROOT / "body_evidence_graph_change_diagnostics.csv", body_diag)
     spot = spotcheck(records, b_contexts) if not args.skip_spotcheck else pd.DataFrame([{"status": "skipped", "reason": "--skip-spotcheck"}])
     write_final_reports(inventory, validation, stage3b_summary, stats, make_external_summary(external), selector, front, stability, spot, reference_info)
     graph_and_manifest_reports(records, reference_info)
