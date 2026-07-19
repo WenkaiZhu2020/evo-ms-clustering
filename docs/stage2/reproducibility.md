@@ -40,6 +40,13 @@ under `results/cross_subject/03_stage2_nsga/modularity_band/`, and the cleanup
 inventory is under
 `results/cross_subject/03_stage2_nsga/final_statistics/historical_selector_cleanup_inventory.csv`.
 
+The canonical 5% profile is unchanged by the post-hoc band sensitivity. The
+1%, 3%, 5%, and 10% rows, summaries, transitions, and deterministic figures
+are under `results/cross_subject/03_stage2_nsga/modularity_band/sensitivity/`.
+They use the frozen Stage 1 Leiden baseline for comparisons; `Q_max` is only
+the band-membership anchor. No optimizer, seed, graph, Pareto front, or
+reference mapping was regenerated.
+
 ## Verified Formal Execution Record
 
 All three formal manifests record the following common execution identity:

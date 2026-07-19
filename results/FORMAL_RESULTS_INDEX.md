@@ -25,6 +25,10 @@ These are the only Stage 2 result trees to use for formal thesis numbers.
 - Canonical Stage 2 operating profiles and the required modularity-band
   response analysis:
   `results/cross_subject/03_stage2_nsga/modularity_band/`
+- Band sensitivity at 1%, 3%, 5%, and 10%:
+  `results/cross_subject/03_stage2_nsga/modularity_band/sensitivity/`
+- Current-contract max-cluster replacement at the canonical 5% band:
+  `results/cross_subject/03_stage2_nsga/final_statistics/max_cluster_posthoc_sensitivity_current_band/`
 - The band profiles are post-hoc operating-profile results derived from the
   frozen fronts; they are not new search or graph outputs and are not an
   optional appendix-only profile.
@@ -43,4 +47,6 @@ supporting evidence, not replacements for the formal 30-seed outputs.
 These paths remain in place because they are part of the recorded repository
 history and are not formal thesis results. Their local status files explain
 the classification. None is used by the unified verifier or current canonical
-Stage 2 result tables.
+Stage 2 result tables. The original
+`final_statistics/max_cluster_posthoc_sensitivity/` tables are historical; the
+current-contract replacement is listed under supporting evidence above.
