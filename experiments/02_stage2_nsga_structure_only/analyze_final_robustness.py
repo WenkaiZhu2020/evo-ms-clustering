@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -35,19 +36,43 @@ def _rank_biserial(differences: np.ndarray) -> float | None:
     return float((ranks[nonzero > 0].sum() - ranks[nonzero < 0].sum()) / ranks.sum())
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--bonferroni-family-size", type=int, default=None)
+    parser.add_argument(
+        "--selected-profile",
+        type=Path,
+        default=ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/"
+        "canonical_operating_profile_metrics_per_seed.csv",
+        help="full post-hoc metrics for the canonical profile",
+    )
     args = parser.parse_args()
     robustness = _load_robustness_module()
+    selected_profile_source = args.selected_profile.resolve()
+    selected_profile = pd.read_csv(selected_profile_source)
+    selector_contract_id = str(selected_profile["selector_contract_id"].iloc[0])
+    selected_profile_sha256 = _sha256(selected_profile_source)
+    selected_profile_display = _display_path(selected_profile_source)
     rows = []
     for subject in ("jpetstore", "daytrader", "xerces-j"):
         run_dir = ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds"
-        selected = pd.read_csv(
-            ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv"
-        )
-        selected = selected.loc[selected["subject"] == subject].copy()
+        selected = selected_profile.loc[selected_profile["subject"] == subject].copy()
         context = robustness._load_context(subject, ROOT / "configs" / "experiments" / "02_stage2_nsga_structure_only.yml")
         leiden = context["stage1_raw_baseline"]
         cluster_by_class = robustness.encoding.to_cluster_by_class(
@@ -93,6 +118,10 @@ def main() -> int:
                 "all_pairs_identical": all_zero,
                 "nsga_lower_count": int(np.sum(delta < 0)), "ties": int(np.sum(tie_mask)),
                 "nsga_higher_count": int(np.sum(delta > 0)),
+                "selector_contract_id": selector_contract_id,
+                "selected_profile_source": selected_profile_display,
+                "selected_profile_sha256": selected_profile_sha256,
+                "posthoc_status": "recomputed_from_frozen_front_and_labels",
             })
 
     requested_metric_comparisons = len(rows)
@@ -111,6 +140,10 @@ def main() -> int:
             if not bool(row["all_pairs_identical"])
             else False
         )
+        row["selector_contract_id"] = selector_contract_id
+        row["selected_profile_source"] = selected_profile_display
+        row["selected_profile_sha256"] = selected_profile_sha256
+        row["posthoc_status"] = "recomputed_from_frozen_front_and_labels"
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(args.output_dir / "paired_selected_vs_leiden_wilcoxon.csv", index=False)
@@ -134,6 +167,8 @@ def main() -> int:
                     "median_difference_nsga_minus_leiden", "wilcoxon_statistic",
                     "p_value_two_sided", "rank_biserial_nsga_minus_leiden",
                     "nonzero_pairs",
+                    "selector_contract_id", "selected_profile_source",
+                    "selected_profile_sha256", "posthoc_status",
                 )
             }
             | {
@@ -147,6 +182,10 @@ def main() -> int:
                 "significant_family_10": significant_10,
                 "significant_family_12": significant_12,
                 "decision_changed_10_vs_12": significant_10 != significant_12,
+                "selector_contract_id": selector_contract_id,
+                "selected_profile_source": selected_profile_display,
+                "selected_profile_sha256": selected_profile_sha256,
+                "posthoc_status": "recomputed_from_frozen_front_and_labels",
             }
         )
     pd.DataFrame(comparison).to_csv(
@@ -160,6 +199,10 @@ def main() -> int:
                 "nondegenerate_tests_executed": nondegenerate_tests,
                 "bonferroni_family_size": family_size,
                 "bonferroni_alpha": alpha,
+                "selector_contract_id": selector_contract_id,
+                "selected_profile_source": selected_profile_display,
+                "selected_profile_sha256": selected_profile_sha256,
+                "posthoc_status": "recomputed_from_frozen_front_and_labels",
             },
             handle,
             indent=2,

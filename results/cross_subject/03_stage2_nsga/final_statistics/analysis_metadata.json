@@ -1,7 +1,11 @@
 {
   "test": "paired Wilcoxon signed-rank, two-sided",
   "requested_metric_comparisons": 14,
-  "nondegenerate_tests_executed": 10,
-  "bonferroni_family_size": 10,
-  "bonferroni_alpha": 0.005
+  "nondegenerate_tests_executed": 14,
+  "bonferroni_family_size": 14,
+  "bonferroni_alpha": 0.0035714285714285718,
+  "selector_contract_id": "stage2-raw-structure-only-modularity-band-v1",
+  "selected_profile_source": "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_profile_metrics_per_seed.csv",
+  "selected_profile_sha256": "0a81c1b770f3531a3025f58cd659a49b3b4773503899a47df4ac5fb1d6bd122c",
+  "posthoc_status": "recomputed_from_frozen_front_and_labels"
 }
