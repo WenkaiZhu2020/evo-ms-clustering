@@ -44,9 +44,10 @@ def main() -> int:
     rows = []
     for subject in ("jpetstore", "daytrader", "xerces-j"):
         run_dir = ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds"
-        selected = pd.DataFrame(
-            [pd.read_csv(run_dir / f"seed_{seed:02d}" / "selected_solution.csv").iloc[0] for seed in range(30)]
+        selected = pd.read_csv(
+            ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv"
         )
+        selected = selected.loc[selected["subject"] == subject].copy()
         context = robustness._load_context(subject, ROOT / "configs" / "experiments" / "02_stage2_nsga_structure_only.yml")
         leiden = context["stage1_raw_baseline"]
         cluster_by_class = robustness.encoding.to_cluster_by_class(
