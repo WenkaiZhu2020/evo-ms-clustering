@@ -1,0 +1,22 @@
+{
+  "subjects": [
+    "jpetstore",
+    "daytrader",
+    "xerces-j"
+  ],
+  "seeds_per_subject": 30,
+  "budgets": [
+    0.01,
+    0.03,
+    0.05,
+    0.1
+  ],
+  "expected_selected_rows": 360,
+  "actual_selected_rows": 360,
+  "duplicate_rows": 0,
+  "5_percent_selected_id_mismatches": 0,
+  "5_percent_objective_mismatches": 0,
+  "5_percent_label_mismatches": 0,
+  "canonical_source_path": "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv",
+  "canonical_source_sha256": "9a0e9a1f40edf260bb06c719e6967aef9c18a81b28fac9f0895e5520341c91d3"
+}
