@@ -21,10 +21,12 @@ These are the only Stage 2 result trees to use for formal thesis numbers.
 - Method and constraint diagnostics: `results/<subject>/03_stage2_nsga/diagnostics/`
 - Stage 2 audit: `docs/stage2/reproducibility.md`
 - Unified provenance verifier: `scripts/reproducibility/verify.py`
-- Canonical Stage 2 operating profiles:
+- Canonical Stage 2 operating profiles and the required modularity-band
+  response analysis:
   `results/cross_subject/03_stage2_nsga/modularity_band/`
-- Preference profiles are derived supporting evidence and must not be treated
-  as new search or graph outputs.
+- The band profiles are post-hoc operating-profile results derived from the
+  frozen fronts; they are not new search or graph outputs and are not an
+  optional appendix-only profile.
 
 Convergence, initialization/constraint diagnostics, and the retained audit are
 supporting evidence, not replacements for the formal 30-seed outputs.

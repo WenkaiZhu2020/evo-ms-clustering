@@ -80,8 +80,14 @@ results/<subject>/03_stage2_nsga/robustness_final_30seeds/
 ```
 
 Each final directory contains `seed_00` through `seed_29`, the complete
-per-seed Pareto outputs, selected solutions, run metadata, and a robustness
-manifest. Final cross-subject statistics are under:
+per-seed Pareto outputs, run metadata, and a robustness manifest. The
+canonical post-hoc operating-profile metrics are under:
+
+```text
+results/cross_subject/03_stage2_nsga/modularity_band/
+```
+
+Final cross-subject statistics are under:
 
 ```text
 results/cross_subject/03_stage2_nsga/final_statistics/

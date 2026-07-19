@@ -17,7 +17,9 @@ data/extracted/<subject>/
        objectives: coupling down, cohesion up, imbalance down
        constraints: max cluster ratio, minimum cluster count
   -> Pareto front across fixed random seeds
-  -> select one final solution from the Pareto front
+  -> select canonical operating profile post hoc:
+       feasible retained front -> 5% modularity-loss band -> deterministic
+       structural tie-break rule
   -> post-hoc evaluation only
        modularity, Hypervolume, MoJoFM, Pairwise F1
   -> compare selected solution with frozen Stage 1 raw_reference_leiden
@@ -25,8 +27,9 @@ data/extracted/<subject>/
 ```
 
 The Stage 2 runner writes Pareto fronts, label vectors, post-hoc metrics,
-selected solution files, Stage 1 raw Leiden comparison tables, Hypervolume
-summaries, and metadata. For the frozen formal results, the canonical
+Stage 1 raw Leiden comparison tables, Hypervolume summaries, and metadata.
+The retired selected-solution files are not an active result interface. For
+the frozen formal results, the canonical
 operating solution is the 5% relative modularity-band profile in
 `results/cross_subject/03_stage2_nsga/modularity_band/`; the former
 max-weighted-modularity selected-solution artifacts are retired.
@@ -70,9 +73,7 @@ Expected files:
 - `pareto_labels.csv.xz`: class-to-cluster assignments for each Pareto solution (xz-compressed; long-format and large for big subjects). Read with `pandas.read_csv(..., compression="xz")`.
 - `posthoc_metrics.csv`: structural and optional DayTrader reference metrics.
 - `leiden_comparison.csv`: ARI/NMI and changed-partition ratio against `raw_reference_leiden`.
-- `selected_solution.csv`: final selected NSGA-II solution and objective values.
-- `selected_partition.csv`: class-to-cluster assignments for the selected solution.
-- `stage1_vs_stage2.csv`: selected Stage 2 solution compared with Stage 1 raw Leiden.
+- `stage1_vs_stage2.csv`: canonical Stage 2 operating profile at seed 0 compared with Stage 1 raw Leiden; provenance identifies the frozen source front and selector contract.
 - `hypervolume_by_seed.csv` and `hypervolume_summary.csv`: Pareto-front quality summaries.
 - `metadata.yml`: seeds, raw input hashes, NSGA-II settings, and git state.
 
@@ -84,3 +85,9 @@ Expected files:
 
 These columns support reporting about whether the Pareto front contains newly
 evolved non-seed solutions, not only injected heuristic seeds.
+
+The canonical 30-seed operating-profile metrics and provenance are maintained
+at `results/cross_subject/03_stage2_nsga/modularity_band/`
+`canonical_operating_profile_metrics_per_seed.csv`. Refresh them with
+`experiments/02_stage2_nsga_structure_only/refresh_modularity_band_downstream.py`;
+the command is post hoc only and does not rerun any seed.

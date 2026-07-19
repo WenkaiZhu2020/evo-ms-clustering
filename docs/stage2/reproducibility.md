@@ -153,12 +153,14 @@ The `rank_biserial` column was never affected: it already filtered with
 `np.isclose`. The disagreement between a correct `rank_biserial` and a
 contaminated `W`/`p` on the same row was the visible symptom of this bug.
 
-Regenerated artifacts: `paired_selected_vs_leiden_wilcoxon.csv` and
-`bonferroni_10_vs_12_comparison.csv`. The latter previously had no generator in
-the repository; it is now emitted by `analyze_final_robustness.py` from the same
-rows as the paired table, so the two files cannot drift apart. Neither file is
-listed in `formal_output_sha256sums.txt`, so the 546-file integrity snapshot of
-the formal run directories is unaffected.
+Regenerated artifacts: the canonical operating-profile metrics, formal
+`raw_runs.csv` summaries, Stage 1 comparisons,
+`paired_selected_vs_leiden_wilcoxon.csv`, and
+`bonferroni_10_vs_12_comparison.csv`. The latter is emitted by
+`analyze_final_robustness.py` from the same rows as the paired table, so the two
+files cannot drift apart. These are derived post-hoc tables; the 546-file
+integrity snapshot of the formal run directories remains a separate protected
+search-output record.
 
 ### E2. Legacy fields in `stage2_robustness_bounds.yml` (not modified)
 

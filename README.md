@@ -38,6 +38,7 @@ graph inputs.
 | Stage 1 runner | `experiments/01_stage1_leiden_baseline/` |
 | Stage 2 runner | `experiments/02_stage2_nsga_structure_only/` |
 | Formal Stage 2 runs | `results/<subject>/03_stage2_nsga/robustness_final_30seeds/` |
+| Canonical Stage 2 operating profiles | `results/cross_subject/03_stage2_nsga/modularity_band/` |
 | Final statistics | `results/cross_subject/03_stage2_nsga/final_statistics/` |
 | Results classification | `results/FORMAL_RESULTS_INDEX.md` |
 | Reproducibility guide | `docs/reproducibility/README.md` |
