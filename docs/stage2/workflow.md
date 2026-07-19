@@ -26,7 +26,10 @@ data/extracted/<subject>/
 
 The Stage 2 runner writes Pareto fronts, label vectors, post-hoc metrics,
 selected solution files, Stage 1 raw Leiden comparison tables, Hypervolume
-summaries, and metadata.
+summaries, and metadata. For the frozen formal results, the canonical
+operating solution is the 5% relative modularity-band profile in
+`results/cross_subject/03_stage2_nsga/modularity_band/`; the former
+max-weighted-modularity selected-solution artifacts are retired.
 
 ## Input Rule
 

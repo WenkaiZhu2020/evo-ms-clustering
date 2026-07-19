@@ -35,21 +35,26 @@ def select_solution(
     ]
     if not candidates:
         candidates = [row for row in pareto_rows if row["solution_id"] in posthoc_by_id]
+    q_max = max(float(posthoc_by_id[row["solution_id"]]["weighted_modularity"]) for row in candidates)
+    denominator = abs(q_max) if abs(q_max) > 1e-12 else 1.0
+    band = [
+        row for row in candidates
+        if (q_max - float(posthoc_by_id[row["solution_id"]]["weighted_modularity"])) / denominator <= 0.05 + 1e-12
+    ]
     selected = min(
-        candidates,
+        band,
         key=lambda row: (
-            -float(posthoc_by_id[row["solution_id"]]["weighted_modularity"]),
-            bool(row["is_injected_seed"]),
-            float(row["coupling"]),
-            -float(row["cohesion"]),
             float(row["imbalance"]),
+            -float(posthoc_by_id[row["solution_id"]]["weighted_modularity"]),
+            float(row["coupling"]),
+            row["solution_id"],
             label_tuple_from_row(row),
         ),
     )
     metrics = posthoc_by_id[selected["solution_id"]]
     return {
         **dict(selected),
-        "selection_rule": "highest_weighted_modularity_among_feasible_pareto_solutions",
+        "selection_rule": "minimum_imbalance_within_5_percent_relative_modularity_band",
         "selected_weighted_modularity": float(metrics["weighted_modularity"]),
         "selected_cluster_count": int(metrics["cluster_count"]),
         "selected_max_cluster_ratio": float(metrics["max_cluster_ratio"]),
