@@ -158,8 +158,6 @@ def run_stage2_nsga(
     pd.DataFrame(comparison_rows).to_csv(output_dir / "leiden_comparison.csv", index=False)
     pd.DataFrame(hv_rows).to_csv(output_dir / "hypervolume_by_seed.csv", index=False)
     pd.DataFrame([hv_summary]).to_csv(output_dir / "hypervolume_summary.csv", index=False)
-    pd.DataFrame([selected]).to_csv(output_dir / "selected_solution.csv", index=False)
-    selected_clusters.to_csv(output_dir / "selected_partition.csv", index=False)
     pd.DataFrame([stage1_vs_stage2]).to_csv(output_dir / "stage1_vs_stage2.csv", index=False)
     _write_metadata(
         output_dir / "metadata.yml",

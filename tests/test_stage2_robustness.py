@@ -426,8 +426,6 @@ def test_resume_rejects_old_empirical_bound_metadata(tmp_path: Path) -> None:
     for name in [
         "pareto_front.csv",
         "pareto_labels.csv.xz",
-        "selected_solution.csv",
-        "selected_partition.csv",
     ]:
         (seed_dir / name).write_text("", encoding="utf-8")
     (seed_dir / "run_metrics.json").write_text(

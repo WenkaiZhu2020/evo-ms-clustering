@@ -11,12 +11,12 @@ Source inputs are under `data/`.
 - **SUPPORTING DIAGNOSTIC**: `convergence_diagnostic/`, retained diagnostics,
   and the Stage 2 audit evidence.
 - **HISTORICAL**: `raw/` and the earlier `robustness/` directories.
-- **FAILED / SUPERSEDED**: `robustness_smoke/` and
-  `robustness_failed_empirical_bounds/`.
+- **FAILED / SUPERSEDED**: retained smoke and failed-bound directories; their
+  temporary selected-summary files have been removed.
 
 Only the FORMAL paths are suitable for thesis result numbers. The other paths
 are retained to preserve experimental provenance and are not used by the
-formal verifier or checksum.
+formal verifier or current canonical Stage 2 result tables.
 
 ## Main Layout
 
@@ -137,6 +137,12 @@ results/xerces-j/00_pre_experiment/sensitivity/
 This folder contains cluster-size summary, resolution sweep, and SSA lambda sweep outputs. Xerces-J has no separate active diagnostic output tree outside `00_pre_experiment/sensitivity/`.
 
 Historical generated outputs are not kept in the active results layout.
+
+The historical-selector cleanup inventory is maintained at:
+
+```text
+results/cross_subject/03_stage2_nsga/final_statistics/historical_selector_cleanup_inventory.csv
+```
 
 ## Report Location
 

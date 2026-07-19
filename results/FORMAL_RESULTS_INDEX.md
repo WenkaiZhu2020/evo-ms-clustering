@@ -10,7 +10,6 @@ outputs. Existing frozen paths are intentionally unchanged.
   - `results/daytrader/03_stage2_nsga/robustness_final_30seeds/`
   - `results/xerces-j/03_stage2_nsga/robustness_final_30seeds/`
 - Cross-subject statistics: `results/cross_subject/03_stage2_nsga/final_statistics/`
-- Formal checksum: `results/cross_subject/03_stage2_nsga/final_statistics/formal_output_sha256sums.txt`
 - Formal manifests: each subject's `robustness_final_30seeds/robustness_manifest.json`
 
 These are the only Stage 2 result trees to use for formal thesis numbers.
@@ -21,6 +20,8 @@ These are the only Stage 2 result trees to use for formal thesis numbers.
 - Method and constraint diagnostics: `results/<subject>/03_stage2_nsga/diagnostics/`
 - Stage 2 audit: `docs/stage2/reproducibility.md`
 - Unified provenance verifier: `scripts/reproducibility/verify.py`
+- Historical selector-cleanup inventory:
+  `results/cross_subject/03_stage2_nsga/final_statistics/historical_selector_cleanup_inventory.csv`
 - Canonical Stage 2 operating profiles and the required modularity-band
   response analysis:
   `results/cross_subject/03_stage2_nsga/modularity_band/`
@@ -35,10 +36,11 @@ supporting evidence, not replacements for the formal 30-seed outputs.
 
 - Earlier runs: `results/<subject>/03_stage2_nsga/raw/`
 - Superseded robustness runs: `results/<subject>/03_stage2_nsga/robustness/`
-- Smoke runs: `results/<subject>/03_stage2_nsga/robustness_smoke/`
-- Failed empirical-bounds attempt: `results/jpetstore/03_stage2_nsga/robustness_failed_empirical_bounds/`
+- Smoke and failed-bound directories retain only protected front, label,
+  metadata, manifest, and status evidence; temporary selected summaries were
+  removed.
 
 These paths remain in place because they are part of the recorded repository
 history and are not formal thesis results. Their local status files explain
-the classification. None is used by the unified verifier or the formal
-checksum.
+the classification. None is used by the unified verifier or current canonical
+Stage 2 result tables.

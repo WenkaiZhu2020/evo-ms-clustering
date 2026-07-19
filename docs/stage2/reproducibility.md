@@ -25,18 +25,20 @@ Each manifest records formal seeds `0..29`, a `config_snapshot`, the formal
 input hashes, the Stage 1 Leiden partition hash, objective-space bounds, and
 the fingerprints listed below.
 
-## Saved-Output Integrity Snapshot
+## Saved-Output Integrity Verification
 
-The current saved formal-output snapshot is listed in:
+The former saved-output checksum snapshot was removed during the historical
+selector cleanup because it listed the retired per-seed selected-solution
+files. Use the read-only verifier instead:
 
-```text
-results/cross_subject/03_stage2_nsga/final_statistics/formal_output_sha256sums.txt
+```bash
+python scripts/reproducibility/verify.py --stage stage2 --skip-environment
 ```
 
-It contains SHA-256 entries for 546 files across the three final 30-seed
-directories. This protects the current saved snapshot from later unnoticed
-changes; it was generated after the formal runs and therefore does not replace
-a checksum manifest captured at run time.
+The current canonical operating-profile and downstream provenance files are
+under `results/cross_subject/03_stage2_nsga/modularity_band/`, and the cleanup
+inventory is under
+`results/cross_subject/03_stage2_nsga/final_statistics/historical_selector_cleanup_inventory.csv`.
 
 ## Verified Formal Execution Record
 
@@ -65,8 +67,12 @@ src/evo_ms/optimization/objectives.py                           b69801c9b8c23476
 src/evo_ms/optimization/problem.py                              356972e17e8b88c4104296ef9e3bb8d095ae45fa12fd424e50ab30c67f79f643
 ```
 
-The current versions of those six files can be checked against the saved
-manifests with `scripts/reproducibility/verify.py --stage stage2`.
+The extraction and optimization files above can be checked against the saved
+manifests with `scripts/reproducibility/verify.py --stage stage2`. The
+historical `run_robustness.py` fingerprint remains in each manifest as
+immutable provenance for the formal search; the current file intentionally
+removes writers for retired selected-solution summaries and is not expected to
+match that historical fingerprint.
 
 ## Formal Input Identity
 

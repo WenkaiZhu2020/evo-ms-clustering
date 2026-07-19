@@ -19,6 +19,8 @@ results/<subject>/03_stage2_nsga/robustness_final_30seeds/
   diagnostics derived from the formal 30-seed outputs.
 - `final_statistics/` is the only cross-subject Stage 2 evidence directory in
   this formal repository.
+- `final_statistics/historical_selector_cleanup_inventory.csv`: machine-readable
+  record of deleted superseded summaries and retained historical evidence.
 
 ## Relocation Note
 
@@ -31,5 +33,8 @@ because they record the location at the time a diagnostic was generated.
 
 The DayTrader `diagnostics/stage2_leiden_tradeoff_audit/` directory remains in
 this formal repository only as superseded provenance for the earlier
-2,994-front audit. Final conclusions must use `final_statistics/` and the
-subject-level `robustness_final_30seeds/` outputs instead.
+2,994-front audit. The old max-cluster sensitivity tables and prior audit
+manifests are similarly historical and are not active canonical inputs. Final
+conclusions must use the current canonical profile refresh manifest, the
+current `final_statistics/` tables, and the subject-level
+`robustness_final_30seeds/` outputs instead.

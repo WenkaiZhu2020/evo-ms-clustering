@@ -22,9 +22,11 @@ FORMAL_SEED_FILES = (
     "run_metrics.json",
 )
 CORE_SOURCES = (
-    # run.py contains the post-hoc operating-profile selector and is therefore
-    # intentionally excluded from frozen-search source fingerprint checks.
-    "experiments/02_stage2_nsga_structure_only/run_robustness.py",
+    # The formal manifests retain the historical run_robustness.py fingerprint,
+    # but this file now omits retired selected-solution writers and resolves
+    # selected labels from the frozen candidate table. It is therefore not
+    # byte-identical to the frozen-search source and is checked as historical
+    # provenance rather than against the current checkout.
     "src/evo_ms/extraction/dependency_extractor.py",
     "src/evo_ms/optimization/encoding.py",
     "src/evo_ms/optimization/objectives.py",
