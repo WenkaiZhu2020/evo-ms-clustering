@@ -1,7 +1,22 @@
 # Results
 
-This directory contains generated Stage 1 and Stage 2 outputs. Source inputs
-are under `data/`.
+This directory contains generated Stage 0, Stage 1, and Stage 2 outputs. The
+formal Stage 2 index is [FORMAL_RESULTS_INDEX.md](FORMAL_RESULTS_INDEX.md).
+Source inputs are under `data/`.
+
+## Classification
+
+- **FORMAL**: `results/<subject>/03_stage2_nsga/robustness_final_30seeds/` and
+  `results/cross_subject/03_stage2_nsga/final_statistics/`.
+- **SUPPORTING DIAGNOSTIC**: `convergence_diagnostic/`, retained diagnostics,
+  and the Stage 2 audit evidence.
+- **HISTORICAL**: `raw/` and the earlier `robustness/` directories.
+- **FAILED / SUPERSEDED**: `robustness_smoke/` and
+  `robustness_failed_empirical_bounds/`.
+
+Only the FORMAL paths are suitable for thesis result numbers. The other paths
+are retained to preserve experimental provenance and are not used by the
+formal verifier or checksum.
 
 ## Main Layout
 

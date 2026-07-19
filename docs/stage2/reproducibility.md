@@ -1,4 +1,9 @@
-# Stage 2 Formal Reproducibility Record
+# Stage 2 Formal Reproducibility Audit
+
+> The public reproducibility entry point is
+> `docs/reproducibility/README.md`. Installation, supported versions, and the
+> main verification commands are maintained there. This file is the detailed
+> Stage 2 audit appendix.
 
 This document records what can be verified for the saved final Stage 2
 formal results. It distinguishes reproducible verification of the saved
@@ -61,7 +66,7 @@ src/evo_ms/optimization/problem.py                              356972e17e8b88c4
 ```
 
 The current versions of those six files can be checked against the saved
-manifests with `scripts/reproducibility/verify_stage2_formal_provenance.py`.
+manifests with `scripts/reproducibility/verify.py --stage stage2`.
 
 ## Formal Input Identity
 
@@ -97,27 +102,17 @@ version, and the generated CSV hashes before overwriting any input.
 
 ## Dependency Evidence and Gap
 
-`requirements.txt` at the formal Git commit is unpinned. A separate branch
-commit, `b2ee9d09ab0e43a2c1178c0f0dfa6eb08ec25437`, contains a historical
-direct-dependency lock recovered verbatim at:
+An older Git snapshot recorded NumPy `2.3.5`, while all final formal manifests
+record NumPy `2.4.4`. That historical snapshot is not an installation or
+verification source; its contents remain traceable through Git history. The
+repository now has one supported installation entry, `pyproject.toml`, and one
+generated lock, `uv.lock`.
 
-```text
-requirements/historical_stage2_lock_b2ee9d0.txt
-```
-
-It is not the final formal environment lock: it specifies NumPy `2.3.5`, while
-all final formal manifests record NumPy `2.4.4`. The only package versions
-directly evidenced by every formal manifest are retained in:
-
-```text
-requirements/stage2_formal_manifest_observed.txt
-```
-
-The formal manifests do not record a full `pip freeze`, wheel hashes, or the
+The formal manifests directly evidence Python `3.13.7`, NumPy `2.4.4`, and
+pymoo `0.6.2`. They do not record a full `pip freeze`, wheel hashes, or the
 versions of pandas, igraph, leidenalg, PyYAML, scipy, networkx, pytest, Java,
 Maven, or Ant. Consequently, an exact fresh computational rerun cannot be
-claimed from the saved evidence alone. Do not describe the historical lock as
-the final formal environment.
+claimed from the saved evidence alone.
 
 ## Errata
 
@@ -188,36 +183,24 @@ properties of the frozen extraction inputs, not of the source code.
 
 ## Selected-Solution Comparison: Scope of Selection Bias
 
-The per-seed solution is chosen by
-`highest_weighted_modularity_among_feasible_pareto_solutions`, and every metric
-in the paired table is then computed on that same one solution per seed. This
-has an asymmetric consequence that reports must respect:
+The canonical per-seed operating solution is chosen within the 5% relative
+weighted-modularity-loss band by minimum imbalance, then maximum weighted
+modularity, minimum coupling, lexicographic solution ID, and canonical label
+tuple. Every canonical-profile comparison is then computed on that one
+solution per seed. This has an asymmetric consequence that reports must
+respect:
 
-- **`weighted_modularity` is selection-biased in NSGA-II's favour.** The front's
-  best-modularity solution is picked and then tested on modularity. On DayTrader
-  NSGA-II still loses this comparison on all 30 seeds, which makes that negative
-  result conservative rather than fragile.
-- **`coupling`, `cohesion`, and `imbalance` are not selection criteria** and
-  carry no winner's-curse on their own comparison. They appear only as
-  lexicographic tie-breakers below `weighted_modularity` in `_select_solution`,
-  and that chain never engaged: across all 90 seed-runs (3 subjects x 30 seeds)
-  the maximum feasible `weighted_modularity` on the Pareto front was unique, so
-  no tie-breaker — including `imbalance` — ever influenced which solution was
-  selected. The `imbalance` result is therefore an unbiased property of the
-  modularity-selected solution.
+- **`weighted_modularity` is constrained by the near-best band.** The canonical
+  profile deliberately permits at most 5% relative loss to expose structural
+  trade-offs; it is not the retired max-modularity selector.
+- **`imbalance` is the primary within-band structural preference**, followed by
+  the documented deterministic tie-breakers. Comparisons are therefore
+  properties of the canonical operating profile, not unbiased estimates of
+  every Pareto candidate.
 
-## Verification Commands
+## Audit-only verification note
 
-Validate saved inputs, config/bounds hashes, formal seed layout, and core
-source fingerprints without running NSGA-II:
-
-```bash
-python scripts/reproducibility/verify_stage2_formal_provenance.py --skip-environment
-```
-
-The same command without `--skip-environment` also requires the two recorded
-runtime versions, Python `3.13.7`, NumPy `2.4.4`, and pymoo `0.6.2`.
-
-Before any future formal rerun, create and preserve a full environment lock
-with `python -m pip freeze --all`, record its SHA-256, pin the three raw source
-commits, and run this verifier before writing a new output directory.
+For current commands, use the unified verifier documented in
+`docs/reproducibility/README.md`. Before any future formal rerun, preserve the
+full environment lock, pin the three raw source commits, and run the verifier
+before writing a new output directory.

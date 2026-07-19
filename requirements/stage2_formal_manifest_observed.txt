@@ -1,7 +1,0 @@
-# Values directly recorded by all three final Stage 2 formal manifests.
-#
-# This is evidence, not a complete installable environment lock. The formal
-# manifests did not record the full pip resolution or versions for pandas,
-# igraph, leidenalg, PyYAML, scipy, networkx, or pytest.
-numpy==2.4.4
-pymoo==0.6.2

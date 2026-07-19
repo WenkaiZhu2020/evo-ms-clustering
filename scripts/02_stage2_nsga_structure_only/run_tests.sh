@@ -8,6 +8,6 @@ require_locked_runtime
 require_pytest
 (
   cd "${STAGE2_ROOT}"
-  PYTHONPATH=src "${PYTHON_BIN}" -m pytest tests/test_stage2_robustness.py -q
-  PYTHONPATH=src "${PYTHON_BIN}" -m pytest -q
+  PYTHONPATH=src "${UV_BIN}" run --frozen pytest tests/test_stage2_robustness.py -q
+  PYTHONPATH=src "${UV_BIN}" run --frozen pytest -q
 )

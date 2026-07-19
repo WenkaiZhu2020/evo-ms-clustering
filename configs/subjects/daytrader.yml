@@ -18,4 +18,4 @@ exclude_packages:
   - com.ibm.websphere.samples.daytrader.web.TradeBuildDB
   - com.ibm.websphere.samples.daytrader.web.TradeConfigServlet
   - com.ibm.websphere.samples.daytrader.web.TradeScenarioServlet
-# Raw source is cloned locally by scripts/prepare_daytrader.sh and ignored by Git.
+# Raw source is cloned locally by scripts/extraction/prepare_daytrader.sh and ignored by Git.
