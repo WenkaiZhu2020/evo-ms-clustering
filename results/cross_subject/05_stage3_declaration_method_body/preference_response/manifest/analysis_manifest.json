@@ -91,7 +91,9 @@
     28,
     29
   ],
-  "selection_rule_unchanged": "highest weighted modularity among eligible feasible candidates; budgeted analyses are post-hoc profiles and do not replace frozen selection",
+  "stage2_canonical_selection_rule": "minimum imbalance within the 5% relative weighted-modularity-loss band, then maximum weighted modularity, minimum coupling, lexicographic solution_id, and canonical label tuple",
+  "stage2_canonical_profile_source": "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv",
+  "selection_rule_unchanged": "Stage 2 canonical operating profile is the synchronized 5% modularity band; final Stage 3 selection remains unchanged",
   "source_artifact_inventory": "reports/stage3/provenance/preference_source_artifact_inventory.csv",
   "source_inventory_path": "reports/stage3/provenance/preference_source_artifact_inventory.csv",
   "source_policy": "saved retained final feasible fronts and saved labels only; no optimizer, embedding, graph, or scientific result regeneration",
@@ -107,5 +109,5 @@
     0.2,
     0.3
   ],
-  "task": "Stage 2/final Stage 3 post-hoc preference-response analysis"
+  "task": "Stage 2 canonical operating profile and final Stage 3 post-hoc preference-response analysis"
 }

@@ -1,0 +1,4 @@
+subject,seed_count,median_imbalance_improvement_vs_leiden,median_coupling_change_vs_leiden,median_cohesion_change_vs_leiden,median_weighted_modularity_change_vs_leiden,median_cluster_count_change_vs_leiden
+daytrader,30,0.21684029658659415,0.018680811808118092,0.5602582266218636,-0.030238877976879353,-2.0
+jpetstore,30,0.2041241452319313,0.022222222222222254,-0.5773809523809526,-0.01433318091754271,0.0
+xerces-j,30,0.10433198735427629,0.02964773544212794,0.18219423483079744,-0.026445847160606772,-2.0

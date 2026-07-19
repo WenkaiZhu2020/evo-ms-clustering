@@ -67,6 +67,6 @@ documented projected three-objective procedure.
 
 Saved results are analysed descriptively and with the preregistered formal
 tests. Preference-response tables are explicitly labelled **post-hoc
-exploratory**. The illustrative 5% operating profile is not a universal
-threshold. A valid DayTrader reference mapping is used only for external
+derived comparisons**. The 5% Stage 2 near-best modularity-band profile is
+the active canonical operating profile. A valid DayTrader reference mapping is used only for external
 evaluation; unavailable subject references remain unavailable.

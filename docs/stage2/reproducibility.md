@@ -188,23 +188,20 @@ properties of the frozen extraction inputs, not of the source code.
 
 ## Selected-Solution Comparison: Scope of Selection Bias
 
-The per-seed solution is chosen by
-`highest_weighted_modularity_among_feasible_pareto_solutions`, and every metric
-in the paired table is then computed on that same one solution per seed. This
-has an asymmetric consequence that reports must respect:
+The canonical per-seed operating solution is chosen within the 5% relative
+weighted-modularity-loss band by minimum imbalance, then maximum weighted
+modularity, minimum coupling, lexicographic solution ID, and canonical label
+tuple. Every canonical-profile comparison is then computed on that one
+solution per seed. This has an asymmetric consequence that reports must
+respect:
 
-- **`weighted_modularity` is selection-biased in NSGA-II's favour.** The front's
-  best-modularity solution is picked and then tested on modularity. On DayTrader
-  NSGA-II still loses this comparison on all 30 seeds, which makes that negative
-  result conservative rather than fragile.
-- **`coupling`, `cohesion`, and `imbalance` are not selection criteria** and
-  carry no winner's-curse on their own comparison. They appear only as
-  lexicographic tie-breakers below `weighted_modularity` in `_select_solution`,
-  and that chain never engaged: across all 90 seed-runs (3 subjects x 30 seeds)
-  the maximum feasible `weighted_modularity` on the Pareto front was unique, so
-  no tie-breaker — including `imbalance` — ever influenced which solution was
-  selected. The `imbalance` result is therefore an unbiased property of the
-  modularity-selected solution.
+- **`weighted_modularity` remains constrained by the near-best band.** The
+  canonical profile deliberately permits at most 5% relative loss to expose
+  structural trade-offs; it is not the retired max-modularity selector.
+- **`imbalance` is the primary within-band structural preference**, followed by
+  the documented deterministic tie-breakers. Comparisons must therefore be
+  interpreted as properties of the canonical operating profile, not as an
+  unbiased estimate of every Pareto candidate.
 
 ## Verification Commands
 
