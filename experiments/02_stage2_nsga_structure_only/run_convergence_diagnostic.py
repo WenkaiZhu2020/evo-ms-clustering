@@ -159,7 +159,7 @@ def _trajectory_for_seed(
 
 
 def _formal_final_hypervolume(subject: str, seed: int) -> float:
-    path = ROOT / "results" / subject / "03_stage2_nsga" / "robustness" / "raw_runs.csv"
+    path = ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds" / "raw_runs.csv"
     rows = pd.read_csv(path)
     matched = rows.loc[rows["seed"] == seed, "hypervolume"]
     if len(matched) != 1:

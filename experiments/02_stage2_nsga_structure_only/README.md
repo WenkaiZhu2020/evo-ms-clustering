@@ -32,11 +32,17 @@ Design documents live in `../../docs/stage2/`:
 - `experiment_design.md`
 - `encoding_and_operators.md`
 
-Output is written under:
+Development output is written under a caller-selected temporary or local
+output root. The frozen formal output is under:
 
 ```text
-results/<subject>/03_stage2_nsga/raw/
+results/<subject>/03_stage2_nsga/robustness_final_30seeds/
 ```
+
+The former 10-seed `raw/` derived summaries were historical and have been
+removed. A compact set of source front/label/metadata files remains only for
+historical provenance; the current post-hoc operating profiles are under
+`results/cross_subject/03_stage2_nsga/modularity_band/`.
 
 Formal output directories must be treated as immutable. Before running
 robustness experiments, use a new output directory and verify that the target

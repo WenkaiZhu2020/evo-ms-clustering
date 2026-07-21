@@ -18,6 +18,21 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
+PRIMARY_STRUCTURAL_METRICS = (
+    "weighted_modularity",
+    "coupling",
+    "cohesion",
+    "imbalance",
+)
+EXTERNAL_REFERENCE_METRICS = (
+    "mojofm_vs_reference",
+    "pairwise_f1",
+)
+PRIMARY_STRUCTURAL_FAMILY = "primary_structural"
+EXTERNAL_REFERENCE_FAMILY = "external_reference_daytrader"
+PRIMARY_STRUCTURAL_FAMILY_SIZE = 3 * len(PRIMARY_STRUCTURAL_METRICS)
+EXTERNAL_REFERENCE_FAMILY_SIZE = len(EXTERNAL_REFERENCE_METRICS)
+
 
 def _load_robustness_module():
     path = ROOT / "experiments" / "02_stage2_nsga_structure_only" / "run_robustness.py"
@@ -51,10 +66,17 @@ def _display_path(path: Path) -> str:
         return str(path)
 
 
+def _statistical_family(metric: str) -> tuple[str, int]:
+    if metric in PRIMARY_STRUCTURAL_METRICS:
+        return PRIMARY_STRUCTURAL_FAMILY, PRIMARY_STRUCTURAL_FAMILY_SIZE
+    if metric in EXTERNAL_REFERENCE_METRICS:
+        return EXTERNAL_REFERENCE_FAMILY, EXTERNAL_REFERENCE_FAMILY_SIZE
+    raise ValueError(f"unregistered statistical metric: {metric}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--bonferroni-family-size", type=int, default=None)
     parser.add_argument(
         "--selected-profile",
         type=Path,
@@ -86,9 +108,14 @@ def main() -> int:
             context["raw_edges"], cluster_by_class, robustness.stage2.RAW_WEIGHT_COLUMN
         )
         baseline.update({"coupling": coupling, "cohesion": cohesion, "imbalance": imbalance})
-        metrics = ["weighted_modularity", "coupling", "cohesion", "imbalance"]
-        metrics.extend(metric for metric in ("mojofm_vs_reference", "pairwise_f1") if metric in selected.columns and baseline.get(metric) is not None)
+        metrics = list(PRIMARY_STRUCTURAL_METRICS)
+        metrics.extend(
+            metric
+            for metric in EXTERNAL_REFERENCE_METRICS
+            if metric in selected.columns and baseline.get(metric) is not None
+        )
         for metric in metrics:
+            family_name, family_size = _statistical_family(metric)
             nsga = selected[metric].to_numpy(dtype=float)
             leiden_values = np.full(len(nsga), float(baseline[metric]))
             delta = nsga - leiden_values
@@ -118,6 +145,8 @@ def main() -> int:
                 "all_pairs_identical": all_zero,
                 "nsga_lower_count": int(np.sum(delta < 0)), "ties": int(np.sum(tie_mask)),
                 "nsga_higher_count": int(np.sum(delta > 0)),
+                "statistical_family": family_name,
+                "bonferroni_family_size": family_size,
                 "selector_contract_id": selector_contract_id,
                 "selected_profile_source": selected_profile_display,
                 "selected_profile_sha256": selected_profile_sha256,
@@ -126,14 +155,8 @@ def main() -> int:
 
     requested_metric_comparisons = len(rows)
     nondegenerate_tests = sum(not bool(row["all_pairs_identical"]) for row in rows)
-    family_size = args.bonferroni_family_size or nondegenerate_tests
-    if family_size <= 0:
-        raise ValueError("Bonferroni family size must be positive")
-    alpha = 0.05 / family_size
-    # The correction family is based on the statistical tests actually
-    # executed; all-zero paired comparisons are descriptive, not Wilcoxon tests.
     for row in rows:
-        row["bonferroni_family_size"] = family_size
+        alpha = 0.05 / int(row["bonferroni_family_size"])
         row["bonferroni_alpha"] = alpha
         row["bonferroni_significant"] = (
             bool(row["p_value_two_sided"] <= alpha)
@@ -148,60 +171,41 @@ def main() -> int:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(args.output_dir / "paired_selected_vs_leiden_wilcoxon.csv", index=False)
 
-    # Sensitivity of every executed test to the Bonferroni family size: the
-    # executed-test family (10) versus the wider family (12). Degenerate
-    # all-identical comparisons run no test and are excluded.
-    alpha_10 = 0.05 / 10
-    alpha_12 = 0.05 / 12
-    comparison = []
-    for row in rows:
-        if bool(row["all_pairs_identical"]):
-            continue
-        significant_10 = bool(row["p_value_two_sided"] <= alpha_10)
-        significant_12 = bool(row["p_value_two_sided"] <= alpha_12)
-        comparison.append(
-            {
-                key: row[key]
-                for key in (
-                    "subject", "metric", "n_pairs", "nsga_median", "leiden_median",
-                    "median_difference_nsga_minus_leiden", "wilcoxon_statistic",
-                    "p_value_two_sided", "rank_biserial_nsga_minus_leiden",
-                    "nonzero_pairs",
-                    "selector_contract_id", "selected_profile_source",
-                    "selected_profile_sha256", "posthoc_status",
-                )
-            }
-            | {
-                "bonferroni_alpha_12": alpha_12,
-                "bonferroni_significant": significant_12,
-                "all_pairs_identical": bool(row["all_pairs_identical"]),
-                "nsga_lower_count": row["nsga_lower_count"],
-                "ties": row["ties"],
-                "nsga_higher_count": row["nsga_higher_count"],
-                "bonferroni_alpha_10": alpha_10,
-                "significant_family_10": significant_10,
-                "significant_family_12": significant_12,
-                "decision_changed_10_vs_12": significant_10 != significant_12,
-                "selector_contract_id": selector_contract_id,
-                "selected_profile_source": selected_profile_display,
-                "selected_profile_sha256": selected_profile_sha256,
-                "posthoc_status": "recomputed_from_frozen_front_and_labels",
-            }
-        )
-    pd.DataFrame(comparison).to_csv(
-        args.output_dir / "bonferroni_10_vs_12_comparison.csv", index=False
-    )
+    family_audit = pd.DataFrame(rows)
+    family_audit.to_csv(args.output_dir / "bonferroni_family_audit.csv", index=False)
+    family_counts = {
+        PRIMARY_STRUCTURAL_FAMILY: int(
+            sum(row["statistical_family"] == PRIMARY_STRUCTURAL_FAMILY for row in rows)
+        ),
+        EXTERNAL_REFERENCE_FAMILY: int(
+            sum(row["statistical_family"] == EXTERNAL_REFERENCE_FAMILY for row in rows)
+        ),
+    }
     with (args.output_dir / "analysis_metadata.json").open("w", encoding="utf-8") as handle:
         json.dump(
             {
                 "test": "paired Wilcoxon signed-rank, two-sided",
                 "requested_metric_comparisons": requested_metric_comparisons,
                 "nondegenerate_tests_executed": nondegenerate_tests,
-                "bonferroni_family_size": family_size,
-                "bonferroni_alpha": alpha,
+                "family_definition": {
+                    "primary_structural": {
+                        "subjects": ["jpetstore", "daytrader", "xerces-j"],
+                        "metrics": list(PRIMARY_STRUCTURAL_METRICS),
+                        "planned_comparisons": PRIMARY_STRUCTURAL_FAMILY_SIZE,
+                        "alpha": 0.05 / PRIMARY_STRUCTURAL_FAMILY_SIZE,
+                    },
+                    "external_reference_daytrader": {
+                        "subjects": ["daytrader"],
+                        "metrics": list(EXTERNAL_REFERENCE_METRICS),
+                        "planned_comparisons": EXTERNAL_REFERENCE_FAMILY_SIZE,
+                        "alpha": 0.05 / EXTERNAL_REFERENCE_FAMILY_SIZE,
+                    },
+                },
+                "family_row_counts": family_counts,
                 "selector_contract_id": selector_contract_id,
                 "selected_profile_source": selected_profile_display,
                 "selected_profile_sha256": selected_profile_sha256,
+                "family_audit_source": _display_path(args.output_dir / "bonferroni_family_audit.csv"),
                 "posthoc_status": "recomputed_from_frozen_front_and_labels",
             },
             handle,

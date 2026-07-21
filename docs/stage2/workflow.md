@@ -23,7 +23,7 @@ data/extracted/<subject>/
   -> post-hoc evaluation only
        modularity, Hypervolume, MoJoFM, Pairwise F1
   -> compare selected solution with frozen Stage 1 raw_reference_leiden
-  -> results/<subject>/03_stage2_nsga/raw/
+  -> frozen formal results/<subject>/03_stage2_nsga/robustness_final_30seeds/
 ```
 
 The Stage 2 runner writes Pareto fronts, label vectors, post-hoc metrics,
@@ -57,25 +57,28 @@ runner. It must not read mutable graph artifacts from `results/`.
 | `src/evo_ms/optimization/encoding.py` | Label-vector conversion, partition DataFrame conversion, and canonical relabeling. |
 | `src/evo_ms/optimization/objectives.py` | Three structural objectives and hard anti-degeneration constraints. |
 | `src/evo_ms/optimization/problem.py` | Lazy-import pymoo Problem wrapper with `F = [coupling, -cohesion, imbalance]`. |
-| `experiments/02_stage2_nsga_structure_only/run.py` | Runner that wires raw inputs, seeded initialization, multi-seed search, selected-solution output, and raw Leiden comparison. |
+| `experiments/02_stage2_nsga_structure_only/run.py` | Runner that wires raw inputs, seeded initialization, multi-seed search, Pareto output, and raw Leiden comparison. |
 
 ## Output
 
-The formal output layer is:
+The frozen formal output layer is:
 
 ```text
-results/<subject>/03_stage2_nsga/raw/
+results/<subject>/03_stage2_nsga/robustness_final_30seeds/
 ```
 
 Expected files:
 
 - `pareto_front.csv`: objective values, feasibility, labels, and seed provenance.
 - `pareto_labels.csv.xz`: class-to-cluster assignments for each Pareto solution (xz-compressed; long-format and large for big subjects). Read with `pandas.read_csv(..., compression="xz")`.
-- `posthoc_metrics.csv`: structural and optional DayTrader reference metrics.
-- `leiden_comparison.csv`: ARI/NMI and changed-partition ratio against `raw_reference_leiden`.
-- `stage1_vs_stage2.csv`: canonical Stage 2 operating profile at seed 0 compared with Stage 1 raw Leiden; provenance identifies the frozen source front and selector contract.
-- `hypervolume_by_seed.csv` and `hypervolume_summary.csv`: Pareto-front quality summaries.
-- `metadata.yml`: seeds, raw input hashes, NSGA-II settings, and git state.
+- `run_metrics.json`: formal per-seed search summary.
+- `run_metadata.json`: formal input, configuration, environment, and source provenance.
+- `robustness_manifest.json`: formal 30-seed completeness and integrity manifest.
+
+The former 10-seed `raw/` derived summaries were historical and have been
+removed. A compact set of source front/label/metadata files remains only for
+historical provenance. Derived selected-profile metrics are maintained
+separately under `results/cross_subject/03_stage2_nsga/modularity_band/`.
 
 `pareto_front.csv` records seeded-initialization provenance:
 

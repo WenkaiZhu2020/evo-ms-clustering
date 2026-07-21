@@ -63,4 +63,5 @@ def test_current_max_cluster_replacement_is_separate_from_historical_tables() ->
     assert len(detail) == 360
     assert sorted(detail["band_budget"].unique()) == [0.05]
     assert not detail[["subject", "seed", "threshold"]].duplicated().any()
-    assert (ROOT / "results/cross_subject/03_stage2_nsga/final_statistics/max_cluster_posthoc_sensitivity/posthoc_max_cluster_sensitivity_per_seed.csv").is_file()
+    historical = ROOT / "results/cross_subject/03_stage2_nsga/final_statistics/max_cluster_posthoc_sensitivity"
+    assert not historical.exists()

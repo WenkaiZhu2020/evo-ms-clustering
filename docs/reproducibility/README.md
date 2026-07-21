@@ -129,7 +129,7 @@ retired `selected_solution.csv` and `selected_partition.csv` files. The
 current canonical profile and downstream provenance are recorded in
 `results/cross_subject/03_stage2_nsga/modularity_band/`, and the cleanup
 inventory is recorded in
-`results/cross_subject/03_stage2_nsga/final_statistics/historical_selector_cleanup_inventory.csv`.
+`results/cross_subject/03_stage2_nsga/final_statistics/historical_output_cleanup_inventory.csv`.
 
 ## 10. External Java/build toolchain
 

@@ -10,13 +10,13 @@ Source inputs are under `data/`.
   `results/cross_subject/03_stage2_nsga/final_statistics/`.
 - **SUPPORTING DIAGNOSTIC**: `convergence_diagnostic/`, retained diagnostics,
   and the Stage 2 audit evidence.
-- **HISTORICAL**: `raw/` and the earlier `robustness/` directories.
-- **FAILED / SUPERSEDED**: retained smoke and failed-bound directories; their
-  temporary selected-summary files have been removed.
+- **HISTORICAL / FAILED CLEANUP**: obsolete raw, smoke, failed-bound, and
+  superseded diagnostic derived outputs were removed; the exact inventory is
+  `cross_subject/03_stage2_nsga/final_statistics/historical_output_cleanup_inventory.csv`.
 
-Only the FORMAL paths are suitable for thesis result numbers. The other paths
-are retained to preserve experimental provenance and are not used by the
-formal verifier or current canonical Stage 2 result tables.
+Only the FORMAL paths are suitable for thesis result numbers. Protected source
+artifacts and compact provenance records are retained separately and are not
+used by the formal verifier or current canonical Stage 2 result tables.
 
 ## Main Layout
 
@@ -93,20 +93,19 @@ Final cross-subject statistics are under:
 results/cross_subject/03_stage2_nsga/final_statistics/
 ```
 
-`convergence_diagnostic/` is a final supporting diagnostic. Other sibling
-directories under `03_stage2_nsga/` are historical or diagnostic evidence,
-not replacements for the final formal outputs:
+`convergence_diagnostic/` is a final supporting diagnostic. Other existing
+sibling directories under `03_stage2_nsga/` are current formal outputs or
+supporting evidence, not replacements for the final formal outputs:
 
-- `raw/`, `robustness/`, and `robustness_smoke/`: earlier or smoke runs.
-- `robustness_failed_empirical_bounds/`: failed bounds-validation attempt.
+- `robustness_final_30seeds/`: frozen formal evidence.
 - `diagnostics/`: supplementary checks.
 
 Pre-final cross-subject robustness tables and the DayTrader
 `final_config_smoke/` output were moved to the external
 `evo-ms-clustering-stage2-diagnostics-archive` repository. They are not final
-Stage 2 evidence. The retained DayTrader
-`diagnostics/stage2_leiden_tradeoff_audit/` directory is superseded provenance
-for the earlier 2,994-front audit and must not be used for final conclusions.
+Stage 2 evidence. Historical raw, smoke, failed-bound, and superseded
+DayTrader audit outputs are recorded in the cleanup inventory and are not
+available as active result paths.
 
 Consumers of final Stage 2 findings must use `robustness_final_30seeds/` and
 the associated `cross_subject/03_stage2_nsga/final_statistics/` directory, not
@@ -138,10 +137,10 @@ This folder contains cluster-size summary, resolution sweep, and SSA lambda swee
 
 Historical generated outputs are not kept in the active results layout.
 
-The historical-selector cleanup inventory is maintained at:
+The historical/failed-output cleanup inventory is maintained at:
 
 ```text
-results/cross_subject/03_stage2_nsga/final_statistics/historical_selector_cleanup_inventory.csv
+results/cross_subject/03_stage2_nsga/final_statistics/historical_output_cleanup_inventory.csv
 ```
 
 ## Report Location
