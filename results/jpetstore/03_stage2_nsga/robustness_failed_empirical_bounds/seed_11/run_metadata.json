@@ -1,0 +1,42 @@
+{
+  "algorithm_config_sha256": "b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d",
+  "bounds_config_sha256": "15c2c64ec55e11c5ade65621a690510836168889d436fc64ee1a342aebee7763",
+  "calibration_status": "formal",
+  "front_source": "recomputed_nondominated_front",
+  "git_commit": "131587f2a4b77d1b8c2153eab16a5d64944ee05c",
+  "normalization_bounds": {
+    "lower_bounds": [
+      0.21012345679012343,
+      -16.69388888888889,
+      -0.07216878364870323
+    ],
+    "upper_bounds": [
+      0.7108641975308643,
+      -3.7005555555555554,
+      0.7938566201357355
+    ]
+  },
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance"
+  ],
+  "reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "run_type": "formal",
+  "seed": 11,
+  "source_fingerprint": {
+    "experiments/02_stage2_nsga_structure_only/run.py": "a0d859bc976f5611e20bbbd720b7f8085919233eb8e434d2cd952c93c5ad6794",
+    "experiments/02_stage2_nsga_structure_only/run_robustness.py": "9a33418b7b8194fb1a25e2a0c6aa96bdf4bac8cc7bb05c69f3958c50e8a53e6d",
+    "src/evo_ms/extraction/dependency_extractor.py": "90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a",
+    "src/evo_ms/optimization/encoding.py": "298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5",
+    "src/evo_ms/optimization/objectives.py": "11d47a1a903b0fece29c30c14e152decc0aca209ca148c39fe0bef3f19eb4155",
+    "src/evo_ms/optimization/problem.py": "1d0ee5dd7dad4be6199314808360f8ebeda943729215e15b78bcb2e7100351c4"
+  },
+  "subject": "jpetstore",
+  "working_tree_diff_sha256": "10e325621a85df19354ec938bde704176515c95049e33ee267a646841293d98b",
+  "working_tree_dirty": true
+}

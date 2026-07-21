@@ -1,0 +1,52 @@
+{
+  "algorithm_config_sha256": "b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d",
+  "bounds_config_sha256": "db8e23479474f5d97e255e0d423a0ae9c4e5b359212dbbf2a3add7338ee64413",
+  "bounds_derivation": {
+    "coupling": "external_weight/total_weight with non-negative weights gives [0,1]",
+    "imbalance": "max std(cluster_sizes)/mean(cluster_sizes) over feasible integer cluster sizes",
+    "negative_cohesion": "cohesion in [0,max_raw_edge_weight], so negative cohesion in [-max_raw_edge_weight,0]"
+  },
+  "bounds_source": "theoretical",
+  "calibration_status": "not_required",
+  "class_count": 24,
+  "front_source": "recomputed_nondominated_front",
+  "git_commit": "131587f2a4b77d1b8c2153eab16a5d64944ee05c",
+  "imbalance_bound_method": "exact_extreme_allocation_over_cluster_count_and_singleton_count",
+  "imbalance_upper_bound": 0.9464847243000458,
+  "max_raw_edge_weight": 35.0,
+  "normalization_bounds": {
+    "lower_bounds": [
+      0.0,
+      -35.0,
+      0.0
+    ],
+    "upper_bounds": [
+      1.0,
+      0.0,
+      0.9464847243000458
+    ]
+  },
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance"
+  ],
+  "reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "run_type": "formal",
+  "seed": 8,
+  "source_fingerprint": {
+    "experiments/02_stage2_nsga_structure_only/run.py": "a0d859bc976f5611e20bbbd720b7f8085919233eb8e434d2cd952c93c5ad6794",
+    "experiments/02_stage2_nsga_structure_only/run_robustness.py": "d10136db1e722f78a079eaa3b77e6fdb94c4f073a9ec49dc7dd33e29390d2295",
+    "src/evo_ms/extraction/dependency_extractor.py": "90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a",
+    "src/evo_ms/optimization/encoding.py": "298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5",
+    "src/evo_ms/optimization/objectives.py": "11d47a1a903b0fece29c30c14e152decc0aca209ca148c39fe0bef3f19eb4155",
+    "src/evo_ms/optimization/problem.py": "1d0ee5dd7dad4be6199314808360f8ebeda943729215e15b78bcb2e7100351c4"
+  },
+  "subject": "jpetstore",
+  "working_tree_diff_sha256": "10e325621a85df19354ec938bde704176515c95049e33ee267a646841293d98b",
+  "working_tree_dirty": true
+}

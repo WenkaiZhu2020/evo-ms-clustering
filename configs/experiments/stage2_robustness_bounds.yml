@@ -1,0 +1,189 @@
+schema_version: 3
+objective_order: &id001
+- coupling
+- negative_cohesion
+- imbalance
+reference_point:
+- 1.1
+- 1.1
+- 1.1
+subjects:
+  daytrader:
+    bounds_source: theoretical
+    calibration_status: not_required
+    generated_from_commit: 131587f2a4b77d1b8c2153eab16a5d64944ee05c
+    working_tree_dirty: true
+    working_tree_fingerprint:
+      experiments/02_stage2_nsga_structure_only/run.py: a0d859bc976f5611e20bbbd720b7f8085919233eb8e434d2cd952c93c5ad6794
+      experiments/02_stage2_nsga_structure_only/run_robustness.py: d10136db1e722f78a079eaa3b77e6fdb94c4f073a9ec49dc7dd33e29390d2295
+      src/evo_ms/extraction/dependency_extractor.py: 90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a
+      src/evo_ms/optimization/problem.py: 1d0ee5dd7dad4be6199314808360f8ebeda943729215e15b78bcb2e7100351c4
+      src/evo_ms/optimization/objectives.py: 11d47a1a903b0fece29c30c14e152decc0aca209ca148c39fe0bef3f19eb4155
+      src/evo_ms/optimization/encoding.py: 298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5
+    working_tree_diff_sha256: 10e325621a85df19354ec938bde704176515c95049e33ee267a646841293d98b
+    algorithm_config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    graph_input_sha256: 7a93a133db3dc573532ec90a68674d8b8b939c8adc106c64fbd5449db697faef
+    input_graph_hashes:
+      class_nodes.csv: 52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd
+      structural_dependencies.csv: 95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0
+      raw_edges: 7a93a133db3dc573532ec90a68674d8b8b939c8adc106c64fbd5449db697faef
+    class_count: 53
+    max_raw_edge_weight: 260.0
+    cohesion_bound_derivation: For non-negative aggregated G_raw edge weights, each
+      cluster weighted density 2*internal_weight/(size*(size-1)) is bounded above
+      by the maximum aggregated raw edge weight.
+    imbalance_upper_bound: 1.602219002376727
+    imbalance_bound_method: exact_extreme_allocation_over_cluster_count_and_singleton_count
+    imbalance_bound_tightness: exact_for_current_size_constraints
+    bounds_derivation:
+      coupling: external_weight/total_weight with non-negative weights gives [0,1]
+      negative_cohesion: cohesion in [0,max_raw_edge_weight], so negative cohesion
+        in [-max_raw_edge_weight,0]
+      imbalance: max std(cluster_sizes)/mean(cluster_sizes) over feasible integer
+        cluster sizes
+    objective_order:
+    - coupling
+    - negative_cohesion
+    - imbalance
+    reference_point:
+    - 1.1
+    - 1.1
+    - 1.1
+    lower_bounds:
+    - 0.0
+    - -260.0
+    - 0.0
+    upper_bounds:
+    - 1.0
+    - 0.0
+    - 1.602219002376727
+    bound_tolerance: 1.0e-12
+    space: pymoo_minimization_objectives
+    input_graph: G_raw
+    stage1_baseline_profile: raw_reference_leiden
+    config_path: configs/experiments/02_stage2_nsga_structure_only.yml
+    config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    generated_at_utc: '2026-07-02T12:32:04Z'
+  jpetstore:
+    bounds_source: theoretical
+    calibration_status: not_required
+    generated_from_commit: 131587f2a4b77d1b8c2153eab16a5d64944ee05c
+    working_tree_dirty: true
+    working_tree_fingerprint:
+      experiments/02_stage2_nsga_structure_only/run.py: a0d859bc976f5611e20bbbd720b7f8085919233eb8e434d2cd952c93c5ad6794
+      experiments/02_stage2_nsga_structure_only/run_robustness.py: d10136db1e722f78a079eaa3b77e6fdb94c4f073a9ec49dc7dd33e29390d2295
+      src/evo_ms/extraction/dependency_extractor.py: 90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a
+      src/evo_ms/optimization/problem.py: 1d0ee5dd7dad4be6199314808360f8ebeda943729215e15b78bcb2e7100351c4
+      src/evo_ms/optimization/objectives.py: 11d47a1a903b0fece29c30c14e152decc0aca209ca148c39fe0bef3f19eb4155
+      src/evo_ms/optimization/encoding.py: 298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5
+    working_tree_diff_sha256: 10e325621a85df19354ec938bde704176515c95049e33ee267a646841293d98b
+    algorithm_config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    graph_input_sha256: 10327cabac7cc7bd0225b25e8cfd29163a9cc0ba67e11180e04bc88d59c36d80
+    input_graph_hashes:
+      class_nodes.csv: 69b59fef4e0cf7feb7402d14beac895b1790db0906b2b6dc11c54743f431e7e0
+      structural_dependencies.csv: b3a22590d19437abaef838eb05f7e4801f2f243cea18f52ab3e592e1f3d765c0
+      raw_edges: 10327cabac7cc7bd0225b25e8cfd29163a9cc0ba67e11180e04bc88d59c36d80
+    class_count: 24
+    max_raw_edge_weight: 35.0
+    cohesion_bound_derivation: For non-negative aggregated G_raw edge weights, each
+      cluster weighted density 2*internal_weight/(size*(size-1)) is bounded above
+      by the maximum aggregated raw edge weight.
+    imbalance_upper_bound: 0.9464847243000458
+    imbalance_bound_method: exact_extreme_allocation_over_cluster_count_and_singleton_count
+    imbalance_bound_tightness: exact_for_current_size_constraints
+    bounds_derivation:
+      coupling: external_weight/total_weight with non-negative weights gives [0,1]
+      negative_cohesion: cohesion in [0,max_raw_edge_weight], so negative cohesion
+        in [-max_raw_edge_weight,0]
+      imbalance: max std(cluster_sizes)/mean(cluster_sizes) over feasible integer
+        cluster sizes
+    objective_order:
+    - coupling
+    - negative_cohesion
+    - imbalance
+    reference_point:
+    - 1.1
+    - 1.1
+    - 1.1
+    lower_bounds:
+    - 0.0
+    - -35.0
+    - 0.0
+    upper_bounds:
+    - 1.0
+    - 0.0
+    - 0.9464847243000458
+    bound_tolerance: 1.0e-12
+    space: pymoo_minimization_objectives
+    input_graph: G_raw
+    stage1_baseline_profile: raw_reference_leiden
+    config_path: configs/experiments/02_stage2_nsga_structure_only.yml
+    config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    generated_at_utc: '2026-07-02T12:32:04Z'
+  xerces-j:
+    bounds_source: theoretical
+    calibration_status: not_required
+    generated_from_commit: 131587f2a4b77d1b8c2153eab16a5d64944ee05c
+    working_tree_dirty: true
+    working_tree_fingerprint: &id002
+      experiments/02_stage2_nsga_structure_only/run.py: a0d859bc976f5611e20bbbd720b7f8085919233eb8e434d2cd952c93c5ad6794
+      experiments/02_stage2_nsga_structure_only/run_robustness.py: d10136db1e722f78a079eaa3b77e6fdb94c4f073a9ec49dc7dd33e29390d2295
+      src/evo_ms/extraction/dependency_extractor.py: 90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a
+      src/evo_ms/optimization/problem.py: 1d0ee5dd7dad4be6199314808360f8ebeda943729215e15b78bcb2e7100351c4
+      src/evo_ms/optimization/objectives.py: 11d47a1a903b0fece29c30c14e152decc0aca209ca148c39fe0bef3f19eb4155
+      src/evo_ms/optimization/encoding.py: 298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5
+    working_tree_diff_sha256: 10e325621a85df19354ec938bde704176515c95049e33ee267a646841293d98b
+    algorithm_config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    graph_input_sha256: 3795b4ab2c33a48f521f6242b791bf29f5a1c67364a3938d504594bae9c6a12e
+    input_graph_hashes:
+      class_nodes.csv: 05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2
+      structural_dependencies.csv: 5e9a30af0b89d61a4aa4d639d9f379f7a50408706b6efad07c9fa028976dd09c
+      raw_edges: 3795b4ab2c33a48f521f6242b791bf29f5a1c67364a3938d504594bae9c6a12e
+    class_count: 814
+    max_raw_edge_weight: 354.0
+    cohesion_bound_derivation: For non-negative aggregated G_raw edge weights, each
+      cluster weighted density 2*internal_weight/(size*(size-1)) is bounded above
+      by the maximum aggregated raw edge weight.
+    imbalance_upper_bound: 6.94092409300659
+    imbalance_bound_method: exact_extreme_allocation_over_cluster_count_and_singleton_count
+    imbalance_bound_tightness: exact_for_current_size_constraints
+    bounds_derivation:
+      coupling: external_weight/total_weight with non-negative weights gives [0,1]
+      negative_cohesion: cohesion in [0,max_raw_edge_weight], so negative cohesion
+        in [-max_raw_edge_weight,0]
+      imbalance: max std(cluster_sizes)/mean(cluster_sizes) over feasible integer
+        cluster sizes
+    objective_order: *id001
+    reference_point:
+    - 1.1
+    - 1.1
+    - 1.1
+    lower_bounds:
+    - 0.0
+    - -354.0
+    - 0.0
+    upper_bounds:
+    - 1.0
+    - 0.0
+    - 6.94092409300659
+    bound_tolerance: 1.0e-12
+    space: pymoo_minimization_objectives
+    input_graph: G_raw
+    stage1_baseline_profile: raw_reference_leiden
+    config_path: configs/experiments/02_stage2_nsga_structure_only.yml
+    config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+    generated_at_utc: '2026-07-02T12:32:05Z'
+generated_from_commit: 131587f2a4b77d1b8c2153eab16a5d64944ee05c
+algorithm_config_sha256: b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d
+source_fingerprint:
+  experiments/02_stage2_nsga_structure_only/run.py: a0d859bc976f5611e20bbbd720b7f8085919233eb8e434d2cd952c93c5ad6794
+  experiments/02_stage2_nsga_structure_only/run_robustness.py: 9a33418b7b8194fb1a25e2a0c6aa96bdf4bac8cc7bb05c69f3958c50e8a53e6d
+  src/evo_ms/extraction/dependency_extractor.py: 90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a
+  src/evo_ms/optimization/problem.py: 1d0ee5dd7dad4be6199314808360f8ebeda943729215e15b78bcb2e7100351c4
+  src/evo_ms/optimization/objectives.py: 11d47a1a903b0fece29c30c14e152decc0aca209ca148c39fe0bef3f19eb4155
+  src/evo_ms/optimization/encoding.py: 298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5
+working_tree_diff_sha256: 10e325621a85df19354ec938bde704176515c95049e33ee267a646841293d98b
+working_tree_dirty: true
+bounds_source: theoretical
+calibration_status: not_required
+working_tree_fingerprint: *id002
