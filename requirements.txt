@@ -1,9 +1,0 @@
-pandas==2.2.3
-numpy==2.3.5
-# Current runtime does not have networkx installed; pin after confirming the full environment.
-networkx
-igraph==1.0.0
-leidenalg==0.12.0
-pymoo==0.6.2
-PyYAML==6.0.3
-pytest

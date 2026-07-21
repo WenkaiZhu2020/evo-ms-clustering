@@ -26,17 +26,16 @@ def test_three_structural_objectives_only() -> None:
     ]
 
 
-def test_admissibility_thresholds_match_stage1() -> None:
-    assert obj.MAX_CLUSTER_RATIO == 0.4
-    assert obj.SINGLETON_RATIO == 0.15
+def test_admissibility_thresholds_match_stage2_design() -> None:
     assert obj.MIN_CLUSTER_COUNT == 2
+    assert problem.DEFAULT_MAX_CLUSTER_RATIO == 0.4
 
 
 def test_config_declares_three_objectives_and_constraints() -> None:
     config = load_yaml(ROOT / "configs" / "experiments" / "02_stage2_nsga_structure_only.yml")
     assert [o["name"] for o in config["objectives"]] == ["coupling", "cohesion", "imbalance"]
     assert config["constraints"]["max_cluster_ratio"] == 0.4
-    assert config["constraints"]["singleton_ratio"] == 0.15
+    assert "singleton_ratio" not in config["constraints"]
     assert config["constraints"]["min_cluster_count"] == 2
     assert config["input_graph"]["name"] == "G_raw"
     assert config["input_graph"]["weight_column"] == "raw_weight"
@@ -89,8 +88,9 @@ def test_singleton_cohesion_is_zero_and_constraints_are_vectorized() -> None:
     violations = obj.admissibility_violation(
         np.asarray([0, 0, 0, 0, 1, 1, 2, 2, 3, 4]),
         class_count=10,
+        max_cluster_ratio=0.4,
     )
-    np.testing.assert_allclose(violations, [0.0, 0.05, -3.0])
+    np.testing.assert_allclose(violations, [0.0, -3.0])
 
 
 def test_encoding_contracts() -> None:
@@ -137,8 +137,40 @@ def test_pymoo_problem_contract() -> None:
         np.asarray([0, 0, 1, 1]),
         return_values_of=["F", "G"],
     )
-    np.testing.assert_allclose(f, [0.5, -2.5, 0.0])
-    assert g.shape == (3,)
+    repaired = problem.repair_labels(np.asarray([0, 0, 1, 1]), len(class_nodes))
+    coupling, cohesion, imbalance = obj.evaluate_structural_objectives(
+        edges,
+        encoding.to_cluster_by_class(repaired, class_nodes),
+        "raw_weight",
+    )
+    np.testing.assert_allclose(f, [coupling, -cohesion, imbalance])
+    assert g.shape == (2,)
+    assert np.all(g <= 0.0)
+
+
+def test_max_cluster_ratio_is_shared_by_constraint_and_repair() -> None:
+    labels = np.zeros(10, dtype=int)
+
+    repaired = problem.repair_labels(labels, class_count=10, max_cluster_ratio=0.5)
+    violations = obj.admissibility_violation(
+        repaired,
+        class_count=10,
+        max_cluster_ratio=0.5,
+    )
+
+    assert max(np.bincount(repaired)) == 5
+    assert violations[0] <= 0.0
+    assert obj.admissibility_violation(
+        repaired,
+        class_count=10,
+        max_cluster_ratio=0.4,
+    )[0] > 0.0
+
+
+@pytest.mark.parametrize("value", [0.0, -0.1, 1.0, 1.1])
+def test_invalid_max_cluster_ratio_is_rejected(value: float) -> None:
+    with pytest.raises(ValueError, match="max_cluster_ratio"):
+        problem.validate_max_cluster_ratio(value)
 
 
 def test_seeded_sampling_places_seed_individual_first() -> None:

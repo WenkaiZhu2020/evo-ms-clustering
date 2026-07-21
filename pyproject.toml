@@ -1,0 +1,29 @@
+[project]
+name = "evo-ms-clustering-stage2"
+version = "0.0.0"
+description = "Reproducible Stage 0–2 evolutionary software clustering experiments"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "igraph==1.0.0",
+    "leidenalg==0.12.0",
+    "matplotlib==3.10.8",
+    "networkx==3.6.1",
+    "numpy==2.4.4",
+    "pandas==2.2.3",
+    "pymoo==0.6.2",
+    "pyyaml==6.0.3",
+    "scipy==1.16.3",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+]
+
+[tool.uv]
+package = false
+default-groups = ["dev"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

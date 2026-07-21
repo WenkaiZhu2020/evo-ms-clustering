@@ -88,9 +88,9 @@ Its role is to provide larger-scale evidence for the current pipeline and to ide
 Run:
 
 ```bash
-bash scripts/run_pre_xerces_j.sh
-bash scripts/run_xerces_j_sensitivity.sh
-bash scripts/run_stage1_xerces_j.sh
+bash scripts/00_pre_experiment/run_pre_xerces_j.sh
+bash scripts/00_pre_experiment/run_xerces_j_sensitivity.sh
+bash scripts/01_stage1_leiden_baseline/run_stage1_xerces_j.sh
 ```
 
 The formal Stage 1 profiles are stored under:

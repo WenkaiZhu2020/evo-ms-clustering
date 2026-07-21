@@ -1,0 +1,34 @@
+{
+  "subject": "jpetstore",
+  "seeds": [
+    0,
+    15
+  ],
+  "population_size": 100,
+  "generations": 100,
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance"
+  ],
+  "normalization_bounds": {
+    "lower_bounds": [
+      0.0,
+      -35.0,
+      0.0
+    ],
+    "upper_bounds": [
+      1.0,
+      0.0,
+      0.9464847243000458
+    ]
+  },
+  "reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "bounds_source": "theoretical",
+  "calibration_status": "not_required",
+  "plateau_rule": "earliest generation whose best-so-far HV is within 1% of the final best-so-far HV"
+}

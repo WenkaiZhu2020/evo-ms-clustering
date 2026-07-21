@@ -1,0 +1,3 @@
+subject,seed,final_hypervolume,best_hypervolume,plateau_generation_1pct_best_so_far,last_20_relative_best_hv_gain,formal_final_hypervolume,final_hv_abs_difference,final_hv_matches_formal
+jpetstore,0,0.3885343992603623,0.3886529085762806,71,0.00612969959632328,0.3885343992603624,5.551115123125783e-17,True
+jpetstore,15,0.38686940111459556,0.38686940111459556,78,0.009019955034629221,0.3868694011145956,5.551115123125783e-17,True

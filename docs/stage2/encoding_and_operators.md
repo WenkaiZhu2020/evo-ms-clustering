@@ -62,24 +62,26 @@ The implemented operators are intentionally simple:
   admissibility repair;
 - mutation: selected classes are reassigned to an existing cluster or one new
   cluster, followed by canonical relabeling and admissibility repair;
-- repair: oversized clusters are split, excess singletons are merged, and the
-  minimum cluster count is enforced.
+- repair: oversized clusters are split and the minimum cluster count is
+  enforced. Singleton clusters are not merged by repair.
 
 ## Constraints and Repair
 
-Anti-degeneration constraints reuse the Stage 1 admissibility policy:
+Stage 2 retains two formal validity controls:
 
 - `max_cluster_ratio <= 0.40`
-- `singleton_ratio <= 0.15`
-- minimum cluster count
+- `k >= 2`
 
-They can be implemented as pymoo constraints, repair operators, or both.
-Degenerate all-in-one and all-singleton solutions should not pollute the Pareto
-front.
+They are implemented through pymoo constraints and repair. Singleton ratio is
+retained as a diagnostic metric, not as a hard constraint or repair condition.
+Candidate labels are bounded by `0..n-1`, but the formal problem does not define
+a separate hard constraint requiring `k <= n-1`; label bounds are not an
+equivalent cluster-count constraint.
 
 Balance is also represented as the soft objective
-`std(cluster_sizes) / mean(cluster_sizes)`, so it appears both in objective
-space and in hard admissibility.
+`std(cluster_sizes) / mean(cluster_sizes)`, so it appears in objective space
+while the max-cluster threshold prevents giant-cluster degeneration.
+`singleton_ratio` remains a post-hoc diagnostic.
 
 ## pymoo Wiring
 

@@ -15,18 +15,24 @@ data/extracted/<subject>/
                        then random fill
        encoding: integer label vector over classes
        objectives: coupling down, cohesion up, imbalance down
-       constraints: max cluster ratio, singleton ratio, minimum cluster count
+       constraints: max cluster ratio, minimum cluster count
   -> Pareto front across fixed random seeds
-  -> select one final solution from the Pareto front
+  -> select canonical operating profile post hoc:
+       feasible retained front -> 5% modularity-loss band -> deterministic
+       structural tie-break rule
   -> post-hoc evaluation only
        modularity, Hypervolume, MoJoFM, Pairwise F1
   -> compare selected solution with frozen Stage 1 raw_reference_leiden
-  -> results/<subject>/03_stage2_nsga/raw/
+  -> frozen formal results/<subject>/03_stage2_nsga/robustness_final_30seeds/
 ```
 
 The Stage 2 runner writes Pareto fronts, label vectors, post-hoc metrics,
-selected solution files, Stage 1 raw Leiden comparison tables, Hypervolume
-summaries, and metadata.
+Stage 1 raw Leiden comparison tables, Hypervolume summaries, and metadata.
+The retired selected-solution files are not an active result interface. For
+the frozen formal results, the canonical
+operating solution is the 5% relative modularity-band profile in
+`results/cross_subject/03_stage2_nsga/modularity_band/`; the former
+max-weighted-modularity selected-solution artifacts are retired.
 
 ## Input Rule
 
@@ -51,27 +57,28 @@ runner. It must not read mutable graph artifacts from `results/`.
 | `src/evo_ms/optimization/encoding.py` | Label-vector conversion, partition DataFrame conversion, and canonical relabeling. |
 | `src/evo_ms/optimization/objectives.py` | Three structural objectives and hard anti-degeneration constraints. |
 | `src/evo_ms/optimization/problem.py` | Lazy-import pymoo Problem wrapper with `F = [coupling, -cohesion, imbalance]`. |
-| `experiments/02_stage2_nsga_structure_only/run.py` | Runner that wires raw inputs, seeded initialization, multi-seed search, selected-solution output, and raw Leiden comparison. |
+| `experiments/02_stage2_nsga_structure_only/run.py` | Runner that wires raw inputs, seeded initialization, multi-seed search, Pareto output, and raw Leiden comparison. |
 
 ## Output
 
-The formal output layer is:
+The frozen formal output layer is:
 
 ```text
-results/<subject>/03_stage2_nsga/raw/
+results/<subject>/03_stage2_nsga/robustness_final_30seeds/
 ```
 
 Expected files:
 
 - `pareto_front.csv`: objective values, feasibility, labels, and seed provenance.
 - `pareto_labels.csv.xz`: class-to-cluster assignments for each Pareto solution (xz-compressed; long-format and large for big subjects). Read with `pandas.read_csv(..., compression="xz")`.
-- `posthoc_metrics.csv`: structural and optional DayTrader reference metrics.
-- `leiden_comparison.csv`: ARI/NMI and changed-partition ratio against `raw_reference_leiden`.
-- `selected_solution.csv`: final selected NSGA-II solution and objective values.
-- `selected_partition.csv`: class-to-cluster assignments for the selected solution.
-- `stage1_vs_stage2.csv`: selected Stage 2 solution compared with Stage 1 raw Leiden.
-- `hypervolume_by_seed.csv` and `hypervolume_summary.csv`: Pareto-front quality summaries.
-- `metadata.yml`: seeds, raw input hashes, NSGA-II settings, and git state.
+- `run_metrics.json`: formal per-seed search summary.
+- `run_metadata.json`: formal input, configuration, environment, and source provenance.
+- `robustness_manifest.json`: formal 30-seed completeness and integrity manifest.
+
+The former 10-seed `raw/` derived summaries were historical and have been
+removed. A compact set of source front/label/metadata files remains only for
+historical provenance. Derived selected-profile metrics are maintained
+separately under `results/cross_subject/03_stage2_nsga/modularity_band/`.
 
 `pareto_front.csv` records seeded-initialization provenance:
 
@@ -81,3 +88,9 @@ Expected files:
 
 These columns support reporting about whether the Pareto front contains newly
 evolved non-seed solutions, not only injected heuristic seeds.
+
+The canonical 30-seed operating-profile metrics and provenance are maintained
+at `results/cross_subject/03_stage2_nsga/modularity_band/`
+`canonical_operating_profile_metrics_per_seed.csv`. Refresh them with
+`experiments/02_stage2_nsga_structure_only/refresh_modularity_band_downstream.py`;
+the command is post hoc only and does not rerun any seed.
