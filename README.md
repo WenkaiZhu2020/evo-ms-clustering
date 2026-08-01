@@ -1,303 +1,113 @@
-# Evolutionary Software Clustering (Stage 1)
-
-This repository contains the Stage 1 code and outputs for a Java software clustering experiment.
-
-Stage 1 compares two class-level graph representations:
-
-* `G_raw`: a structural graph built from type and method-call dependencies.
-* `G_ssa`: an SSA-enriched graph that adds selected return-value and argument-passing flow evidence.
-
-Both graphs are clustered with Leiden. The goal is to check whether SSA-derived evidence changes the graph and the resulting class partitions.
-
-Stage 1 is the frozen Leiden baseline. The repository also contains a Stage 2
-structure-only NSGA-II scaffold for design review; it does not yet implement
-the algorithm or write results. Semantic embedding stages are not included.
-
-## 1. Stage 1 Flow
-
-The Stage 1 workflow is:
-
-```text
-Java extraction with Soot / Shimple
-→ normalized CSV files
-→ CSV loading and validation
-→ G_raw / G_ssa graph construction
-→ pre-experiment runs
-→ DayTrader calibration
-→ Xerces-J sensitivity analysis
-→ fixed formal Leiden profiles
-→ formal Stage 1 outputs
-```
-
-There are two main result layers:
-
-* `00_pre_experiment`: diagnostics, calibration, and sensitivity analysis.
-* `01_stage1_leiden_baseline`: final Stage 1 outputs generated after the formal profiles are fixed.
-
-## 2. Subject Systems
-
-Three Java systems are used.
-
-### JPetStore
-
-JPetStore is the small subject. It is mainly used to check that the full pipeline works on a compact system.
-
-It checks:
-
-* extraction
-* CSV loading
-* graph construction
-* Leiden clustering
-* metric generation
-
-### DayTrader
-
-DayTrader is the calibration subject.
-
-DayTrader has a domain-informed proxy reference for the retained application classes. Internal structural metrics guide calibration, while reference metrics are retained as sanity checks.
-
-DayTrader is used for:
-
-* default pre-experiment diagnostics
-* lambda and resolution calibration
-* reference-based sanity checks during calibration
-
-The DayTrader reference metrics are used as calibration evidence, not as independent validation.
-
-### Xerces-J
-
-Xerces-J is the larger subject.
-
-It is used to check larger-scale behaviour and parameter sensitivity. It does not provide a reference decomposition in this project.
-
-Xerces-J is used for:
-
-* default pre-experiment diagnostics
-* larger-scale feasibility checking
-* lambda sensitivity analysis
-* resolution sensitivity analysis
-
-## 3. Extracted Data
-
-The Java extractor uses Soot and Shimple to process compiled Java classes.
-
-Extractor outputs are stored under:
-
-```text
-data/extracted/<subject>/
-```
-
-The main CSV files are:
-
-* `class_nodes.csv`
-* `structural_dependencies.csv`
-* `ssa_flow_edges.csv`
-
-The Python pipeline loads and validates these files before graph construction.
-
-## 4. Graphs
-
-### G_raw
-
-`G_raw` is the raw structural graph.
-
-It uses:
-
-* type dependency evidence
-* method call evidence
-
-Main weight column:
-
-* `raw_weight`
-
-### G_ssa
-
-`G_ssa` starts from `G_raw` and adds selected SSA-derived flow evidence:
-
-* return-value flow
-* argument-passing flow
-
-Main weight column:
-
-* `g_ssa_weight`
-
-The SSA contribution is controlled by `lambda`.
-
-When `lambda = 0`, `G_ssa` is equivalent to `G_raw` in active edge weights.
-
-## 5. CSV Validation
-
-Before graph construction, the Python loader checks the normalized CSV files.
-
-It validates:
-
-* required columns
-* allowed evidence values
-* source and target class references
-* embedded evidence weights
-
-Main validation files:
-
-* `src/evo_ms/extraction/dependency_extractor.py`
-* `src/evo_ms/extraction/evidence_weight_validation.py`
-
-## 6. Pre-experiment
-
-The pre-experiment layer is not the final result layer.
-
-It is used to check that each subject can pass through the full pipeline and to inspect the first effect of SSA-derived evidence.
-
-For all subjects, the default pre-experiment run checks:
-
-* whether the extracted CSVs can be loaded
-* whether `G_raw` and `G_ssa` can be constructed
-* whether Leiden can run
-* whether metrics can be generated
-* whether SSA-derived evidence changes the graph or partition
-
-Additional pre-experiment analyses are subject-specific:
-
-* JPetStore is mainly used for pipeline validation.
-* DayTrader is used for calibration.
-* Xerces-J is used for sensitivity analysis.
-
-## 7. DayTrader Calibration
-
-DayTrader calibration explores combinations of:
-
-* SSA `lambda`
-* Leiden resolution
-
-The purpose is to select two formal Leiden profiles:
-
-* `raw_reference_leiden`
-* `ssa_selected_leiden`
-
-These profiles are selected for controlled comparison. They are not claimed to be universally optimal.
-
-## 8. Xerces-J Sensitivity Analysis
-
-Xerces-J sensitivity analysis checks how the larger graph reacts when parameters change.
-
-It examines:
-
-* how SSA-weight share changes as `lambda` increases
-* how raw and SSA partitions diverge
-* how cluster count and modularity respond to parameter changes
-
-This is a larger-scale sensitivity check, not reference-based validation.
-
-## 9. Formal Stage 1
-
-After calibration, two formal Leiden profiles are fixed:
-
-### raw_reference_leiden
-
-* graph: `G_raw`
-* weight column: `raw_weight`
-* lambda: `0.0`
-* resolution: `1.0`
-* seed: `42`
-
-### ssa_selected_leiden
-
-* graph: `G_ssa`
-* weight column: `g_ssa_weight`
-* lambda: `0.25`
-* resolution: `1.0`
-* seed: `42`
-
-These two profiles are then applied to all three subjects:
-
-* JPetStore
-* DayTrader
-* Xerces-J
-
-Formal outputs are stored under:
-
-```text
-results/<subject>/01_stage1_leiden_baseline/
-```
-
-These outputs are the Stage 1 results used for dissertation analysis.
-
-## 10. Repository Structure
-
-```text
-configs/      Subject and experiment configuration files.
-data/         Raw projects, extracted CSV files, and reference data.
-docs/         Stage 1 technical notes and experiment reports.
-experiments/  Python experiment entrypoints.
-results/      Generated experiment outputs.
-scripts/      Shell wrappers for extraction and experiment runs.
-src/          Core Python implementation.
-tests/        Python tests and fixtures.
-tools/        Java Soot extractor.
-```
-
-## 11. Main Run Order
-
-Prepare or build the Java subject first, then run extraction.
-
-Extraction:
+# Evolutionary Software Clustering — Final Stage 3 Repository
+
+This repository contains the complete three-stage experimental pipeline for
+evolutionary class-level software clustering. The canonical final branch is
+`stage3-Declaration+Method-Body`, which adds declaration and normalized method
+body semantic evidence to the frozen structural experiments.
+
+## Experimental stages
+
+1. **Stage 1 — Leiden baseline.** Builds class-level structural and SSA-enriched
+   graphs, runs Leiden clustering, and records the frozen baseline partitions
+   and seed-robustness evidence.
+2. **Stage 2 — structure-only NSGA-II.** Optimizes coupling, cohesion, and
+   cluster-size imbalance on the frozen raw structural graph. Its formal
+   30-seed fronts and canonical modularity-band operating profiles are retained
+   as the structural comparison baseline.
+3. **Stage 3 — Declaration + Method Body semantic extension.** Uses the frozen
+   `declaration_method_body_v1` representation, code-model embeddings, and a
+   true-cosine top-3 semantic graph. Four-objective NSGA-II optimizes the three
+   Stage 2 structural objectives plus semantic cut ratio.
+
+The three subject systems are JPetStore, DayTrader, and Xerces-J. Each formal
+stage uses 30 accepted seed outputs per subject where required by its protocol.
+For Stage 3, seed 0 is the accepted validation run and seeds 1–29 are the formal
+runs, giving 90 validated Stage 3 runs in total.
+
+## Stage 3 scientific contract
+
+- Experiment ID: `stage3_declaration_method_body`
+- Representation: `declaration_method_body_v1`
+- Subjects: JPetStore (24 classes), DayTrader (53), Xerces-J (814)
+- Embedding model: `nomic-ai/nomic-embed-code` at the pinned revision in the
+  Stage 3 configuration
+- Semantic graph: true-cosine top-3, lexicographic tie-breaking, OR
+  symmetrisation
+- Search: four-objective NSGA-II
+- Comparison: project the Stage 3 front to the original three structural
+  objectives and reuse the frozen Stage 2 selection and Hypervolume contracts
+
+The accepted semantic inputs, embeddings, semantic graphs, optimizer outputs,
+and provenance are immutable scientific artifacts during repository
+maintenance. Regeneration commands require explicit output destinations and do
+not overwrite accepted artifacts by default.
+
+## Main locations
+
+| Purpose | Location |
+| --- | --- |
+| Stage 1 experiment | `experiments/01_stage1_leiden_baseline/` |
+| Stage 2 experiment | `experiments/02_stage2_nsga_structure_only/` |
+| Stage 3 experiment | `experiments/05_stage3_declaration_method_body/` |
+| Stage 3 launchers | `scripts/05_stage3_declaration_method_body/` |
+| Reusable implementation | `src/evo_ms/` |
+| Stage 3 configuration | `configs/experiments/05_stage3_declaration_method_body.yml` |
+| Semantic text | `data/semantic_text/declaration_method_body/` |
+| Embeddings | `data/embeddings/declaration_method_body/` |
+| Semantic graphs | `data/semantic_graphs/declaration_method_body/` |
+| Per-subject Stage 3 results | `results/<subject>/05_stage3_declaration_method_body/` |
+| Cross-subject validation and analysis | `results/cross_subject/05_stage3_declaration_method_body/` |
+| Human-readable Stage 3 findings | `docs/stage3/results/` |
+| Stage 3 reproducibility guide | `docs/stage3/reproducibility.md` |
+
+## Environment
+
+Stage 3 requires Python 3.13 and the fully pinned dependency set in
+`requirements-stage3-lock.txt`. Create an isolated environment from the
+repository root:
 
 ```bash
-bash scripts/extraction/extract_soot_jpetstore.sh
-bash scripts/extraction/extract_soot_daytrader.sh
-bash scripts/extraction/extract_soot_xerces_j.sh
+python3.13 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -r requirements-stage3-lock.txt
 ```
 
-Default pre-experiment diagnostics:
+The formal embedding configuration records an Apple Silicon MPS runtime. Saved
+artifacts can be inspected and validated without regenerating embeddings or
+rerunning the formal NSGA-II experiment.
+
+## Validation and common commands
+
+Run the complete test suite:
 
 ```bash
-bash scripts/00_pre_experiment/run_pre_jpetstore.sh
-bash scripts/00_pre_experiment/run_pre_daytrader.sh
-bash scripts/00_pre_experiment/run_pre_xerces_j.sh
+.venv/bin/python -m pytest
 ```
 
-Additional pre-experiment analysis:
+Inspect the supported Stage 3 commands:
 
 ```bash
-bash scripts/00_pre_experiment/run_daytrader_calibration.sh
-bash scripts/00_pre_experiment/run_xerces_j_sensitivity.sh
+.venv/bin/python experiments/05_stage3_declaration_method_body/prepare_semantic.py --help
+.venv/bin/python experiments/05_stage3_declaration_method_body/run.py --help
+.venv/bin/python experiments/05_stage3_declaration_method_body/run_robustness.py --help
+.venv/bin/python experiments/05_stage3_declaration_method_body/analyze.py --help
+.venv/bin/python experiments/05_stage3_declaration_method_body/synchronize_stage2_operating_profile.py --help
 ```
 
-Formal Stage 1 outputs:
+Equivalent shell launchers are available under
+`scripts/05_stage3_declaration_method_body/`. Read
+`docs/stage3/reproducibility.md` before any regeneration or optimizer run.
 
-```bash
-bash scripts/01_stage1_leiden_baseline/run_stage1_jpetstore.sh
-bash scripts/01_stage1_leiden_baseline/run_stage1_daytrader.sh
-bash scripts/01_stage1_leiden_baseline/run_stage1_xerces_j.sh
-```
-
-## 12. Testing
-
-Python tests:
-
-```bash
-pytest
-```
-
-Java extractor tests:
-
-```bash
-mvn -f tools/soot_extractor/pom.xml test
-```
-
-## 13. Data Policy
-
-Raw Java projects are local research inputs and are not committed.
-
-Normalized extraction outputs are stored under:
+## Repository structure
 
 ```text
-data/extracted/
+configs/       Subject and experiment contracts.
+data/          Extracted structural data and frozen semantic artifacts.
+docs/          Stage documentation, reproducibility guidance, and findings.
+experiments/   Stage-specific orchestration and analysis entry points.
+results/       Accepted per-subject and cross-subject experiment evidence.
+scripts/       Thin shell launchers and extraction helpers.
+src/           Reusable extraction, graph, optimization, semantic, and analysis code.
+tests/         Unit, integration, architecture, provenance, and reproducibility tests.
+tools/         Java Soot/Shimple extractor.
 ```
-
-Generated experiment outputs are stored under:
-
-```text
-results/
-```
-
-Final Stage 1 outputs are identified by the frozen Git snapshot and the formal Stage 1 result folders.

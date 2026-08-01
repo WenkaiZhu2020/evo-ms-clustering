@@ -45,9 +45,16 @@ def test_stage3_script_directory_contains_only_shell_launchers():
     assert all(path.suffix == ".sh" for path in SCRIPT_ROOT.iterdir())
 
 
-def test_final_experiment_directory_is_exactly_five_files():
+def test_final_experiment_directory_has_four_entrypoints_and_one_maintenance_utility():
     paths = sorted(path.name for path in EXPERIMENT_ROOT.iterdir() if path.is_file())
-    assert paths == ["README.md", "analyze.py", "prepare_semantic.py", "run.py", "run_robustness.py"]
+    assert paths == [
+        "README.md",
+        "analyze.py",
+        "prepare_semantic.py",
+        "run.py",
+        "run_robustness.py",
+        "synchronize_stage2_operating_profile.py",
+    ]
 
 
 def test_config_has_no_private_stage2_implementation_references():
