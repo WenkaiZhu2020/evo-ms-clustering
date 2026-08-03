@@ -15,7 +15,7 @@ require_locked_runtime
 run_stage2 \
   --subject "$1" \
   --seeds "${seeds}" \
-  --output-dir "results/$1/03_stage2_nsga/robustness_smoke" \
+  --output-dir "results/stage2/subjects/$1/nsga/robustness_smoke" \
   --bounds-config "${STAGE2_BOUNDS}" \
   --config "${STAGE2_CONFIG}" \
   --allow-smoke-bounds

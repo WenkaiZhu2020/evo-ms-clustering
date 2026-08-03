@@ -8,7 +8,7 @@ The pipeline reads the isolated semantic text under
 `data/semantic_text/declaration_method_body/`, saved embeddings under
 `data/embeddings/declaration_method_body/`, and saved top-3 semantic graphs
 under `data/semantic_graphs/declaration_method_body/`. The accepted optimizer
-results remain under `results/<subject>/05_stage3_declaration_method_body/`.
+results remain under `results/stage3/subjects/<subject>/declaration_method_body/`.
 
 The implementation boundary is `experiments/05_stage3_declaration_method_body/`.
 Its only scripts are thin launchers under

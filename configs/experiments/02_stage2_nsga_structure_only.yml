@@ -48,4 +48,4 @@ post_hoc_metrics:
   - pairwise_f1   # DayTrader only.
 # Multi-seed robustness for stochastic NSGA-II, mirroring the Stage 1 pattern.
 random_seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-output_root: results       # Future output path: results/<subject>/03_stage2_nsga/.
+output_root: results/stage2/subjects

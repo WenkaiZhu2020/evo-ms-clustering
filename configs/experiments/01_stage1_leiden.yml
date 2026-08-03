@@ -24,4 +24,4 @@ profiles:
     seed: 42
     selection_source: constrained_minimum_effective_ssa_calibration
     selection_role: minimum_effective_nonzero_ssa_comparison
-output_root: results
+output_root: results/stage1/subjects

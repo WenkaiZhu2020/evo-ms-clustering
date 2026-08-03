@@ -2,16 +2,16 @@
 
 The final Stage 3 experiment uses three ownership layers:
 
-* `results/cross_subject/05_stage3_declaration_method_body/` stores generated
+* `results/stage3/` stores generated
   machine-readable tables, analysis data, hashes, manifests, inventories, and
   validation evidence;
-* `docs/stage3/results/` stores human-readable
+* `docs/stage3/findings/` stores human-readable
   findings, explanations, reproducibility guidance, and thesis figures;
 * `reports/stage3/` is a legacy mixed root and is retired only after the
   migration manifest, byte-level checks, and all active path references pass.
 
 Subject-specific formal results remain under
-`results/<subject>/05_stage3_declaration_method_body/`. Scientific inputs and
+`results/stage3/subjects/<subject>/declaration_method_body/`. Scientific inputs and
 intermediate artifacts remain under `data/`.
 
 The current configuration's `outputs.report_root` is a layout-only output
@@ -37,26 +37,25 @@ names.
 ## Current machine-readable roots
 
 ```text
-results/cross_subject/05_stage3_declaration_method_body/
-  formal_statistics/
-  stage2_vs_stage3/
-  preference_response/
-  quality/
+results/stage3/
+  subjects/<subject>/declaration_method_body/
+  cross_subject/formal_statistics/
+  cross_subject/stage2_comparison/
+  cross_subject/preference_analysis/
+  data_quality/
+  reproducibility_checks/
   provenance/
-  validation/
-  figures/
 ```
 
 ## Current human-readable root
 
 ```text
-docs/stage3/results/
+docs/stage3/findings/
   README.md
-  main_findings.md
   formal_results.md
   stage2_vs_stage3.md
   preference_response.md
-  input_and_graph_quality.md
-  reproducibility.md
+  input_quality_summary.md
+  semantic_graph_quality_summary.md
   figures/
 ```

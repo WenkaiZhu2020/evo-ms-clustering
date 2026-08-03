@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
+from evo_ms.repository_layout import STAGE2_OPERATING_PROFILE_ROOT, stage2_subject_root
+
 
 def _load_robustness_module():
     path = ROOT / "experiments" / "02_stage2_nsga_structure_only" / "run_robustness.py"
@@ -43,9 +45,9 @@ def main() -> int:
     robustness = _load_robustness_module()
     rows = []
     for subject in ("jpetstore", "daytrader", "xerces-j"):
-        run_dir = ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds"
+        run_dir = stage2_subject_root(subject, ROOT) / "robustness_final_30seeds"
         selected = pd.read_csv(
-            ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv"
+            STAGE2_OPERATING_PROFILE_ROOT / "canonical_operating_solution_per_seed.csv"
         )
         selected = selected.loc[selected["subject"] == subject].copy()
         context = robustness._load_context(subject, ROOT / "configs" / "experiments" / "02_stage2_nsga_structure_only.yml")

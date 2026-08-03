@@ -21,4 +21,4 @@ The analysis reads only `pareto_front.csv` from the frozen
 `robustness_final_30seeds` directories. It does not rerun NSGA-II, rebuild
 graphs, regenerate Pareto fronts or references, or modify the frozen search
 artifacts. Generated outputs are under
-`results/cross_subject/03_stage2_nsga/modularity_band/`.
+`results/stage2/cross_subject/operating_profile/`.

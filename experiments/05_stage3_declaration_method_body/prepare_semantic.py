@@ -53,6 +53,7 @@ from evo_ms.semantic.method_body import MethodBody  # noqa: E402
 from evo_ms.semantic.method_body import compose_semantic_text  # noqa: E402
 from evo_ms.semantic.method_body import extract_declaration_section  # noqa: E402
 from evo_ms.semantic.method_body import normalize_class_bodies  # noqa: E402
+from evo_ms.repository_layout import STAGE3_PROVENANCE_ROOT  # noqa: E402
 
 
 SUBJECTS = ("jpetstore", "daytrader", "xerces")
@@ -64,7 +65,7 @@ EXPECTED_INPUT_HASHES = {
 }
 INPUT_ROOT = ROOT / "data/semantic_text/declaration_method_body"
 OUTPUT_ROOT = ROOT / "data/embeddings/declaration_method_body"
-REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body/provenance"
+REPORT_ROOT = STAGE3_PROVENANCE_ROOT
 INPUT_PROVENANCE_ROOT = REPORT_ROOT / "inputs"
 FORMAL_CONFIG = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 MAX_NORM_TOLERANCE = (0.999, 1.001)

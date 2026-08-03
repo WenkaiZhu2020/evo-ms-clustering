@@ -33,6 +33,7 @@ if str(SRC) not in sys.path:
 
 from evo_ms.optimization import encoding
 from evo_ms.optimization.objectives import evaluate_structural_objectives
+from evo_ms.repository_layout import stage2_subject_root
 from evo_ms.utils.config_loader import load_yaml
 
 
@@ -274,7 +275,7 @@ def run_robustness(
     context["imbalance_bound_method"] = bounds.get("imbalance_bound_method")
     _validate_bounds_against_context(bounds, context, run_type)
     default_group = "robustness_smoke" if run_type == "smoke" else "robustness"
-    root_output = output_dir or ROOT / "results" / subject / stage2.OUTPUT_LAYER / default_group
+    root_output = output_dir or stage2_subject_root(subject, ROOT) / default_group
     root_output.mkdir(parents=True, exist_ok=True)
 
     manifest = _base_manifest(context, bounds, seeds, bounds_config, config_path, run_type)

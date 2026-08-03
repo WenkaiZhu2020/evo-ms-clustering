@@ -47,7 +47,7 @@ Allowed `evidence_kind` values:
 ## Pre-Experiment Outputs
 
 ```text
-results/<subject>/00_pre_experiment/
+results/pre_experiment/subjects/<subject>/
   graph/raw_edges.csv
   graph/ssa_edges.csv
   graph/raw_graph_metrics.csv
@@ -63,12 +63,12 @@ results/<subject>/00_pre_experiment/
   comparison/top_moved_classes.csv
 ```
 
-DayTrader calibration outputs are under `results/daytrader/00_pre_experiment/calibration/`. Xerces-J sensitivity outputs are under `results/xerces-j/00_pre_experiment/sensitivity/`.
+DayTrader calibration outputs are under `results/pre_experiment/subjects/daytrader/calibration/`. Xerces-J sensitivity outputs are under `results/pre_experiment/subjects/xerces-j/sensitivity/`.
 
 ## Formal Stage 1 Outputs
 
 ```text
-results/<subject>/01_stage1_leiden_baseline/
+results/stage1/subjects/<subject>/leiden_baseline/
   baseline_index.yml
   raw_reference_leiden/
     graph/stage1_edges.csv

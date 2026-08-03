@@ -11,9 +11,9 @@ The final outputs are the 30-seed directories below, not the historical or
 diagnostic siblings under the same subject stage:
 
 ```text
-results/jpetstore/03_stage2_nsga/robustness_final_30seeds/
-results/daytrader/03_stage2_nsga/robustness_final_30seeds/
-results/xerces-j/03_stage2_nsga/robustness_final_30seeds/
+results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/
+results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/
+results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/
 ```
 
 Each manifest records formal seeds `0..29`, a `config_snapshot`, the formal
@@ -25,7 +25,7 @@ the fingerprints listed below.
 The current saved formal-output snapshot is listed in:
 
 ```text
-results/cross_subject/03_stage2_nsga/final_statistics/formal_output_sha256sums.txt
+results/stage2/cross_subject/formal_statistics/formal_output_sha256sums.txt
 ```
 
 It contains SHA-256 entries for 546 files across the three final 30-seed
@@ -97,27 +97,22 @@ version, and the generated CSV hashes before overwriting any input.
 
 ## Dependency Evidence and Gap
 
-`requirements.txt` at the formal Git commit is unpinned. A separate branch
-commit, `b2ee9d09ab0e43a2c1178c0f0dfa6eb08ec25437`, contains a historical
-direct-dependency lock recovered verbatim at:
+The authoritative Stage 2 branch maintains its supported environment as
+`pyproject.toml` plus `uv.lock` at `stage2-nsga@7b003e6`. The final Stage 3
+publication branch provides a compatible superset through its own
+`pyproject.toml` and `uv.lock`; this does not modify the Stage 2 branch's
+environment history.
 
-```text
-requirements/historical_stage2_lock_b2ee9d0.txt
-```
-
-It is not the final formal environment lock: it specifies NumPy `2.3.5`, while
-all final formal manifests record NumPy `2.4.4`. The only package versions
-directly evidenced by every formal manifest are retained in:
-
-```text
-requirements/stage2_formal_manifest_observed.txt
-```
+The formal Stage 2 manifests directly record Python `3.13.7`, NumPy `2.4.4`,
+and pymoo `0.6.2`. An older Stage 1 branch commit (`b2ee9d0`) recorded NumPy
+`2.3.5`; that historical requirements file remains available through Git
+history and is not a current installation source.
 
 The formal manifests do not record a full `pip freeze`, wheel hashes, or the
 versions of pandas, igraph, leidenalg, PyYAML, scipy, networkx, pytest, Java,
-Maven, or Ant. Consequently, an exact fresh computational rerun cannot be
-claimed from the saved evidence alone. Do not describe the historical lock as
-the final formal environment.
+Maven, or Ant. Consequently, the unified lock is the supported current
+reproduction environment, not a claim that every transitive package was
+recorded during the historical formal run.
 
 ## Errata
 
@@ -209,7 +204,7 @@ Validate saved inputs, config/bounds hashes, formal seed layout, and core
 source fingerprints without running NSGA-II:
 
 ```bash
-python scripts/reproducibility/verify_stage2_formal_provenance.py --skip-environment
+uv run --frozen python scripts/reproducibility/verify_stage2_formal_provenance.py --skip-environment
 ```
 
 The same command without `--skip-environment` also requires the two recorded

@@ -23,6 +23,7 @@ from evo_ms.optimization.semantic_objective import (
     evaluate_semantic_objective,
     semantic_total_weight,
 )
+from evo_ms.repository_layout import stage3_subject_root
 
 
 SUBJECTS = ("jpetstore", "daytrader", "xerces")
@@ -42,12 +43,11 @@ TOL = 1e-12
 ALPHA = 0.05
 
 ACTIVE_STAGE2_PROFILE = Path(
-    "results/cross_subject/03_stage2_nsga/modularity_band/"
+    "results/stage2/cross_subject/operating_profile/"
     "canonical_operating_solution_per_seed.csv"
 )
 PROJECTED_HV_SOURCE = Path(
-    "results/cross_subject/05_stage3_declaration_method_body/"
-    "stage2_vs_stage3/paired_per_seed.csv"
+    "results/stage3/cross_subject/stage2_comparison/paired_per_seed.csv"
 )
 STAGE2_PROFILE_ID = "stage2_5pct_modularity_band"
 STAGE3_PROFILE_ID = "stage3_final_projected_front_operating_selector"
@@ -146,15 +146,7 @@ def _vector_partition(class_nodes: pd.DataFrame, vector: str | Sequence[int]) ->
 
 def _stage3_selected(root: Path, subject: str, seed: int) -> tuple[str, pd.DataFrame, float]:
     phase = "validation" if seed == 0 else "formal"
-    path = (
-        root
-        / "results"
-        / subject
-        / "05_stage3_declaration_method_body"
-        / phase
-        / f"seed_{seed:02d}"
-        / "selected_solution.json"
-    )
+    path = stage3_subject_root(subject, root) / phase / f"seed_{seed:02d}" / "selected_solution.json"
     _validate_final_path(path)
     payload = json.loads(path.read_text(encoding="utf-8"))
     if payload.get("representation_id") != "declaration_method_body_v1":
@@ -260,7 +252,7 @@ def build_selected_fsemantic_pairs(root: Path) -> pd.DataFrame:
                     "delta_stage3_minus_stage2": float(stage3_value - stage2_value),
                     "stage2_profile_source": ACTIVE_STAGE2_PROFILE.as_posix(),
                     "stage3_profile_source": (
-                        f"results/{subject}/05_stage3_declaration_method_body/"
+                        f"results/stage3/subjects/{STORAGE_SUBJECT[subject]}/declaration_method_body/"
                         f"{'validation' if seed == 0 else 'formal'}/seed_{seed:02d}/selected_solution.json"
                     ),
                     "semantic_graph_source": (
@@ -422,7 +414,7 @@ def build_formal_tests(
                 STAGE3_PROFILE_ID,
                 (
                     f"{ACTIVE_STAGE2_PROFILE.as_posix()}; "
-                    "results/<subject>/05_stage3_declaration_method_body/"
+                    "results/stage3/subjects/<subject>/declaration_method_body/"
                     "{validation,formal}/seed_*/selected_solution.json; "
                     "data/semantic_graphs/declaration_method_body/<subject>/semantic_edges.csv"
                 ),
@@ -529,17 +521,13 @@ def build_partition_similarity(
 def build_input_control_summary(root: Path) -> pd.DataFrame:
     """Separate model context truncation from the 256-token body budget."""
     manifest_path = (
-        root
-        / "results/cross_subject/05_stage3_declaration_method_body/provenance/"
-        "embedding_generation_manifest.json"
+        root / "results/stage3/provenance/embedding_generation_manifest.json"
     )
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     rows: list[dict[str, Any]] = []
     for subject in SUBJECTS:
         quality_path = (
-            root
-            / "results/cross_subject/05_stage3_declaration_method_body/quality/input/"
-            "input_quality_per_class.csv"
+            root / "results/stage3/data_quality/semantic_input/input_quality_per_class.csv"
         )
         quality = _read_csv(quality_path)
         quality = quality.loc[quality["subject"].map(_normalise_subject) == subject].copy()
@@ -682,20 +670,20 @@ def reporting_outputs(root: Path) -> Mapping[Path, bytes]:
     summary = build_formal_summary(tests)
     similarity_per_seed, similarity_summary = build_partition_similarity(root)
     controls = build_input_control_summary(root)
-    base = Path("results/cross_subject/05_stage3_declaration_method_body")
+    base = Path("results/stage3")
     outputs: dict[Path, bytes] = {
-        base / "formal_statistics/formal_selected_fsemantic_per_seed.csv": csv_bytes(selected),
-        base / "formal_statistics/formal_statistical_tests.csv": csv_bytes(tests),
-        base / "formal_statistics/formal_summary.csv": csv_bytes(summary),
-        base / "formal_statistics/formal_partition_similarity_per_seed.csv": csv_bytes(
+        base / "cross_subject/formal_statistics/formal_selected_fsemantic_per_seed.csv": csv_bytes(selected),
+        base / "cross_subject/formal_statistics/formal_statistical_tests.csv": csv_bytes(tests),
+        base / "cross_subject/formal_statistics/formal_summary.csv": csv_bytes(summary),
+        base / "cross_subject/formal_statistics/formal_partition_similarity_per_seed.csv": csv_bytes(
             similarity_per_seed
         ),
-        base / "formal_statistics/formal_partition_similarity_summary.csv": csv_bytes(
+        base / "cross_subject/formal_statistics/formal_partition_similarity_summary.csv": csv_bytes(
             similarity_summary
         ),
-        base / "quality/input/input_control_summary.csv": csv_bytes(controls),
+        base / "data_quality/semantic_input/input_control_summary.csv": csv_bytes(controls),
     }
-    report_path = Path("docs/stage3/results/chapter4_3_data_pack.md")
+    report_path = Path("docs/stage3/findings/chapter4_3_data_pack.md")
     report_text = (root / report_path).read_text(encoding="utf-8")
     outputs[report_path] = render_report_blocks(
         report_text,

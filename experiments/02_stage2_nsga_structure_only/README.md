@@ -35,7 +35,7 @@ Design documents live in `../../docs/stage2/`:
 Output is written under:
 
 ```text
-results/<subject>/03_stage2_nsga/raw/
+results/stage2/subjects/<subject>/nsga/raw/
 ```
 
 Formal output directories must be treated as immutable. Before running

@@ -27,6 +27,7 @@ if str(SRC) not in sys.path:
 from evo_ms.analysis.stage3 import availability
 from evo_ms.analysis.stage3_reporting import write_reporting_outputs
 from evo_ms.analysis.statistics import deterministic_rows
+from evo_ms.repository_layout import STAGE3_ROOT, stage2_subject_root
 
 
 def _load_experiment_module(filename: str, name: str):
@@ -47,14 +48,14 @@ SUBJECTS = adapter.SUBJECTS
 SEEDS = tuple(range(30))
 STORAGE_SUBJECT = adapter.STORAGE_SUBJECT
 CLASS_COUNTS = adapter.EXPECTED_COUNTS
-REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
+REPORT_ROOT = STAGE3_ROOT
 STAGE2_CONFIG = adapter.STAGE2_CONFIG_PATH
 STAGE3_CONFIG = adapter.STAGE3_CONFIG
 
 
 def stage2_dir(subject: str, seed: int) -> Path:
     """Return the frozen Stage 2 formal result directory used for comparison."""
-    return ROOT / "results" / STORAGE_SUBJECT[subject] / "03_stage2_nsga" / "robustness_final_30seeds" / f"seed_{seed:02d}"
+    return stage2_subject_root(STORAGE_SUBJECT[subject], ROOT) / "robustness_final_30seeds" / f"seed_{seed:02d}"
 
 
 def stage3_dir(subject: str, seed: int) -> Path:

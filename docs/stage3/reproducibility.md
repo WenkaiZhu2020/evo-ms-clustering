@@ -4,7 +4,7 @@
 
 - Experiment: `stage3_declaration_method_body`
 - Representation: `declaration_method_body_v1`
-- Subjects: JPetStore (24), DayTrader (53), Xerces (814)
+- Subjects: JPetStore (24), DayTrader (53), Xerces-J (814; semantic ID `xerces`)
 - Seeds: validation seed 0 and formal seeds 1–29
 - Graph: true-cosine top-3 with lexicographic tie-breaking and OR symmetrisation
 
@@ -13,19 +13,33 @@ The canonical experiment entry points are under
 under `scripts/05_stage3_declaration_method_body/`. Reusable semantic,
 optimization, evaluation, and analysis logic is under `src/evo_ms/`.
 
+## Supported environment
+
+The final branch has one supported environment for all three stages. Install it
+from the repository root with the frozen uv lock:
+
+```bash
+uv sync --frozen
+```
+
+Run validation commands through `uv run --frozen`. The Stage 2 branch remains
+the authority for the environment that generated the historical Stage 2
+artifacts; the final lock is a compatible Stage 1--3 reproduction and
+inspection environment, not a rewritten historical claim.
+
 ## Reproduction flow
 
 The following commands describe the frozen flow. They are not an instruction
 to regenerate accepted artifacts during repository maintenance:
 
 ```text
-scripts/05_stage3_declaration_method_body/prepare_semantic.sh --help
-scripts/05_stage3_declaration_method_body/run_stage3.sh --help
-python experiments/05_stage3_declaration_method_body/run.py --help
-scripts/05_stage3_declaration_method_body/run_robustness.sh --help
-scripts/05_stage3_declaration_method_body/analyze.sh --help
-python experiments/05_stage3_declaration_method_body/analyze.py --help
-python experiments/05_stage3_declaration_method_body/analyze.py --check-reporting
+uv run --frozen scripts/05_stage3_declaration_method_body/prepare_semantic.sh --help
+uv run --frozen scripts/05_stage3_declaration_method_body/run_stage3.sh --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/run.py --help
+uv run --frozen scripts/05_stage3_declaration_method_body/run_robustness.sh --help
+uv run --frozen scripts/05_stage3_declaration_method_body/analyze.sh --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/analyze.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/analyze.py --check-reporting
 ```
 
 Input preparation is a real command and must use a temporary output directory.
@@ -37,15 +51,15 @@ external local inputs; a missing source directory is an explicit failure.
 Graph provenance has two layers. Historical source commits and original config
 hashes describe accepted artifact generation. Current regeneration checks the
 normalized scientific contract in
-`results/cross_subject/05_stage3_declaration_method_body/provenance/final_graph_compatibility_contract.json`; current
+`results/stage3/provenance/final_graph_compatibility_contract.json`; current
 Git HEAD is not compared with the historical graph-generation commit.
 
 Input, embedding, graph, and formal-result manifests record exact hashes,
 configuration identity, model revision, class mapping, source commit, and
 validation status. Machine-readable reports are organised under
-`results/cross_subject/05_stage3_declaration_method_body/`; human-readable
+`results/stage3/`; human-readable
 findings and thesis figures are under
-`docs/stage3/results/`. Historical provenance may
+`docs/stage3/findings/`. Historical provenance may
 still contain the original `reports/stage3` path by design.
 
 `--check-reporting` deterministically rebuilds the final six-row statistical

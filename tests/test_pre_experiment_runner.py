@@ -22,7 +22,7 @@ def test_run_pre_experiment_writes_expected_outputs_to_temp_results(tmp_path: Pa
     output_dirs = pre_experiment_runner.run_pre_experiment(root=tmp_path, subject="jpetstore")
 
     output_dir = output_dirs[0]
-    assert output_dir == tmp_path / "results" / "jpetstore" / "00_pre_experiment"
+    assert output_dir == tmp_path / "results" / "pre_experiment" / "subjects" / "jpetstore"
     assert sorted(path.name for path in output_dir.iterdir()) == [
         "clustering",
         "comparison",
@@ -93,7 +93,7 @@ def test_run_pre_experiment_uses_config_subjects(tmp_path: Path) -> None:
 
     output_dirs = pre_experiment_runner.run_pre_experiment(root=tmp_path)
 
-    assert output_dirs == [tmp_path / "results" / "jpetstore" / "00_pre_experiment"]
+    assert output_dirs == [tmp_path / "results" / "pre_experiment" / "subjects" / "jpetstore"]
 
 
 def test_run_pre_experiment_accepts_ssa_lambda_override(tmp_path: Path) -> None:

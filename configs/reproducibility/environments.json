@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "supported_final_environment": {
+    "python": "3.13.7",
+    "dependency_manager": "uv 0.11.29",
+    "project_file": "pyproject.toml",
+    "lockfile": "uv.lock",
+    "installation_command": "uv sync --frozen",
+    "scope": [
+      "stage1",
+      "stage2",
+      "stage3"
+    ],
+    "common_packages": {
+      "igraph": "1.0.0",
+      "leidenalg": "0.12.0",
+      "matplotlib": "3.10.8",
+      "networkx": "3.6.1",
+      "numpy": "2.4.4",
+      "pandas": "2.2.3",
+      "pymoo": "0.6.2",
+      "pyyaml": "6.0.3",
+      "scipy": "1.16.3"
+    },
+    "stage3_semantic_packages": {
+      "scikit-learn": "1.9.0",
+      "sentence-transformers": "5.6.0",
+      "torch": "2.13.0",
+      "transformers": "5.14.1"
+    },
+    "dev_packages": {
+      "pytest": "9.1.1"
+    }
+  },
+  "historical_evidence": {
+    "stage1": {
+      "branch": "stage1-baseline",
+      "commit": "0f2591e84db4",
+      "complete_environment_recorded": false,
+      "note": "The unified lock is a supported reproduction environment, not a retrospective claim about the Stage 1 runtime."
+    },
+    "stage2": {
+      "branch": "stage2-nsga",
+      "supported_environment_commit": "7b003e65418d",
+      "formal_computation_tag": "stage2-frozen",
+      "formal_computation_commit": "2da4408abe89",
+      "formal_manifest_packages": {
+        "python": "3.13.7",
+        "numpy": "2.4.4",
+        "pymoo": "0.6.2"
+      },
+      "ownership": "The Stage 2 branch remains authoritative for its environment history; this final lock only provides a compatible superset."
+    },
+    "stage3": {
+      "branch": "stage3-Declaration+Method-Body",
+      "pre_migration_commit": "74dca15aa79e",
+      "previous_lock": "results/stage3/provenance/environment/historical_stage3_requirements_lock.txt",
+      "previous_lock_sha256": "f390c0dcef98c921f7367733b8169ea7664c03f1f5fafff6e99345512abb2a8f",
+      "version_parity_required": true
+    }
+  }
+}

@@ -45,11 +45,12 @@ from evo_ms.optimization.problem import build_structural_problem
 from evo_ms.optimization.problem import DEFAULT_MAX_CLUSTER_RATIO
 from evo_ms.optimization.problem import repair_labels
 from evo_ms.optimization.problem import validate_max_cluster_ratio
+from evo_ms.repository_layout import stage1_baseline_root, stage2_subject_root
 from evo_ms.utils.config_loader import load_yaml
 from evo_ms.utils.logging import get_logger
 
 CONFIG_PATH = ROOT / "configs" / "experiments" / "02_stage2_nsga_structure_only.yml"
-OUTPUT_LAYER = "03_stage2_nsga"
+OUTPUT_LAYER = "nsga"
 RAW_OUTPUT_GROUP = "raw"
 RAW_WEIGHT_COLUMN = "raw_weight"
 RAW_BASELINE_PROFILE = "raw_reference_leiden"
@@ -103,8 +104,7 @@ def run_stage2_nsga(
     stage1_raw_baseline = _frozen_raw_leiden_baseline(root, subject_name, class_nodes)
     reference_mapping = _reference_mapping(root, subject_config, subject_name)
 
-    output_root = root / config.get("output_root", "results")
-    output_dir = output_root / subject_name / OUTPUT_LAYER / (output_group or RAW_OUTPUT_GROUP)
+    output_dir = stage2_subject_root(subject_name, root) / (output_group or RAW_OUTPUT_GROUP)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     logger = get_logger(__name__)
@@ -844,10 +844,7 @@ def _frozen_raw_leiden_baseline(
     class_nodes: pd.DataFrame,
 ) -> pd.DataFrame:
     path = (
-        root
-        / "results"
-        / subject
-        / "01_stage1_leiden_baseline"
+        stage1_baseline_root(subject, root)
         / RAW_BASELINE_PROFILE
         / "clustering"
         / "stage1_clusters.csv"

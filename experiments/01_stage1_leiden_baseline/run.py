@@ -25,6 +25,7 @@ from evo_ms.extraction.evidence_weight_validation import expected_extracted_evid
 from evo_ms.extraction.evidence_weight_validation import validate_extracted_evidence_weights
 from evo_ms.graph.raw_graph_builder import build_raw_edges
 from evo_ms.graph.ssa_graph_builder import build_ssa_edges
+from evo_ms.repository_layout import STAGE1_SUBJECTS_RELATIVE, canonical_subject
 from evo_ms.utils.config_loader import load_yaml
 from evo_ms.utils.logging import get_logger
 
@@ -42,7 +43,7 @@ def run_stage1_leiden(
 
     profiles = _profiles(config)
     expected_weights = expected_extracted_evidence_weights(config)
-    output_root = root / config.get("output_root", config.get("output_directory", "results"))
+    output_root = root / STAGE1_SUBJECTS_RELATIVE
 
     output_dirs = []
     for subject_name in subjects:
@@ -81,7 +82,7 @@ def run_subject(
 
     class_nodes = extracted["class_nodes"]
     raw_edges = build_raw_edges(class_nodes, extracted["structural_dependencies"])
-    output_dir = output_root / subject / "01_stage1_leiden_baseline"
+    output_dir = output_root / canonical_subject(subject) / "leiden_baseline"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     generated_profiles = []

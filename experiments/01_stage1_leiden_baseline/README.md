@@ -2,7 +2,7 @@
 
 This folder contains the formal Stage 1 Leiden baseline runner. Diagnostic, calibration, and sensitivity scripts belong under `experiments/00_pre_experiment/`.
 
-The runner reconstructs fixed baseline graphs from normalized extracted CSV inputs. It does not read `results/<subject>/00_pre_experiment/` and does not automatically select the best DayTrader calibration row.
+The runner reconstructs fixed baseline graphs from normalized extracted CSV inputs. It does not read `results/pre_experiment/subjects/<subject>/` and does not automatically select the best DayTrader calibration row.
 
 Formal profiles:
 
@@ -17,7 +17,7 @@ Inputs:
 - `data/extracted/<subject>/structural_dependencies.csv`
 - `data/extracted/<subject>/ssa_flow_edges.csv`
 
-Outputs are written to `results/<subject>/01_stage1_leiden_baseline/`:
+Outputs are written to `results/stage1/subjects/<subject>/leiden_baseline/`:
 
 - `baseline_index.yml`
 - `raw_reference_leiden/graph/stage1_edges.csv`

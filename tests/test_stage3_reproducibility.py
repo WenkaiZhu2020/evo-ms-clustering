@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_canonical_provenance_points_to_final_representation_and_existing_hashes() -> None:
-    provenance_root = ROOT / "results/cross_subject/05_stage3_declaration_method_body/provenance"
+    provenance_root = ROOT / "results/stage3/provenance"
     manifest = json.loads((provenance_root / "final_stage3_provenance.json").read_text(encoding="utf-8"))
     embedding_manifest = json.loads((provenance_root / "embedding_generation_manifest.json").read_text(encoding="utf-8"))
     graph_manifest = json.loads((provenance_root / "semantic_graph_generation_manifest.json").read_text(encoding="utf-8"))

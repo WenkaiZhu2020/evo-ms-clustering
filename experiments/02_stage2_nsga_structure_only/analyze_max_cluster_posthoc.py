@@ -18,6 +18,8 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
+from evo_ms.repository_layout import stage2_subject_root
+
 
 def _robustness_module():
     path = ROOT / "experiments" / "02_stage2_nsga_structure_only" / "run_robustness.py"
@@ -103,7 +105,7 @@ def main() -> int:
     _assert_selector_adapter_matches_formal_helper(robustness.stage2)
     rows = []
     for subject in ("daytrader", "xerces-j"):
-        run_dir = ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds"
+        run_dir = stage2_subject_root(subject, ROOT) / "robustness_final_30seeds"
         context = robustness._load_context(subject, ROOT / "configs" / "experiments" / "02_stage2_nsga_structure_only.yml")
         baseline = context["stage1_raw_baseline"]
         mapping = robustness.encoding.to_cluster_by_class(

@@ -226,4 +226,4 @@ def test_stage2_boundary_is_independent_of_final_stage3() -> None:
 
 def test_stage1_frozen_paths_intact() -> None:
     assert (ROOT / "experiments" / "01_stage1_leiden_baseline").is_dir()
-    assert (ROOT / "results" / "daytrader" / "01_stage1_leiden_baseline").is_dir()
+    assert (ROOT / "results/stage1/subjects/daytrader/leiden_baseline").is_dir()

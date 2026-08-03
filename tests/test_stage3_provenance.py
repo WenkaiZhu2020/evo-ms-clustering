@@ -47,7 +47,7 @@ def _rows(subject: str) -> list[dict[str, str]]:
 
 def test_final_config_and_manifest_have_one_runtime_identity() -> None:
     config = yaml.safe_load((ROOT / "configs/experiments/05_stage3_declaration_method_body.yml").read_text(encoding="utf-8"))
-    manifest = json.loads((ROOT / "results/cross_subject/05_stage3_declaration_method_body/provenance/formal_experiment_manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads((ROOT / "results/stage3/provenance/formal_experiment_manifest.json").read_text(encoding="utf-8"))
     assert config["experiment_name"] == "stage3_declaration_method_body"
     assert config["representation_id"] == REPRESENTATION_ID
     assert "base_experiment_config" not in config
@@ -61,7 +61,7 @@ def test_final_reporting_manifest_uses_active_six_row_contract() -> None:
     manifest = json.loads(
         (
             ROOT
-            / "results/cross_subject/05_stage3_declaration_method_body/provenance/formal_experiment_manifest.json"
+            / "results/stage3/provenance/formal_experiment_manifest.json"
         ).read_text(encoding="utf-8")
     )
     contract = manifest["reporting_correction"]
@@ -73,13 +73,13 @@ def test_final_reporting_manifest_uses_active_six_row_contract() -> None:
     assert contract["correction"] == "Holm across exactly six confirmatory rows"
     assert contract["family_wise_alpha"] == 0.05
     assert contract["stage2_profile_source"].endswith(
-        "modularity_band/canonical_operating_solution_per_seed.csv"
+        "operating_profile/canonical_operating_solution_per_seed.csv"
     )
     assert contract["experiment_rerun"] is False
 
 
 def test_saved_formal_runs_validate_against_their_generation_config_snapshot() -> None:
-    run = ROOT / "results/jpetstore/05_stage3_declaration_method_body/formal/seed_01"
+    run = ROOT / "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_01"
     metadata = json.loads((run / "run_metadata.json").read_text(encoding="utf-8"))
     snapshot_hash = hashlib.sha256((run / "config_snapshot.yml").read_bytes()).hexdigest()
     current_hash = hashlib.sha256(
@@ -149,8 +149,8 @@ def test_provenance_validator_rejects_other_representation() -> None:
 
 
 def test_canonical_report_subtrees_are_final_only() -> None:
-    report_root = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
-    for subtree in ("stage2_vs_stage3", "quality", "validation"):
+    report_root = ROOT / "results/stage3"
+    for subtree in ("cross_subject/stage2_comparison", "data_quality", "reproducibility_checks"):
         for path in (report_root / subtree).rglob("*"):
             if path.is_file():
                 text = path.read_text(encoding="utf-8", errors="replace").lower()

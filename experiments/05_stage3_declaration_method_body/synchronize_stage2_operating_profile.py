@@ -5,18 +5,24 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import sys
 
 import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))
+
+from evo_ms.repository_layout import STAGE2_OPERATING_PROFILE_ROOT, STAGE3_PREFERENCE_ANALYSIS_ROOT
+
 STAGE3_SUBJECT = {"daytrader": "daytrader", "jpetstore": "jpetstore", "xerces-j": "xerces"}
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--stage2-dir", type=Path, default=ROOT / "results/cross_subject/03_stage2_nsga/modularity_band")
-    parser.add_argument("--stage3-root", type=Path, default=ROOT / "results/cross_subject/05_stage3_declaration_method_body/preference_response")
+    parser.add_argument("--stage2-dir", type=Path, default=STAGE2_OPERATING_PROFILE_ROOT)
+    parser.add_argument("--stage3-root", type=Path, default=STAGE3_PREFERENCE_ANALYSIS_ROOT)
     args = parser.parse_args()
     profiles = pd.read_csv(args.stage2_dir / "profiles_per_seed.csv")
     canonical = pd.read_csv(args.stage2_dir / "canonical_operating_solution_per_seed.csv")

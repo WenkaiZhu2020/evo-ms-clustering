@@ -22,6 +22,7 @@ from evo_ms.extraction.evidence_weight_validation import expected_extracted_evid
 from evo_ms.extraction.evidence_weight_validation import validate_extracted_evidence_weights
 from evo_ms.graph.raw_graph_builder import build_raw_edges, build_raw_graph
 from evo_ms.graph.ssa_graph_builder import build_g_ssa_graph, build_ssa_edges
+from evo_ms.repository_layout import PRE_EXPERIMENT_RELATIVE, canonical_subject
 from evo_ms.utils.config_loader import load_yaml
 from evo_ms.utils.logging import get_logger
 
@@ -43,7 +44,7 @@ def run_pre_experiment(
     ssa_lambda = _ssa_lambda(config) if ssa_lambda is None else float(ssa_lambda)
     expected_weights = expected_extracted_evidence_weights(config)
     seed = int(config.get("leiden", {}).get("seed", 42))
-    output_root = root / config.get("output_root", config.get("output_directory", "results"))
+    output_root = root / PRE_EXPERIMENT_RELATIVE
 
     output_dirs = []
     for subject_name in subjects:
@@ -133,7 +134,7 @@ def run_subject(
         graph_type="ssa",
     )
 
-    output_dir = output_root / subject / "00_pre_experiment"
+    output_dir = output_root / canonical_subject(subject)
     graph_dir = output_dir / "graph"
     clustering_dir = output_dir / "clustering"
     comparison_dir = output_dir / "comparison"

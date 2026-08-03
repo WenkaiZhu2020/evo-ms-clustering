@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "final_branch": "stage3-Declaration+Method-Body",
+  "layout_migration_start_head": "74dca15aa79e5c643f78c8b8c1152962a0a38e8e",
+  "stage1": {
+    "branch": "stage1-baseline",
+    "observed_head": "0f2591e84db4",
+    "historical_environment_complete": false
+  },
+  "stage2": {
+    "branch": "stage2-nsga",
+    "formal_computation_tag": "stage2-frozen",
+    "formal_computation_commit": "2da4408abe891af39924e0efd48648144debda8a",
+    "supported_environment_ref": "origin/stage2-nsga",
+    "supported_environment_commit": "7b003e65418da93d846b244100623f0e2feddd51",
+    "environment_ownership": "stage2-nsga",
+    "modified_by_final_layout_migration": false
+  },
+  "stage3": {
+    "branch": "stage3-Declaration+Method-Body",
+    "representation_id": "declaration_method_body_v1",
+    "experiment_id": "stage3_declaration_method_body",
+    "role": "canonical final publication branch"
+  }
+}

@@ -20,9 +20,9 @@ def test_final_config_is_self_contained():
     assert "base_experiment_config" not in config
     assert config["input"]["semantic_text_root"] == "data/semantic_text/declaration_method_body"
     assert config["input"]["stage3a_input_required"] is False
-    assert all("05_stage3_declaration_method_body" in value for value in config["outputs"]["result_roots"].values())
+    assert all("results/stage3/subjects/" in value for value in config["outputs"]["result_roots"].values())
     assert config["input"]["semantic_text_filename_template"] == "class_semantic_inputs.csv"
-    assert config["outputs"]["report_root"] == "results/cross_subject/05_stage3_declaration_method_body"
+    assert config["outputs"]["report_root"] == "results/stage3"
     assert config["semantic_graph"]["similarity_implementation"] == "evo_ms.semantic.graph.true_cosine_similarity"
 
 

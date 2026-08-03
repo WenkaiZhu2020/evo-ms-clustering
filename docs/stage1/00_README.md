@@ -36,4 +36,6 @@ compiled Java classes
 | `daytrader` | constrained calibration case with reference-based sanity checks |
 | `xerces-j`  | larger-scale sensitivity case    |
 
-Research-facing summaries are stored under `docs/reports/`.
+Research-facing summaries are stored under `docs/stage1/findings/`; shared
+Pre-experiment selection and calibration notes are under
+`docs/pre_experiment/findings/`.

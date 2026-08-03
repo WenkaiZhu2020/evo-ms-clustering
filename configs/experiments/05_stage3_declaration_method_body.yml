@@ -168,7 +168,8 @@ random_graph_baseline:
     condition_on_reference_labels: false
   rng:
     implementation: numpy.random.default_rng
-    numpy_version_source: requirements-stage3-lock.txt
+    numpy_version_source: configs/reproducibility/environments.json
+    historical_environment_source: results/stage3/provenance/environment/historical_stage3_requirements_lock.txt
     repetition_index_start: 0
     repetition_index_end: 999
     subject_seed_bases:
@@ -300,11 +301,11 @@ statistics:
   difference_definition: Stage_3_minus_Stage_2
   stage2_selected_profile:
     id: stage2_5pct_modularity_band
-    source: results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv
+    source: results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv
   stage3_selected_profile:
     id: stage3_final_projected_front_operating_selector
-    source: results/<subject>/05_stage3_declaration_method_body/{validation,formal}/seed_*/selected_solution.json
-  projected_hypervolume_source: results/cross_subject/05_stage3_declaration_method_body/stage2_vs_stage3/paired_per_seed.csv
+    source: results/stage3/subjects/<subject>/declaration_method_body/{validation,formal}/seed_*/selected_solution.json
+  projected_hypervolume_source: results/stage3/cross_subject/stage2_comparison/paired_per_seed.csv
   selected_f_semantic_evaluation_graph: data/semantic_graphs/declaration_method_body/<subject>/semantic_edges.csv
   exploratory_metrics: separate_declared_families_only
   reporting_only_correction: true
@@ -381,13 +382,13 @@ input:
   stage3a_input_required: false
 
 outputs:
-  report_root: results/cross_subject/05_stage3_declaration_method_body
+  report_root: results/stage3
   embedding_root: data/embeddings/declaration_method_body
   semantic_graph_root: data/semantic_graphs/declaration_method_body
   result_roots:
-    jpetstore: results/jpetstore/05_stage3_declaration_method_body
-    daytrader: results/daytrader/05_stage3_declaration_method_body
-    xerces: results/xerces/05_stage3_declaration_method_body
+    jpetstore: results/stage3/subjects/jpetstore/declaration_method_body
+    daytrader: results/stage3/subjects/daytrader/declaration_method_body
+    xerces: results/stage3/subjects/xerces-j/declaration_method_body
 
 boundary:
   stage3a_runtime_dependency_forbidden: true

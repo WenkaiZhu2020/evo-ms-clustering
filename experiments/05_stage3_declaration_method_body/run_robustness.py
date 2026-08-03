@@ -31,6 +31,8 @@ if str(ROOT) not in sys.path:
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from evo_ms.repository_layout import STAGE3_ROOT, stage3_subject_root
+
 def _load_run_module():
     path = ROOT / "experiments/05_stage3_declaration_method_body/run.py"
     spec = importlib.util.spec_from_file_location("stage3_final_experiment_run", path)
@@ -46,7 +48,7 @@ adapter = _load_run_module()
 
 SUBJECTS = adapter.SUBJECTS
 FORMAL_SEEDS = tuple(range(1, 30))
-REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
+REPORT_ROOT = STAGE3_ROOT
 RUNTIME_ROOT = REPORT_ROOT / "runtime"
 LOG_ROOT = RUNTIME_ROOT / "logs"
 LOCK_ROOT = RUNTIME_ROOT / "locks"
@@ -81,7 +83,7 @@ def formal_output_dir(subject: str, seed: int) -> Path:
     if seed not in FORMAL_SEEDS:
         raise ValueError(f"formal Stage 3B runner accepts seeds 1..29 only, got {seed}")
     path = adapter.output_dir(subject, seed=seed)
-    expected = ROOT / "results" / subject / "05_stage3_declaration_method_body" / "formal" / f"seed_{seed:02d}"
+    expected = stage3_subject_root(subject, ROOT) / "formal" / f"seed_{seed:02d}"
     if path.resolve() != expected.resolve() or "validation" in str(path):
         raise ValueError(f"formal output path isolation failure: {path}")
     return path

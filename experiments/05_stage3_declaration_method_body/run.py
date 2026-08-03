@@ -43,6 +43,13 @@ from evo_ms.optimization.semantic_objective import (
     resolve_semantic_total_weight,
 )
 from evo_ms.optimization.objectives import evaluate_structural_objectives
+from evo_ms.repository_layout import (
+    STAGE3_PROVENANCE_ROOT,
+    STAGE3_ROOT,
+    stage1_baseline_root,
+    stage2_subject_root,
+    stage3_subject_root,
+)
 from evo_ms.utils.config_loader import load_yaml
 from evo_ms.optimization.stage3_problem import (
     STAGE3_OBJECTIVE_ORDER,
@@ -54,8 +61,8 @@ from evo_ms.optimization.stage3_problem import (
 CONFIG_PATH = ROOT / "configs/experiments/05_stage3_declaration_method_body.yml"
 STAGE2_CONFIG_PATH = ROOT / "configs/experiments/02_stage2_nsga_structure_only.yml"
 BOUNDS_PATH = ROOT / "configs/experiments/stage2_robustness_bounds.yml"
-REPORT_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
-PROVENANCE_ROOT = REPORT_ROOT / "provenance"
+REPORT_ROOT = STAGE3_ROOT
+PROVENANCE_ROOT = STAGE3_PROVENANCE_ROOT
 MANIFEST_PATH = PROVENANCE_ROOT / "semantic_graph_generation_manifest.json"
 COMPATIBILITY_CONTRACT_PATH = PROVENANCE_ROOT / "final_graph_compatibility_contract.json"
 SEMANTIC_SUBJECTS = ("jpetstore", "daytrader", "xerces")
@@ -64,7 +71,7 @@ EXPECTED_COUNTS = {"jpetstore": 24, "daytrader": 53, "xerces": 814}
 STORAGE_SUBJECT = {"jpetstore": "jpetstore", "daytrader": "daytrader", "xerces": "xerces-j"}
 EXPERIMENT_ID = "stage3_declaration_method_body"
 REPRESENTATION_ID = "declaration_method_body_v1"
-STAGE3_RESULT_PART = "05_stage3_declaration_method_body"
+STAGE3_RESULT_PART = "declaration_method_body"
 STAGE3_CONFIG = CONFIG_PATH
 FORMAL_SEEDS = list(range(30))
 REFERENCE_POINT = np.full(3, 1.1, dtype=float)
@@ -116,8 +123,10 @@ def _raw_graph_inputs(subject: str, subject_config: dict[str, Any]) -> tuple[Pat
 
 def _frozen_raw_leiden_baseline(subject: str, class_nodes: pd.DataFrame) -> pd.DataFrame:
     path = (
-        ROOT / "results" / subject / "01_stage1_leiden_baseline" / "raw_reference_leiden"
-        / "clustering" / "stage1_clusters.csv"
+        stage1_baseline_root(subject, ROOT)
+        / "raw_reference_leiden"
+        / "clustering"
+        / "stage1_clusters.csv"
     )
     if not path.exists():
         raise FileNotFoundError(f"missing frozen Stage 1 raw Leiden baseline: {path}")
@@ -205,11 +214,11 @@ def subject_paths(subject: str) -> dict[str, Path]:
         "graph_mapping": graph / "class_mapping.csv",
         "raw_class_nodes": ROOT / "data/extracted" / storage / "class_nodes.csv",
         "raw_structural_dependencies": ROOT / "data/extracted" / storage / "structural_dependencies.csv",
-        "stage1_clusters": ROOT / "results" / storage / "01_stage1_leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
-        "stage2_robustness_manifest": ROOT / "results" / storage / "03_stage2_nsga/robustness/robustness_manifest.json",
-        "stage2_seed_metrics": ROOT / "results" / storage / "03_stage2_nsga/robustness/seed_00/run_metrics.json",
-        "stage2_seed_metadata": ROOT / "results" / storage / "03_stage2_nsga/robustness/seed_00/run_metadata.json",
-        "stage2_raw_hv": ROOT / "results" / storage / "03_stage2_nsga/raw/hypervolume_by_seed.csv",
+        "stage1_clusters": stage1_baseline_root(storage, ROOT) / "raw_reference_leiden/clustering/stage1_clusters.csv",
+        "stage2_robustness_manifest": stage2_subject_root(storage, ROOT) / "robustness/robustness_manifest.json",
+        "stage2_seed_metrics": stage2_subject_root(storage, ROOT) / "robustness/seed_00/run_metrics.json",
+        "stage2_seed_metadata": stage2_subject_root(storage, ROOT) / "robustness/seed_00/run_metadata.json",
+        "stage2_raw_hv": stage2_subject_root(storage, ROOT) / "raw/hypervolume_by_seed.csv",
     }
 
 
@@ -220,7 +229,7 @@ def output_dir(subject: str, root: Path = ROOT, seed: int = 0) -> Path:
     if not 0 <= seed <= 29:
         raise ValueError("Stage 3 seed must be in the range 0..29")
     layer = "validation" if seed == 0 else "formal"
-    return root / "results" / subject / STAGE3_RESULT_PART / layer / f"seed_{seed:02d}"
+    return stage3_subject_root(subject, root) / layer / f"seed_{seed:02d}"
 
 
 def canonical_graph_hash(edges: pd.DataFrame) -> str:

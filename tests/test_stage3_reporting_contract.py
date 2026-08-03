@@ -46,7 +46,7 @@ def test_active_stage2_profile_is_exact_five_percent_source() -> None:
     assert set(frame["budget"]) == {0.05}
     assert frame["canonical_operating_profile"].all()
     assert ACTIVE_STAGE2_PROFILE.as_posix() == (
-        "results/cross_subject/03_stage2_nsga/modularity_band/"
+        "results/stage2/cross_subject/operating_profile/"
         "canonical_operating_solution_per_seed.csv"
     )
 
@@ -60,7 +60,7 @@ def test_projected_hv_loader_reads_only_accepted_pair_columns() -> None:
         "stage3_projected_hv",
     ]
     assert len(frame) == 90
-    assert PROJECTED_HV_SOURCE.as_posix().endswith("stage2_vs_stage3/paired_per_seed.csv")
+    assert PROJECTED_HV_SOURCE.as_posix().endswith("stage2_comparison/paired_per_seed.csv")
 
 
 def test_selected_fsemantic_is_recomputed_for_all_paired_seeds(
@@ -73,7 +73,7 @@ def test_selected_fsemantic_is_recomputed_for_all_paired_seeds(
         "stage3_final_projected_front_operating_selector"
     }
     sources = " ".join(selected_pairs["stage3_profile_source"])
-    assert "05_stage3_declaration_method_body" in sources
+    assert "results/stage3/subjects/" in sources
     assert "stage3a" not in sources.lower()
     assert "04_stage3_semantic" not in sources.lower()
 

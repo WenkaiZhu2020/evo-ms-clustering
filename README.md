@@ -55,21 +55,26 @@ not overwrite accepted artifacts by default.
 | Semantic text | `data/semantic_text/declaration_method_body/` |
 | Embeddings | `data/embeddings/declaration_method_body/` |
 | Semantic graphs | `data/semantic_graphs/declaration_method_body/` |
-| Per-subject Stage 3 results | `results/<subject>/05_stage3_declaration_method_body/` |
-| Cross-subject validation and analysis | `results/cross_subject/05_stage3_declaration_method_body/` |
-| Human-readable Stage 3 findings | `docs/stage3/results/` |
+| Pre-experiment results | `results/pre_experiment/subjects/<subject>/` |
+| Stage 1 results | `results/stage1/subjects/<subject>/` |
+| Stage 2 subject results | `results/stage2/subjects/<subject>/nsga/` |
+| Stage 2 cross-subject results | `results/stage2/cross_subject/` |
+| Per-subject Stage 3 results | `results/stage3/subjects/<subject>/declaration_method_body/` |
+| Stage 3 cross-subject analysis | `results/stage3/cross_subject/` |
+| Stage 3 data quality | `results/stage3/data_quality/` |
+| Stage 3 reproducibility checks | `results/stage3/reproducibility_checks/` |
+| Stage 3 provenance | `results/stage3/provenance/` |
+| Human-readable Stage 3 findings | `docs/stage3/findings/` |
 | Stage 3 reproducibility guide | `docs/stage3/reproducibility.md` |
 
 ## Environment
 
-Stage 3 requires Python 3.13 and the fully pinned dependency set in
-`requirements-stage3-lock.txt`. Create an isolated environment from the
-repository root:
+The final repository has one supported Python environment for Stage 1–3:
+`pyproject.toml` plus `uv.lock`. It requires Python 3.13.7. From the repository
+root run:
 
 ```bash
-python3.13 -m venv .venv
-.venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -r requirements-stage3-lock.txt
+uv sync --frozen
 ```
 
 The formal embedding configuration records an Apple Silicon MPS runtime. Saved
@@ -81,17 +86,17 @@ rerunning the formal NSGA-II experiment.
 Run the complete test suite:
 
 ```bash
-.venv/bin/python -m pytest
+uv run --frozen pytest
 ```
 
 Inspect the supported Stage 3 commands:
 
 ```bash
-.venv/bin/python experiments/05_stage3_declaration_method_body/prepare_semantic.py --help
-.venv/bin/python experiments/05_stage3_declaration_method_body/run.py --help
-.venv/bin/python experiments/05_stage3_declaration_method_body/run_robustness.py --help
-.venv/bin/python experiments/05_stage3_declaration_method_body/analyze.py --help
-.venv/bin/python experiments/05_stage3_declaration_method_body/synchronize_stage2_operating_profile.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/prepare_semantic.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/run.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/run_robustness.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/analyze.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/synchronize_stage2_operating_profile.py --help
 ```
 
 Equivalent shell launchers are available under
@@ -106,6 +111,7 @@ data/          Extracted structural data and frozen semantic artifacts.
 docs/          Stage documentation, reproducibility guidance, and findings.
 experiments/   Stage-specific orchestration and analysis entry points.
 results/       Accepted per-subject and cross-subject experiment evidence.
+provenance/    Repository lineage, migration inventories, and integrity ledgers.
 scripts/       Thin shell launchers and extraction helpers.
 src/           Reusable extraction, graph, optimization, semantic, and analysis code.
 tests/         Unit, integration, architecture, provenance, and reproducibility tests.

@@ -14,7 +14,6 @@ app_packages:
   - org.apache.xml
 source_path: data/raw_projects/xerces-j
 extracted_output_path: data/extracted/xerces-j
-result_output_path: results/xerces-j
 exclude_packages:
   - org.apache.html
   - org.w3c.dom

@@ -21,14 +21,14 @@ data/extracted/<subject>/
   -> post-hoc evaluation only
        modularity, Hypervolume, MoJoFM, Pairwise F1
   -> compare selected solution with frozen Stage 1 raw_reference_leiden
-  -> results/<subject>/03_stage2_nsga/raw/
+  -> results/stage2/subjects/<subject>/nsga/raw/
 ```
 
 The Stage 2 runner writes Pareto fronts, label vectors, post-hoc metrics,
 selected solution files, Stage 1 raw Leiden comparison tables, Hypervolume
 summaries, and metadata. For the frozen formal results, the canonical
 operating solution is the 5% relative modularity-band profile in
-`results/cross_subject/03_stage2_nsga/modularity_band/`; the former
+`results/stage2/cross_subject/operating_profile/`; the former
 max-weighted-modularity selected-solution artifacts are retired.
 
 ## Input Rule
@@ -43,7 +43,7 @@ runner. It must not read mutable graph artifacts from `results/`.
 | Load input | `load_extracted_subject` | `extraction/dependency_extractor.py` | Load and validate normalized CSV inputs. |
 | Build raw graph | `build_raw_edges` | `graph/raw_graph_builder.py` | Produce raw structural edge weights. |
 | Objective primitive | `_edge_weight_split` | `evaluation/partition_metrics.py` | O(E) internal/external edge-weight split. |
-| Raw Leiden baseline | `results/<subject>/01_stage1_leiden_baseline/raw_reference_leiden/` | frozen Stage 1 results | Comparison target. |
+| Raw Leiden baseline | `results/stage1/subjects/<subject>/leiden_baseline/raw_reference_leiden/` | frozen Stage 1 results | Comparison target. |
 | Solution comparison | `partition_similarity` | `evaluation/partition_metrics.py` | ARI/NMI against frozen raw Leiden. |
 | Reference check | `load_reference_mapping`, `calculate_reference_metrics` | `evaluation/reference_metrics.py` | DayTrader-only post-hoc MoJoFM/F1 checks. |
 
@@ -61,7 +61,7 @@ runner. It must not read mutable graph artifacts from `results/`.
 The formal output layer is:
 
 ```text
-results/<subject>/03_stage2_nsga/raw/
+results/stage2/subjects/<subject>/nsga/raw/
 ```
 
 Expected files:

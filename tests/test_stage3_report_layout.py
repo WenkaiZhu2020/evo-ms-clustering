@@ -7,8 +7,8 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DOC_ROOT = ROOT / "docs/stage3/results"
-MACHINE_ROOT = ROOT / "results/cross_subject/05_stage3_declaration_method_body"
+DOC_ROOT = ROOT / "docs/stage3/findings"
+MACHINE_ROOT = ROOT / "results/stage3"
 PROVENANCE_ROOT = MACHINE_ROOT / "provenance"
 
 
@@ -22,8 +22,8 @@ def test_stage3_has_one_human_document_root() -> None:
 def test_migration_manifest_is_machine_provenance() -> None:
     path = PROVENANCE_ROOT / "report_migration_manifest.yml"
     document = yaml.safe_load(path.read_text(encoding="utf-8"))
-    assert document["machine_result_root"] == "results/cross_subject/05_stage3_declaration_method_body"
-    assert document["human_report_root"] == "docs/stage3/results"
+    assert document["machine_result_root"] == "results/stage3"
+    assert document["human_report_root"] == "docs/stage3/findings"
     assert document["inventory_summary"] == {
         "source_effective_file_count": 80,
         "source_tracked_file_count": 79,
@@ -38,9 +38,9 @@ def test_current_report_locator_is_not_write_configuration() -> None:
     locator = json.loads(
         (PROVENANCE_ROOT / "current_report_locator.json").read_text(encoding="utf-8")
     )
-    assert locator["machine_result_root"] == "results/cross_subject/05_stage3_declaration_method_body"
-    assert locator["human_report_root"] == "docs/stage3/results"
-    assert locator["canonical_data_pack"] == "docs/stage3/results/chapter4_3_data_pack.md"
+    assert locator["machine_result_root"] == "results/stage3"
+    assert locator["human_report_root"] == "docs/stage3/findings"
+    assert locator["canonical_data_pack"] == "docs/stage3/findings/chapter4_3_data_pack.md"
     assert locator["purpose"] == "current_location_only"
     assert locator["runtime_write_configuration"] is False
 
