@@ -1,7 +1,7 @@
 {
   "analysis_commit": "649c7d129b0a97ddfaaebd7c2b461aa6a4e945a8",
   "analysis_elapsed_seconds": 157.72976395802107,
-  "canonical_report_root": "reports/stage3",
+  "canonical_report_root": "docs/stage3/results",
   "class_counts": {
     "daytrader": 53,
     "jpetstore": 24,
@@ -61,6 +61,9 @@
     "stage2_vs_stage3_summary.csv",
     "stage2_vs_stage3_summary.md",
     "formal_statistical_tests.csv",
+    "formal_selected_fsemantic_per_seed.csv",
+    "formal_partition_similarity_per_seed.csv",
+    "formal_partition_similarity_summary.csv",
     "formal_statistical_summary.md",
     "formal_external_metrics_per_seed.csv",
     "formal_external_metrics_summary.csv",
@@ -75,6 +78,46 @@
     "formal_artifact_hashes.csv",
     "formal_final_conclusions.md"
   ],
+  "reporting_correction": {
+    "status": "current",
+    "scope": "reporting_and_statistics_only",
+    "experiment_rerun": false,
+    "semantic_inputs_regenerated": false,
+    "embeddings_regenerated": false,
+    "semantic_graphs_regenerated": false,
+    "optimizer_outputs_regenerated": false,
+    "subjects": [
+      "jpetstore",
+      "daytrader",
+      "xerces"
+    ],
+    "paired_seeds": "0-29",
+    "primary_family_row_count": 6,
+    "primary_metrics": [
+      "projected_hypervolume",
+      "selected_f_semantic"
+    ],
+    "test": "paired two-sided Wilcoxon signed-rank",
+    "wilcoxon_zero_method": "wilcox",
+    "correction": "Holm across exactly six confirmatory rows",
+    "family_wise_alpha": 0.05,
+    "stage2_profile_id": "stage2_5pct_modularity_band",
+    "stage2_profile_source": "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv",
+    "stage3_profile_id": "stage3_final_projected_front_operating_selector",
+    "stage3_profile_source": "results/<subject>/05_stage3_declaration_method_body/{validation,formal}/seed_*/selected_solution.json",
+    "projected_hypervolume_source": "results/cross_subject/05_stage3_declaration_method_body/stage2_vs_stage3/paired_per_seed.csv",
+    "selected_f_semantic_source": "recomputed on data/semantic_graphs/declaration_method_body/<subject>/semantic_edges.csv",
+    "current_outputs": [
+      "results/cross_subject/05_stage3_declaration_method_body/formal_statistics/formal_statistical_tests.csv",
+      "results/cross_subject/05_stage3_declaration_method_body/formal_statistics/formal_summary.csv",
+      "results/cross_subject/05_stage3_declaration_method_body/formal_statistics/formal_selected_fsemantic_per_seed.csv",
+      "docs/stage3/results/chapter4_3_data_pack.md"
+    ],
+    "legacy_selected_f_semantic_table": "results/cross_subject/05_stage3_declaration_method_body/formal_statistics/legacy/formal_statistical_tests_pre_active_stage2_profile.csv",
+    "legacy_table_current_input": false,
+    "accepted_generation_config_sha256": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+    "corrected_reporting_config_sha256": "d1c84206b828095c8732e378b2da5b7d0635b1ef628e7a90f2d9b55e85b71859"
+  },
   "representation_id": "declaration_method_body_v1",
   "semantic_graphs_regenerated": false,
   "source_provenance": {
@@ -106,7 +149,7 @@
   "spotcheck_pass": true,
   "stage3_formal_seeds": "results/<subject>/05_stage3_declaration_method_body/formal/seed_01..29",
   "stage3_seed0": "results/<subject>/05_stage3_declaration_method_body/validation/seed_00",
-  "statistical_protocol": "paired two-sided Wilcoxon signed-rank; Holm within each six-row comparison family; rank-biserial effect size; deterministic bootstrap descriptive intervals",
+  "statistical_protocol": "paired two-sided Wilcoxon signed-rank with zero_method=wilcox; Stage 3 minus Stage 2 differences; Holm across exactly six confirmatory rows (three subjects times projected_hypervolume and selected_f_semantic); alpha 0.05; rank-biserial effect size",
   "subjects": [
     "jpetstore",
     "daytrader",

@@ -1,6 +1,6 @@
-# Stage 3B formal robustness summary
+# Final Stage 3 Declaration + Method Body robustness summary
 
-The table reports descriptive 30-seed distributions for the frozen Stage 3B representation. Seed 0 is validation and seeds 1–29 are formal; all are retained in the paired 30-seed analysis.
+The table reports descriptive 30-seed distributions for the frozen `declaration_method_body_v1` representation. Seed 0 is validation and seeds 1–29 are formal; all are retained in the paired 30-seed analysis. These Stage 3-only distributions are unchanged by the reporting correction.
 
 | subject | metric | mean | std | median | min | max |
 |---|---|---:|---:|---:|---:|---:|

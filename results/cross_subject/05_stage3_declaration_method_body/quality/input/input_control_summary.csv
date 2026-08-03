@@ -1,0 +1,4 @@
+subject,class_count,embedding_model_max_tokens,model_tokenizer_truncation_count,embedding_context_limit_exceeded_count,method_body_budget_tokens,body_budget_capped_classes,body_tokens_removed_by_budget,affected_class_ids
+jpetstore,24,32768,0,0,256,0,0,
+daytrader,53,32768,0,0,256,1,31,com.ibm.websphere.samples.daytrader.direct.TradeDirect
+xerces,814,32768,0,0,256,7,753,org.apache.xerces.dom.CoreDocumentImpl;org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl;org.apache.xerces.impl.xpath.regex.Token;org.apache.xerces.impl.xs.XMLSchemaValidator;org.apache.xerces.impl.xs.traversers.XSDHandler;org.apache.xerces.util.EncodingMap;org.apache.xerces.xinclude.XIncludeHandler

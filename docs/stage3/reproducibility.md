@@ -25,6 +25,7 @@ python experiments/05_stage3_declaration_method_body/run.py --help
 scripts/05_stage3_declaration_method_body/run_robustness.sh --help
 scripts/05_stage3_declaration_method_body/analyze.sh --help
 python experiments/05_stage3_declaration_method_body/analyze.py --help
+python experiments/05_stage3_declaration_method_body/analyze.py --check-reporting
 ```
 
 Input preparation is a real command and must use a temporary output directory.
@@ -46,6 +47,12 @@ validation status. Machine-readable reports are organised under
 findings and thesis figures are under
 `docs/stage3/results/`. Historical provenance may
 still contain the original `reports/stage3` path by design.
+
+`--check-reporting` deterministically rebuilds the final six-row statistical
+family and Chapter 4.3 generated blocks in memory, then fails if committed
+reporting outputs differ. `--write-reporting` is the explicit reporting-only
+update mode. It reads accepted artifacts and never invokes semantic preparation
+or either optimizer.
 
 ## Scientific non-change rule
 

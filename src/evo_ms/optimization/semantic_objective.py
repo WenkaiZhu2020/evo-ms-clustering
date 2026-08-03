@@ -70,6 +70,26 @@ def semantic_total_weight(edges: pd.DataFrame) -> float:
     return total
 
 
+def resolve_semantic_total_weight(
+    edges: pd.DataFrame,
+    graph_metadata: Mapping[str, object],
+) -> float:
+    """Resolve total weight from final edges, checking optional legacy metadata.
+
+    Accepted final graph metadata does not serialize ``total_edge_weight``.
+    Older runner code expected that convenience field.  The scientific source
+    remains the saved edge table; when a metadata value is present it must agree
+    exactly within floating-point tolerance.
+    """
+    calculated = semantic_total_weight(edges)
+    recorded = graph_metadata.get("total_edge_weight")
+    if recorded is not None and not np.isclose(
+        float(recorded), calculated, rtol=0.0, atol=1e-12
+    ):
+        raise ValueError("semantic graph metadata total weight mismatch")
+    return calculated
+
+
 def evaluate_semantic_objective(
     edges: pd.DataFrame,
     cluster_by_class: Mapping[str, int],

@@ -1,9 +1,35 @@
 {
   "experiment_name": "stage3_declaration_method_body",
   "representation_id": "declaration_method_body_v1",
-  "final_config_sha256": "41235283ab090e2e6262cf94962a6d031287dc58ee9a26b018563e64a0ed853e",
+  "pre_reporting_correction_config_sha256": "41235283ab090e2e6262cf94962a6d031287dc58ee9a26b018563e64a0ed853e",
   "runtime_namespace": "final_stage3_only",
-  "reference_allowlist": "reports/stage3/provenance/final_reference_allowlist.md",
+  "reference_allowlist_status": "historical path retired after report migration",
+  "canonical_data_pack": "docs/stage3/results/chapter4_3_data_pack.md",
+  "reporting_correction": {
+    "scope": "statistics, terminology, documentation, and provenance only",
+    "accepted_generation_config_sha256": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+    "corrected_reporting_config_sha256": "d1c84206b828095c8732e378b2da5b7d0635b1ef628e7a90f2d9b55e85b71859",
+    "config_bytes_unchanged_claimed": false,
+    "scientific_artifacts_regenerated": false,
+    "optimizer_rerun": false,
+    "stage2_profile_source": "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv",
+    "formal_statistics_source": "results/cross_subject/05_stage3_declaration_method_body/formal_statistics/formal_statistical_tests.csv"
+  },
+  "reporting_correction_artifact_integrity": {
+    "protected_file_count": 402,
+    "before_inventory_sha256": "612a811c94c50d4476e4657b7405830eb5611b8cf85379871ce02173e7f24a27",
+    "after_inventory_sha256": "612a811c94c50d4476e4657b7405830eb5611b8cf85379871ce02173e7f24a27",
+    "byte_identical": true,
+    "protected_groups": [
+      "final semantic input files",
+      "final embedding files",
+      "final semantic graph files",
+      "Stage 2 Pareto fronts for seeds 0-29",
+      "Stage 3 4D Pareto fronts for seeds 0-29",
+      "Stage 3 projected fronts for seeds 0-29",
+      "Stage 3 selected_solution.json files for seeds 0-29"
+    ]
+  },
   "subjects": {
     "jpetstore": {
       "class_count": 24,

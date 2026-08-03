@@ -21,6 +21,17 @@ results/<subject>/05_stage3_declaration_method_body/
 The preference-response material is post-hoc exploratory analysis. It must
 not be interpreted as a replacement for the preregistered formal comparison.
 
+The canonical Dissertation Section 4.3 data pack is
+[`chapter4_3_data_pack.md`](chapter4_3_data_pack.md). Its reporting-only
+outputs are regenerated and byte-checked with:
+
+```text
+python experiments/05_stage3_declaration_method_body/analyze.py --write-reporting
+python experiments/05_stage3_declaration_method_body/analyze.py --check-reporting
+```
+
+Neither command runs an experiment or regenerates semantic evidence.
+
 The former `reports/stage3/` directory was a mixed legacy root and has been
 retired. Historical provenance files may still contain that path because they
 record the original generation environment.

@@ -25,6 +25,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from evo_ms.analysis.stage3 import availability
+from evo_ms.analysis.stage3_reporting import write_reporting_outputs
 from evo_ms.analysis.statistics import deterministic_rows
 
 
@@ -109,7 +110,32 @@ def validate_inventory() -> pd.DataFrame:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate final Stage 3 saved formal artifacts")
     parser.add_argument("--inventory-only", action="store_true")
+    reporting = parser.add_mutually_exclusive_group()
+    reporting.add_argument(
+        "--write-reporting",
+        action="store_true",
+        help="regenerate reporting/statistical outputs from accepted artifacts only",
+    )
+    reporting.add_argument(
+        "--check-reporting",
+        action="store_true",
+        help="fail unless canonical reporting outputs are byte-identical to regeneration",
+    )
     args = parser.parse_args()
+    if args.write_reporting or args.check_reporting:
+        changed = write_reporting_outputs(ROOT, check=args.check_reporting)
+        print(
+            json.dumps(
+                {
+                    "status": "PASS",
+                    "mode": "check" if args.check_reporting else "write",
+                    "changed": [str(path) for path in changed],
+                    "scientific_artifacts_regenerated": False,
+                },
+                indent=2,
+            )
+        )
+        return 0
     frame = formal_inventory() if args.inventory_only else validate_inventory()
     print(json.dumps({"status": "PASS", "rows": len(frame), "representation_id": adapter.REPRESENTATION_ID}, indent=2))
     return 0

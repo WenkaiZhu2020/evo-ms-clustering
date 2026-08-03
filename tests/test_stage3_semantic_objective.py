@@ -7,6 +7,7 @@ import pytest
 from evo_ms.optimization.semantic_objective import (
     evaluate_semantic_objective,
     load_semantic_edges,
+    resolve_semantic_total_weight,
     semantic_total_weight,
     validate_semantic_edges,
 )
@@ -51,6 +52,14 @@ def test_each_undirected_row_is_counted_once():
     graph = edges([["A", "B", 2.0], ["A", "C", 6.0]])
     assert semantic_total_weight(graph) == 8.0
     assert evaluate_semantic_objective(graph, labels(("A", 1), ("B", 1), ("C", 2))) == pytest.approx(0.75)
+
+
+def test_total_weight_is_resolved_from_edges_when_metadata_omits_it():
+    graph = edges([["A", "B", 2.0], ["A", "C", 6.0]])
+    assert resolve_semantic_total_weight(graph, {"edge_count": 2}) == 8.0
+    assert resolve_semantic_total_weight(graph, {"total_edge_weight": 8.0}) == 8.0
+    with pytest.raises(ValueError, match="metadata total weight mismatch"):
+        resolve_semantic_total_weight(graph, {"total_edge_weight": 7.0})
 
 
 @pytest.mark.parametrize(

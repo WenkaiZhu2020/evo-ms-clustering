@@ -57,6 +57,38 @@ def test_final_config_and_manifest_have_one_runtime_identity() -> None:
     assert manifest["task"] == "Stage 3B formal robustness experiment"
 
 
+def test_final_reporting_manifest_uses_active_six_row_contract() -> None:
+    manifest = json.loads(
+        (
+            ROOT
+            / "results/cross_subject/05_stage3_declaration_method_body/provenance/formal_experiment_manifest.json"
+        ).read_text(encoding="utf-8")
+    )
+    contract = manifest["reporting_correction"]
+    assert contract["primary_family_row_count"] == 6
+    assert contract["primary_metrics"] == [
+        "projected_hypervolume",
+        "selected_f_semantic",
+    ]
+    assert contract["correction"] == "Holm across exactly six confirmatory rows"
+    assert contract["family_wise_alpha"] == 0.05
+    assert contract["stage2_profile_source"].endswith(
+        "modularity_band/canonical_operating_solution_per_seed.csv"
+    )
+    assert contract["experiment_rerun"] is False
+
+
+def test_saved_formal_runs_validate_against_their_generation_config_snapshot() -> None:
+    run = ROOT / "results/jpetstore/05_stage3_declaration_method_body/formal/seed_01"
+    metadata = json.loads((run / "run_metadata.json").read_text(encoding="utf-8"))
+    snapshot_hash = hashlib.sha256((run / "config_snapshot.yml").read_bytes()).hexdigest()
+    current_hash = hashlib.sha256(
+        (ROOT / "configs/experiments/05_stage3_declaration_method_body.yml").read_bytes()
+    ).hexdigest()
+    assert metadata["config_hash"] == metadata["config_sha256"] == snapshot_hash
+    assert snapshot_hash != current_hash
+
+
 def test_final_inputs_have_frozen_scope_and_aggregate_hashes() -> None:
     for subject, count in SUBJECTS.items():
         rows = _rows(subject)

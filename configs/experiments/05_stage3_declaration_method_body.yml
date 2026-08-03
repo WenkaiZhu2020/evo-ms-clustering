@@ -284,16 +284,31 @@ diagnostics:
     input_values: unrounded_objective_values
 statistics:
   test: paired_wilcoxon_signed_rank
-  correction: bonferroni
+  alternative: two_sided
+  zero_method: wilcox
+  correction: holm
   alpha_family: 0.05
+  family_scope: exactly_six_confirmatory_rows
+  subjects:
+    - jpetstore
+    - daytrader
+    - xerces
   primary_metrics:
-    - MoJoFM
-    - PairwiseF1
-    - structural_modularity
-    - imbalance
-  number_of_primary_tests: 4
-  alpha_adjusted: 0.0125
-  secondary_metrics: descriptive_only
+    - projected_hypervolume
+    - selected_f_semantic
+  number_of_primary_tests: 6
+  difference_definition: Stage_3_minus_Stage_2
+  stage2_selected_profile:
+    id: stage2_5pct_modularity_band
+    source: results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv
+  stage3_selected_profile:
+    id: stage3_final_projected_front_operating_selector
+    source: results/<subject>/05_stage3_declaration_method_body/{validation,formal}/seed_*/selected_solution.json
+  projected_hypervolume_source: results/cross_subject/05_stage3_declaration_method_body/stage2_vs_stage3/paired_per_seed.csv
+  selected_f_semantic_evaluation_graph: data/semantic_graphs/declaration_method_body/<subject>/semantic_edges.csv
+  exploratory_metrics: separate_declared_families_only
+  reporting_only_correction: true
+  experiment_rerun: false
 seeds:
   source: "frozen_formal_seed_contract: seeds_1_through_29"
   formal:
@@ -353,6 +368,9 @@ xerces_rules:
 historical_provenance:
   source_config_path: configs/experiments/04_stage3_semantic.yml
   source_config_sha256: eddbb3674dacabfac2925f4ef6887bb86c9030f629a231230d6a889e1c28cc27
+  accepted_generation_config_sha256: c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286
+  accepted_generation_hash_status: historical_provenance_only
+  current_statistics_block_status: reporting_only_correction_after_generation
   runtime_dependency: false
 
 input:

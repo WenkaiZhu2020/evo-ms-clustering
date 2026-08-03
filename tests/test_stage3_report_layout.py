@@ -14,6 +14,7 @@ PROVENANCE_ROOT = MACHINE_ROOT / "provenance"
 
 def test_stage3_has_one_human_document_root() -> None:
     assert DOC_ROOT.is_dir()
+    assert (DOC_ROOT / "chapter4_3_data_pack.md").is_file()
     assert not (ROOT / "docs/reports/05_stage3_declaration_method_body").exists()
     assert not (ROOT / "reports/stage3").exists()
 
@@ -39,6 +40,7 @@ def test_current_report_locator_is_not_write_configuration() -> None:
     )
     assert locator["machine_result_root"] == "results/cross_subject/05_stage3_declaration_method_body"
     assert locator["human_report_root"] == "docs/stage3/results"
+    assert locator["canonical_data_pack"] == "docs/stage3/results/chapter4_3_data_pack.md"
     assert locator["purpose"] == "current_location_only"
     assert locator["runtime_write_configuration"] is False
 

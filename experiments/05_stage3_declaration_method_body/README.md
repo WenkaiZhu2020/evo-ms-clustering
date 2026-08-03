@@ -10,12 +10,19 @@ The four Python experiment entry points have distinct responsibilities:
   orchestration;
 - `run.py` runs one explicit Stage 3 seed and validates its output;
 - `run_robustness.py` owns formal-seed execution and validation;
-- `analyze.py` reads saved Stage 2 and Stage 3 artifacts for analysis.
+- `analyze.py` reads saved Stage 2 and Stage 3 artifacts for validation and
+  deterministic reporting-only regeneration/checks.
 
 `synchronize_stage2_operating_profile.py` is an internal maintenance utility,
 not a fifth experiment stage. It deterministically synchronizes the frozen
 Stage 2 modularity-band operating profile into the saved Stage 3 preference
 analysis. Its generated CSVs are committed and reproducible byte-for-byte.
+
+The final reporting contract is regenerated with `analyze.py
+--write-reporting` and verified with `analyze.py --check-reporting`. The loader
+accepts only the frozen Stage 2 5% modularity-band profile and final Stage 3
+Declaration + Method Body selected solutions; it fails on incomplete seed or
+class-universe alignment.
 
 Reusable numerical behaviour is provided by `src/evo_ms`. No file in this
 directory imports a script or the Stage 2 experiment.

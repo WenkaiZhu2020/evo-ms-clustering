@@ -1,10 +1,19 @@
 {
   "status": "passed",
-  "method": "deterministic filtering and relabelling of accepted saved reports",
+  "method": "deterministic regeneration of the six-row formal family and marked Chapter 4.3 report blocks from accepted saved artifacts",
   "scientific_artifacts_regenerated": false,
   "stage2_vs_final_stage3_numeric_equivalence": true,
   "preference_final_only_rows": true,
   "canonical_links_checked": true,
+  "canonical_data_pack": "docs/stage3/results/chapter4_3_data_pack.md",
+  "active_stage2_profile_checked": true,
+  "six_row_confirmatory_family_checked": true,
+  "non_identical_pair_terminology_checked": true,
+  "tokenizer_and_body_budget_terms_checked": true,
+  "protected_artifact_file_count": 402,
+  "protected_artifact_inventory_sha256_before": "612a811c94c50d4476e4657b7405830eb5611b8cf85379871ce02173e7f24a27",
+  "protected_artifact_inventory_sha256_after": "612a811c94c50d4476e4657b7405830eb5611b8cf85379871ce02173e7f24a27",
+  "protected_artifacts_byte_identical": true,
   "authoritative_daytrader_mojofm_mean": 23.550724637681,
   "notes": "Only lightweight report views and deterministic copies were created; no input, embedding, graph, optimizer, or seed artifact was regenerated."
 }

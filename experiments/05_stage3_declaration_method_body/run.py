@@ -37,7 +37,11 @@ from evo_ms.optimization.initialization import build_structure_aware_seed_record
 from evo_ms.optimization.problem import build_nsga2_algorithm
 from evo_ms.optimization.selection import select_solution
 from evo_ms.optimization.search import run_nsga2
-from evo_ms.optimization.semantic_objective import evaluate_semantic_objective, load_semantic_edges
+from evo_ms.optimization.semantic_objective import (
+    evaluate_semantic_objective,
+    load_semantic_edges,
+    resolve_semantic_total_weight,
+)
 from evo_ms.optimization.objectives import evaluate_structural_objectives
 from evo_ms.utils.config_loader import load_yaml
 from evo_ms.optimization.stage3_problem import (
@@ -272,6 +276,10 @@ def load_context(subject: str) -> dict[str, Any]:
     compatibility = validate_graph_compatibility(subject, graph_metadata)
     graph_manifest = {"aggregate_sha256": graph_metadata["semantic_graph_sha256"], "source": "final_graph_metadata"}
     semantic_edges = load_semantic_edges(paths["graph_edges"], expected_class_ids=class_ids)
+    graph_metadata["total_edge_weight"] = resolve_semantic_total_weight(
+        semantic_edges,
+        graph_metadata,
+    )
     actual_graph_hash = canonical_graph_hash_file(paths["graph_edges"])
     if actual_graph_hash != graph_metadata["semantic_graph_sha256"]:
         raise ValueError(f"{subject}: semantic graph metadata hash mismatch")

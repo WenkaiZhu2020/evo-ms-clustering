@@ -87,7 +87,13 @@ def formal_output_dir(subject: str, seed: int) -> Path:
     return path
 
 
-def _identity(context: dict[str, Any], subject: str, seed: int) -> dict[str, Any]:
+def _identity(
+    context: dict[str, Any],
+    subject: str,
+    seed: int,
+    *,
+    config_hash: str | None = None,
+) -> dict[str, Any]:
     source = context["graph_provenance"]["embedding_source"]
     return {
         "experiment_id": adapter.EXPERIMENT_ID,
@@ -101,7 +107,7 @@ def _identity(context: dict[str, Any], subject: str, seed: int) -> dict[str, Any
         "embedding_file_sha256": source["embedding_sha256"],
         "class_mapping_sha256": context["semantic_graph_metadata"]["class_mapping_sha256"],
         "graph_sha256": context["semantic_graph_hash"],
-        "config_hash": sha256_file(adapter.STAGE3_CONFIG),
+        "config_hash": config_hash or sha256_file(adapter.STAGE3_CONFIG),
     }
 
 
@@ -214,7 +220,11 @@ def validate_formal_seed(subject: str, seed: int, output: Path) -> dict[str, Any
         raise ValueError(f"{subject} seed {seed}: artifact set mismatch: {sorted(actual_files ^ EXPECTED_FILES)}")
     metadata = json.loads((output / "run_metadata.json").read_text(encoding="utf-8"))
     context = adapter.load_context(subject)
-    expected = _identity(context, subject, seed)
+    config_snapshot = output / "config_snapshot.yml"
+    snapshot_hash = sha256_file(config_snapshot)
+    if snapshot_hash != metadata["config_sha256"] or snapshot_hash != metadata["config_hash"]:
+        raise ValueError(f"{subject} seed {seed}: configuration snapshot hash mismatch")
+    expected = _identity(context, subject, seed, config_hash=snapshot_hash)
     for key, value in expected.items():
         if metadata.get(key) != value:
             raise ValueError(f"{subject} seed {seed}: metadata {key} mismatch")
@@ -228,9 +238,6 @@ def validate_formal_seed(subject: str, seed: int, output: Path) -> dict[str, Any
     for key, value in required_metadata.items():
         if metadata.get(key) != value:
             raise ValueError(f"{subject} seed {seed}: required metadata {key} mismatch")
-    config_snapshot = output / "config_snapshot.yml"
-    if sha256_file(config_snapshot) != metadata["config_sha256"]:
-        raise ValueError(f"{subject} seed {seed}: configuration snapshot hash mismatch")
     graph_provenance = json.loads((output / "graph_provenance.json").read_text(encoding="utf-8"))
     for key, value in expected.items():
         if graph_provenance.get(key) != value:
