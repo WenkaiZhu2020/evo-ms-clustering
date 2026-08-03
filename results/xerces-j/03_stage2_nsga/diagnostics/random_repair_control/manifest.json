@@ -1,0 +1,39 @@
+{
+  "subject": "xerces-j",
+  "class_count": 814,
+  "population_size": 100,
+  "generations": 100,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "initialization": "independent uniform labels U{0,...,N-1}; paired across arms",
+  "arms": {
+    "random_with_repair": "existing repair_labels at initialization plus existing Stage 2 repair operators",
+    "random_without_repair": "no _repair_labels, no CanonicalLabelRepair, and local no-repair crossover/mutation"
+  },
+  "hypervolume": {
+    "bounds_path": "configs/experiments/stage2_robustness_bounds.yml",
+    "bounds_sha256": "db8e23479474f5d97e255e0d423a0ae9c4e5b359212dbbf2a3add7338ee64413",
+    "reference_point": [
+      1.1,
+      1.1,
+      1.1
+    ],
+    "seeded_reference_path": "results/xerces-j/03_stage2_nsga/convergence_diagnostic/hypervolume_by_generation.csv"
+  },
+  "read_only_inputs": [
+    "data/extracted/xerces-j/class_nodes.csv",
+    "data/extracted/xerces-j/structural_dependencies.csv",
+    "configs/experiments/stage2_robustness_bounds.yml",
+    "results/xerces-j/03_stage2_nsga/convergence_diagnostic/hypervolume_by_generation.csv"
+  ]
+}

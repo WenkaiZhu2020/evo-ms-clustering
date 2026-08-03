@@ -1,0 +1,4 @@
+criterion,answer,evidence
+a_repair_initial_feasibility,yes,after-repair feasible rate=1.000000 (1000/1000)
+b_repair_trajectory_vs_seeded_reference,positive_progress_but_lower_hv_than_seeded_reference,random+repair mean best HV at gen 100=0.018483150; seeded reference mean=0.131254207; all 10 repair seeds had positive HV and 100 feasible final individuals
+c_no_repair_feasibility,initially_zero_then_recovers_under_constraint_selection,initial feasible rate=0; generation-1 mean feasible count=0.0; first positive mean feasible count at generation 4; generation-100 mean feasible count=100.0

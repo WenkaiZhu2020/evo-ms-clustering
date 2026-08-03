@@ -1,0 +1,3 @@
+condition,before_repair_feasible,after_repair_feasible,before_repair_unique_partition_ratio,after_repair_unique_partition_ratio,before_repair_cluster_count_min,before_repair_cluster_count_max,after_repair_cluster_count_min,after_repair_cluster_count_max,before_repair_singleton_count_median,after_repair_singleton_count_median,before_repair_imbalance_median,after_repair_imbalance_median,repaired_individuals,repair_failures
+current_warm_start,91.6,100.0,1.0,1.0,2.0,17.0,3.0,17.0,0.0,0.0,0.3692321975545913,0.39929298028144367,8.4,0.0
+random_only,90.5,100.0,1.0,1.0,2.0,15.0,3.0,15.0,0.0,0.0,0.3475347304299785,0.3719485178049338,9.5,0.0

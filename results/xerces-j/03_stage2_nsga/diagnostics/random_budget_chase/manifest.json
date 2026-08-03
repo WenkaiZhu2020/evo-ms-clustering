@@ -1,0 +1,34 @@
+{
+  "subject": "xerces-j",
+  "class_count": 814,
+  "population_size": 100,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "random_budgets": [
+    100,
+    200,
+    300,
+    500
+  ],
+  "seeded_generations": 100,
+  "random_initialization": "paired independent uniform labels U{0,...,N-1}, followed by existing repair",
+  "seeded_initialization": "existing structure-aware Leiden-seeded Stage 2 configuration",
+  "near_match_rule": "random mean HV >= 0.95 * seeded mean HV",
+  "inputs_read_only": [
+    "data/extracted/xerces-j/class_nodes.csv",
+    "data/extracted/xerces-j/structural_dependencies.csv",
+    "results/xerces-j/01_stage1_leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+    "configs/experiments/02_stage2_nsga_structure_only.yml",
+    "configs/experiments/stage2_robustness_bounds.yml"
+  ]
+}

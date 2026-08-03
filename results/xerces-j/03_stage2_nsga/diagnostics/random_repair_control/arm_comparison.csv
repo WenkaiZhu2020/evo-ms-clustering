@@ -1,0 +1,8 @@
+metric,random_with_repair_mean,random_with_repair_min,random_with_repair_max,random_without_repair_mean,random_without_repair_min,random_without_repair_max
+initial_before_feasible_rate,0.0,0.0,0.0,0.0,0.0,0.0
+initial_after_feasible_rate,1.0,1.0,1.0,,,
+final_feasible_individual_count,100.0,100.0,100.0,100.0,100.0,100.0
+final_pareto_front_size,63.4,37.0,100.0,71.0,41.0,94.0
+final_hypervolume,0.01848315013691524,0.0175095037213099,0.0195576089352053,0.0199581169640649,0.0189126972642079,0.0211297439115954
+best_hypervolume,0.01848315013691524,0.0175095037213099,0.0195576089352053,0.0199581169640649,0.0189126972642079,0.0211297439115954
+plateau_generation_1pct_best_so_far,88.2,68.0,99.0,80.7,50.0,98.0

@@ -1,0 +1,82 @@
+{
+  "bounds_path": "configs/experiments/stage2_robustness_bounds.yml",
+  "bounds_sha256": "db8e23479474f5d97e255e0d423a0ae9c4e5b359212dbbf2a3add7338ee64413",
+  "conditions": [
+    "current_warm_start",
+    "random_only"
+  ],
+  "diagnostic_config_sha256": "a37182613360dae6d2810b04d513d83847498dcd4e74b7cb73c717586728d880",
+  "formal_bounds_validated": true,
+  "formal_config": "configs/experiments/02_stage2_nsga_structure_only.yml",
+  "formal_config_sha256": "b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d",
+  "input_hashes": {
+    "class_nodes.csv": "52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd",
+    "raw_edges": "7a93a133db3dc573532ec90a68674d8b8b939c8adc106c64fbd5449db697faef",
+    "structural_dependencies.csv": "95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0"
+  },
+  "input_inventory": [
+    {
+      "access": "referenced_read_only",
+      "destination_path": null,
+      "sha256": "b32a044e7398bb2248fdca30790a3e9ce9ee08ed565020a40db5ae68b6b69d6d",
+      "source_path": "configs/experiments/02_stage2_nsga_structure_only.yml"
+    },
+    {
+      "access": "referenced_read_only",
+      "destination_path": null,
+      "sha256": "db8e23479474f5d97e255e0d423a0ae9c4e5b359212dbbf2a3add7338ee64413",
+      "source_path": "configs/experiments/stage2_robustness_bounds.yml"
+    },
+    {
+      "access": "referenced_read_only",
+      "destination_path": null,
+      "sha256": "52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd",
+      "source_path": "data/extracted/daytrader/class_nodes.csv"
+    },
+    {
+      "access": "referenced_read_only",
+      "destination_path": null,
+      "sha256": "95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0",
+      "source_path": "data/extracted/daytrader/structural_dependencies.csv"
+    },
+    {
+      "access": "referenced_read_only",
+      "destination_path": null,
+      "sha256": "90a727ad67cdb6f3c02b278d77b405b0acd65bb52019939dd3afd822c9132cd6",
+      "source_path": "results/daytrader/01_stage1_leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv"
+    },
+    {
+      "access": "referenced_read_only",
+      "destination_path": null,
+      "sha256": "f2b92abf9863658acfe590d280c49b8b71b6e50727dae05c25153ac9a3389eab",
+      "source_path": "results/daytrader/03_stage2_nsga/robustness/raw_runs.csv"
+    },
+    {
+      "access": "referenced_read_only",
+      "destination_path": null,
+      "sha256": "4569232af8b642f769786988c089cd7fc275b260ef7d17f8f8ccb39076067619",
+      "source_path": "results/daytrader/03_stage2_nsga/robustness/seed_00/selected_solution.csv"
+    },
+    {
+      "access": "referenced_read_only",
+      "destination_path": null,
+      "sha256": "042c52d991ae1e63503a0fe32c906ed159370f15ef0a0cdc1e5c1e588cf01f2d",
+      "source_path": "results/daytrader/03_stage2_nsga/robustness/seed_00/pareto_front.csv"
+    }
+  ],
+  "input_mode": "referenced_read_only",
+  "leiden_partition_sha256": "90a727ad67cdb6f3c02b278d77b405b0acd65bb52019939dd3afd822c9132cd6",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "source_branch_commit": "ecfaa3ccb5a589645b719077abdf026aeb246946"
+}

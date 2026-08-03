@@ -1,0 +1,4 @@
+question,answer,definition_of_near_match,evidence
+a_random_budget_matches_seeded_gen_100,no,random mean HV >= 0.95 * seeded mean HV,
+b_random_500_plateau,reported_from_1pct_best_so_far_rule,plateau is earliest generation within 1% of that seed's final best-so-far HV,gen=500 mean HV=0.022602142; mean plateau generation=418.4 (range 296-485)
+c_random_500_gap_to_seeded_gen_100,reported,seeded mean HV / random gen=500 mean HV,seeded/random ratio=5.759365
