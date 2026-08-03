@@ -47,6 +47,7 @@ class LabelVectorSampling:
         self,
         max_clusters: int | None = None,
         seed_labels: list[np.ndarray] | None = None,
+        initialization_observer=None,
     ) -> None:
         from pymoo.core.sampling import Sampling
 
@@ -59,24 +60,25 @@ class LabelVectorSampling:
             def _do(self, problem, n_samples, *args, random_state=None, **kwargs):
                 rng = _rng(random_state)
                 rows = []
+                raw_rows = []
                 for labels in prepared_seed_labels[:n_samples]:
                     if len(labels) != problem.n_var:
                         raise ValueError(
                             "seed label vector length does not match problem.n_var"
                         )
+                    raw_rows.append(np.asarray(labels, dtype=int).copy())
                     rows.append(_repair_labels(labels, problem.n_var))
 
-                rows.extend(
-                    _repair_labels(
-                        encoding.random_individual(
-                            problem.n_var,
-                            rng,
-                            max_clusters=max_clusters,
-                        ),
-                        problem.n_var,
+                for _ in range(n_samples - len(rows)):
+                    raw = encoding.random_individual(
+                        problem.n_var, rng, max_clusters=max_clusters
                     )
-                    for _ in range(n_samples - len(rows))
-                )
+                    raw_rows.append(raw.copy())
+                    rows.append(_repair_labels(raw, problem.n_var))
+                if initialization_observer is not None:
+                    initialization_observer(
+                        np.asarray(raw_rows, dtype=int), np.asarray(rows, dtype=int)
+                    )
                 return np.asarray(rows, dtype=int)
 
         self.operator = _Sampling()
@@ -174,6 +176,7 @@ def build_nsga2_algorithm(
     population_size: int,
     max_clusters: int | None = None,
     seed_labels: list[np.ndarray] | None = None,
+    initialization_observer=None,
 ):
     """Build pymoo NSGA2 with label-vector operators."""
     from pymoo.algorithms.moo.nsga2 import NSGA2
@@ -183,6 +186,7 @@ def build_nsga2_algorithm(
         sampling=LabelVectorSampling(
             max_clusters=max_clusters,
             seed_labels=seed_labels,
+            initialization_observer=initialization_observer,
         ).operator,
         crossover=UniformLabelCrossover().operator,
         mutation=LabelReassignmentMutation().operator,

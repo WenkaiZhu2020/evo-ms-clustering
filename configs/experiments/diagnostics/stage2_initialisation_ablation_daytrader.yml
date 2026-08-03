@@ -1,0 +1,47 @@
+experiment_name: stage2_initialisation_ablation_daytrader
+description: Exploratory paired DayTrader diagnostic. All Stage 2 factors are fixed except initial population source.
+subject: daytrader
+input_graph:
+  name: G_raw
+  weight_column: raw_weight
+objectives:
+  - {name: coupling, direction: minimize}
+  - {name: cohesion, direction: maximize}
+  - {name: imbalance, direction: minimize}
+constraints:
+  max_cluster_ratio: 0.4
+  singleton_ratio: 0.15
+  min_cluster_count: 2
+nsga:
+  algorithm: NSGA2
+  population_size: 100
+  generations: 100
+random_seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+formal_config: configs/experiments/02_stage2_nsga_structure_only.yml
+formal_bounds: configs/experiments/stage2_robustness_bounds.yml
+output_root: results/daytrader/03_stage2_nsga/diagnostics/initialisation_ablation
+conditions:
+  current_warm_start:
+    initialisation_mode: current_warm_start
+    enabled: true
+    strategy: structure_aware_seeded
+    basis: raw_reference_leiden_and_raw_graph
+    include_raw_leiden: true
+    random_fill: true
+    perturbations:
+      enabled: true
+      fractions: [0.005, 0.01, 0.02, 0.05]
+      per_fraction: 5
+    graph_groupings:
+      enabled: true
+      target_offsets_from_raw_leiden: [-10, 0, 10]
+      include_sqrt_target: true
+  random_only:
+    initialisation_mode: random_only
+    enabled: true
+    strategy: existing_random_initializer_only
+    basis: none
+    include_raw_leiden: false
+    random_fill: true
+    perturbations: {enabled: false}
+    graph_groupings: {enabled: false}

@@ -168,6 +168,7 @@ def _run_seed(
     generations: int,
     save_history: bool = False,
     callback: object | None = None,
+    initialization_observer=None,
 ) -> dict[str, object]:
     from pymoo.optimize import minimize
 
@@ -191,6 +192,7 @@ def _run_seed(
     algorithm = build_nsga2_algorithm(
         population_size=population_size,
         seed_labels=[record["labels"] for record in seed_records],
+        initialization_observer=initialization_observer,
     )
     result = minimize(
         problem,
@@ -688,6 +690,15 @@ def _seed_initialization_records(
     """Build deterministic structure-aware initial labels for one NSGA-II seed."""
     if not bool(config.get("enabled", True)):
         return []
+
+    mode = str(config.get("initialisation_mode", "current_warm_start"))
+    if mode == "random_only":
+        # Deliberately return before reading the Leiden partition.  This makes
+        # the diagnostic condition independent of all Leiden-derived labels,
+        # including perturbations and graph-grouping target counts.
+        return []
+    if mode != "current_warm_start":
+        raise ValueError(f"unsupported initialisation_mode: {mode}")
 
     class_ids = class_nodes["class_id"].astype(str).tolist()
     index_by_id = {class_id: index for index, class_id in enumerate(class_ids)}
