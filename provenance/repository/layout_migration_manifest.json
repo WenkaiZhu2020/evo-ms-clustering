@@ -71,6 +71,25 @@
     "source path columns in formal_selected_fsemantic_per_seed.csv",
     "source_artifacts path column in formal_statistical_tests.csv",
     "current report locator and current provenance paths",
-    "human-readable documentation paths"
-  ]
+    "human-readable documentation paths",
+    "current Stage 2 derived-table source paths migrated from the retired result roots"
+  ],
+  "subsequent_main_reconciliation": {
+    "stage3_starting_head": "9afa5665ef31a7c9853eaaeac3fa47c563f68c62",
+    "merged_main_head": "0f8544ecf2ad52a2aaed5759b7b8c0395bf48648",
+    "scope": "latest Stage 1 and Stage 2 code, documentation, reporting outputs, and DayTrader per-seed Leiden partitions",
+    "path_policy": "upstream content was placed under the final stage-oriented layout; retired result roots were not restored",
+    "optimizer_or_semantic_regeneration": false,
+    "protected_group_digests_reverified": true,
+    "protected_groups_reverified": [
+      "semantic_inputs",
+      "embeddings",
+      "semantic_graphs",
+      "stage2_formal_fronts",
+      "stage3_4d_fronts",
+      "stage3_projected_fronts",
+      "stage3_selected_solutions"
+    ],
+    "stage1_inventory_note": "The upstream main snapshot adds 30 accepted DayTrader raw-Leiden per-seed partitions, so the earlier whole-Stage-1 file-count digest remains a pre-reconciliation migration record rather than a post-merge invariant."
+  }
 }

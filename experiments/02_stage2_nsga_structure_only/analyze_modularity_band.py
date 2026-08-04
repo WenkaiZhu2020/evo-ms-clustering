@@ -17,11 +17,11 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[2]
-if str(ROOT / "src") not in sys.path:
-    sys.path.insert(0, str(ROOT / "src"))
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 from evo_ms.repository_layout import STAGE2_OPERATING_PROFILE_ROOT, stage2_subject_root
-
 SUBJECTS = ("daytrader", "jpetstore", "xerces-j")
 SEEDS = tuple(range(30))
 BUDGETS = (0.000, 0.005, 0.010, 0.025, 0.050, 0.100, 0.150, 0.200)
@@ -32,6 +32,18 @@ TOL = 1e-12
 
 def source_dir(subject: str, seed: int) -> Path:
     return stage2_subject_root(subject, ROOT) / "robustness_final_30seeds" / f"seed_{seed:02d}"
+
+
+def canonical_label_tuple(value: str) -> tuple[int, ...]:
+    labels = json.loads(value)
+    relabel: dict[int, int] = {}
+    canonical: list[int] = []
+    for label in labels:
+        label = int(label)
+        if label not in relabel:
+            relabel[label] = len(relabel)
+        canonical.append(relabel[label])
+    return tuple(canonical)
 
 
 def select(frame: pd.DataFrame, budget: float) -> tuple[pd.Series, float, int]:
@@ -46,12 +58,13 @@ def select(frame: pd.DataFrame, budget: float) -> tuple[pd.Series, float, int]:
     eligible = feasible.loc[feasible["modularity_loss"] <= budget + TOL].copy()
     if eligible.empty:
         raise ValueError(f"no candidate in {budget:.3f} modularity band")
+    eligible["_canonical_label_tuple"] = eligible["label_vector"].map(canonical_label_tuple)
     eligible = eligible.sort_values(
-        ["imbalance", "weighted_modularity", "coupling", "solution_id"],
-        ascending=[True, False, True, True],
+        ["imbalance", "weighted_modularity", "coupling", "solution_id", "_canonical_label_tuple"],
+        ascending=[True, False, True, True, True],
         kind="stable",
     )
-    return eligible.iloc[0], q_max, int(len(eligible))
+    return eligible.iloc[0].drop(labels=["_canonical_label_tuple"]), q_max, int(len(eligible))
 
 
 def hash_file(path: Path) -> str:

@@ -416,11 +416,6 @@ def _run_one_seed(
         index=False,
         compression={"method": "xz", "preset": 9 | lzma.PRESET_EXTREME},
     )
-    pd.DataFrame([{**result["selected_solution"], **result["selected_posthoc_metrics"]}]).to_csv(
-        seed_dir / "selected_solution.csv",
-        index=False,
-    )
-    result["selected_partition"].to_csv(seed_dir / "selected_partition.csv", index=False)
 
     metrics = _run_metrics_row(
         context=context,
@@ -876,8 +871,6 @@ def _seed_output_is_valid(seed_dir: Path, seed: int, manifest: dict[str, Any]) -
     required = [
         "pareto_front.csv",
         "pareto_labels.csv.xz",
-        "selected_solution.csv",
-        "selected_partition.csv",
         "run_metrics.json",
         "run_metadata.json",
     ]
@@ -1027,9 +1020,16 @@ def _normalize_checked(
 
 def _snapshot_run_output(seed_dir: Path, bounds: dict[str, Any]) -> dict[str, Any]:
     pareto = pd.read_csv(seed_dir / "pareto_front.csv")
-    selected = pd.read_csv(seed_dir / "selected_solution.csv").iloc[0].to_dict()
-    selected_partition = pd.read_csv(seed_dir / "selected_partition.csv")
     metrics = _read_json(seed_dir / "run_metrics.json")
+    selected_id = str(metrics["solution_id"])
+    selected_rows = pareto.loc[pareto["solution_id"].astype(str) == selected_id]
+    if len(selected_rows) != 1:
+        raise ValueError(f"expected exactly one selected solution in {seed_dir}")
+    selected = selected_rows.iloc[0].to_dict()
+    labels = pd.read_csv(seed_dir / "pareto_labels.csv.xz", compression="xz")
+    selected_partition = labels.loc[labels["solution_id"].astype(str) == selected_id]
+    if selected_partition.empty:
+        raise ValueError(f"missing selected labels for {selected_id} in {seed_dir}")
     objectives = pareto.loc[
         :,
         ["coupling", "pymoo_f1_negative_cohesion", "imbalance"],

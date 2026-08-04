@@ -161,7 +161,7 @@ def _trajectory_for_seed(
 
 
 def _formal_final_hypervolume(subject: str, seed: int) -> float:
-    path = stage2_subject_root(subject, ROOT) / "robustness" / "raw_runs.csv"
+    path = stage2_subject_root(subject, ROOT) / "robustness_final_30seeds" / "raw_runs.csv"
     rows = pd.read_csv(path)
     matched = rows.loc[rows["seed"] == seed, "hypervolume"]
     if len(matched) != 1:
@@ -280,9 +280,9 @@ def main() -> int:
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     args = parser.parse_args()
 
-    output_dir = args.output_dir or (
-        stage2_subject_root(args.subject, ROOT) / "convergence_diagnostic"
-    )
+    output_dir = args.output_dir or stage2_subject_root(
+        args.subject, ROOT
+    ) / "convergence_diagnostic"
     summaries = run_diagnostic(
         subject=args.subject,
         seeds=_parse_seeds(args.seeds),

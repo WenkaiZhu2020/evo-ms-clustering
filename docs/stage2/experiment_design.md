@@ -57,13 +57,13 @@ NSGA-II is stochastic, so single-seed results are insufficient. Stage 2:
 
 ## Selected-Solution Reporting
 
-The runner keeps the full Pareto front, then selects one final solution for the
-Stage 1 comparison. The default rule is:
+The runner keeps the full Pareto front. The canonical Stage 2 operating
+profile is selected post hoc for the Stage 1 comparison by:
 
 ```text
-minimum imbalance within the 5% relative weighted-modularity-loss band,
-then maximum weighted modularity, minimum coupling, lexicographic
-solution_id, and canonical label tuple
+feasible retained Pareto front -> 5% relative modularity-loss band
+-> minimum imbalance -> maximum weighted modularity -> minimum coupling
+-> solution_id -> canonical labels
 ```
 
 The selected solution is not the only Stage 2 output. The Pareto front remains

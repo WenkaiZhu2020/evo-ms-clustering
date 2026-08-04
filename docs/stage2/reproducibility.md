@@ -1,4 +1,9 @@
-# Stage 2 Formal Reproducibility Record
+# Stage 2 Formal Reproducibility Audit
+
+> The public reproducibility entry point is
+> `docs/reproducibility/README.md`. Installation, supported versions, and the
+> main verification commands are maintained there. This file is the detailed
+> Stage 2 audit appendix.
 
 This document records what can be verified for the saved final Stage 2
 formal results. It distinguishes reproducible verification of the saved
@@ -20,18 +25,27 @@ Each manifest records formal seeds `0..29`, a `config_snapshot`, the formal
 input hashes, the Stage 1 Leiden partition hash, objective-space bounds, and
 the fingerprints listed below.
 
-## Saved-Output Integrity Snapshot
+## Saved-Output Integrity Verification
 
-The current saved formal-output snapshot is listed in:
+The former saved-output checksum snapshot was removed during the historical
+selector cleanup because it listed the retired per-seed selected-solution
+files. Use the read-only verifier instead:
 
-```text
-results/stage2/cross_subject/formal_statistics/formal_output_sha256sums.txt
+```bash
+uv run --frozen python scripts/reproducibility/verify.py --stage stage2 --skip-environment
 ```
 
-It contains SHA-256 entries for 546 files across the three final 30-seed
-directories. This protects the current saved snapshot from later unnoticed
-changes; it was generated after the formal runs and therefore does not replace
-a checksum manifest captured at run time.
+The current canonical operating-profile and downstream provenance files are
+under `results/stage2/cross_subject/operating_profile/`, and the cleanup
+inventory is under
+`results/stage2/cross_subject/formal_statistics/historical_output_cleanup_inventory.csv`.
+
+The canonical 5% profile is unchanged by the post-hoc band sensitivity. The
+1%, 3%, 5%, and 10% rows, summaries, transitions, and deterministic figures
+are under `results/stage2/cross_subject/operating_profile/sensitivity/`.
+They use the frozen Stage 1 Leiden baseline for comparisons; `Q_max` is only
+the band-membership anchor. No optimizer, seed, graph, Pareto front, or
+reference mapping was regenerated.
 
 ## Verified Formal Execution Record
 
@@ -60,8 +74,12 @@ src/evo_ms/optimization/objectives.py                           b69801c9b8c23476
 src/evo_ms/optimization/problem.py                              356972e17e8b88c4104296ef9e3bb8d095ae45fa12fd424e50ab30c67f79f643
 ```
 
-The current versions of those six files can be checked against the saved
-manifests with `scripts/reproducibility/verify_stage2_formal_provenance.py`.
+The historical source and configuration bytes above are checked at the
+`stage2-frozen` Git ref by `scripts/reproducibility/verify.py --stage stage2`.
+The historical `run_robustness.py` fingerprint remains in each manifest as
+immutable provenance for the formal search; the current file intentionally
+removes writers for retired selected-solution summaries and is not expected to
+match that historical fingerprint in the working tree.
 
 ## Formal Input Identity
 
@@ -97,22 +115,17 @@ version, and the generated CSV hashes before overwriting any input.
 
 ## Dependency Evidence and Gap
 
-The authoritative Stage 2 branch maintains its supported environment as
-`pyproject.toml` plus `uv.lock` at `stage2-nsga@7b003e6`. The final Stage 3
-publication branch provides a compatible superset through its own
-`pyproject.toml` and `uv.lock`; this does not modify the Stage 2 branch's
-environment history.
+An older Git snapshot recorded NumPy `2.3.5`, while all final formal manifests
+record NumPy `2.4.4`. That historical snapshot is not an installation or
+verification source; its contents remain traceable through Git history. The
+repository now has one supported installation entry, `pyproject.toml`, and one
+generated lock, `uv.lock`.
 
-The formal Stage 2 manifests directly record Python `3.13.7`, NumPy `2.4.4`,
-and pymoo `0.6.2`. An older Stage 1 branch commit (`b2ee9d0`) recorded NumPy
-`2.3.5`; that historical requirements file remains available through Git
-history and is not a current installation source.
-
-The formal manifests do not record a full `pip freeze`, wheel hashes, or the
+The formal manifests directly evidence Python `3.13.7`, NumPy `2.4.4`, and
+pymoo `0.6.2`. They do not record a full `pip freeze`, wheel hashes, or the
 versions of pandas, igraph, leidenalg, PyYAML, scipy, networkx, pytest, Java,
-Maven, or Ant. Consequently, the unified lock is the supported current
-reproduction environment, not a claim that every transitive package was
-recorded during the historical formal run.
+Maven, or Ant. Consequently, an exact fresh computational rerun cannot be
+claimed from the saved evidence alone.
 
 ## Errata
 
@@ -136,13 +149,13 @@ direction counts, and SciPy's zero handling from that single tolerance.
 | `xerces-j` / `coupling` | 21 of 30 | 9 | `165.0` → `6.0` | `0.147449` → `0.050612` |
 | `daytrader` / `coupling` | 6 of 30 | 24 | `85.0` → `46.0` | `0.002391` → `0.002961` |
 
-**No significance decision changed.** All 14 comparisons (10 executed tests plus
-4 degenerate all-identical rows) hold the same `bonferroni_significant` verdict
-at `alpha = 0.005` before and after the fix, and `decision_changed_10_vs_12` is
-`False` for all 10 executed tests under both family sizes. The affected
-`p`-values stay on the same side of their threshold: `xerces-j` / `coupling`
-remains non-significant (`0.0506 > 0.005`) and `daytrader` / `coupling` remains
-significant (`0.00296 <= 0.005`).
+For the historical maximum-modularity selector, no significance decision
+changed at the then-used `alpha = 0.005`: that table had 10 nondegenerate tests
+and 4 all-identical JPetStore rows. This is historical context for the tie fix,
+not the current canonical statistical family. The current 5% modularity-band
+profile makes all 14 requested rows nondegenerate, so the current family
+definition is documented below rather than inferred from the number of rows
+that happen to differ from Leiden.
 
 The bug also double-counted round-off ties in the descriptive columns, so
 `nsga_lower_count + ties + nsga_higher_count` exceeded `n_pairs` on those two
@@ -153,14 +166,36 @@ The `rank_biserial` column was never affected: it already filtered with
 `np.isclose`. The disagreement between a correct `rank_biserial` and a
 contaminated `W`/`p` on the same row was the visible symptom of this bug.
 
-Regenerated artifacts: `paired_selected_vs_leiden_wilcoxon.csv` and
-`bonferroni_10_vs_12_comparison.csv`. The latter previously had no generator in
-the repository; it is now emitted by `analyze_final_robustness.py` from the same
-rows as the paired table, so the two files cannot drift apart. Neither file is
-listed in `formal_output_sha256sums.txt`, so the 546-file integrity snapshot of
-the formal run directories is unaffected.
+Regenerated artifacts: the canonical operating-profile metrics, formal
+`raw_runs.csv` summaries, Stage 1 comparisons, and the current
+`paired_selected_vs_leiden_wilcoxon.csv`. The current family audit is
+`bonferroni_family_audit.csv`, emitted from the same rows as the paired table.
+These are derived post-hoc tables; the integrity snapshot of the formal run
+directories remains a separate protected search-output record.
 
-### E2. Legacy fields in `stage2_robustness_bounds.yml` (not modified)
+### E2. Current multiple-comparison family definition
+
+The current 5% canonical profile has 14 requested comparisons, but they are not
+one undifferentiated family of 14:
+
+| Statistical family | Subjects | Metrics | Planned comparisons | Bonferroni alpha |
+| --- | --- | --- | ---: | ---: |
+| `primary_structural` | JPetStore, DayTrader, Xerces-J | weighted modularity, coupling, cohesion, imbalance | 12 | `0.05 / 12` |
+| `external_reference_daytrader` | DayTrader | MoJoFM, Pairwise F1 | 2 | `0.05 / 2` |
+
+The 12-comparison primary family is the predeclared cross-subject structural
+family: three subjects times four structural metrics. The two DayTrader
+external-reference metrics are retained as a separate external family because
+they use a different reference-mapping outcome domain and are unavailable for
+the other two subjects.
+
+The old `family=10` value was generated by excluding four all-identical
+JPetStore rows under the retired selector. It was therefore data-dependent and
+must not be reused as the current family definition. The machine-readable
+`analysis_metadata.json`, the per-row `bonferroni_family_size` columns, and
+`bonferroni_family_audit.csv` now record the two current families explicitly.
+
+### E3. Legacy fields in `stage2_robustness_bounds.yml` (not modified)
 
 The bounds file is left byte-for-byte unchanged: its SHA-256 is pinned by all
 three formal manifests and checked by the provenance verifier. Two of its fields
@@ -172,7 +207,8 @@ are legacy and must not be read as provenance:
   formal run state. Nothing verifies it. The authoritative record of the source
   state that produced the formal runs is the per-subject
   `working_tree_fingerprint` together with the formal manifests; those agree with
-  each other and with the current tree, and the verifier checks them.
+  each other and with the historical `stage2-frozen` ref, which the verifier
+  checks without replacing the current working tree.
 - **`reference_point`** is inert. `run_robustness.py` overwrites it with the
   module constant `REFERENCE_POINT`, which is the value actually used for
   Hypervolume.
@@ -190,26 +226,17 @@ tuple. Every canonical-profile comparison is then computed on that one
 solution per seed. This has an asymmetric consequence that reports must
 respect:
 
-- **`weighted_modularity` remains constrained by the near-best band.** The
-  canonical profile deliberately permits at most 5% relative loss to expose
-  structural trade-offs; it is not the retired max-modularity selector.
+- **`weighted_modularity` is constrained by the near-best band.** The canonical
+  profile deliberately permits at most 5% relative loss to expose structural
+  trade-offs; it is not the retired max-modularity selector.
 - **`imbalance` is the primary within-band structural preference**, followed by
-  the documented deterministic tie-breakers. Comparisons must therefore be
-  interpreted as properties of the canonical operating profile, not as an
-  unbiased estimate of every Pareto candidate.
+  the documented deterministic tie-breakers. Comparisons are therefore
+  properties of the canonical operating profile, not unbiased estimates of
+  every Pareto candidate.
 
-## Verification Commands
+## Audit-only verification note
 
-Validate saved inputs, config/bounds hashes, formal seed layout, and core
-source fingerprints without running NSGA-II:
-
-```bash
-uv run --frozen python scripts/reproducibility/verify_stage2_formal_provenance.py --skip-environment
-```
-
-The same command without `--skip-environment` also requires the two recorded
-runtime versions, Python `3.13.7`, NumPy `2.4.4`, and pymoo `0.6.2`.
-
-Before any future formal rerun, create and preserve a full environment lock
-with `python -m pip freeze --all`, record its SHA-256, pin the three raw source
-commits, and run this verifier before writing a new output directory.
+For current commands, use the unified verifier documented in
+`docs/reproducibility/README.md`. Before any future formal rerun, preserve the
+full environment lock, pin the three raw source commits, and run the verifier
+before writing a new output directory.

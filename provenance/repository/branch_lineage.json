@@ -2,6 +2,12 @@
   "schema_version": 1,
   "final_branch": "stage3-Declaration+Method-Body",
   "layout_migration_start_head": "74dca15aa79e5c643f78c8b8c1152962a0a38e8e",
+  "main_reconciliation": {
+    "stage3_starting_head": "9afa5665ef31a7c9853eaaeac3fa47c563f68c62",
+    "merged_main_head": "0f8544ecf2ad52a2aaed5759b7b8c0395bf48648",
+    "strategy": "preserve the final Stage 3 layout and migrate the latest Stage 1/2 main snapshot into its canonical stage-oriented paths",
+    "scientific_experiment_rerun": false
+  },
   "stage1": {
     "branch": "stage1-baseline",
     "observed_head": "0f2591e84db4",

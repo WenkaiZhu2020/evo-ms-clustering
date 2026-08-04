@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import re
+import subprocess
+import sys
 import tomllib
 
 
@@ -43,3 +45,24 @@ def test_uv_lock_preserves_every_historical_stage3_version() -> None:
     }
     assert set(expected).issubset(actual)
     assert {name: actual[name] for name in expected} == expected
+
+
+def test_unified_verifier_covers_all_final_stages_without_rerunning_experiments() -> None:
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "scripts/reproducibility/verify.py",
+            "--stage",
+            "all",
+            "--skip-environment",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    result = json.loads(completed.stdout)
+    assert result["passed"] is True
+    assert result["stage1"]["passed"] is True
+    assert result["stage2"]["passed"] is True
+    assert result["stage3"]["passed"] is True

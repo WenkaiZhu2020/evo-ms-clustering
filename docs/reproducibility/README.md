@@ -6,6 +6,7 @@ Stage 2, and Stage 3:
 ```bash
 uv sync --frozen
 uv run --frozen pytest
+uv run --frozen python scripts/reproducibility/verify.py --stage all
 ```
 
 The supported dependency contract is `pyproject.toml` plus `uv.lock`. Exact

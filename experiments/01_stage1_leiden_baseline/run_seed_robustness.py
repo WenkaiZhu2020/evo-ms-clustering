@@ -62,6 +62,7 @@ def run_seed_robustness(
     root: Path = ROOT,
     subjects: Sequence[str] | None = None,
     seeds: Sequence[int] | None = None,
+    write_reports: bool = True,
 ) -> dict[str, dict[str, object]]:
     """Run the multi-seed control for each subject and write outputs."""
     logger = get_logger(__name__)
@@ -73,7 +74,14 @@ def run_seed_robustness(
 
     summaries: dict[str, dict[str, object]] = {}
     for subject in subjects:
-        summaries[subject] = _run_subject(root, subject, seeds, git_state, logger)
+        summaries[subject] = _run_subject(
+            root,
+            subject,
+            seeds,
+            git_state,
+            logger,
+            write_reports=write_reports,
+        )
     return summaries
 
 
@@ -83,6 +91,7 @@ def _run_subject(
     seeds: list[int],
     git_state: dict[str, object],
     logger,
+    write_reports: bool,
 ) -> dict[str, object]:
     subject_config = _load_subject_config(root, subject)
     extracted_dir = root / subject_config.get(
@@ -204,21 +213,38 @@ def _run_subject(
 
     output_dir = stage1_seed_robustness_root(subject, root)
     output_dir.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(ssa_effect).to_csv(output_dir / "ssa_effect_ari.csv", index=False)
-    pd.DataFrame(seed_noise).to_csv(output_dir / "seed_noise_ari.csv", index=False)
-    pd.DataFrame([summary_row]).to_csv(output_dir / "robustness_summary.csv", index=False)
-    _write_summary_markdown(output_dir / "robustness_summary.md", summary_row, seeds)
-    _write_metadata(
-        output_dir / "robustness_metadata.yml",
-        root=root,
-        subject=subject,
-        seeds=seeds,
-        extracted_dir=extracted_dir,
-        git_state=git_state,
-    )
+    _write_raw_seed_partitions(output_dir, raw_clusters)
+    if write_reports:
+        pd.DataFrame(ssa_effect).to_csv(output_dir / "ssa_effect_ari.csv", index=False)
+        pd.DataFrame(seed_noise).to_csv(output_dir / "seed_noise_ari.csv", index=False)
+        pd.DataFrame([summary_row]).to_csv(output_dir / "robustness_summary.csv", index=False)
+        _write_summary_markdown(output_dir / "robustness_summary.md", summary_row, seeds)
+        _write_metadata(
+            output_dir / "robustness_metadata.yml",
+            root=root,
+            subject=subject,
+            seeds=seeds,
+            extracted_dir=extracted_dir,
+            git_state=git_state,
+        )
     logger.info("Wrote seed-robustness outputs to %s", output_dir)
     summary_row["output_dir"] = str(output_dir.relative_to(root))
     return summary_row
+
+
+def _write_raw_seed_partitions(
+    output_dir: Path,
+    raw_clusters: dict[int, pd.DataFrame],
+) -> None:
+    """Persist the raw-graph Leiden partition for every fixed seed."""
+    partition_dir = output_dir / "per_seed_partitions"
+    partition_dir.mkdir(parents=True, exist_ok=True)
+    columns = ["class_id", "class_name", "cluster_id"]
+    for seed, clusters in sorted(raw_clusters.items()):
+        clusters.loc[:, columns].to_csv(
+            partition_dir / f"leiden_seed_{seed:02d}.csv",
+            index=False,
+        )
 
 
 def _mann_whitney_u(x: np.ndarray, y: np.ndarray) -> tuple[float, float]:
@@ -475,13 +501,22 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Stage 1 multi-seed SSA-vs-seed-noise robustness control.")
     parser.add_argument("--subjects", default=",".join(SUBJECTS), help="comma-separated subject list")
     parser.add_argument("--num-seeds", type=int, default=30, help="number of fixed seeds, starting at 0")
+    parser.add_argument(
+        "--partitions-only",
+        action="store_true",
+        help="write per-seed raw Leiden partitions without replacing robustness reports",
+    )
     args = parser.parse_args()
 
     subjects = [name.strip() for name in args.subjects.split(",") if name.strip()]
     seeds = list(range(args.num_seeds))
 
     try:
-        summaries = run_seed_robustness(subjects=subjects, seeds=seeds)
+        summaries = run_seed_robustness(
+            subjects=subjects,
+            seeds=seeds,
+            write_reports=not args.partitions_only,
+        )
     except ImportError as exc:
         print(f"ERROR: missing dependency for Leiden: {exc}", file=sys.stderr)
         return 1

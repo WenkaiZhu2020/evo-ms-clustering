@@ -2,7 +2,7 @@ subject: xerces-j
 language: java
 project_root: data/raw_projects/xerces-j
 build_tool: ant+javac
-compile_command: bash scripts/prepare_xerces_j.sh
+compile_command: bash scripts/extraction/prepare_xerces_j.sh
 classes_dir: target/classes
 classpath_entries:
   - target/classes
@@ -17,4 +17,4 @@ extracted_output_path: data/extracted/xerces-j
 exclude_packages:
   - org.apache.html
   - org.w3c.dom
-# Raw source is cloned locally by scripts/prepare_xerces_j.sh and ignored by Git.
+# Raw source is cloned locally by scripts/extraction/prepare_xerces_j.sh and ignored by Git.
