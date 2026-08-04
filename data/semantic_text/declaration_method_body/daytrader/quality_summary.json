@@ -1,0 +1,58 @@
+{
+  "aggregate_input_sha256": "da53d434b820e3c25bc69df63ced807cd0113d412fa36acc9694d1a97631d655",
+  "body_tokens": {
+    "max": 256,
+    "mean": 46.490566037735846,
+    "median": 33,
+    "min": 0,
+    "std": 50.90228250118598
+  },
+  "body_truncated_count": 1,
+  "class_count": 53,
+  "declaration_tokens": {
+    "max": 678,
+    "mean": 116.0754716981132,
+    "median": 53,
+    "min": 7,
+    "std": 128.60512168218926
+  },
+  "declaration_truncated_count": 0,
+  "empty_body_count": 4,
+  "feature_totals": {
+    "accepted_exception_tokens": 178,
+    "accepted_field_tokens": 2171,
+    "accepted_invoked_method_tokens": 1725,
+    "accepted_local_tokens": 105,
+    "accepted_operation_tokens": 6568,
+    "accepted_string_tokens": 2418
+  },
+  "filter_totals": {
+    "boilerplate_or_invalid_identifier": 3243,
+    "duplicate_within_method": 8582,
+    "java_keyword": 1193,
+    "literal_boilerplate": 1,
+    "literal_empty": 56,
+    "literal_encoded_or_binary": 1,
+    "literal_format_only": 1,
+    "literal_length": 127,
+    "literal_no_meaningful_tokens": 79,
+    "literal_numeric_or_timestamp": 3,
+    "literal_path": 153,
+    "raw_jimple_syntax": 788,
+    "repeated_token_cap": 2039,
+    "synthetic_local": 16821,
+    "type_like_identifier": 1
+  },
+  "generated_code_status": {
+    "compiler_synthetic_evidence": 5,
+    "not_detected": 48
+  },
+  "subject": "daytrader",
+  "total_tokens": {
+    "max": 975,
+    "mean": 174.67924528301887,
+    "median": 114,
+    "min": 29,
+    "std": 178.4207211065607
+  }
+}

@@ -32,8 +32,8 @@ require_stage2_worktree() {
     echo "ERROR: expected repository root ${STAGE2_ROOT}, got ${top_level}" >&2
     exit 1
   fi
-  if [[ "${branch}" != "stage2-nsga" ]]; then
-    echo "ERROR: Stage 2 commands require branch stage2-nsga, got ${branch}" >&2
+  if [[ "${branch}" != "stage2-nsga" && "${branch}" != "stage3-Declaration+Method-Body" ]]; then
+    echo "ERROR: Stage 2 commands require stage2-nsga or the final Stage 3 branch, got ${branch}" >&2
     exit 1
   fi
 }

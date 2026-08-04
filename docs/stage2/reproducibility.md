@@ -16,9 +16,9 @@ The final outputs are the 30-seed directories below, not the historical or
 diagnostic siblings under the same subject stage:
 
 ```text
-results/jpetstore/03_stage2_nsga/robustness_final_30seeds/
-results/daytrader/03_stage2_nsga/robustness_final_30seeds/
-results/xerces-j/03_stage2_nsga/robustness_final_30seeds/
+results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/
+results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/
+results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/
 ```
 
 Each manifest records formal seeds `0..29`, a `config_snapshot`, the formal
@@ -32,17 +32,17 @@ selector cleanup because it listed the retired per-seed selected-solution
 files. Use the read-only verifier instead:
 
 ```bash
-python scripts/reproducibility/verify.py --stage stage2 --skip-environment
+uv run --frozen python scripts/reproducibility/verify.py --stage stage2 --skip-environment
 ```
 
 The current canonical operating-profile and downstream provenance files are
-under `results/cross_subject/03_stage2_nsga/modularity_band/`, and the cleanup
+under `results/stage2/cross_subject/operating_profile/`, and the cleanup
 inventory is under
-`results/cross_subject/03_stage2_nsga/final_statistics/historical_output_cleanup_inventory.csv`.
+`results/stage2/cross_subject/formal_statistics/historical_output_cleanup_inventory.csv`.
 
 The canonical 5% profile is unchanged by the post-hoc band sensitivity. The
 1%, 3%, 5%, and 10% rows, summaries, transitions, and deterministic figures
-are under `results/cross_subject/03_stage2_nsga/modularity_band/sensitivity/`.
+are under `results/stage2/cross_subject/operating_profile/sensitivity/`.
 They use the frozen Stage 1 Leiden baseline for comparisons; `Q_max` is only
 the band-membership anchor. No optimizer, seed, graph, Pareto front, or
 reference mapping was regenerated.
@@ -74,12 +74,12 @@ src/evo_ms/optimization/objectives.py                           b69801c9b8c23476
 src/evo_ms/optimization/problem.py                              356972e17e8b88c4104296ef9e3bb8d095ae45fa12fd424e50ab30c67f79f643
 ```
 
-The extraction and optimization files above can be checked against the saved
-manifests with `scripts/reproducibility/verify.py --stage stage2`. The
-historical `run_robustness.py` fingerprint remains in each manifest as
+The historical source and configuration bytes above are checked at the
+`stage2-frozen` Git ref by `scripts/reproducibility/verify.py --stage stage2`.
+The historical `run_robustness.py` fingerprint remains in each manifest as
 immutable provenance for the formal search; the current file intentionally
 removes writers for retired selected-solution summaries and is not expected to
-match that historical fingerprint.
+match that historical fingerprint in the working tree.
 
 ## Formal Input Identity
 
@@ -207,7 +207,8 @@ are legacy and must not be read as provenance:
   formal run state. Nothing verifies it. The authoritative record of the source
   state that produced the formal runs is the per-subject
   `working_tree_fingerprint` together with the formal manifests; those agree with
-  each other and with the current tree, and the verifier checks them.
+  each other and with the historical `stage2-frozen` ref, which the verifier
+  checks without replacing the current working tree.
 - **`reference_point`** is inert. `run_robustness.py` overwrites it with the
   module constant `REFERENCE_POINT`, which is the value actually used for
   Hypervolume.

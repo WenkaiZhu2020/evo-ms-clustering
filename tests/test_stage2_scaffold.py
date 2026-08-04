@@ -213,16 +213,17 @@ def test_pymoo_dependency_importable_or_skipped() -> None:
     pytest.importorskip("pymoo")
 
 
-def test_no_stage3_or_semantics_scaffold() -> None:
-    forbidden = [
-        ROOT / "docs" / "stage3",
-        ROOT / "experiments" / "03_stage3",
-        ROOT / "src" / "evo_ms" / "semantics",
-        ROOT / "src" / "evo_ms" / "refinement",
-    ]
-    assert not any(p.exists() for p in forbidden)
+def test_stage2_boundary_is_independent_of_final_stage3() -> None:
+    runner = (ROOT / "experiments" / "02_stage2_nsga_structure_only" / "run.py").read_text(encoding="utf-8")
+    config = (ROOT / "configs" / "experiments" / "02_stage2_nsga_structure_only.yml").read_text(encoding="utf-8")
+    assert "stage3" not in runner.lower()
+    assert "stage3" not in config.lower()
+    # Final Stage 3 documentation is an allowed downstream namespace.  This
+    # test protects the actual Stage 2 dependency boundary instead of
+    # rejecting a documentation directory by name.
+    assert (ROOT / "docs" / "stage3").is_dir()
 
 
 def test_stage1_frozen_paths_intact() -> None:
     assert (ROOT / "experiments" / "01_stage1_leiden_baseline").is_dir()
-    assert (ROOT / "results" / "daytrader" / "01_stage1_leiden_baseline").is_dir()
+    assert (ROOT / "results/stage1/subjects/daytrader/leiden_baseline").is_dir()

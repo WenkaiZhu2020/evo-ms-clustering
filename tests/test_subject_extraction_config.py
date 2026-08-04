@@ -46,6 +46,7 @@ def test_app_packages_and_classpath_are_normalized(tmp_path: Path) -> None:
         ]
     )
     assert args[args.index("--out-dir") + 1] == "data/extracted/fixture"
+    assert "--semantic-out" not in args
 
 
 def test_xerces_config_produces_expected_scope() -> None:

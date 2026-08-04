@@ -15,6 +15,11 @@ from scipy.stats import rankdata, wilcoxon
 
 
 ROOT = Path(__file__).resolve().parents[2]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from evo_ms.repository_layout import STAGE2_OPERATING_PROFILE_ROOT
 SELECTOR_CONTRACT_ID = "stage2-raw-structure-only-modularity-band-v1"
 SELECTOR_CONTRACT = (
     "feasible retained Pareto candidates; fallback to all retained candidates "
@@ -242,8 +247,8 @@ def main() -> int:
     parser.add_argument(
         "--selected-profile",
         type=Path,
-        default=ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/"
-        "canonical_operating_profile_metrics_per_seed.csv",
+        default=STAGE2_OPERATING_PROFILE_ROOT
+        / "canonical_operating_profile_metrics_per_seed.csv",
     )
     args = parser.parse_args()
     refresh(args.output_dir.resolve(), args.selected_profile.resolve())

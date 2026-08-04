@@ -1,0 +1,21 @@
+{
+  "class_mapping_sha256": "7e204d1865c1ddb228cc42f6f61519e280076590a92f0965e4f1fc765b77a4ab",
+  "config_hash": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+  "embedding_aggregate_sha256": "36bdeca0e1ef32f36631c30ebbf86a1875621490e92f9b4a7fd0860755676236",
+  "embedding_file_sha256": "d81607ad9e48ef274ecf65a4e3b1b1c7c22163c3b073831ffbb506bac7601bac",
+  "evaluations": 10000,
+  "experiment_id": "stage3_declaration_method_body",
+  "experiment_name": "stage3_declaration_method_body",
+  "front_size": 100,
+  "graph_sha256": "7d5d45f6e7cc46cdb57c57688bc89b5e90e0ecea7390833a7acb2e8887d935a5",
+  "input_aggregate_sha256": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+  "input_hash": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+  "projected_front_size": 84,
+  "projected_hypervolume": 0.22777871982745157,
+  "representation_id": "declaration_method_body_v1",
+  "runtime_seconds": 75.78577041602693,
+  "seed": 7,
+  "selected_solution_id": "seed7_solution013",
+  "subject": "xerces",
+  "validation_pass": true
+}

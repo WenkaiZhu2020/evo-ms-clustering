@@ -1,0 +1,132 @@
+{
+  "base_config_path": "configs/experiments/04_stage3_semantic.yml",
+  "base_config_sha256": "eddbb3674dacabfac2925f4ef6887bb86c9030f629a231230d6a889e1c28cc27",
+  "class_mapping_file_sha256": "fddd1609d142fc7e3f717fd872d8c48d51ba70e1b2c17a35e7c1d58d3927cf55",
+  "class_mapping_sha256": "7e204d1865c1ddb228cc42f6f61519e280076590a92f0965e4f1fc765b77a4ab",
+  "completion_status": "completed",
+  "config_hash": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+  "config_path": "configs/experiments/05_stage3_declaration_method_body.yml",
+  "config_sha256": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+  "embedding_aggregate_sha256": "36bdeca0e1ef32f36631c30ebbf86a1875621490e92f9b4a7fd0860755676236",
+  "embedding_file_sha256": "d81607ad9e48ef274ecf65a4e3b1b1c7c22163c3b073831ffbb506bac7601bac",
+  "embedding_source_commit": "33074fe5a2479b9d76605cd6a507c8a66c523a19",
+  "end_timestamp_utc": "2026-07-17T23:57:06Z",
+  "evaluations": 10000,
+  "execution_head": "6bbed4acef9af0bd7dd4938938decf99457ef112",
+  "experiment_id": "stage3_declaration_method_body",
+  "experiment_name": "stage3_declaration_method_body",
+  "front_diagnostics": {
+    "constraint_violating_population_size": 0,
+    "feasible_population_size": 100,
+    "final_population_size": 100,
+    "front_source": "recomputed_nondominated_front",
+    "front_validation_passed": true,
+    "recomputed_nondominated_size": 100
+  },
+  "g_sem_graph_hash": "7d5d45f6e7cc46cdb57c57688bc89b5e90e0ecea7390833a7acb2e8887d935a5",
+  "generations": 100,
+  "graph_sha256": "7d5d45f6e7cc46cdb57c57688bc89b5e90e0ecea7390833a7acb2e8887d935a5",
+  "graph_source_commit": "6f595208e1bde1702b7a99f00410b35a225777c8",
+  "implementation_commit": "6bbed4acef9af0bd7dd4938938decf99457ef112",
+  "initialization_contract": "experiments/02_stage2_nsga_structure_only/run.py:_seed_initialization_records",
+  "input_aggregate_sha256": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+  "input_hash": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+  "no_graph_fusion": true,
+  "no_model_inference": true,
+  "no_semantic_graph_generation": true,
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance",
+    "f_semantic"
+  ],
+  "population_size": 100,
+  "projected_front_rule": "final 4D front -> exact 3D nondominance -> exact projected objective tuple deduplication; stable solution_id survivor",
+  "projected_hv_bounds_source": "configs/experiments/stage2_robustness_bounds.yml",
+  "projected_hv_implementation": "experiments/02_stage2_nsga_structure_only/run.py:_hypervolume",
+  "projected_hv_reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "report_objective_order": [
+    "coupling",
+    "cohesion",
+    "imbalance",
+    "f_semantic"
+  ],
+  "representation_id": "declaration_method_body_v1",
+  "representative_selection_implementation": "experiments/02_stage2_nsga_structure_only/run.py:_select_solution",
+  "run_type": "formal",
+  "runtime_seconds": 76.13712716696318,
+  "schema_version": 2,
+  "seed": 28,
+  "semantic_graph_config_sha256": "eddbb3674dacabfac2925f4ef6887bb86c9030f629a231230d6a889e1c28cc27",
+  "semantic_graph_hash": "7d5d45f6e7cc46cdb57c57688bc89b5e90e0ecea7390833a7acb2e8887d935a5",
+  "semantic_graph_metadata_path": "data/semantic_graphs/declaration_method_body/xerces/graph_metadata.json",
+  "semantic_graph_path": "data/semantic_graphs/declaration_method_body/xerces/semantic_edges.csv",
+  "semantic_input_aggregate_sha256": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+  "semantic_input_source": "frozen Stage 3B semantic_edges.csv only",
+  "semantic_objective_used_for_selection": false,
+  "stage2_config_path": "configs/experiments/02_stage2_nsga_structure_only.yml",
+  "stage2_config_sha256": "37f4f1a096b0e485da87fc9644a7ad874f5654fa46df3bd77bb718e6425330fa",
+  "stage2_same_seed_hypervolume": {
+    "bounds_path": "configs/experiments/stage2_robustness_bounds.yml",
+    "checked_paths": [
+      "results/xerces-j/03_stage2_nsga/robustness/seed_00/run_metrics.json",
+      "results/xerces-j/03_stage2_nsga/raw/hypervolume_by_seed.csv"
+    ],
+    "source_path": "results/xerces-j/03_stage2_nsga/robustness/seed_00/run_metrics.json",
+    "stage2_git_commit": "131587f2a4b77d1b8c2153eab16a5d64944ee05c",
+    "value": 0.1345042131321827
+  },
+  "start_timestamp_utc": "2026-07-17T23:55:49Z",
+  "storage_subject": "xerces-j",
+  "structural_objective_invariance": {
+    "checks": {
+      "all_one": {
+        "pass": true,
+        "stage2_cohesion": 0.10509503129429329,
+        "stage2_coupling": 0.0,
+        "stage2_imbalance": 0.0,
+        "stage3_cohesion": 0.10509503129429329,
+        "stage3_coupling": 0.0,
+        "stage3_imbalance": 0.0
+      },
+      "deterministic_two_cluster": {
+        "pass": true,
+        "stage2_cohesion": 0.09843744326502947,
+        "stage2_coupling": 0.5322501797268152,
+        "stage2_imbalance": 0.0,
+        "stage3_cohesion": 0.09843744326502947,
+        "stage3_coupling": 0.5322501797268152,
+        "stage3_imbalance": 0.0
+      },
+      "fixed_leiden": {
+        "pass": true,
+        "stage2_cohesion": 8.068765336183423,
+        "stage2_coupling": 0.20879942487419123,
+        "stage2_imbalance": 1.314526165589089,
+        "stage3_cohesion": 8.068765336183423,
+        "stage3_coupling": 0.20879942487419123,
+        "stage3_imbalance": 1.314526165589089
+      }
+    },
+    "pass": true
+  },
+  "subject": "xerces",
+  "validation": {
+    "f_semantic_max": 0.9802700793500183,
+    "f_semantic_mean": 0.6827805254997515,
+    "f_semantic_min": 0.38657629115931036,
+    "f_semantic_std": 0.15654662837738811,
+    "front_size": 100,
+    "hv_abs_difference": 0.0,
+    "projected_front_size": 85,
+    "projected_hv": 0.1301882880705885,
+    "recomputed_projected_hv": 0.1301882880705885,
+    "selected_f_semantic": 0.38657629115931036,
+    "selected_solution_id": "seed28_solution013",
+    "validation_pass": true
+  }
+}

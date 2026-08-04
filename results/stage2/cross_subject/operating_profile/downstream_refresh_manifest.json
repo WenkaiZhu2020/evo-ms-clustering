@@ -1,0 +1,862 @@
+{
+  "analysis": "stage2_modularity_band_downstream_refresh",
+  "selector_contract_id": "stage2-raw-structure-only-modularity-band-v1",
+  "selector_contract": "feasible retained Pareto candidates; fallback to all retained candidates only when feasible is empty; 5% relative weighted-modularity-loss band with 1e-12 tolerance; minimum imbalance; maximum weighted modularity; minimum coupling; solution_id; canonical label tuple",
+  "canonical_source_path": "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+  "canonical_source_sha256": "9a0e9a1f40edf260bb06c719e6967aef9c18a81b28fac9f0895e5520341c91d3",
+  "subjects": [
+    "jpetstore",
+    "daytrader",
+    "xerces-j"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "posthoc_status": "recomputed_from_frozen_front_and_labels",
+  "no_optimizer_run": true,
+  "no_seed_rerun": true,
+  "no_graph_files_regenerated": true,
+  "no_pareto_fronts_regenerated": true,
+  "no_reference_mapping_regenerated": true,
+  "source_inventory": [
+    {
+      "subject": "jpetstore",
+      "seed": 0,
+      "canonical_solution_id": "seed0_solution006",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_00/pareto_front.csv",
+      "source_front_sha256": "f5c21a0497a021c1be32c3dbc6ff530c492f33226454da735ef0248c1d4a471d",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_00/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "beac69186a17501ec6aabf2920b23f5336fb2d862636d29f24ba680f92b0541d"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 1,
+      "canonical_solution_id": "seed1_solution007",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_front.csv",
+      "source_front_sha256": "df8ed7067837aa4f7b677483eaeff8a6330d92956ec7e9d9b7c6e60b8b4074cc",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "3ac02924a7056da42fe624d928b72e52158f87da146455241eb31cdd6f621983"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 2,
+      "canonical_solution_id": "seed2_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_02/pareto_front.csv",
+      "source_front_sha256": "a3c358f3be51fed5bc485ba85e5785353e76c706c45ba1822eea402dc08ad35c",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_02/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "baada8321387abca95d8e5336b5047d43f10655b7ce9e3df804a9b2516723b78"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 3,
+      "canonical_solution_id": "seed3_solution007",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_03/pareto_front.csv",
+      "source_front_sha256": "28545b76fb9df9d6bd390417e48667ead6fc8b07f3d98cac762171261522f5fd",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_03/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "03366e353ccb6a63f4106620b19e3fae750d484f1665338189e720e108d46df4"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 4,
+      "canonical_solution_id": "seed4_solution007",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_04/pareto_front.csv",
+      "source_front_sha256": "c339c2db2d6762c572ccbc8ef27c560e88df6fc327a448343493199353df3a75",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_04/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "b2576f36fa46b0fcab9a9f35ecac6b2d6558405815d858d635383f3d3770b6d6"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 5,
+      "canonical_solution_id": "seed5_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_05/pareto_front.csv",
+      "source_front_sha256": "3bc0bfa671d29c5f00a40c8c79162d16165712ff4df94368da715ce9e9bb6fa5",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_05/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "ebedcc29dce791a7ed01a07aca82180764fc61140a5a75d42e703a2e3881eaed"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 6,
+      "canonical_solution_id": "seed6_solution011",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_06/pareto_front.csv",
+      "source_front_sha256": "fbce0085e8a7c3bc0fc9e4cc51c5f745a7bacb41ea349d292bcac6774121e83b",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_06/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "243e329640534e43ec548ba2cd1679996d9b1b6cc70883ef441d8d027788a78c"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 7,
+      "canonical_solution_id": "seed7_solution007",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_07/pareto_front.csv",
+      "source_front_sha256": "08bb62caac5124a0489fcd6129664c4da4832d4b7ccddb6de808d055482d49c7",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_07/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "b5e83ace65e5417b035d348a5e6917e7eb29dd49cd05d35010815504ffb4fd7e"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 8,
+      "canonical_solution_id": "seed8_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_08/pareto_front.csv",
+      "source_front_sha256": "c693053b5fe8517de8fbf15d3252fb64792ae2de4a019690363d0e1f5a9cc68d",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_08/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "001f1fe55b5327fab64133a5f93377a9a688947e32986e431785ef065cd8be28"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 9,
+      "canonical_solution_id": "seed9_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_09/pareto_front.csv",
+      "source_front_sha256": "b7f83f87e3a688d5d00551dddb3e69d4624562b14a4c742df1d1495fe837db56",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_09/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "25e9730607647ccef2d54ac8baa52fa67fe21917861fd6c6833dde60b188b71c"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 10,
+      "canonical_solution_id": "seed10_solution002",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_10/pareto_front.csv",
+      "source_front_sha256": "3839f954f6aea7d2dfdffa6ab1343483f7de9e3de82f2e69db750f5eaee1b736",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_10/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "637f0538f06c3f70c85087c539eaa12e71769bf882effaa5ad5f7e19d353da12"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 11,
+      "canonical_solution_id": "seed11_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_11/pareto_front.csv",
+      "source_front_sha256": "b350a1bceb3bff51c2763596e594784032dbd3dbc4e986425afa328fe84f9a3e",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_11/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "9f594fe7bf87b18eba855b8384333f56304bb5d6ec9f4f0c68f63905b8aa5456"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 12,
+      "canonical_solution_id": "seed12_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_12/pareto_front.csv",
+      "source_front_sha256": "a747307c4dbf6637b39265d0280158b293dbbeaeb690d509b3715c43873df5f3",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_12/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "cd6aa3a62c66e937fc45a764419378ebd77145c454ae2f9bea71bfd75eafa2b7"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 13,
+      "canonical_solution_id": "seed13_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_13/pareto_front.csv",
+      "source_front_sha256": "96f4e7291517256be41c73ef5fca1b6dd25cd94b7451489c5bd9e77e35b4f02c",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_13/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "1d4f0d3d24adb261ae6ced1e1e4c30b8cf6b60040f1a7271f2cf34a56b7d4b7a"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 14,
+      "canonical_solution_id": "seed14_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_14/pareto_front.csv",
+      "source_front_sha256": "4f843a9cc37642e1832422c6a4e2356d3d085748a82f0f50c107ff9887416742",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_14/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "55df1e027ff18b9b16d27d737752b8b6843e217e279cd996892610f26d1305b5"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 15,
+      "canonical_solution_id": "seed15_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_15/pareto_front.csv",
+      "source_front_sha256": "08e39a659889f76664285c21825520d14cfe571552a687801a4b8675bedbb199",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_15/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "124416e9736d8cddb4d945619f84a240d7c1e05c6e7ec0454b242de18098c3a1"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 16,
+      "canonical_solution_id": "seed16_solution007",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_16/pareto_front.csv",
+      "source_front_sha256": "4164296fd44cdfe3c50c31d480a45076ded25d0dd08044d6c98f08b3fa0dd428",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_16/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "3a6194582ff2764e70d9b9b8f7d05ddd1a4c0a3d4fa33144414d806b0d73e76c"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 17,
+      "canonical_solution_id": "seed17_solution002",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_17/pareto_front.csv",
+      "source_front_sha256": "9346ecaae9fc86104a0c6acf5454a14187773a8d999bffe11c7a586ff6a4a763",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_17/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "e5ae26ad474001eaf7bb6785109f28042475eb5c97b4322caab1875a219dc419"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 18,
+      "canonical_solution_id": "seed18_solution007",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_18/pareto_front.csv",
+      "source_front_sha256": "74db15b711c27e506bf07098dd1d518139de2f7bc2b635f7d7892e2d60cd76b7",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_18/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "2c8a8e984a4976de96add2ecd123b512092a3a291cd9d34fe61b34e331a48ab3"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 19,
+      "canonical_solution_id": "seed19_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_19/pareto_front.csv",
+      "source_front_sha256": "0e4af1f7059d9e31c5b2e427874c400901b26b417387896885e403f57baa717c",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_19/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "67377f4866bf78411be196700dcd47cb73815f3d3ca379653f691ea42925cad9"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 20,
+      "canonical_solution_id": "seed20_solution002",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_20/pareto_front.csv",
+      "source_front_sha256": "9c395e8612107a721c9910a5883ab00735a81218067518dfa4fbcf8f343fd330",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_20/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "c556f52da98983e9fbc96dcf1079063e5250e7c10188e1b3967a3770d15ce2c5"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 21,
+      "canonical_solution_id": "seed21_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_21/pareto_front.csv",
+      "source_front_sha256": "432876a8ba535b7d75a51a589e22c35d3c12c7c684777a6c00ac14d6c2ef4d5d",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "e1acc1ad1b3d7c20e08df382dd3e14a39240b5b7d2a5111fe7b3dd59149806ed"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 22,
+      "canonical_solution_id": "seed22_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_22/pareto_front.csv",
+      "source_front_sha256": "9f00beb9c3216665e9505d1cdbc8fdc802a8390c74be2fea7ec3fa183c4086eb",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_22/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "34bf527c5718febaf48abe2cb9c019c95ea7c6377ceb436fb641f37bf7ef711b"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 23,
+      "canonical_solution_id": "seed23_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_23/pareto_front.csv",
+      "source_front_sha256": "99503cd0c6e31175a78d7f9179b787551f517d197e85e84088e2730734959bb4",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_23/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "5af97fe8cccf1db25bbdc3eec680fa0c780f8a10309f3ddc457f50437710b459"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 24,
+      "canonical_solution_id": "seed24_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_24/pareto_front.csv",
+      "source_front_sha256": "a20e479d602537ce6b3d4fda60add5de731fef1d46f34c5d7f4f6b6954978059",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_24/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "5195ef7121c41164fb2f2cbe85ca45f1d3e0e17f7211f53a22919296d31bd910"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 25,
+      "canonical_solution_id": "seed25_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_25/pareto_front.csv",
+      "source_front_sha256": "c62355038d378c6ae6508ad338eaf9b577da55f6c0cd2f2d0c6b6a00adda989b",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "648df8d3cd2b9f8088ddd84d56cc88fff911a83a8e90afcf2f0c552869320d32"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 26,
+      "canonical_solution_id": "seed26_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_26/pareto_front.csv",
+      "source_front_sha256": "b8ae22b24066961e2c9b76a98df8011d759d89ae6ff41b9b14ad014b608b2beb",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_26/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "b75818c38d38efd8d53368d1127d15a98abca09a59c03183a2b0f959e7bcf130"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 27,
+      "canonical_solution_id": "seed27_solution007",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_27/pareto_front.csv",
+      "source_front_sha256": "57d0776a4752ed14c165a5da96b592b2f7cd4371b3f96837e62fbb12d358c8fa",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_27/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "84bb058e4454f126558567d9f008e819f6008e9f39965f51ef9e725d07a070b8"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 28,
+      "canonical_solution_id": "seed28_solution008",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_28/pareto_front.csv",
+      "source_front_sha256": "38c68df02fc7606d089463f3cd397781aad7ab0a7e9c56a98dde7533440d27f6",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_28/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "f80f5d2e12e05d83a5ed69310b99a81e536154c4ee7a34ea100886c52c7e69f4"
+    },
+    {
+      "subject": "jpetstore",
+      "seed": 29,
+      "canonical_solution_id": "seed29_solution009",
+      "source_front_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_29/pareto_front.csv",
+      "source_front_sha256": "6ee8a31849eb7a945fd8353ab97cd6ea3111ef249ea48c03437dabd0466553bb",
+      "source_candidate_label_path": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_29/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "21a7d75f8b41c24e2a81be922f108b266997302cb35a26c4c0ca675f75119a7f"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 0,
+      "canonical_solution_id": "seed0_solution054",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_00/pareto_front.csv",
+      "source_front_sha256": "64dd3c3b2430596e6bfa91403790572bf261769c03d0e1a737f2ac0b8736db63",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_00/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "67695115343390d7beb60e5f90a6a59d77a5f73c99cb33e7e469d386a2c251f7"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 1,
+      "canonical_solution_id": "seed1_solution064",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_01/pareto_front.csv",
+      "source_front_sha256": "0e93f0ba0cd1818dc69b9b01c616ae8fc15c94035778834fd10a1e0339968d12",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "a3fc9c815131e471b73a114bd0bd59bd7e9a38dc8471eaca904cfd9dcfed0045"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 2,
+      "canonical_solution_id": "seed2_solution041",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_02/pareto_front.csv",
+      "source_front_sha256": "8b109033df7978d1da5571846c003353afd83d2c5e1582572193f9fe0bc9c701",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_02/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "50f0e943b23a5a2f04103edce7993390b9be4d0111e0cfd00435ff70f500dc68"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 3,
+      "canonical_solution_id": "seed3_solution060",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_03/pareto_front.csv",
+      "source_front_sha256": "6b5ca3b68f69212d63c7b4864fb8fc6c6c7df43080438e46b67a98a6005240ea",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_03/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "abdab2aee5990bc507211670ed23bd020236f619d7e4856d753b3f9bbb6c03ab"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 4,
+      "canonical_solution_id": "seed4_solution042",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_04/pareto_front.csv",
+      "source_front_sha256": "a2f94422930cfc1ba214fedc90032e37f1884e5df204ebe24f56088da7ae2be8",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_04/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "1b919a31e1f1a6a6565d1ba0fbcce87e36a586d0b9607e2bff53fb58bd434356"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 5,
+      "canonical_solution_id": "seed5_solution037",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_05/pareto_front.csv",
+      "source_front_sha256": "f044a59563e78bd4c5173170d7a268b39de1df29e2eec21ef4dbb9ddd1afc605",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_05/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "2b20b4b7fd28cdcc51d1fc686eb8c731cfa8fd654aed96839d89556b89941fd9"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 6,
+      "canonical_solution_id": "seed6_solution038",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_06/pareto_front.csv",
+      "source_front_sha256": "7ab401b0ca0f13a00d69a9e3184d8fd3e4287302ed360de64dfefd4a1317abc6",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_06/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "4983c08737724912f04e162a6f343ef119f45942b5199b522fb52b8c3ed7156e"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 7,
+      "canonical_solution_id": "seed7_solution074",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_07/pareto_front.csv",
+      "source_front_sha256": "4ee555eb367c0e4ade602c43930156eb5143ffda28cf9d07e71f28d2cb40e228",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_07/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "c6cfdfc53c4952cf87345ff21e278310b61a5d1a880fd2767ddd3dad20d80ac7"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 8,
+      "canonical_solution_id": "seed8_solution052",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_08/pareto_front.csv",
+      "source_front_sha256": "ce17f2c6278d3b4d44f300d473645ca19f6c56cc0a80e5f37b29459b73253ce0",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_08/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "eeb1eb513260352e9c5355b42b262a589ba84bef11e0ba5df4e925229b58841f"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 9,
+      "canonical_solution_id": "seed9_solution051",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_09/pareto_front.csv",
+      "source_front_sha256": "8ecf37605b1886a5405c502160cda7466eba967c64c5a0c09b7030a7aa3810fc",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_09/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "e979c96cf826ab7ba6e8c9a6b8ae1a21920adf90c5e00e11ba144537bc8f9b8b"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 10,
+      "canonical_solution_id": "seed10_solution040",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_10/pareto_front.csv",
+      "source_front_sha256": "a0d457d49b670ba2d043f08fe192a487231f9c2fd254660257ce8266754dccd9",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_10/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "4192384d0a9fb459acb4099fe4de1a4a9f141253ae10b9bd32de73bca3718616"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 11,
+      "canonical_solution_id": "seed11_solution061",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_11/pareto_front.csv",
+      "source_front_sha256": "e9ba806f19c2cd1fd3c378946124c69d73fb0add1ae67a7ae35e160201aefd6c",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_11/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "3c061d3acd0aeba2e7dd4e562198666943a746c714414f8f4792f8e97ac260b7"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 12,
+      "canonical_solution_id": "seed12_solution034",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_12/pareto_front.csv",
+      "source_front_sha256": "3a2c1ba19ffd2964b935561c05a0627fd2463fa295fed80f25a2b89d5b7a311e",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_12/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "fe270f50b6b4406769096db2249f9989a4121b1db61d893a18b81917518671ef"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 13,
+      "canonical_solution_id": "seed13_solution033",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_13/pareto_front.csv",
+      "source_front_sha256": "c76833e98490fcae810d79983ed4d71815f36ef6a9fe66800db09d73e5f751f0",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_13/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "97951fc40716cdb77e67957234427a45f526ffb8b2ee6de84848b35c62ad5bd5"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 14,
+      "canonical_solution_id": "seed14_solution042",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_14/pareto_front.csv",
+      "source_front_sha256": "db3f1bf4db5373ac6f6820b5235b757b7dbea61a36f6ba7582525aad3e8547ab",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_14/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "0b29ff17d46a85e98ea42ebc3dfb5b5c48fb383feb12211f903118ffe77a657f"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 15,
+      "canonical_solution_id": "seed15_solution030",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_15/pareto_front.csv",
+      "source_front_sha256": "7c42e2ecdd907f39d019e1a4275a4aa00405356e3a2e07354c9157fdc68943a7",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_15/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "87d82910c768dbd99bc68b28bf1566cad57a3410428fd2c029cd085ce958d9a8"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 16,
+      "canonical_solution_id": "seed16_solution039",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_16/pareto_front.csv",
+      "source_front_sha256": "c7e6076cb15131ed21865b6e2609a740dc8ccdee665c9f0aeb1fc0a32bbb2c62",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_16/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "9c721ea4f7a3322a8cba0f8b86e3827408c9d4a1897d9008a9668b6745d364c7"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 17,
+      "canonical_solution_id": "seed17_solution037",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_17/pareto_front.csv",
+      "source_front_sha256": "f47880922f1b62c5a66b4853233ff1cb61f60fa53f1495de62a8f7300c781b97",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_17/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "48d00099751db927228fb48fd43c0d5110592c6e03444a10431185998bd8c501"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 18,
+      "canonical_solution_id": "seed18_solution034",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_18/pareto_front.csv",
+      "source_front_sha256": "db436018db292729979fd7b61c507beabe097bee19b27e2b7da182f2c28f50c5",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_18/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "379b175121ac879f7b6d1e6d87f5e09f99efa228ed75d8147d11bb4df8f72e51"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 19,
+      "canonical_solution_id": "seed19_solution030",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_19/pareto_front.csv",
+      "source_front_sha256": "809b013821d7ab6defdf71d684d4fdabdf2fb1bc420225a57d898a807e10b982",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_19/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "ade1bab72d1332198e8d28ca782edf1d42a502ad0a6c3579e8f1db8f9e7fab38"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 20,
+      "canonical_solution_id": "seed20_solution038",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_20/pareto_front.csv",
+      "source_front_sha256": "751f6b7072c43f8028cc0a6143be98eb51ad09bf5c9c61d51c5cc4e14ec11137",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_20/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "26a7dc614c222be981ba919e5fc46e15b9b4155914f0ff3709c4e3bfe261ea16"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 21,
+      "canonical_solution_id": "seed21_solution030",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_21/pareto_front.csv",
+      "source_front_sha256": "b80a6de3a89098726bc45d252a3d3c8f2cec33742732d25f4626a3e67580b9d7",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "db294cb4796eb27e9831f540b4f1962c29555c030669330c3be1458148e8cf3e"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 22,
+      "canonical_solution_id": "seed22_solution037",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_22/pareto_front.csv",
+      "source_front_sha256": "7df9d2d770ca896664bae553e57768ce0585f158c8fce72dba1e5a3787d1dcc2",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_22/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "33af08f57ccfe53a14e58eb1862c0bfb3bcabd7e434041ae83bbc99aae12b35b"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 23,
+      "canonical_solution_id": "seed23_solution055",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_23/pareto_front.csv",
+      "source_front_sha256": "9dfaaf5297dd9ae4ce7b76da9fdb31ba10117e76d2e2ea67a4a743e6a16e2d5b",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_23/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "d0dc9be5a3f879e0df49639fe46358cb87639140ed27bfcb00a8cffa0d4fb622"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 24,
+      "canonical_solution_id": "seed24_solution029",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_24/pareto_front.csv",
+      "source_front_sha256": "bfc7a704e491f8c8ef43c09a1f856b6107ae3df802325cadcb726cccab93a628",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_24/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "80c485a68644dc885c4fb192c999097790cf77c88af1ebd93887b3823f952fbe"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 25,
+      "canonical_solution_id": "seed25_solution047",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_front.csv",
+      "source_front_sha256": "ce7a1f1644e49e03164dc1a9e82e6aeb683bece5c0f3f1569178ed11b075bf89",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "ab32aef9c4c2b653028ea498be25fb7f35313ab62e07e2c634fa33293a2a7daf"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 26,
+      "canonical_solution_id": "seed26_solution052",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_26/pareto_front.csv",
+      "source_front_sha256": "0b21362a9ef11a0a805c6b1ffb7e7af35f47b12b29524684f263c2c66f6666de",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_26/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "797774244ce062bd49298558442c5a26ac6a74ffe4aa657452834e8a445a2ae7"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 27,
+      "canonical_solution_id": "seed27_solution030",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_27/pareto_front.csv",
+      "source_front_sha256": "6481c8fcee118588c691dccbfaa128a4caadd5eee694ea5c50e1996eca4f6bf5",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_27/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "a1d3033399fef065eddbfb1a078932929d486755097201ff12738667c900b56d"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 28,
+      "canonical_solution_id": "seed28_solution041",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_28/pareto_front.csv",
+      "source_front_sha256": "673974323594adabc871fa29c8b9501885b8549a3e29a6cc2f5a7cb61a7d979d",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_28/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "b25424ce0369c4e93c8a9daa71d94da55cd166b6c3977f346a47cc30cd692524"
+    },
+    {
+      "subject": "daytrader",
+      "seed": 29,
+      "canonical_solution_id": "seed29_solution040",
+      "source_front_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_29/pareto_front.csv",
+      "source_front_sha256": "82afba8fc114f9969c349bc683fc5eaccbd9d1a67b5987dbf4e1a8328f0dbe32",
+      "source_candidate_label_path": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_29/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "82751045c29ec26b808cae17ec8496a255c356f455c886664739f9558330c327"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 0,
+      "canonical_solution_id": "seed0_solution021",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_00/pareto_front.csv",
+      "source_front_sha256": "2a1191c4ec4b33c40e29a6935d8efe15c5c4a7edb246e69ff9648d63cccec7a0",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_00/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "5cfe09ffb83be47decef5c30220e255582f48c72cc2a29e6d7dcdeb1fdc20f39"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 1,
+      "canonical_solution_id": "seed1_solution019",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_01/pareto_front.csv",
+      "source_front_sha256": "3c1c8fbd355d2071bf22c27b08fd22f38b68b24ca70ea2aa5468e4c89e38673b",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "1356ff39322f8ac0a99d7c795981d08e793b525ddcde246fbae28c25c094e193"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 2,
+      "canonical_solution_id": "seed2_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_02/pareto_front.csv",
+      "source_front_sha256": "fb4a2d02a6b582b4f23015604bca015e08bf4e98e4d3fe2e330d9778d5df2768",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_02/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "3ff3372ed86eef406ada83c168f88f7561d42d0d29bf66ca54d80e55faf8536e"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 3,
+      "canonical_solution_id": "seed3_solution012",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_03/pareto_front.csv",
+      "source_front_sha256": "25e01df59279fab84b18be07057bcd7307a2c44631e6e0adce4f2ea757c045b6",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_03/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "ec9f197f57006160aa4d1244c1e4fe820e55d2541e5f2a024b79aa9db94f09a1"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 4,
+      "canonical_solution_id": "seed4_solution018",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_04/pareto_front.csv",
+      "source_front_sha256": "271b9395277b172c8d545c37710e2bf3410ab2a576482bf82ffee36e17c61651",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_04/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "7544ff3363e10de70f5b51f254719cdc2414603d04db3200620f1b7f75422441"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 5,
+      "canonical_solution_id": "seed5_solution016",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_05/pareto_front.csv",
+      "source_front_sha256": "6b44886b232a2ffb7b91316ced19918870073b1d227a87d49c7c52ffa2221f6e",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_05/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "42e7c29d96d188fcc968011e00663f21f3124f2b787efefbd7bbdb4636dcfdf6"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 6,
+      "canonical_solution_id": "seed6_solution021",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_06/pareto_front.csv",
+      "source_front_sha256": "af5aab033a1519ee28f979d6516e4e06474dbca8b825f7580b893025785b1993",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_06/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "5032c7e5d20e942e31c5cc06a21aad0b27f956f7408e8e0bde5d5b8516d93c26"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 7,
+      "canonical_solution_id": "seed7_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_07/pareto_front.csv",
+      "source_front_sha256": "d80eee41d14f8b64d00a1d25bb27e94b41ea7b4d0ae2af26756c77da325348df",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_07/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "dce1a4884ef4106a8d52e62b881dcfb656ba9293403d345b50c59abf9ca56da1"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 8,
+      "canonical_solution_id": "seed8_solution016",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_08/pareto_front.csv",
+      "source_front_sha256": "a02efc3916e9d1bc3144f8e0eb9abc2a7170c2e0a553799ec6e347dbedcd37df",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_08/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "107e316cfc495cbba3c20c18bbc6ec5cb7cb5f8e72dcf8640429f4991a2db497"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 9,
+      "canonical_solution_id": "seed9_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_09/pareto_front.csv",
+      "source_front_sha256": "bf7e8e3a7de0589e50afbd59ddb9169abf5a67767b4ad0169b2958863776ae1d",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_09/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "c161d99927b4833deee8e8e45b0cb5c564a4cb75dd0d3bcb1d63bb830b490e6b"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 10,
+      "canonical_solution_id": "seed10_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_10/pareto_front.csv",
+      "source_front_sha256": "1d5e9c31ca5facd915a2ae8d39cdd24af080063c6449d66a561a4abbc2736ae7",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_10/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "b821ef31fab57adf9993359f6a49d2b10e94f594b742c8d2479ca4f8722d7ac4"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 11,
+      "canonical_solution_id": "seed11_solution020",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_11/pareto_front.csv",
+      "source_front_sha256": "eab54ec0950bd86d093d5c0467034165db9b4d1580ea0300b853a9f395f7762c",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_11/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "1e81d8d00cb815a0b00081b88b42bdb26d2937df922f36fd06d645840d52e3f2"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 12,
+      "canonical_solution_id": "seed12_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_12/pareto_front.csv",
+      "source_front_sha256": "5280afef2e1593a2f0ff781c394d2c9fcf3074ca012e899f42b5383e1fe9107d",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_12/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "81b95971595b3d99683c87446ef45e2520a8faf9f847fc65326d04629613faf0"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 13,
+      "canonical_solution_id": "seed13_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_13/pareto_front.csv",
+      "source_front_sha256": "12f68c78b3e630c5a4ce53bebf0bf0c0517d01feeb4be946879abd7966227f7a",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_13/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "ab38f2116d9b1fef9bfd9dca393d619131bb5a6afaa94e9dc502bc3d1e70c7b4"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 14,
+      "canonical_solution_id": "seed14_solution019",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_14/pareto_front.csv",
+      "source_front_sha256": "029403fb4cc0a75af0880579ae76d9c6f21bb79bc93c5a6dde3dad8303a940e5",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_14/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "6a4ffeb527f0e84b831b9e72642b05e6ea8b7d74130de86e158e58e17fd211ab"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 15,
+      "canonical_solution_id": "seed15_solution021",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_15/pareto_front.csv",
+      "source_front_sha256": "7e8615eeb219239a2069a9eac86bfc97bfb356a6f06afb49464cc94bc23b5ea0",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_15/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "ffb2ea91d2bca21d3152500a84f7126625f21d9c426a365ffe96047f8d439f21"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 16,
+      "canonical_solution_id": "seed16_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_16/pareto_front.csv",
+      "source_front_sha256": "60d949d664180f50978626e4d0a276dac473419c1ec0d5e55756830a472b0609",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_16/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "e624ea2776d2958d1110ee7f414516a9b7b7b92d355224936139d0d27516a4dd"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 17,
+      "canonical_solution_id": "seed17_solution018",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_17/pareto_front.csv",
+      "source_front_sha256": "1fe29b084ae3012e6c5fa74a32d9a43cfec82ad704f5121ee4fbf84e85afdea5",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_17/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "1726da175603a15c54ef4af4e322e613c75d2b77e1524214928df41808fbd2cf"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 18,
+      "canonical_solution_id": "seed18_solution021",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_18/pareto_front.csv",
+      "source_front_sha256": "be0a57a277f27c997e98a0421a30792c09006d1248fdab74e77adda6cf02f18e",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_18/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "028c62f161143663aae0b1f9c5bd822e4d0ce076a8c45ad0f251223e4458e342"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 19,
+      "canonical_solution_id": "seed19_solution014",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_19/pareto_front.csv",
+      "source_front_sha256": "a5663457efc760eabfae07992b6c06b3fa11a38f65ac00e2fe7dc22bf5810071",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_19/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "549a8ae6a01fcf156c83b1451e78fe7919b12420a8d47e8e1ec2875b1f1c9705"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 20,
+      "canonical_solution_id": "seed20_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_20/pareto_front.csv",
+      "source_front_sha256": "cb5ae7f5e4a1605cb0dc6ccce330aba0bd219802fb4897ea48dc008c5a0b35ae",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_20/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "84e0d6bab9a40e44998f3f1ca335f89ab8bd31a3674ac6a2c2f8015e8d707f7f"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 21,
+      "canonical_solution_id": "seed21_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_front.csv",
+      "source_front_sha256": "381c3f2d5ef151a9f5c9934f673b6f7dbb4d8a47f22b3b9f99fa7db3836ece18",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "47528c23b7a83c665c9d84d429308db9b5addc9d2a61b1eeda42bf1dc2985fde"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 22,
+      "canonical_solution_id": "seed22_solution014",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_22/pareto_front.csv",
+      "source_front_sha256": "551a617844ccbaeea865607ab7e0e21a2e151abde1f29a5a2b4b544348c83f34",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_22/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "0dafebcafbc64260794c3ca31088296204d4e05110326cfcb4e37acb7c65dac0"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 23,
+      "canonical_solution_id": "seed23_solution015",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_23/pareto_front.csv",
+      "source_front_sha256": "3597a99f997af9c33bc31441b16d617dd3bdefaf01783d458d9c33277db5e958",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_23/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "31f6382ea8997eaf7709f30430a4cdac2da65f8f20467087fc153199c4aa4e0f"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 24,
+      "canonical_solution_id": "seed24_solution014",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_24/pareto_front.csv",
+      "source_front_sha256": "0c9daccf238fa843bf5bb1aaa78acb8661e4ef6a71434aaefc99eb27efeb1159",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_24/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "d41ef9c231a751a6f0c8abf9541cd2794aa99f21142cac4e6f4d6cb76c6b786c"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 25,
+      "canonical_solution_id": "seed25_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_25/pareto_front.csv",
+      "source_front_sha256": "a9bb2491423806a243f494db4a4e549cf86f55a6f0c170bce0b6c18ab7176378",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "5de8a61962a52bf67f6cca973a8353d27dcefcfdabdf9412d3418c2f79ac10af"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 26,
+      "canonical_solution_id": "seed26_solution022",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_26/pareto_front.csv",
+      "source_front_sha256": "c888afb3619abbee4054f120d914a0a14311f7c058d0398493c7c91f77c2e16e",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_26/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "be2999fdb6d68598e46aba8496e4a3aa22e5cc72e9662679669743fd95b3fe91"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 27,
+      "canonical_solution_id": "seed27_solution024",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_27/pareto_front.csv",
+      "source_front_sha256": "21943a2cbc7d757d3a3b31502b62f2675199488ae1e69503e5b082711205e294",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_27/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "45e6f0c50248efcf9a2774bd04c9357e608098980bf45ae02ad9464a3b68f4e3"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 28,
+      "canonical_solution_id": "seed28_solution020",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_28/pareto_front.csv",
+      "source_front_sha256": "d7f595bc6339b3723642f9a0dff4e3e2fb5e62c656c72040a9bb57d66eeb3d3b",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_28/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "0dfc3a53ffc0c49c65694ce13cc549fc2cdd5ffb43b8e51f9edc3746947d003b"
+    },
+    {
+      "subject": "xerces-j",
+      "seed": 29,
+      "canonical_solution_id": "seed29_solution019",
+      "source_front_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_29/pareto_front.csv",
+      "source_front_sha256": "37b263c6731c5d8b7ce9019612b78d89c33cd931cb82cf488137a743cf5ce47c",
+      "source_candidate_label_path": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_29/pareto_labels.csv.xz",
+      "source_candidate_label_sha256": "621fa24962b927050041f01b3cbf29d8d94ddaf10e1e117f294200d24fcbab51"
+    }
+  ]
+}

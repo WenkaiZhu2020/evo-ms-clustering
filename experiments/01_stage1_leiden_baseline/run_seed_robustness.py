@@ -12,8 +12,8 @@ Everything is held fixed except the graph (raw vs ssa) and the Leiden seed:
 * n_iterations = -1 (run Leiden to convergence so the only varying factor is the
   seed, not the library's default 2-iteration early stop)
 
-Outputs go to results/<subject>/02_stage1_seed_robustness/ and never touch the
-frozen results/<subject>/01_stage1_leiden_baseline/ outputs.
+Outputs go to results/stage1/subjects/<subject>/seed_robustness/ and never
+touch the frozen results/stage1/subjects/<subject>/leiden_baseline/ outputs.
 
 Two ARI distributions are produced per subject, both with the repo's own ARI:
 
@@ -47,6 +47,7 @@ from evo_ms.evaluation.partition_metrics import partition_similarity
 from evo_ms.extraction.dependency_extractor import load_extracted_subject
 from evo_ms.graph.raw_graph_builder import build_raw_edges
 from evo_ms.graph.ssa_graph_builder import build_ssa_edges
+from evo_ms.repository_layout import stage1_seed_robustness_root
 from evo_ms.utils.config_loader import load_yaml
 from evo_ms.utils.logging import get_logger
 
@@ -55,7 +56,6 @@ RESOLUTION = 1.0
 RAW_LAMBDA = 0.0
 SSA_LAMBDA = 0.25
 N_ITERATIONS = -1
-OUTPUT_LAYER = "02_stage1_seed_robustness"
 
 
 def run_seed_robustness(
@@ -74,7 +74,14 @@ def run_seed_robustness(
 
     summaries: dict[str, dict[str, object]] = {}
     for subject in subjects:
-        summaries[subject] = _run_subject(root, subject, seeds, git_state, logger, write_reports)
+        summaries[subject] = _run_subject(
+            root,
+            subject,
+            seeds,
+            git_state,
+            logger,
+            write_reports=write_reports,
+        )
     return summaries
 
 
@@ -204,11 +211,7 @@ def _run_subject(
         "verdict": verdict,
     }
 
-    output_dir = (
-        root
-        / subject_config.get("result_output_path", f"results/{subject}")
-        / OUTPUT_LAYER
-    )
+    output_dir = stage1_seed_robustness_root(subject, root)
     output_dir.mkdir(parents=True, exist_ok=True)
     _write_raw_seed_partitions(output_dir, raw_clusters)
     if write_reports:
@@ -224,16 +227,21 @@ def _run_subject(
             extracted_dir=extracted_dir,
             git_state=git_state,
         )
-    logger.info("Wrote seed-robustness partition outputs to %s", output_dir)
+    logger.info("Wrote seed-robustness outputs to %s", output_dir)
     summary_row["output_dir"] = str(output_dir.relative_to(root))
     return summary_row
 
 
-def _write_raw_seed_partitions(output_dir: Path, raw_clusters: dict[int, pd.DataFrame]) -> None:
+def _write_raw_seed_partitions(
+    output_dir: Path,
+    raw_clusters: dict[int, pd.DataFrame],
+) -> None:
+    """Persist the raw-graph Leiden partition for every fixed seed."""
     partition_dir = output_dir / "per_seed_partitions"
     partition_dir.mkdir(parents=True, exist_ok=True)
-    for seed, clusters in raw_clusters.items():
-        clusters.loc[:, ["class_id", "class_name", "cluster_id"]].to_csv(
+    columns = ["class_id", "class_name", "cluster_id"]
+    for seed, clusters in sorted(raw_clusters.items()):
+        clusters.loc[:, columns].to_csv(
             partition_dir / f"leiden_seed_{seed:02d}.csv",
             index=False,
         )
@@ -385,7 +393,7 @@ def _write_metadata(
     metadata = {
         "subject": subject,
         "role": "seed_robustness_control_for_ssa_effect",
-        "does_not_modify": "results/<subject>/01_stage1_leiden_baseline/",
+        "does_not_modify": "results/stage1/subjects/<subject>/leiden_baseline/",
         "resolution": float(RESOLUTION),
         "raw_ssa_lambda": float(RAW_LAMBDA),
         "ssa_ssa_lambda": float(SSA_LAMBDA),
@@ -496,7 +504,7 @@ def main() -> int:
     parser.add_argument(
         "--partitions-only",
         action="store_true",
-        help="write per-seed raw Leiden partitions without rewriting existing report files",
+        help="write per-seed raw Leiden partitions without replacing robustness reports",
     )
     args = parser.parse_args()
 

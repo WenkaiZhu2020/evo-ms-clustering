@@ -1,92 +1,119 @@
-# Evolutionary Software Clustering — Stage 2 final branch
+# Evolutionary Software Clustering — Final Stage 3 Repository
 
-This repository is the `stage2-nsga` branch. It contains:
+This repository contains the complete three-stage experimental pipeline for
+evolutionary class-level software clustering. The canonical final branch is
+`stage3-Declaration+Method-Body`, which adds declaration and normalized method
+body semantic evidence to the frozen structural experiments.
 
-- Stage 0 pre-experiment diagnostics and calibration;
-- the Stage 1 Leiden baseline and seed-robustness outputs;
-- the Stage 2 structure-only NSGA-II implementation, analyses, and frozen
-  formal 30-seed results.
+## Experimental stages
 
-It does not contain an active or formal Stage 3 implementation. Stage 3 is
-carried by an independent branch; its historical contents remain available
-through Git history.
+1. **Stage 1 — Leiden baseline.** Builds class-level structural and SSA-enriched
+   graphs, runs Leiden clustering, and records the frozen baseline partitions
+   and seed-robustness evidence.
+2. **Stage 2 — structure-only NSGA-II.** Optimizes coupling, cohesion, and
+   cluster-size imbalance on the frozen raw structural graph. Its formal
+   30-seed fronts and canonical modularity-band operating profiles are retained
+   as the structural comparison baseline.
+3. **Stage 3 — Declaration + Method Body semantic extension.** Uses the frozen
+   `declaration_method_body_v1` representation, code-model embeddings, and a
+   true-cosine top-3 semantic graph. Four-objective NSGA-II optimizes the three
+   Stage 2 structural objectives plus semantic cut ratio.
 
-The formal computation snapshot is `stage2-frozen @ 2da4408`, as tagged in
-Git. The reproducibility cleanup in this worktree happens after that result
-freeze; it does not alter or impersonate the formal computation commit.
+The three subject systems are JPetStore, DayTrader, and Xerces-J. Each formal
+stage uses 30 accepted seed outputs per subject where required by its protocol.
+For Stage 3, seed 0 is the accepted validation run and seeds 1–29 are the formal
+runs, giving 90 validated Stage 3 runs in total.
 
-## Workflow
+## Stage 3 scientific contract
 
-```text
-Java extraction with Soot / Shimple
-→ normalized CSV inputs
-→ graph construction and Stage 0 diagnostics
-→ fixed Stage 1 Leiden baseline
-→ structure-only Stage 2 NSGA-II
-→ formal 30-seed outputs and cross-subject analyses
-```
+- Experiment ID: `stage3_declaration_method_body`
+- Representation: `declaration_method_body_v1`
+- Subjects: JPetStore (24 classes), DayTrader (53), Xerces-J (814)
+- Embedding model: `nomic-ai/nomic-embed-code` at the pinned revision in the
+  Stage 3 configuration
+- Semantic graph: true-cosine top-3, lexicographic tie-breaking, OR
+  symmetrisation
+- Search: four-objective NSGA-II
+- Comparison: project the Stage 3 front to the original three structural
+  objectives and reuse the frozen Stage 2 selection and Hypervolume contracts
 
-The main graph inputs are `G_raw`, built from structural dependencies, and
-`G_ssa`, which adds selected SSA-derived flow evidence. Stage 1 compares their
-Leiden partitions. Stage 2 optimizes structural objectives on the frozen raw
-graph inputs.
+The accepted semantic inputs, embeddings, semantic graphs, optimizer outputs,
+and provenance are immutable scientific artifacts during repository
+maintenance. Regeneration commands require explicit output destinations and do
+not overwrite accepted artifacts by default.
 
 ## Main locations
 
 | Purpose | Location |
 | --- | --- |
-| Stage 1 runner | `experiments/01_stage1_leiden_baseline/` |
-| Stage 2 runner | `experiments/02_stage2_nsga_structure_only/` |
-| Formal Stage 2 runs | `results/<subject>/03_stage2_nsga/robustness_final_30seeds/` |
-| Canonical Stage 2 operating profiles | `results/cross_subject/03_stage2_nsga/modularity_band/` |
-| Final statistics | `results/cross_subject/03_stage2_nsga/final_statistics/` |
-| Results classification | `results/FORMAL_RESULTS_INDEX.md` |
-| Reproducibility guide | `docs/reproducibility/README.md` |
-| Unified verifier | `scripts/reproducibility/verify.py` |
-| Machine-readable environment | `configs/reproducibility/environments.json` |
+| Stage 1 experiment | `experiments/01_stage1_leiden_baseline/` |
+| Stage 2 experiment | `experiments/02_stage2_nsga_structure_only/` |
+| Stage 3 experiment | `experiments/05_stage3_declaration_method_body/` |
+| Stage 3 launchers | `scripts/05_stage3_declaration_method_body/` |
+| Reusable implementation | `src/evo_ms/` |
+| Stage 3 configuration | `configs/experiments/05_stage3_declaration_method_body.yml` |
+| Semantic text | `data/semantic_text/declaration_method_body/` |
+| Embeddings | `data/embeddings/declaration_method_body/` |
+| Semantic graphs | `data/semantic_graphs/declaration_method_body/` |
+| Pre-experiment results | `results/pre_experiment/subjects/<subject>/` |
+| Stage 1 results | `results/stage1/subjects/<subject>/` |
+| Stage 2 subject results | `results/stage2/subjects/<subject>/nsga/` |
+| Stage 2 cross-subject results | `results/stage2/cross_subject/` |
+| Per-subject Stage 3 results | `results/stage3/subjects/<subject>/declaration_method_body/` |
+| Stage 3 cross-subject analysis | `results/stage3/cross_subject/` |
+| Stage 3 data quality | `results/stage3/data_quality/` |
+| Stage 3 reproducibility checks | `results/stage3/reproducibility_checks/` |
+| Stage 3 provenance | `results/stage3/provenance/` |
+| Human-readable Stage 3 findings | `docs/stage3/findings/` |
+| Stage 3 reproducibility guide | `docs/stage3/reproducibility.md` |
 
-The experiment and result numbering is intentionally different. The
-`experiments/` sequence numbers the main implementation stages, so Stage 2 is
-`02_stage2_nsga_structure_only/`. The historical `results/` sequence also
-counts Stage 1 seed robustness as step `02`, so Stage 2 results remain under
-`03_stage2_nsga/`. These are historical output paths, not a conflict in stage
-definitions, and they are not renamed.
+## Environment
 
-## Subjects and data
-
-The three Java subjects are JPetStore, DayTrader, and Xerces-J. Normalized
-extractor inputs are under `data/extracted/<subject>/`; raw checkouts are local,
-ignored inputs under `data/raw_projects/`. Subject preparation scripts are in
-`scripts/extraction/` and their paths are declared by
-`configs/subjects/*.yml`.
-
-## Reproduction entry point
-
-The single human-readable entry point is
-[`docs/reproducibility/README.md`](docs/reproducibility/README.md). It covers
-installation with uv, the environment contract, formal manifests, checksum
-validation, and the unified verifier. The standard commands are:
+The final repository has one supported Python environment for Stage 1–3:
+`pyproject.toml` plus `uv.lock`. It requires Python 3.13.7. From the repository
+root run:
 
 ```bash
 uv sync --frozen
-uv run --frozen python scripts/reproducibility/verify.py --stage stage2
-PYTHONPATH=src uv run --frozen pytest -q
 ```
 
-The verifier checks saved inputs, formal seed layout, core source fingerprints,
-configuration hashes, manifest environment evidence, and all three Stage 2
-subjects. It never runs NSGA-II.
+The formal embedding configuration records an Apple Silicon MPS runtime. Saved
+artifacts can be inspected and validated without regenerating embeddings or
+rerunning the formal NSGA-II experiment.
+
+## Validation and common commands
+
+Run the complete test suite:
+
+```bash
+uv run --frozen pytest
+```
+
+Inspect the supported Stage 3 commands:
+
+```bash
+uv run --frozen python experiments/05_stage3_declaration_method_body/prepare_semantic.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/run.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/run_robustness.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/analyze.py --help
+uv run --frozen python experiments/05_stage3_declaration_method_body/synchronize_stage2_operating_profile.py --help
+```
+
+Equivalent shell launchers are available under
+`scripts/05_stage3_declaration_method_body/`. Read
+`docs/stage3/reproducibility.md` before any regeneration or optimizer run.
 
 ## Repository structure
 
 ```text
-configs/       Subject, experiment, and reproducibility configuration.
-data/          Raw-project placeholders, extracted CSV inputs, and references.
-docs/          Stage 1/2 technical notes, reports, and public reproducibility guide.
-experiments/   Python experiment runners and analyses for Stage 0–2.
-results/       Generated outputs; see FORMAL_RESULTS_INDEX.md.
-scripts/       Extraction, experiment wrappers, analysis, visualization, and verification.
-src/           Core Python implementation.
-tests/         Python tests and repository layout checks.
-tools/         Java Soot extractor.
+configs/       Subject and experiment contracts.
+data/          Extracted structural data and frozen semantic artifacts.
+docs/          Stage documentation, reproducibility guidance, and findings.
+experiments/   Stage-specific orchestration and analysis entry points.
+results/       Accepted per-subject and cross-subject experiment evidence.
+provenance/    Repository lineage, migration inventories, and integrity ledgers.
+scripts/       Thin shell launchers and extraction helpers.
+src/           Reusable extraction, graph, optimization, semantic, and analysis code.
+tests/         Unit, integration, architecture, provenance, and reproducibility tests.
+tools/         Java Soot/Shimple extractor.
 ```

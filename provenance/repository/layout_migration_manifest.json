@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "migration_date": "2026-08-03",
+  "branch": "stage3-Declaration+Method-Body",
+  "starting_head": "74dca15aa79e5c643f78c8b8c1152962a0a38e8e",
+  "policy": {
+    "scientific_experiment_rerun": false,
+    "semantic_artifact_regeneration": false,
+    "result_move": "byte-preserving git rename",
+    "frozen_metadata_internal_paths": "preserved as historical evidence",
+    "stage1_or_stage2_branch_modified": false
+  },
+  "environment": {
+    "supported_installation_entry": "uv sync --frozen",
+    "project_file": "pyproject.toml",
+    "lock_file": "uv.lock",
+    "historical_stage3_lock": "results/stage3/provenance/environment/historical_stage3_requirements_lock.txt",
+    "historical_stage3_lock_sha256": "f390c0dcef98c921f7367733b8169ea7664c03f1f5fafff6e99345512abb2a8f",
+    "historical_stage3_versions_preserved_in_uv_lock": true,
+    "stage2_environment_authority": "stage2-nsga@7b003e65418d"
+  },
+  "path_mappings": {
+    "results/<subject>/00_pre_experiment": "results/pre_experiment/subjects/<subject>",
+    "results/<subject>/01_stage1_leiden_baseline": "results/stage1/subjects/<subject>/leiden_baseline",
+    "results/<subject>/02_stage1_seed_robustness": "results/stage1/subjects/<subject>/seed_robustness",
+    "results/<subject>/03_stage2_nsga": "results/stage2/subjects/<subject>/nsga",
+    "results/cross_subject/03_stage2_nsga/modularity_band": "results/stage2/cross_subject/operating_profile",
+    "results/cross_subject/03_stage2_nsga/final_statistics": "results/stage2/cross_subject/formal_statistics",
+    "results/<subject>/05_stage3_declaration_method_body": "results/stage3/subjects/<subject>/declaration_method_body",
+    "results/xerces/05_stage3_declaration_method_body": "results/stage3/subjects/xerces-j/declaration_method_body",
+    "results/cross_subject/05_stage3_declaration_method_body/formal_statistics": "results/stage3/cross_subject/formal_statistics",
+    "results/cross_subject/05_stage3_declaration_method_body/stage2_vs_stage3": "results/stage3/cross_subject/stage2_comparison",
+    "results/cross_subject/05_stage3_declaration_method_body/preference_response": "results/stage3/cross_subject/preference_analysis",
+    "results/cross_subject/05_stage3_declaration_method_body/quality": "results/stage3/data_quality",
+    "results/cross_subject/05_stage3_declaration_method_body/validation": "results/stage3/reproducibility_checks",
+    "results/cross_subject/05_stage3_declaration_method_body/provenance": "results/stage3/provenance",
+    "docs/stage3/results": "docs/stage3/findings"
+  },
+  "pre_migration_inventory": {
+    "scope": [
+      "data",
+      "results"
+    ],
+    "file_count": 6957,
+    "total_bytes": 2105028458,
+    "inventory_method": "SHA-256 and byte-size inventory recorded outside the repository before any move",
+    "raw_inventory_committed": false,
+    "note": "The raw inventory was intentionally temporary; stable group digests are recorded below."
+  },
+  "post_migration_inventory": {
+    "scope": [
+      "data",
+      "results"
+    ],
+    "file_count": 6958,
+    "total_bytes": 2105028837,
+    "file_count_delta": 1,
+    "content_delta_summary": "Eight current README, reporting, locator, and provenance files were intentionally rewritten for the new paths; the historical Stage 3 lock was relocated into results/stage3/provenance/environment as one additional in-scope file. All other content hashes were preserved."
+  },
+  "protected_groups": {
+    "semantic_inputs": {"file_count": 12, "sha256_multiset_digest": "546fb19b5a4d75e48e3790f92b178a3ccca31122a631bc7c161856300ecc9c42", "byte_identical": true},
+    "embeddings": {"file_count": 15, "sha256_multiset_digest": "7202b6c43290648a744d34fbd0d4eddfe1241aa0a24c9e6477a01a4c346c2945", "byte_identical": true},
+    "semantic_graphs": {"file_count": 15, "sha256_multiset_digest": "937950564170215ad628b3b652f2fd038ec30079d417cd745308de085eeedee9", "byte_identical": true},
+    "stage1_results": {"file_count": 108, "sha256_multiset_digest": "c78957cd5715e5ccaeb58ee6a6a6af48b9cf3cf3ddb82419dcb3965bb8012bd7", "byte_identical": true},
+    "stage2_formal_fronts": {"file_count": 90, "sha256_multiset_digest": "8c2a25db3c8f1d927798fb48a2f9b2798edc8b76b442e681257ac27261a6cac8", "byte_identical": true},
+    "stage3_4d_fronts": {"file_count": 90, "sha256_multiset_digest": "b439375a31bda5302780c7960dbf4747bf5da25953e4c6494ff3aa28b194f3e4", "byte_identical": true},
+    "stage3_projected_fronts": {"file_count": 90, "sha256_multiset_digest": "76575d079722b6dc09d370705863c7c308b4ee855fdd61ef3de8df48d5cbe78f", "byte_identical": true},
+    "stage3_selected_solutions": {"file_count": 90, "sha256_multiset_digest": "699d937c67f73c5cd6e760a69644c701f7fbed62099e819d9d264899633347b3", "byte_identical": true}
+  },
+  "reporting_only_updates": [
+    "source path columns in formal_selected_fsemantic_per_seed.csv",
+    "source_artifacts path column in formal_statistical_tests.csv",
+    "current report locator and current provenance paths",
+    "human-readable documentation paths",
+    "current Stage 2 derived-table source paths migrated from the retired result roots"
+  ],
+  "subsequent_main_reconciliation": {
+    "stage3_starting_head": "9afa5665ef31a7c9853eaaeac3fa47c563f68c62",
+    "merged_main_head": "0f8544ecf2ad52a2aaed5759b7b8c0395bf48648",
+    "scope": "latest Stage 1 and Stage 2 code, documentation, reporting outputs, and DayTrader per-seed Leiden partitions",
+    "path_policy": "upstream content was placed under the final stage-oriented layout; retired result roots were not restored",
+    "optimizer_or_semantic_regeneration": false,
+    "protected_group_digests_reverified": true,
+    "protected_groups_reverified": [
+      "semantic_inputs",
+      "embeddings",
+      "semantic_graphs",
+      "stage2_formal_fronts",
+      "stage3_4d_fronts",
+      "stage3_projected_fronts",
+      "stage3_selected_solutions"
+    ],
+    "stage1_inventory_note": "The upstream main snapshot adds 30 accepted DayTrader raw-Leiden per-seed partitions, so the earlier whole-Stage-1 file-count digest remains a pre-reconciliation migration record rather than a post-merge invariant."
+  }
+}

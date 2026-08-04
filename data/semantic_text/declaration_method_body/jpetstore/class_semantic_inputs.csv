@@ -1,0 +1,435 @@
+subject,class_id,class_name,kind,superclass_present,semantic_text,method_count,annotation_count,interface_count,truncated_method_count,input_hash,experiment_name,representation_id,stage3a_source_path,stage3a_source_file_sha256,stage3a_declaration_hash,declaration_exact_match,declaration_token_count,raw_body_candidate_count,filtered_body_token_count_before_budget,appended_body_token_count,body_model_token_count,total_token_count,body_tokens_truncated,declaration_truncated,body_empty,extracted_concrete_method_count,normalized_method_count,synthetic_method_count,generated_code_status,accepted_invoked_method_tokens,accepted_field_tokens,accepted_local_tokens,accepted_exception_tokens,accepted_operation_tokens,accepted_string_tokens,accepted_literals,rejected_token_count,body_hash
+jpetstore,org.mybatis.jpetstore.domain.Account,Account,class,false,"[DECLARATION]
+public class Account implements Serializable {
+    String getAddress1();
+    String getAddress2();
+    String getBannerName();
+    String getCity();
+    String getCountry();
+    String getEmail();
+    String getFavouriteCategoryId();
+    String getFirstName();
+    String getLanguagePreference();
+    String getLastName();
+    String getPassword();
+    String getPhone();
+    String getState();
+    String getStatus();
+    String getUsername();
+    String getZip();
+    boolean isBannerOption();
+    boolean isListOption();
+    void setAddress1(String);
+    void setAddress2(String);
+    void setBannerName(String);
+    void setBannerOption(boolean);
+    void setCity(String);
+    void setCountry(String);
+    void setEmail(String);
+    void setFavouriteCategoryId(String);
+    void setFirstName(String);
+    void setLanguagePreference(String);
+    void setLastName(String);
+    void setListOption(boolean);
+    void setPassword(String);
+    void setPhone(String);
+    void setState(String);
+    void setStatus(String);
+    void setUsername(String);
+    void setZip(String);
+}
+[METHOD_BODY]
+invoke address1 address2 banner name city country email favourite category id first name language preference last password phone state status username zip banner option list option address1 address2 city country email favourite category id first language preference last list password phone state status username zip
+",36,0,1,0,836223e9668677fb8eeaa4e4c4db3f6f14503e489628c3084019e4eb3e554025,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,5d95274200b9ab99375a7bc37b5349cfc93695abe59b0a2cd0e43d862583d31f,true,207,110,45,45,49,265,0,false,false,37,37,0,not_detected,52,52,0,0,1,0,0,300,20837597fe711aaad19f4e4e0e56540a39ee7cf38390c8ea17180525dba30a6b
+jpetstore,org.mybatis.jpetstore.domain.Cart,Cart,class,false,"[DECLARATION]
+public class Cart implements Serializable {
+    void addItem(Item, boolean);
+    boolean containsItemId(String);
+    Iterator getAllCartItems();
+    List getCartItemList();
+    Iterator getCartItems();
+    int getNumberOfItems();
+    BigDecimal getSubTotal();
+    void incrementQuantityByItemId(String);
+    Item removeItemById(String);
+    void setQuantityByItemId(String, int);
+}
+[METHOD_BODY]
+invoke create item map list add item increment quantity invoke branch jump create map list contains id key all cart items iterator cart items iterator number size sub total reduce zero increment quantity id remove branch jump
+",10,0,1,0,ab0a8d13e63fa051903bd44e2d6597ee8bdd8bbb84afb45a7ca6e67e170c7f19,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,ae327ae131da8459f0c754810733634f4636c2e170a0d8a931f5f11d9f3369e3,true,75,91,37,37,37,121,0,false,false,12,11,1,compiler_synthetic_evidence,39,33,0,0,37,0,0,250,9c718cf5e8fe6b74511536bbd8ffdde0844ed499f7291c3e7e3c25d27888c94b
+jpetstore,org.mybatis.jpetstore.domain.CartItem,CartItem,class,false,"[DECLARATION]
+public class CartItem implements Serializable {
+    void calculateTotal();
+    Item getItem();
+    int getQuantity();
+    BigDecimal getTotal();
+    void incrementQuantity();
+    boolean isInStock();
+    void setInStock(boolean);
+    void setItem(Item);
+    void setQuantity(int);
+}
+[METHOD_BODY]
+invoke calculate total invoke item item quantity total increment quantity calculate stock stock
+",9,0,1,0,e004475c4603b53c4fe444d74cc119389a82314f8051479f3e2b362b776580f0,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,2a2403051db0607a20d67d1c4b1b8f2b126034d4f2c5720a4b43e8876ca8d6d1,true,55,44,13,13,13,77,0,false,false,11,10,1,compiler_synthetic_evidence,17,11,0,0,10,0,0,112,c8298bde04eca80638095eba1d29a93d3c957b82daf8c9e1dcd0449443f957a4
+jpetstore,org.mybatis.jpetstore.domain.Category,Category,class,false,"[DECLARATION]
+public class Category implements Serializable {
+    String getCategoryId();
+    String getDescription();
+    String getName();
+    void setCategoryId(String);
+    void setDescription(String);
+    void setName(String);
+    String toString();
+}
+[METHOD_BODY]
+invoke category id description name category id trim invoke description name string
+",7,0,1,0,eab81e1147be4f1be016c8344b822381aee3d5a11b291d790c1d36e211f6be6e,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,bfbe27d957dd8236c5c66e052c5909fa3d85ec699939aa80457af01b52fe5a27,true,40,26,12,12,12,61,0,false,false,8,8,0,not_detected,12,8,0,0,3,0,0,62,540cee7e1cafc865b10fd8d917c687817b1c529ca96d484ca5357edb1ed0d4a7
+jpetstore,org.mybatis.jpetstore.domain.Item,Item,class,false,"[DECLARATION]
+public class Item implements Serializable {
+    String getAttribute1();
+    String getAttribute2();
+    String getAttribute3();
+    String getAttribute4();
+    String getAttribute5();
+    String getItemId();
+    BigDecimal getListPrice();
+    Product getProduct();
+    int getQuantity();
+    String getStatus();
+    int getSupplierId();
+    BigDecimal getUnitCost();
+    void setAttribute1(String);
+    void setAttribute2(String);
+    void setAttribute3(String);
+    void setAttribute4(String);
+    void setAttribute5(String);
+    void setItemId(String);
+    void setListPrice(BigDecimal);
+    void setProduct(Product);
+    void setQuantity(int);
+    void setStatus(String);
+    void setSupplierId(int);
+    void setUnitCost(BigDecimal);
+    String toString();
+}
+[METHOD_BODY]
+invoke attribute1 attribute2 attribute3 attribute4 attribute5 item id list price product quantity status supplier id unit cost attribute1 attribute2 attribute3 attribute4 attribute5 item trim invoke list price product quantity status supplier unit cost string make concat constants
+",25,0,1,0,d66651d9874ba8e963e8b46c2d16f66e4fa96a4540a84b30f42660c77772ee43,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,8f2e7798981f368cf27f4eee7ac74d9d8293982b71e3119e5316d51fbf6220cb,true,155,82,37,37,47,211,0,false,false,26,26,0,not_detected,37,32,0,0,5,3,1,219,fa59e0d27ca874840a5db1b072edb4f3786581792d3d5b79ca7f724be243e50d
+jpetstore,org.mybatis.jpetstore.domain.LineItem,LineItem,class,false,"[DECLARATION]
+public class LineItem implements Serializable {
+    void calculateTotal();
+    Item getItem();
+    String getItemId();
+    int getLineNumber();
+    int getOrderId();
+    int getQuantity();
+    BigDecimal getTotal();
+    BigDecimal getUnitPrice();
+    void setItem(Item);
+    void setItemId(String);
+    void setLineNumber(int);
+    void setOrderId(int);
+    void setQuantity(int);
+    void setUnitPrice(BigDecimal);
+}
+[METHOD_BODY]
+invoke calculate total invoke line number quantity item id unit price calculate total item id line number order quantity unit price order
+",14,0,1,0,7184d8270fc77b83090d88624768f379ddfd64a856af5fd1b63f95855be689c8,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,315d9fdaf0eeb121799f5e34b58d0d8a954a0b265d3cda69ab98d8697da46a15,true,84,71,22,22,22,115,0,false,false,17,16,1,compiler_synthetic_evidence,29,31,0,0,17,0,0,204,62b4434347dd4078483961fa85f7e0c10396e0620050becb21bed09d70ff39b8
+jpetstore,org.mybatis.jpetstore.domain.Order,Order,class,false,"[DECLARATION]
+public class Order implements Serializable {
+    void addLineItem(CartItem);
+    void addLineItem(LineItem);
+    String getBillAddress1();
+    String getBillAddress2();
+    String getBillCity();
+    String getBillCountry();
+    String getBillState();
+    String getBillToFirstName();
+    String getBillToLastName();
+    String getBillZip();
+    String getCardType();
+    String getCourier();
+    String getCreditCard();
+    String getExpiryDate();
+    List getLineItems();
+    String getLocale();
+    Date getOrderDate();
+    int getOrderId();
+    String getShipAddress1();
+    String getShipAddress2();
+    String getShipCity();
+    String getShipCountry();
+    String getShipState();
+    String getShipToFirstName();
+    String getShipToLastName();
+    String getShipZip();
+    String getStatus();
+    BigDecimal getTotalPrice();
+    String getUsername();
+    void initOrder(Account, Cart);
+    void setBillAddress1(String);
+    void setBillAddress2(String);
+    void setBillCity(String);
+    void setBillCountry(String);
+    void setBillState(String);
+    void setBillToFirstName(String);
+    void setBillToLastName(String);
+    void setBillZip(String);
+    void setCardType(String);
+    void setCourier(String);
+    void setCreditCard(String);
+    void setExpiryDate(String);
+    void setLineItems(List);
+    void setLocale(String);
+    void setOrderDate(Date);
+    void setOrderId(int);
+    void setShipAddress1(String);
+    void setShipAddress2(String);
+    void setShipCity(String);
+    void setShipCountry(String);
+    void setShipState(String);
+    void setShipToFirstName(String);
+    void setShipToLastName(String);
+    void setShipZip(String);
+    void setStatus(String);
+    void setTotalPrice(BigDecimal);
+    void setUsername(String);
+}
+[METHOD_BODY]
+invoke create line items add line item create invoke items add item bill address1 bill address2 city country state first name last name zip card type courier credit card expiry date locale order date order id ship address1 ship address2 city country state first last zip status total price username has next branch jump username total price credit expiry type courier locale status visa ups ca id
+",57,0,1,0,5f711f85c4a0513bd637217a8467712934d7a028a257eab0ec3fbdf70b9b44cb,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,006b4b1ce25257b9bbce3209473d2582368b7b0f284062a709753303e6921bd1,true,386,237,67,67,71,466,0,false,false,58,58,0,not_detected,120,164,0,0,36,3,3,750,42d834b9770d8a667ddc1de71862916fd18f26e13e1c016eb61e7246d0575788
+jpetstore,org.mybatis.jpetstore.domain.Product,Product,class,false,"[DECLARATION]
+public class Product implements Serializable {
+    String getCategoryId();
+    String getDescription();
+    String getName();
+    String getProductId();
+    void setCategoryId(String);
+    void setDescription(String);
+    void setName(String);
+    void setProductId(String);
+    String toString();
+}
+[METHOD_BODY]
+invoke category id description name product id category description name product trim invoke string
+",9,0,1,0,847fa19d82ae7e6fbe86b45c03d38ad57c08046d7b4580a1b565a0d9afd33655,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,e5296ac04efff722891302a63489b01a32f0c86595bc4287e74ced19fe8192c5,true,51,32,14,14,14,74,0,false,false,10,10,0,not_detected,15,12,0,0,3,0,0,80,d5c704cf740462461d3ef84c69e3f618cd5944ddf635e464f40c5b0936fe5b26
+jpetstore,org.mybatis.jpetstore.domain.Sequence,Sequence,class,false,"[DECLARATION]
+public class Sequence implements Serializable {
+    String getName();
+    int getNextId();
+    void setName(String);
+    void setNextId(int);
+}
+[METHOD_BODY]
+invoke invoke name next id name next id
+",4,0,1,0,abb9aaad117ec9fcb0617a69d8f482f44f4cf48fa2e5461581fb08ee44d8b133,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,51ff6ed36b9c0f4048b21eba64728837120caf4dfe3e6e7b0fc62550ba24a089,true,28,18,8,8,8,45,0,false,false,6,6,0,not_detected,6,9,0,0,2,0,0,53,3c26e356bcb2a5fd046c8f79bcdef33c9ef36a9128b09e8700b945c594987d80
+jpetstore,org.mybatis.jpetstore.mapper.AccountMapper,AccountMapper,interface,false,"[DECLARATION]
+public interface AccountMapper {
+    Account getAccountByUsername(String);
+    Account getAccountByUsernameAndPassword(String, String);
+    void insertAccount(Account);
+    void insertProfile(Account);
+    void insertSignon(Account);
+    void updateAccount(Account);
+    void updateProfile(Account);
+    void updateSignon(Account);
+}
+[METHOD_BODY]
+<EMPTY>
+",8,0,0,0,0448e09395c3346af47c2b9115e9cc8b567d96c67409ce6b97d2c2b4ea54bdde,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,fbf942adc8a5c6036a7bf5498e0ad11c4e470a5bfad8f8846740138145f27ea5,true,61,0,0,0,3,72,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+jpetstore,org.mybatis.jpetstore.mapper.CategoryMapper,CategoryMapper,interface,false,"[DECLARATION]
+public interface CategoryMapper {
+    Category getCategory(String);
+    List getCategoryList();
+}
+[METHOD_BODY]
+<EMPTY>
+",2,0,0,0,4c2b0b9614de47c93d52b3e71d44d77577d0f8f24d5f318430de16a31d338a08,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,77045e6e50f73c3cbd199dc5537096c548999d9dabbdce2d12d5ea9ef68c1fd9,true,16,0,0,0,3,27,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+jpetstore,org.mybatis.jpetstore.mapper.ItemMapper,ItemMapper,interface,false,"[DECLARATION]
+public interface ItemMapper {
+    int getInventoryQuantity(String);
+    Item getItem(String);
+    List getItemListByProduct(String);
+    void updateInventoryQuantity(Map);
+}
+[METHOD_BODY]
+<EMPTY>
+",4,0,0,0,f7a4d34cc83ec41e04e5305afff4f8fa8db765acb0e16f08f36d5e3c436c660b,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,46865703180302cba3a502392172882bd12eef02a25d68b8fadea2e950037bdb,true,33,0,0,0,3,44,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+jpetstore,org.mybatis.jpetstore.mapper.LineItemMapper,LineItemMapper,interface,false,"[DECLARATION]
+public interface LineItemMapper {
+    List getLineItemsByOrderId(int);
+    void insertLineItem(LineItem);
+}
+[METHOD_BODY]
+<EMPTY>
+",2,0,0,0,71af6f379965ab0cfb5273fbf7e3733ed5c5b8adb3fd3cac4b06b7a88333a51c,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,40f209695f43ebed808ee266c5265e0d032ff7607933101edec189de1634a1b4,true,24,0,0,0,3,35,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+jpetstore,org.mybatis.jpetstore.mapper.OrderMapper,OrderMapper,interface,false,"[DECLARATION]
+public interface OrderMapper {
+    Order getOrder(int);
+    List getOrdersByUsername(String);
+    void insertOrder(Order);
+    void insertOrderStatus(Order);
+}
+[METHOD_BODY]
+<EMPTY>
+",4,0,0,0,7e8e40f55a2c7915a803664f4374d530ef390d75a7cb12d48749845a092d65c7,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,be60bbfe64991d122c53390240b91317703e08e794a236aecd63b3a482beec75,true,31,0,0,0,3,42,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+jpetstore,org.mybatis.jpetstore.mapper.ProductMapper,ProductMapper,interface,false,"[DECLARATION]
+public interface ProductMapper {
+    Product getProduct(String);
+    List getProductListByCategory(String);
+    List searchProductList(String);
+}
+[METHOD_BODY]
+<EMPTY>
+",3,0,0,0,88f2b3ee8fb71f2a5d030a5dd3a006010dce5220299e2df1624cb7a1e546bff5,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,afd68148ad4082277eb3d9d64fa5785aa184223a17b106720118f27a4211c9aa,true,26,0,0,0,3,37,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+jpetstore,org.mybatis.jpetstore.mapper.SequenceMapper,SequenceMapper,interface,false,"[DECLARATION]
+public interface SequenceMapper {
+    Sequence getSequence(Sequence);
+    void updateSequence(Sequence);
+}
+[METHOD_BODY]
+<EMPTY>
+",2,0,0,0,a18094d1f2d3b7eeb9a5d092d8e52dbcac67e6d2b5e1e0701a9e8859cc2e44c8,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,397e1f58a092b8af9680028ce2121bbe684304b6880a2851792711c9bccc3bcb,true,20,0,0,0,3,31,0,false,true,0,0,0,not_detected,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+jpetstore,org.mybatis.jpetstore.service.AccountService,AccountService,class,false,"[DECLARATION]
+@Service
+public class AccountService {
+    Account getAccount(String);
+    Account getAccount(String, String);
+    void insertAccount(Account);
+    void updateAccount(Account);
+}
+[METHOD_BODY]
+invoke account mapper account username invoke mapper username password insert signon update present
+",4,1,0,0,62fa0263a48f1cdcf9221655e50e39b26e3a9164f982c1b84d14398a18c66be1,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,425e493934670a393d66391ffdcbb23d857c4daae14039582ee91b123d4f6299,true,34,35,13,13,14,57,0,false,false,7,5,2,compiler_synthetic_evidence,14,16,0,0,14,0,0,107,6fdd28775820b7646e6e665bab4c66bfea4f85e3cd68690f13e12a60a984d3d3
+jpetstore,org.mybatis.jpetstore.service.CatalogService,CatalogService,class,false,"[DECLARATION]
+@Service
+public class CatalogService {
+    Category getCategory(String);
+    List getCategoryList();
+    Item getItem(String);
+    List getItemListByProduct(String);
+    Product getProduct(String);
+    List getProductListByCategory(String);
+    boolean isItemInStock(String);
+    List searchProductList(String);
+}
+[METHOD_BODY]
+invoke category mapper item product category invoke mapper list item list product stock branch jump search create measure branch jump make concat constants
+",8,1,0,0,311b8cd67bd162079413ca08817b5c2f60b2908d6748e84b6127f36c5d91c253,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,2eaf41eb5323e93cf5fab878ed1def36c1e531e07ad02f6d860ef4365b2a6386,true,59,73,23,23,23,91,0,false,false,9,9,0,not_detected,29,22,0,0,21,3,1,198,9e34ba248fbbe3e458a5dd037709ea167ab153cfd14d787694f4652af7acdfc9
+jpetstore,org.mybatis.jpetstore.service.OrderService,OrderService,class,false,"[DECLARATION]
+@Service
+public class OrderService {
+    int getNextId(String);
+    Order getOrder(int);
+    List getOrdersByUsername(String);
+    void insertOrder(Order);
+}
+[METHOD_BODY]
+invoke item mapper order sequence line next id create invoke branch jump sequence mapper runtime exception make concat constants order each line item orders username insert each ordernum
+",4,1,0,0,ab610247715c7e8af8066b7cf4549313474d223c241d7c1f8e14d0293507f315,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,2bdfcfd59cb9af71af2221693d603d5e818fbee3f623d987031eb7be80349e6f,true,32,58,28,28,30,71,0,false,false,8,5,3,compiler_synthetic_evidence,13,24,0,4,31,4,2,179,759608f172ffd80a0d6237880c10f5a56ff73b830301041b26635e290f94fa9f
+jpetstore,org.mybatis.jpetstore.web.actions.AbstractActionBean,AbstractActionBean,abstract class,false,"[DECLARATION]
+public abstract class AbstractActionBean implements ActionBean, Serializable {
+    ActionBeanContext getContext();
+    void setContext(ActionBeanContext);
+    void setMessage(String);
+}
+[METHOD_BODY]
+invoke context context message add invoke create
+",3,0,2,0,5685ab07312f08adc9dc5704fe9436f04a6de52929f1ccab34a4af5f43512887,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,32836c8944cdd4e745f8b640658a41d2be7ab3cca756bc15792a5fc76df648fa,true,32,17,7,7,7,48,0,false,false,4,4,0,not_detected,4,3,0,0,6,0,0,39,1946b0ec8b48f2c0c71b31906407a928b758ce0d570f2728f50be9ae4e8ecdf0
+jpetstore,org.mybatis.jpetstore.web.actions.AccountActionBean,AccountActionBean,class,true,"[DECLARATION]
+@SessionScope
+public class AccountActionBean extends AbstractActionBean {
+    void clear();
+    Resolution editAccount();
+    Resolution editAccountForm();
+    Account getAccount();
+    List getCategories();
+    List getLanguages();
+    List getMyList();
+    String getPassword();
+    String getUsername();
+    boolean isAuthenticated();
+    Resolution newAccount();
+    Resolution newAccountForm();
+    void setMyList(List);
+    void setPassword(String);
+    void setUsername(String);
+    Resolution signoff();
+    Resolution signon();
+    Resolution signonForm();
+}
+[METHOD_BODY]
+unmodifiable list create invoke language category english japanese fish dogs reptiles cats birds invoke create account clear account my list authenticated edit service catalog my edit form categories category languages language password username authenticated branch jump service catalog form password username signoff context signon branch jump context invalid failed bean signon
+",18,1,0,0,f8889d28106565ed20148a4a22d087326279016eaf2b15316fd95731141ac8f5,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,384028f5517a4c1b4b78fa9411c0c5f9002cf3bcd068ce35596462980f06fe10,true,107,166,51,51,56,172,0,false,false,20,20,0,not_detected,32,64,0,0,66,14,9,439,bc8c14388335d10de3420f43027b6b01ef8103443d30d1edda724222873d76a8
+jpetstore,org.mybatis.jpetstore.web.actions.CartActionBean,CartActionBean,class,true,"[DECLARATION]
+@SessionScope
+public class CartActionBean extends AbstractActionBean {
+    Resolution addItemToCart();
+    ForwardResolution checkOut();
+    void clear();
+    Cart getCart();
+    Resolution removeItemFromCart();
+    void setCart(Cart);
+    void setWorkingItemId(String);
+    Resolution updateCartQuantities();
+    ForwardResolution viewCart();
+}
+[METHOD_BODY]
+invoke create cart add item cart branch jump invoke create working id catalog service invalid cannot check out clear working item id remove branch jump invalid cannot attempted update quantities context view
+",9,1,0,0,6e2082049949bc32797b855bfa06cf8b854060e47407dbd85b81f0d1c8085e08,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,1a7a603e8314ecee38ebe10eaa92d39aed7e4635ea39e2c2aedb544d148ee8e2,true,70,120,32,32,32,111,0,false,false,10,10,0,not_detected,19,50,2,0,71,29,5,351,474d238b1201d2b8dd7c4f1a72b04cbe42d1eb4928b8b3a6ef1cfd75bef5139e
+jpetstore,org.mybatis.jpetstore.web.actions.CatalogActionBean,CatalogActionBean,class,true,"[DECLARATION]
+@SessionScope
+public class CatalogActionBean extends AbstractActionBean {
+    void clear();
+    Category getCategory();
+    String getCategoryId();
+    List getCategoryList();
+    Item getItem();
+    String getItemId();
+    List getItemList();
+    String getKeyword();
+    Product getProduct();
+    String getProductId();
+    List getProductList();
+    ForwardResolution searchProducts();
+    void setCategory(Category);
+    void setCategoryId(String);
+    void setCategoryList(List);
+    void setItem(Item);
+    void setItemId(String);
+    void setItemList(List);
+    void setKeyword(String);
+    void setProduct(Product);
+    void setProductId(String);
+    void setProductList(List);
+    ForwardResolution viewCategory();
+    ForwardResolution viewItem();
+    ForwardResolution viewMain();
+    ForwardResolution viewProduct();
+}
+[METHOD_BODY]
+invoke clear keyword category id list product item category id list item keyword product search products branch jump invoke create catalog service please enter press button view branch jump create catalog service view main
+",26,1,0,0,c7b77c1ac86484ab13836eab214963ec1aa3c82fd8e04f889fd0dcd278382850,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,68da1c85a6cf5cc60a2f9f95190758306deab6f6ee927de687d1f4a5c52c9f55,true,158,143,34,34,34,201,0,false,false,27,27,0,not_detected,43,90,0,0,34,14,2,429,855578e3c477b42bfdf3762e5585417c346650ea70783239ddb4403aea35a047
+jpetstore,org.mybatis.jpetstore.web.actions.OrderActionBean,OrderActionBean,class,true,"[DECLARATION]
+@SessionScope
+public class OrderActionBean extends AbstractActionBean {
+    void clear();
+    List getCreditCardTypes();
+    Order getOrder();
+    int getOrderId();
+    List getOrderList();
+    boolean isConfirmed();
+    boolean isShippingAddressRequired();
+    Resolution listOrders();
+    Resolution newOrder();
+    Resolution newOrderForm();
+    void setConfirmed(boolean);
+    void setOrder(Order);
+    void setOrderId(int);
+    void setShippingAddressRequired(boolean);
+    Resolution viewOrder();
+}
+[METHOD_BODY]
+unmodifiable list create invoke card type visa master american express invoke create order clear order shipping address required confirmed list credit card types type id confirmed shipping address required orders context service branch jump context service error occurred processing your was thank has been submitted form branch jump could not created because cart found id view account bean you may only your own orders
+",15,1,0,0,e5d67bb4e9044a9c9e70b5900fa93f583f15d7d0ff4d856ecf1a521dbe5b5115,stage3_declaration_method_body,declaration_method_body_v1,data/semantic_inputs/jpetstore_class_declarations.csv,aa8b4e79ac041011866ff0ea9017f9814d63d423bc0395f50c7e5f6c8a51b9a2,d36d1de8b4299553a0a5b42104e3e952a27d318675b564280279f283b851efda,true,99,160,64,64,65,173,0,false,false,17,17,0,not_detected,33,53,1,0,85,50,10,471,09a6569f7f916d87fa083d91123d34128e89e842addbebd9127f85ae8e695f51

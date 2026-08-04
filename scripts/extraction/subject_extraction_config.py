@@ -48,6 +48,10 @@ def load_extraction_cli_args(root: Path, subject: str) -> list[str]:
     ]
     if exclude_packages:
         args.extend(["--exclude-packages", ",".join(exclude_packages)])
+    # The extractor's default semantic output is kept beside its isolated
+    # extraction output.  Representation-specific pipelines own any later
+    # semantic-input copy and must not route generic extraction through a
+    # deleted Stage 3A path.
     args.extend(["--out-dir", str(output_dir)])
     return args
 

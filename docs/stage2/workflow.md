@@ -23,7 +23,7 @@ data/extracted/<subject>/
   -> post-hoc evaluation only
        modularity, Hypervolume, MoJoFM, Pairwise F1
   -> compare selected solution with frozen Stage 1 raw_reference_leiden
-  -> frozen formal results/<subject>/03_stage2_nsga/robustness_final_30seeds/
+  -> frozen formal results/stage2/subjects/<subject>/nsga/robustness_final_30seeds/
 ```
 
 The Stage 2 runner writes Pareto fronts, label vectors, post-hoc metrics,
@@ -31,7 +31,7 @@ Stage 1 raw Leiden comparison tables, Hypervolume summaries, and metadata.
 The retired selected-solution files are not an active result interface. For
 the frozen formal results, the canonical
 operating solution is the 5% relative modularity-band profile in
-`results/cross_subject/03_stage2_nsga/modularity_band/`; the former
+`results/stage2/cross_subject/operating_profile/`; the former
 max-weighted-modularity selected-solution artifacts are retired.
 
 ## Input Rule
@@ -46,7 +46,7 @@ runner. It must not read mutable graph artifacts from `results/`.
 | Load input | `load_extracted_subject` | `extraction/dependency_extractor.py` | Load and validate normalized CSV inputs. |
 | Build raw graph | `build_raw_edges` | `graph/raw_graph_builder.py` | Produce raw structural edge weights. |
 | Objective primitive | `_edge_weight_split` | `evaluation/partition_metrics.py` | O(E) internal/external edge-weight split. |
-| Raw Leiden baseline | `results/<subject>/01_stage1_leiden_baseline/raw_reference_leiden/` | frozen Stage 1 results | Comparison target. |
+| Raw Leiden baseline | `results/stage1/subjects/<subject>/leiden_baseline/raw_reference_leiden/` | frozen Stage 1 results | Comparison target. |
 | Solution comparison | `partition_similarity` | `evaluation/partition_metrics.py` | ARI/NMI against frozen raw Leiden. |
 | Reference check | `load_reference_mapping`, `calculate_reference_metrics` | `evaluation/reference_metrics.py` | DayTrader-only post-hoc MoJoFM/F1 checks. |
 
@@ -64,7 +64,7 @@ runner. It must not read mutable graph artifacts from `results/`.
 The frozen formal output layer is:
 
 ```text
-results/<subject>/03_stage2_nsga/robustness_final_30seeds/
+results/stage2/subjects/<subject>/nsga/robustness_final_30seeds/
 ```
 
 Expected files:
@@ -78,7 +78,7 @@ Expected files:
 The former 10-seed `raw/` derived summaries were historical and have been
 removed. A compact set of source front/label/metadata files remains only for
 historical provenance. Derived selected-profile metrics are maintained
-separately under `results/cross_subject/03_stage2_nsga/modularity_band/`.
+separately under `results/stage2/cross_subject/operating_profile/`.
 
 `pareto_front.csv` records seeded-initialization provenance:
 
@@ -90,7 +90,7 @@ These columns support reporting about whether the Pareto front contains newly
 evolved non-seed solutions, not only injected heuristic seeds.
 
 The canonical 30-seed operating-profile metrics and provenance are maintained
-at `results/cross_subject/03_stage2_nsga/modularity_band/`
+at `results/stage2/cross_subject/operating_profile/`
 `canonical_operating_profile_metrics_per_seed.csv`. Refresh them with
 `experiments/02_stage2_nsga_structure_only/refresh_modularity_band_downstream.py`;
 the command is post hoc only and does not rerun any seed.

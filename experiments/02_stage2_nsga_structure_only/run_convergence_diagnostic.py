@@ -25,6 +25,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from evo_ms.repository_layout import stage2_subject_root
+
 
 def _load_robustness_module():
     spec = importlib.util.spec_from_file_location(
@@ -159,7 +161,7 @@ def _trajectory_for_seed(
 
 
 def _formal_final_hypervolume(subject: str, seed: int) -> float:
-    path = ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds" / "raw_runs.csv"
+    path = stage2_subject_root(subject, ROOT) / "robustness_final_30seeds" / "raw_runs.csv"
     rows = pd.read_csv(path)
     matched = rows.loc[rows["seed"] == seed, "hypervolume"]
     if len(matched) != 1:
@@ -278,9 +280,9 @@ def main() -> int:
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     args = parser.parse_args()
 
-    output_dir = args.output_dir or (
-        ROOT / "results" / args.subject / "03_stage2_nsga" / "convergence_diagnostic"
-    )
+    output_dir = args.output_dir or stage2_subject_root(
+        args.subject, ROOT
+    ) / "convergence_diagnostic"
     summaries = run_diagnostic(
         subject=args.subject,
         seeds=_parse_seeds(args.seeds),

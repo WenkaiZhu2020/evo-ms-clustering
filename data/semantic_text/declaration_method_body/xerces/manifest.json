@@ -1,0 +1,25 @@
+{
+  "aggregate_input_sha256": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+  "class_count": 814,
+  "class_mapping_sha256": "7e204d1865c1ddb228cc42f6f61519e280076590a92f0965e4f1fc765b77a4ab",
+  "config_sha256": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+  "contract_sha256": "836aa335f18670b58e88b280d4830ead038fde7b36a133009c3461a718ab0aee",
+  "experiment_name": "stage3_declaration_method_body",
+  "extraction_version": "soot_shimple_method_body_v1",
+  "generated_at_utc": "2026-07-17T21:03:18Z",
+  "normalization_source_sha256": "13fee24eb66f64398f6e73b0676b39e2aa030e8beee5a2730d0478cf7b1185d6",
+  "representation_id": "declaration_method_body_v1",
+  "representation_version": "Body V1",
+  "source_commit": "8cf2c0170a5503a9b2f4832e79f943ab00a8074d",
+  "stage3a_source_commit": "7fa31fea02b4ca5c4177128dafaada889b56c1bd",
+  "stage3a_source_path": "data/semantic_inputs/xerces-j_class_declarations.csv",
+  "stage3a_source_sha256": "2352575ba8552ee8d55a4b641d017d0542316561731dced47fe7625a4792a524",
+  "subject": "xerces",
+  "tokenizer": {
+    "add_special_tokens": true,
+    "max_sequence_length": 32768,
+    "name": "nomic-ai/nomic-embed-code",
+    "revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+    "truncation": false
+  }
+}

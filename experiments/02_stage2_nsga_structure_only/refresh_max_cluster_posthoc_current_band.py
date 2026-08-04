@@ -24,6 +24,8 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from evo_ms.repository_layout import stage2_subject_root
+
 SUBJECTS = ("daytrader", "xerces-j")
 SEEDS = tuple(range(30))
 THRESHOLDS = (0.30, 0.35, 0.40, 0.45, 0.50, 0.60)
@@ -93,7 +95,12 @@ def run(output_dir: Path) -> dict[str, Any]:
             context["reference_mapping"],
         )
         for seed in SEEDS:
-            front_path = ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds" / f"seed_{seed:02d}" / "pareto_front.csv"
+            front_path = (
+                stage2_subject_root(subject, ROOT)
+                / "robustness_final_30seeds"
+                / f"seed_{seed:02d}"
+                / "pareto_front.csv"
+            )
             labels_path = front_path.with_name("pareto_labels.csv.xz")
             front = pd.read_csv(front_path)
             for threshold in THRESHOLDS:
@@ -171,7 +178,11 @@ def run(output_dir: Path) -> dict[str, Any]:
         "selector_contract_id": SELECTOR_CONTRACT_ID,
         "selector_contract": SELECTOR_CONTRACT,
         "source_policy": "frozen formal Stage 2 Pareto fronts and candidate-label mappings",
-        "historical_originals_retained": True,
+        "historical_originals_retained": False,
+        "historical_cleanup_inventory": (
+            "results/stage2/cross_subject/formal_statistics/"
+            "historical_output_cleanup_inventory.csv"
+        ),
         "no_optimizer_run": True,
         "no_seed_rerun": True,
         "no_graph_regeneration": True,

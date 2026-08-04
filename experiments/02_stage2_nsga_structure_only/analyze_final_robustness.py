@@ -18,6 +18,8 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
+from evo_ms.repository_layout import STAGE2_OPERATING_PROFILE_ROOT, stage2_subject_root
+
 PRIMARY_STRUCTURAL_METRICS = (
     "weighted_modularity",
     "coupling",
@@ -80,8 +82,8 @@ def main() -> int:
     parser.add_argument(
         "--selected-profile",
         type=Path,
-        default=ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/"
-        "canonical_operating_profile_metrics_per_seed.csv",
+        default=STAGE2_OPERATING_PROFILE_ROOT
+        / "canonical_operating_profile_metrics_per_seed.csv",
         help="full post-hoc metrics for the canonical profile",
     )
     args = parser.parse_args()
@@ -93,7 +95,7 @@ def main() -> int:
     selected_profile_display = _display_path(selected_profile_source)
     rows = []
     for subject in ("jpetstore", "daytrader", "xerces-j"):
-        run_dir = ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds"
+        run_dir = stage2_subject_root(subject, ROOT) / "robustness_final_30seeds"
         selected = selected_profile.loc[selected_profile["subject"] == subject].copy()
         context = robustness._load_context(subject, ROOT / "configs" / "experiments" / "02_stage2_nsga_structure_only.yml")
         leiden = context["stage1_raw_baseline"]

@@ -27,6 +27,8 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from evo_ms.repository_layout import STAGE2_OPERATING_PROFILE_ROOT, stage2_subject_root
+
 SUBJECTS = ("jpetstore", "daytrader", "xerces-j")
 SEEDS = tuple(range(30))
 BUDGETS = (0.01, 0.03, 0.05, 0.10)
@@ -178,8 +180,10 @@ def _selected_rows(selector, refresh, robustness) -> list[dict[str, Any]]:
         baseline = baselines[subject]
         for seed in SEEDS:
             front_path = (
-                ROOT / "results" / subject / "03_stage2_nsga" /
-                "robustness_final_30seeds" / f"seed_{seed:02d}" / "pareto_front.csv"
+                stage2_subject_root(subject, ROOT)
+                / "robustness_final_30seeds"
+                / f"seed_{seed:02d}"
+                / "pareto_front.csv"
             )
             labels_path = front_path.with_name("pareto_labels.csv.xz")
             front = pd.read_csv(front_path)
@@ -421,7 +425,7 @@ def run(output_dir: Path, make_figures: bool = True) -> dict[str, Any]:
     profiles.to_csv(output_dir / "sensitivity_profiles_per_seed.csv", index=False)
     summary, transitions = _write_summaries(profiles, output_dir)
 
-    canonical_path = ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv"
+    canonical_path = STAGE2_OPERATING_PROFILE_ROOT / "canonical_operating_solution_per_seed.csv"
     canonical = pd.read_csv(canonical_path)
     canonical_rows = profiles.loc[profiles["budget"] == CANONICAL_BUDGET].merge(
         canonical[["subject", "seed", "solution_id", "weighted_modularity", "label_vector"]],
@@ -449,7 +453,7 @@ def run(output_dir: Path, make_figures: bool = True) -> dict[str, Any]:
         "canonical_source_sha256": _sha256(canonical_path),
     }
     (output_dir / "sensitivity_validation.json").write_text(json.dumps(validation, indent=2) + "\n", encoding="utf-8")
-    existing = pd.read_csv(ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/profiles_per_seed.csv")
+    existing = pd.read_csv(STAGE2_OPERATING_PROFILE_ROOT / "profiles_per_seed.csv")
     manifest = {
         "analysis": "stage2_modularity_band_sensitivity",
         "selector_contract_id": SELECTOR_CONTRACT_ID,

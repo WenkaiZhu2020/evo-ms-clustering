@@ -22,7 +22,7 @@ Inputs:
 
 Base evidence weights are embedded in the normalized extracted CSV rows. `expected_extracted_evidence_weights` validates those row weights; it does not reweight an existing extracted dataset. `ssa_lambda` controls the total SSA contribution after extraction.
 
-Outputs are written to `results/<subject>/00_pre_experiment/`:
+Outputs are written to `results/pre_experiment/subjects/<subject>/`:
 
 - `graph/`: raw and SSA edge tables plus graph metrics.
 - `clustering/`: Leiden cluster assignments and partition metrics.

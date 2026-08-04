@@ -26,6 +26,7 @@ from evo_ms.extraction.evidence_weight_validation import expected_extracted_evid
 from evo_ms.extraction.evidence_weight_validation import validate_extracted_evidence_weights
 from evo_ms.graph.raw_graph_builder import build_raw_edges
 from evo_ms.graph.ssa_graph_builder import build_ssa_edges
+from evo_ms.repository_layout import pre_experiment_subject_root
 from evo_ms.utils.config_loader import load_yaml
 from evo_ms.utils.logging import get_logger
 
@@ -43,7 +44,7 @@ def run_xerces_j_sensitivity(root: Path = ROOT) -> Path:
     expected_weights = expected_extracted_evidence_weights(pre_config)
 
     extracted_dir = root / subject_config.get("extracted_output_path", f"data/extracted/{subject}")
-    output_dir = root / subject_config.get("result_output_path", f"results/{subject}") / "00_pre_experiment"
+    output_dir = pre_experiment_subject_root(subject, root)
     sensitivity_dir = output_dir / "sensitivity"
     sensitivity_dir.mkdir(parents=True, exist_ok=True)
 

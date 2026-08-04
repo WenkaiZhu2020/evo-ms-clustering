@@ -9,8 +9,8 @@ It does not claim that the generated clusters are final microservice boundaries.
 
 | Layer | Role | Output |
 | --- | --- | --- |
-| Pre-experiment | diagnostics, calibration, and sensitivity analysis | `results/<subject>/00_pre_experiment/` |
-| Formal Stage 1 | frozen Leiden baseline profiles | `results/<subject>/01_stage1_leiden_baseline/` |
+| Pre-experiment | diagnostics, calibration, and sensitivity analysis | `results/pre_experiment/subjects/<subject>/` |
+| Formal Stage 1 | frozen Leiden baseline profiles | `results/stage1/subjects/<subject>/leiden_baseline/` |
 
 The Pre-experiment layer is used to inspect how graph settings affect the result. Its outputs may change across parameter runs.
 

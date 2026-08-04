@@ -1,0 +1,132 @@
+{
+  "base_config_path": "configs/experiments/04_stage3_semantic.yml",
+  "base_config_sha256": "eddbb3674dacabfac2925f4ef6887bb86c9030f629a231230d6a889e1c28cc27",
+  "class_mapping_file_sha256": "aca600c5c4cee3d35e1d0de04d84680884c0e58ebf298dff04f51d9e03f6c83b",
+  "class_mapping_sha256": "83c4643fdad9661f2e409563f8e496b792575ecc72ac548ba8c2f13fb46e019f",
+  "completion_status": "completed",
+  "config_hash": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+  "config_path": "configs/experiments/05_stage3_declaration_method_body.yml",
+  "config_sha256": "c1af2191baefddee68a7f41c97c29f7799df4bcf5372d9e9cf44a52a3b510286",
+  "embedding_aggregate_sha256": "e7615e77d4f3258df46e499fd94c2dbb59bee03c0d2f6c3bb822c3aff4577139",
+  "embedding_file_sha256": "6ca1abf13b753a89a7f78e93486a3c24ae4367d4a32edfa367306a79e3297b04",
+  "embedding_source_commit": "33074fe5a2479b9d76605cd6a507c8a66c523a19",
+  "end_timestamp_utc": "2026-07-17T23:14:58Z",
+  "evaluations": 10000,
+  "execution_head": "6bbed4acef9af0bd7dd4938938decf99457ef112",
+  "experiment_id": "stage3_declaration_method_body",
+  "experiment_name": "stage3_declaration_method_body",
+  "front_diagnostics": {
+    "constraint_violating_population_size": 0,
+    "feasible_population_size": 100,
+    "final_population_size": 100,
+    "front_source": "recomputed_nondominated_front",
+    "front_validation_passed": true,
+    "recomputed_nondominated_size": 100
+  },
+  "g_sem_graph_hash": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a9214",
+  "generations": 100,
+  "graph_sha256": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a9214",
+  "graph_source_commit": "6f595208e1bde1702b7a99f00410b35a225777c8",
+  "implementation_commit": "6bbed4acef9af0bd7dd4938938decf99457ef112",
+  "initialization_contract": "experiments/02_stage2_nsga_structure_only/run.py:_seed_initialization_records",
+  "input_aggregate_sha256": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+  "input_hash": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+  "no_graph_fusion": true,
+  "no_model_inference": true,
+  "no_semantic_graph_generation": true,
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance",
+    "f_semantic"
+  ],
+  "population_size": 100,
+  "projected_front_rule": "final 4D front -> exact 3D nondominance -> exact projected objective tuple deduplication; stable solution_id survivor",
+  "projected_hv_bounds_source": "configs/experiments/stage2_robustness_bounds.yml",
+  "projected_hv_implementation": "experiments/02_stage2_nsga_structure_only/run.py:_hypervolume",
+  "projected_hv_reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "report_objective_order": [
+    "coupling",
+    "cohesion",
+    "imbalance",
+    "f_semantic"
+  ],
+  "representation_id": "declaration_method_body_v1",
+  "representative_selection_implementation": "experiments/02_stage2_nsga_structure_only/run.py:_select_solution",
+  "run_type": "formal",
+  "runtime_seconds": 8.436826124903746,
+  "schema_version": 2,
+  "seed": 22,
+  "semantic_graph_config_sha256": "eddbb3674dacabfac2925f4ef6887bb86c9030f629a231230d6a889e1c28cc27",
+  "semantic_graph_hash": "2dcf34b9e931cfdb0eec205f7da5bd0f24f6956be98d838369e12573026a9214",
+  "semantic_graph_metadata_path": "data/semantic_graphs/declaration_method_body/jpetstore/graph_metadata.json",
+  "semantic_graph_path": "data/semantic_graphs/declaration_method_body/jpetstore/semantic_edges.csv",
+  "semantic_input_aggregate_sha256": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+  "semantic_input_source": "frozen Stage 3B semantic_edges.csv only",
+  "semantic_objective_used_for_selection": false,
+  "stage2_config_path": "configs/experiments/02_stage2_nsga_structure_only.yml",
+  "stage2_config_sha256": "37f4f1a096b0e485da87fc9644a7ad874f5654fa46df3bd77bb718e6425330fa",
+  "stage2_same_seed_hypervolume": {
+    "bounds_path": "configs/experiments/stage2_robustness_bounds.yml",
+    "checked_paths": [
+      "results/jpetstore/03_stage2_nsga/robustness/seed_00/run_metrics.json",
+      "results/jpetstore/03_stage2_nsga/raw/hypervolume_by_seed.csv"
+    ],
+    "source_path": "results/jpetstore/03_stage2_nsga/robustness/seed_00/run_metrics.json",
+    "stage2_git_commit": "131587f2a4b77d1b8c2153eab16a5d64944ee05c",
+    "value": 0.38853439926036243
+  },
+  "start_timestamp_utc": "2026-07-17T23:14:50Z",
+  "storage_subject": "jpetstore",
+  "structural_objective_invariance": {
+    "checks": {
+      "all_one": {
+        "pass": true,
+        "stage2_cohesion": 1.4673913043478262,
+        "stage2_coupling": 0.0,
+        "stage2_imbalance": 0.0,
+        "stage3_cohesion": 1.4673913043478262,
+        "stage3_coupling": 0.0,
+        "stage3_imbalance": 0.0
+      },
+      "deterministic_two_cluster": {
+        "pass": true,
+        "stage2_cohesion": 1.371212121212121,
+        "stage2_coupling": 0.5530864197530864,
+        "stage2_imbalance": 0.0,
+        "stage3_cohesion": 1.371212121212121,
+        "stage3_coupling": 0.5530864197530864,
+        "stage3_imbalance": 0.0
+      },
+      "fixed_leiden": {
+        "pass": true,
+        "stage2_cohesion": 5.477380952380952,
+        "stage2_coupling": 0.2518518518518518,
+        "stage2_imbalance": 0.20412414523193148,
+        "stage3_cohesion": 5.477380952380952,
+        "stage3_coupling": 0.2518518518518518,
+        "stage3_imbalance": 0.20412414523193148
+      }
+    },
+    "pass": true
+  },
+  "subject": "jpetstore",
+  "validation": {
+    "f_semantic_max": 0.7626426810079554,
+    "f_semantic_mean": 0.48970829720122544,
+    "f_semantic_min": 0.2707504162874229,
+    "f_semantic_std": 0.10948454413920936,
+    "front_size": 100,
+    "hv_abs_difference": 0.0,
+    "projected_front_size": 44,
+    "projected_hv": 0.3763722001090664,
+    "recomputed_projected_hv": 0.3763722001090664,
+    "selected_f_semantic": 0.5122600685375185,
+    "selected_solution_id": "seed22_solution000",
+    "validation_pass": true
+  }
+}

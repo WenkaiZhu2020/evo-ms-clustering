@@ -23,4 +23,4 @@ expected_extracted_evidence_weights:
 leiden:
   resolution: 1.0
   seed: 42
-output_root: results
+output_root: results/pre_experiment/subjects

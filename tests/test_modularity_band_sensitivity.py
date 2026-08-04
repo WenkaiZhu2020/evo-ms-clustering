@@ -8,8 +8,8 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SENSITIVITY = ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/sensitivity"
-MAX_CLUSTER = ROOT / "results/cross_subject/03_stage2_nsga/final_statistics/max_cluster_posthoc_sensitivity_current_band"
+SENSITIVITY = ROOT / "results/stage2/cross_subject/operating_profile/sensitivity"
+MAX_CLUSTER = ROOT / "results/stage2/cross_subject/sensitivity_analysis/max_cluster"
 
 
 def _selector_module():
@@ -33,7 +33,7 @@ def test_five_percent_sensitivity_matches_canonical() -> None:
     selector = _selector_module()
     profiles = pd.read_csv(SENSITIVITY / "sensitivity_profiles_per_seed.csv")
     canonical = pd.read_csv(
-        ROOT / "results/cross_subject/03_stage2_nsga/modularity_band/canonical_operating_solution_per_seed.csv"
+        ROOT / "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv"
     )
     selected = profiles.loc[profiles["budget"] == 0.05].merge(
         canonical[["subject", "seed", "solution_id", "weighted_modularity", "label_vector"]],
@@ -63,5 +63,5 @@ def test_current_max_cluster_replacement_is_separate_from_historical_tables() ->
     assert len(detail) == 360
     assert sorted(detail["band_budget"].unique()) == [0.05]
     assert not detail[["subject", "seed", "threshold"]].duplicated().any()
-    historical = ROOT / "results/cross_subject/03_stage2_nsga/final_statistics/max_cluster_posthoc_sensitivity"
+    historical = ROOT / "results/stage2/cross_subject/sensitivity_analysis/max_cluster_historical"
     assert not historical.exists()

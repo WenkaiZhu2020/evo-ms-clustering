@@ -1,0 +1,52 @@
+{
+  "aggregate_input_sha256": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
+  "body_tokens": {
+    "max": 67,
+    "mean": 21.125,
+    "median": 13.5,
+    "min": 0,
+    "std": 20.41917501598273
+  },
+  "body_truncated_count": 0,
+  "class_count": 24,
+  "declaration_tokens": {
+    "max": 386,
+    "mean": 78.45833333333333,
+    "median": 53.0,
+    "min": 16,
+    "std": 80.182593272411
+  },
+  "declaration_truncated_count": 0,
+  "empty_body_count": 7,
+  "feature_totals": {
+    "accepted_exception_tokens": 4,
+    "accepted_field_tokens": 674,
+    "accepted_invoked_method_tokens": 514,
+    "accepted_local_tokens": 3,
+    "accepted_operation_tokens": 442,
+    "accepted_string_tokens": 120
+  },
+  "filter_totals": {
+    "boilerplate_or_invalid_identifier": 327,
+    "duplicate_within_method": 870,
+    "java_keyword": 339,
+    "literal_format_only": 1,
+    "literal_length": 4,
+    "literal_path": 40,
+    "raw_jimple_syntax": 15,
+    "repeated_token_cap": 377,
+    "synthetic_local": 2270
+  },
+  "generated_code_status": {
+    "compiler_synthetic_evidence": 5,
+    "not_detected": 19
+  },
+  "subject": "jpetstore",
+  "total_tokens": {
+    "max": 466,
+    "mean": 110.29166666666667,
+    "median": 73.0,
+    "min": 27,
+    "std": 97.73581703017352
+  }
+}

@@ -21,12 +21,12 @@ SPEC.loader.exec_module(stage1_runner)
 def test_run_stage1_leiden_writes_two_profile_outputs_to_temp_results(tmp_path: Path) -> None:
     require_leiden()
     write_fixture_repo(tmp_path)
-    assert not (tmp_path / "results" / "jpetstore" / "00_pre_experiment").exists()
+    assert not (tmp_path / "results" / "pre_experiment" / "subjects" / "jpetstore").exists()
 
     output_dirs = stage1_runner.run_stage1_leiden(root=tmp_path, subject="jpetstore")
 
     output_dir = output_dirs[0]
-    assert output_dir == tmp_path / "results" / "jpetstore" / "01_stage1_leiden_baseline"
+    assert output_dir == tmp_path / "results" / "stage1" / "subjects" / "jpetstore" / "leiden_baseline"
     assert sorted(path.name for path in output_dir.iterdir()) == [
         "baseline_index.yml",
         "raw_reference_leiden",
@@ -96,7 +96,7 @@ def test_run_stage1_leiden_writes_two_profile_outputs_to_temp_results(tmp_path: 
         assert "git_head" in metadata
         assert "git_dirty" in metadata
 
-    assert not (tmp_path / "results" / "jpetstore" / "00_pre_experiment").exists()
+    assert not (tmp_path / "results" / "pre_experiment" / "subjects" / "jpetstore").exists()
 
 
 def test_run_stage1_leiden_uses_config_subjects(tmp_path: Path) -> None:
@@ -105,7 +105,9 @@ def test_run_stage1_leiden_uses_config_subjects(tmp_path: Path) -> None:
 
     output_dirs = stage1_runner.run_stage1_leiden(root=tmp_path)
 
-    assert output_dirs == [tmp_path / "results" / "jpetstore" / "01_stage1_leiden_baseline"]
+    assert output_dirs == [
+        tmp_path / "results" / "stage1" / "subjects" / "jpetstore" / "leiden_baseline"
+    ]
 
 
 def test_run_stage1_leiden_uses_profile_config_values(tmp_path: Path) -> None:

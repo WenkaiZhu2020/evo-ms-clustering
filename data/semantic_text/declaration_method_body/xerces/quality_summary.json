@@ -1,0 +1,61 @@
+{
+  "aggregate_input_sha256": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+  "body_tokens": {
+    "max": 256,
+    "mean": 34.33906633906634,
+    "median": 20.0,
+    "min": 0,
+    "std": 45.76425031068776
+  },
+  "body_truncated_count": 7,
+  "class_count": 814,
+  "declaration_tokens": {
+    "max": 1501,
+    "mean": 86.15724815724816,
+    "median": 43.0,
+    "min": 5,
+    "std": 134.24165873105377
+  },
+  "declaration_truncated_count": 0,
+  "empty_body_count": 120,
+  "feature_totals": {
+    "accepted_exception_tokens": 8442,
+    "accepted_field_tokens": 73789,
+    "accepted_invoked_method_tokens": 19477,
+    "accepted_local_tokens": 9342,
+    "accepted_operation_tokens": 86866,
+    "accepted_string_tokens": 10008
+  },
+  "filter_totals": {
+    "boilerplate_or_invalid_identifier": 83207,
+    "duplicate_within_method": 147462,
+    "java_keyword": 26477,
+    "literal_boilerplate": 11,
+    "literal_empty": 272,
+    "literal_encoded_or_binary": 501,
+    "literal_format_only": 14,
+    "literal_hash": 6,
+    "literal_length": 462,
+    "literal_namespace_uri": 3,
+    "literal_no_meaningful_tokens": 549,
+    "literal_numeric_or_timestamp": 110,
+    "literal_path": 484,
+    "literal_url": 2471,
+    "raw_jimple_syntax": 17469,
+    "repeated_token_cap": 30420,
+    "synthetic_local": 269316,
+    "type_like_identifier": 13
+  },
+  "generated_code_status": {
+    "compiler_synthetic_evidence": 39,
+    "not_detected": 775
+  },
+  "subject": "xerces",
+  "total_tokens": {
+    "max": 1833,
+    "mean": 136.25184275184276,
+    "median": 75.0,
+    "min": 15,
+    "std": 187.08756891506772
+  }
+}

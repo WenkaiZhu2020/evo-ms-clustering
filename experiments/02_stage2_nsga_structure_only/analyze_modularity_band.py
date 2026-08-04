@@ -11,11 +11,17 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[2]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from evo_ms.repository_layout import STAGE2_OPERATING_PROFILE_ROOT, stage2_subject_root
 SUBJECTS = ("daytrader", "jpetstore", "xerces-j")
 SEEDS = tuple(range(30))
 BUDGETS = (0.000, 0.005, 0.010, 0.025, 0.050, 0.100, 0.150, 0.200)
@@ -25,7 +31,7 @@ TOL = 1e-12
 
 
 def source_dir(subject: str, seed: int) -> Path:
-    return ROOT / "results" / subject / "03_stage2_nsga" / "robustness_final_30seeds" / f"seed_{seed:02d}"
+    return stage2_subject_root(subject, ROOT) / "robustness_final_30seeds" / f"seed_{seed:02d}"
 
 
 def canonical_label_tuple(value: str) -> tuple[int, ...]:
@@ -74,7 +80,7 @@ def main() -> int:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=ROOT / "results/cross_subject/03_stage2_nsga/modularity_band",
+        default=STAGE2_OPERATING_PROFILE_ROOT,
     )
     args = parser.parse_args()
 

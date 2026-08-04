@@ -23,15 +23,17 @@ def test_xerces_sensitivity_writes_only_sensitivity_outputs(tmp_path: Path) -> N
 
     output_dir = xerces_sensitivity_runner.run_xerces_j_sensitivity(root=tmp_path)
 
-    assert output_dir == tmp_path / "results" / "xerces-j" / "00_pre_experiment" / "sensitivity"
+    assert output_dir == (
+        tmp_path / "results" / "pre_experiment" / "subjects" / "xerces-j" / "sensitivity"
+    )
     assert sorted(path.name for path in output_dir.iterdir()) == [
         "cluster_size_summary.csv",
         "resolution_sweep.csv",
         "ssa_lambda_sweep.csv",
     ]
-    assert not (tmp_path / "results" / "xerces-j" / "stage1").exists()
-    assert not (tmp_path / "results" / "xerces-j" / "00_pre_experiment" / "comparison").exists()
-    assert not (tmp_path / "results" / "xerces-j" / "00_pre_experiment" / "clustering").exists()
+    assert not (tmp_path / "results" / "stage1" / "subjects" / "xerces-j").exists()
+    assert not (tmp_path / "results" / "pre_experiment" / "subjects" / "xerces-j" / "comparison").exists()
+    assert not (tmp_path / "results" / "pre_experiment" / "subjects" / "xerces-j" / "clustering").exists()
     assert report.read_text(encoding="utf-8") == "do not overwrite"
 
 

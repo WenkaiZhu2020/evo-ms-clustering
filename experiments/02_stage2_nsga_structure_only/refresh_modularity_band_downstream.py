@@ -25,10 +25,12 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from evo_ms.repository_layout import stage2_subject_root
+
 SUBJECTS = ("jpetstore", "daytrader", "xerces-j")
 SEEDS = tuple(range(30))
 CANONICAL_SOURCE = Path(
-    "results/cross_subject/03_stage2_nsga/modularity_band/"
+    "results/stage2/cross_subject/operating_profile/"
     "canonical_operating_solution_per_seed.csv"
 )
 SELECTOR_CONTRACT_ID = "stage2-raw-structure-only-modularity-band-v1"
@@ -190,7 +192,7 @@ def refresh(output_root: Path, command: str) -> dict[str, Any]:
 
     for subject in SUBJECTS:
         context = robustness._load_context(subject, config_path)
-        final_dir = ROOT / f"results/{subject}/03_stage2_nsga/robustness_final_30seeds"
+        final_dir = stage2_subject_root(subject, ROOT) / "robustness_final_30seeds"
         existing_raw = pd.read_csv(final_dir / "raw_runs.csv").set_index("seed")
         baseline = context["stage1_raw_baseline"]
         baseline_key = robustness.stage2._label_key(
@@ -276,18 +278,18 @@ def refresh(output_root: Path, command: str) -> dict[str, Any]:
                 "source_candidate_label_sha256": _sha256(labels_path),
             })
 
-    output_modularity = output_root / "results/cross_subject/03_stage2_nsga/modularity_band"
+    output_modularity = output_root / "results/stage2/cross_subject/operating_profile"
     output_modularity.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(all_profiles).sort_values(["subject", "seed"]).to_csv(
         output_modularity / "canonical_operating_profile_metrics_per_seed.csv", index=False
     )
     for subject in SUBJECTS:
-        out_final = output_root / f"results/{subject}/03_stage2_nsga/robustness_final_30seeds"
+        out_final = stage2_subject_root(subject, output_root) / "robustness_final_30seeds"
         out_final.mkdir(parents=True, exist_ok=True)
         pd.DataFrame(raw_rows[subject]).sort_values("seed").to_csv(
             out_final / "raw_runs.csv", index=False
         )
-        out_raw = output_root / f"results/{subject}/03_stage2_nsga/raw"
+        out_raw = stage2_subject_root(subject, output_root) / "raw"
         out_raw.mkdir(parents=True, exist_ok=True)
         pd.DataFrame([stage1_rows[subject]]).to_csv(
             out_raw / "stage1_vs_stage2.csv", index=False

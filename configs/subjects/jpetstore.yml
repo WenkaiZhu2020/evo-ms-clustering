@@ -10,5 +10,4 @@ app_packages:
   - org.mybatis.jpetstore
 source_path: data/raw_projects/jpetstore
 extracted_output_path: data/extracted/jpetstore
-result_output_path: results/jpetstore
 exclude_packages: []

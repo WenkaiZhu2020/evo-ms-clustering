@@ -23,7 +23,7 @@ The analysis reads only `pareto_front.csv` from the frozen
 `robustness_final_30seeds` directories. It does not rerun NSGA-II, rebuild
 graphs, regenerate Pareto fronts or references, or modify the frozen search
 artifacts. Generated outputs are under
-`results/cross_subject/03_stage2_nsga/modularity_band/`. The downstream
+`results/stage2/cross_subject/operating_profile/`. The downstream
 post-hoc metric refresh is written to
 `canonical_operating_profile_metrics_per_seed.csv` with source-front,
 candidate-label, and selector-contract provenance.
@@ -34,7 +34,7 @@ The canonical profile remains the `5%` band. A separate sensitivity analysis
 uses the same selector at `1%`, `3%`, `5%`, and `10%`. The existing complete
 profile table already covered `1%`, `5%`, and `10%`; only the `3%` budget was
 new. The sensitivity rows are stored in
-`results/cross_subject/03_stage2_nsga/modularity_band/sensitivity/` and are
+`results/stage2/cross_subject/operating_profile/sensitivity/` and are
 post-hoc evaluations of the frozen fronts. `Q_max` anchors band membership;
 all scientific comparisons below use the fixed Stage 1 Leiden baseline.
 
@@ -78,7 +78,7 @@ Figures are deterministic views of the machine-readable summary tables:
 - `sensitivity/modularity_loss_vs_coupling_change.png`
 - `sensitivity/budget_vs_cluster_count_change.png`
 
-The historical max-cluster tables remain untouched. A separate current-
-contract replacement at the fixed canonical 5% band is under
-`final_statistics/max_cluster_posthoc_sensitivity_current_band/`; the two
+Historical max-cluster tables are not current evidence. The current-contract
+replacement at the fixed canonical 5% band is under
+`results/stage2/cross_subject/sensitivity_analysis/max_cluster/`; the two
 dimensions are intentionally kept separate.
