@@ -64,6 +64,8 @@ cluster_contribution_comparison:
   external_border: "#888888"
   internal_edge: "#4D4D4D"
   boundary_edge: "#AAAAAA"
+  boundary_width_min: 0.65
+  boundary_width_max: 2.8
   node_font_size: 5.8
   title_font_size: 8.5
   metric_font_size: 6.5

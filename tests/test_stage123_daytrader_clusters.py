@@ -17,6 +17,8 @@ from evo_ms.visualization.figures.stage123_daytrader_clusters import (
     STAGE3_SEED,
     STAGE3_SOLUTION,
     build_figure,
+    boundary_aggregation_csv,
+    boundary_penwidth,
     figure_dot,
     prepare_figure_data,
     profiles_csv,
@@ -93,30 +95,74 @@ def test_highest_lowest_ties_and_complete_csvs_are_deterministic(prepared) -> No
     assert len(selected_rows) == 6
     assert all(not Path(row["partition_source"]).is_absolute() for row in selected_rows)
     assert "/Users/" not in first + second
+    selected = {(profile.stage, role): profile for role, profile in data.selected}
+    assert selected[(1, "highest")].members == selected[(2, "highest")].members == selected[(3, "highest")].members
+    assert selected[(1, "lowest")].members == selected[(3, "lowest")].members == (
+        "com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage",
+    )
+    assert selected[(2, "lowest")].members == (
+        "com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage",
+        "com.ibm.websphere.samples.daytrader.web.TradeWebContextListener",
+        "com.ibm.websphere.samples.daytrader.web.websocket.JsonEncoder",
+    )
+    assert selected[(1, "highest")].contribution == pytest.approx(0.08948036306354759)
+    assert selected[(2, "lowest")].contribution == pytest.approx(-8.090039964052776e-05)
 
 
-def test_every_focal_member_internal_and_boundary_edge_is_rendered(prepared) -> None:
+def test_every_focal_member_internal_edge_and_aggregate_is_rendered(prepared) -> None:
     config, data = prepared
     dot = figure_dot(config, data)
     assert dot == figure_dot(config, data)
     assert len(re.findall(r'^  "p[123][hl]_panel" ', dot, re.MULTILINE)) == 6
     for role, profile in data.selected:
         prefix = f"p{profile.stage}{role[0]}"
-        visible = sorted((*profile.members, *profile.external))
-        ids = {class_id: f"{prefix}_n{i:03d}" for i, class_id in enumerate(visible, 1)}
+        ids = {class_id: f"{prefix}_f{i:03d}" for i, class_id in enumerate(profile.members, 1)}
         for member in profile.members:
             line = next(line for line in dot.splitlines() if line.startswith(f'  "{ids[member]}" '))
             assert 'fillcolor="#DCEAF7"' in line
-        for external in profile.external:
-            line = next(line for line in dot.splitlines() if line.startswith(f'  "{ids[external]}" '))
-            assert 'fillcolor="#F2F2F2"' in line and '#DCEAF7' not in line
+        for aggregate in profile.boundary_aggregates:
+            summary = f"{prefix}_x{aggregate.external_cluster_id}"
+            line = next(line for line in dot.splitlines() if line.startswith(f'  "{summary}" '))
+            assert 'fillcolor="#F2F2F2"' in line and 'style="rounded,dashed,filled"' in line
         for left, right, _ in profile.internal_edges:
             line = next(line for line in dot.splitlines() if f'"{ids[left]}" -- "{ids[right]}"' in line)
             assert 'style="solid"' in line
-        for left, right, _ in profile.boundary_edges:
-            line = next(line for line in dot.splitlines() if f'"{ids[left]}" -- "{ids[right]}"' in line)
-            assert 'style="dashed"' in line
+        assert sum(len(a.connections) for a in profile.boundary_aggregates) == sum(
+            1 for line in dot.splitlines() if line.startswith(f'  "{prefix}_f') and ' -- ' in line and 'style="dashed"' in line
+        )
     assert "best" not in dot.lower() and "worst" not in dot.lower()
+
+
+def test_boundary_aggregation_is_complete_actual_and_deterministic(prepared) -> None:
+    config, data = prepared
+    assert prepare_figure_data(config) == data
+    text = boundary_aggregation_csv(data)
+    assert text == boundary_aggregation_csv(data) and text.endswith("\n")
+    rows = list(csv.DictReader(StringIO(text)))
+    assert len(rows) == sum(len(profile.boundary_aggregates) for _role, profile in data.selected)
+    for role, profile in data.selected:
+        aggregates = profile.boundary_aggregates
+        assert sum(a.boundary_edge_count for a in aggregates) == len(profile.boundary_edges)
+        assert sum(a.boundary_weight for a in aggregates) == pytest.approx(profile.boundary_weight)
+        assert {item for aggregate in aggregates for item in aggregate.external_classes} == set(profile.external)
+        assert sum(a.boundary_edge_count for a in aggregates) == sum(
+            connection.boundary_edge_count for a in aggregates for connection in a.connections
+        )
+        for aggregate in aggregates:
+            assert aggregate.external_cluster_id != profile.cluster_id
+            assert aggregate.connected_focal_classes == tuple(sorted(aggregate.connected_focal_classes))
+            assert all(class_id in profile.members for class_id in aggregate.connected_focal_classes)
+
+
+def test_boundary_width_is_deterministic_monotonic_and_singletons_are_annotated(prepared) -> None:
+    config, data = prepared
+    widths = [boundary_penwidth(value, 100.0, 0.65, 2.8) for value in (1.0, 4.0, 25.0, 100.0)]
+    assert widths == sorted(widths) and len(set(widths)) == 4
+    assert widths == [boundary_penwidth(value, 100.0, 0.65, 2.8) for value in (1.0, 4.0, 25.0, 100.0)]
+    dot = figure_dot(config, data)
+    assert dot.count("Isolated singleton") == 2
+    assert '"p1l_isolated"' in dot and '"p3l_isolated"' in dot and '"p2l_isolated"' not in dot
+    assert "The highest-contributing cluster is unchanged across the three stages." in dot
 
 
 def test_real_fixed_neato_svg_pdf_relative_provenance_and_manifest(tmp_path: Path) -> None:
@@ -124,6 +170,7 @@ def test_real_fixed_neato_svg_pdf_relative_provenance_and_manifest(tmp_path: Pat
                            git_commit="abc123", git_dirty=True)
     assert outputs["svg"].read_text().lstrip().startswith("<?xml")
     assert outputs["pdf"].read_bytes().startswith(b"%PDF")
+    assert outputs["aggregation"].is_file()
     provenance = json.loads(outputs["provenance"].read_text())
     assert provenance["graphviz_engine"] == "neato"
     assert all(command[:2] == ["neato", "-n2"] for command in provenance["render_command"])

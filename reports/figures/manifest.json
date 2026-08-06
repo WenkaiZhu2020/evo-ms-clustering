@@ -7,7 +7,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-06T18:56:04Z",
+      "generated_at": "2026-08-06T19:42:07Z",
       "generator": "evo_ms.visualization.figures.stage123_daytrader_clusters",
       "inputs": [
         "data/extracted/daytrader/class_nodes.csv",
@@ -32,6 +32,7 @@
         "subject": "daytrader"
       },
       "outputs": {
+        "aggregation": "reports/figures/data/cross_stage/daytrader_boundary_aggregation.csv",
         "dot": "reports/figures/source/cross_stage/daytrader_highest_lowest_clusters.dot",
         "pdf": "reports/figures/pdf/cross_stage/daytrader_highest_lowest_clusters.pdf",
         "profiles": "reports/figures/data/cross_stage/daytrader_cluster_profiles.csv",
@@ -40,12 +41,13 @@
         "svg": "reports/figures/preview/cross_stage/daytrader_highest_lowest_clusters.svg"
       },
       "sha256": {
-        "dot": "93924870b19c86c20bdd1b629e13e0bb9349b982670210aed283b022253988c3",
-        "pdf": "7576cf17e2288967e53f335f6a858eed863285b3a725d3d6869c5bc4247c5acc",
-        "profiles": "666e822e48f9fa5c194606d28be804ca45432e7dd52b39ffebbc7c88a8519f88",
-        "provenance": "9cc7239e94d1225f025066dd65e60b8c7eb2375ac030b71949a7aac08abf60c4",
-        "selected": "b1690061c60e4e852896ea6da30c6c86dfba5c6430a981e4ca68a19a1ee42512",
-        "svg": "320b10bc137563cf144be5aea8996f459f0eb7f146f2a465f13510bd8149c8c5"
+        "aggregation": "f4a825d0495ef66c3e43d6ede1ebe63afe2733d5fe9707f1aecc49bacb3be827",
+        "dot": "0c2a7609f08511c6e6affce8f78c00284abaedef6571d045b26c7a9132cf10f6",
+        "pdf": "f2906c14b29525d9b91029deefbbac53826c41c5808ab90990e5ab48e4e75d3a",
+        "profiles": "3e1b6529736c3aa67a62a4c742c617fe7b55695d4bdb2c33eabc2ca9ea565527",
+        "provenance": "eaabb8f95e85db400b6ca3fa5c48584ca8ca71ec9e078c50f10fde9b5b5541da",
+        "selected": "44d816734ec2965bf38a0c491210fddd437479c9535ee396975348c46ae9354e",
+        "svg": "9742a106db40eb354f372e0d19c9242bd7f96e322e3d36c94c7b0cfbff9a79b8"
       },
       "stage": "stage3",
       "title": "Highest- and lowest-contributing DayTrader clusters across the three stages"

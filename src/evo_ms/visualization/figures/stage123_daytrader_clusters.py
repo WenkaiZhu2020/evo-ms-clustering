@@ -45,6 +45,7 @@ class ClusterProfile:
     boundary_weight: float
     degree_sum: float
     contribution: float
+    boundary_aggregates: tuple["BoundaryAggregate", ...]
 
     @property
     def rank_key(self) -> tuple[str, ...]:
@@ -56,6 +57,24 @@ class FigureData:
     profiles: tuple[ClusterProfile, ...]
     selected: tuple[tuple[str, ClusterProfile], ...]
     formal_modularity: tuple[tuple[int, float], ...]
+
+
+@dataclass(frozen=True)
+class BoundaryConnection:
+    focal_class: str
+    external_classes: tuple[str, ...]
+    boundary_edge_count: int
+    boundary_weight: float
+
+
+@dataclass(frozen=True)
+class BoundaryAggregate:
+    external_cluster_id: str
+    external_classes: tuple[str, ...]
+    boundary_edge_count: int
+    boundary_weight: float
+    connected_focal_classes: tuple[str, ...]
+    connections: tuple[BoundaryConnection, ...]
 
 
 def _relative(path: Path, root: Path, artifact_root: Path | None = None) -> str:
@@ -124,6 +143,7 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
         if ids.duplicated().any() or set(ids) != expected:
             raise ValueError(f"Stage {stage} partition does not cover all 53 classes exactly once")
         partition = _canonical_partition(raw_partition)
+        cluster_by_class = dict(zip(partition.class_id.astype(str), partition.cluster_id.astype(str), strict=True))
         if not partition.equals(_canonical_partition(raw_partition.sample(frac=1, random_state=42))):
             raise ValueError("cluster canonicalisation is not deterministic")
         for cluster_id, group in partition.groupby("cluster_id", sort=True):
@@ -137,8 +157,35 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
             iw = sum(edge[2] for edge in internal); bw = sum(edge[2] for edge in boundary)
             strength = sum(degree[class_id] for class_id in members)
             q = iw / total - (strength / (2.0 * total)) ** 2
+            grouped: dict[str, list[tuple[str, str, float]]] = {}
+            for left, right, weight in boundary:
+                focal, outside = (left, right) if left in member_set else (right, left)
+                grouped.setdefault(cluster_by_class[outside], []).append((focal, outside, weight))
+            aggregates = []
+            for external_cluster_id in sorted(grouped):
+                records = grouped[external_cluster_id]
+                by_focal: dict[str, list[tuple[str, float]]] = {}
+                for focal, outside, weight in records:
+                    by_focal.setdefault(focal, []).append((outside, weight))
+                connections = tuple(
+                    BoundaryConnection(
+                        focal,
+                        tuple(sorted({outside for outside, _weight in by_focal[focal]})),
+                        len(by_focal[focal]),
+                        sum(weight for _outside, weight in by_focal[focal]),
+                    )
+                    for focal in sorted(by_focal)
+                )
+                aggregates.append(BoundaryAggregate(
+                    external_cluster_id,
+                    tuple(sorted({outside for _focal, outside, _weight in records})),
+                    len(records),
+                    sum(weight for _focal, _outside, weight in records),
+                    tuple(sorted(by_focal)),
+                    connections,
+                ))
             profiles.append(ClusterProfile(stage, seed, solution, source, str(cluster_id), members, internal, boundary,
-                                           external, iw, bw, strength, q))
+                                           external, iw, bw, strength, q, tuple(aggregates)))
         stage_profiles = [profile for profile in profiles if profile.stage == stage]
         reconstructed = sum(profile.contribution for profile in stage_profiles)
         if abs(reconstructed - formal_q) > 1e-12:
@@ -152,17 +199,20 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
     return FigureData(tuple(profiles), tuple(selected), tuple(formal))
 
 
-PROFILE_FIELDS = ("stage", "cluster_id", "class_count", "member_classes", "internal_edge_count", "internal_weight",
+PROFILE_FIELDS = ("stage", "cluster_id", "class_count", "member_classes", "internal_edge_count", "internal_edges", "internal_weight",
                   "boundary_edge_count", "boundary_weight", "weighted_degree_sum", "local_modularity_contribution",
-                  "representative_seed", "representative_solution_id", "partition_source")
+                  "boundary_edges", "external_classes", "representative_seed", "representative_solution_id", "partition_source")
 
 
 def _row(profile: ClusterProfile) -> dict[str, object]:
     return {"stage": profile.stage, "cluster_id": profile.cluster_id, "class_count": len(profile.members),
             "member_classes": json.dumps(profile.members, separators=(",", ":")), "internal_edge_count": len(profile.internal_edges),
+            "internal_edges": json.dumps(profile.internal_edges, separators=(",", ":")),
             "internal_weight": format(profile.internal_weight, ".12g"), "boundary_edge_count": len(profile.boundary_edges),
             "boundary_weight": format(profile.boundary_weight, ".12g"), "weighted_degree_sum": format(profile.degree_sum, ".12g"),
-            "local_modularity_contribution": format(profile.contribution, ".12g"), "representative_seed": profile.seed,
+            "local_modularity_contribution": format(profile.contribution, ".12g"),
+            "boundary_edges": json.dumps(profile.boundary_edges, separators=(",", ":")),
+            "external_classes": json.dumps(profile.external, separators=(",", ":")), "representative_seed": profile.seed,
             "representative_solution_id": profile.solution_id, "partition_source": profile.partition_source}
 
 
@@ -183,6 +233,31 @@ def selected_csv(data: FigureData) -> str:
     return buffer.getvalue()
 
 
+AGGREGATION_FIELDS = ("stage", "rank_role", "focal_cluster_id", "external_cluster_id",
+                      "external_class_count", "external_classes", "boundary_edge_count", "boundary_weight",
+                      "connected_focal_classes")
+
+
+def boundary_aggregation_csv(data: FigureData) -> str:
+    buffer = StringIO(newline="")
+    writer = csv.DictWriter(buffer, fieldnames=AGGREGATION_FIELDS, lineterminator="\n")
+    writer.writeheader()
+    for role, profile in data.selected:
+        for aggregate in profile.boundary_aggregates:
+            writer.writerow({
+                "stage": profile.stage,
+                "rank_role": role,
+                "focal_cluster_id": profile.cluster_id,
+                "external_cluster_id": aggregate.external_cluster_id,
+                "external_class_count": len(aggregate.external_classes),
+                "external_classes": json.dumps(aggregate.external_classes, separators=(",", ":")),
+                "boundary_edge_count": aggregate.boundary_edge_count,
+                "boundary_weight": format(aggregate.boundary_weight, ".12g"),
+                "connected_focal_classes": json.dumps(aggregate.connected_focal_classes, separators=(",", ":")),
+            })
+    return buffer.getvalue()
+
+
 def _grid(items: tuple[str, ...], columns: tuple[float, ...]) -> dict[str, tuple[float, float]]:
     if not items:
         return {}
@@ -198,11 +273,20 @@ def _layout(profile: ClusterProfile, seed: int = 42) -> dict[str, tuple[float, f
 
     if seed != 42:
         raise ValueError("formal panel layout seed must remain 42")
-    if len(profile.members) == 1 and not profile.external:
+    if len(profile.members) == 1 and not profile.boundary_aggregates:
         return {profile.members[0]: (0.0, -8.0)}
     focal_columns = (-88.0, -45.0) if len(profile.members) > 7 else (-68.0,)
-    external_columns = (5.0, 50.0, 95.0) if len(profile.external) > 8 else (45.0, 88.0)
-    return {**_grid(profile.members, focal_columns), **_grid(profile.external, external_columns)}
+    summaries = tuple(aggregate.external_cluster_id for aggregate in profile.boundary_aggregates)
+    external_columns = (55.0, 98.0) if len(summaries) > 3 else (78.0,)
+    return {**_grid(profile.members, focal_columns), **_grid(summaries, external_columns)}
+
+
+def boundary_penwidth(weight: float, maximum_weight: float, minimum: float, maximum: float) -> float:
+    if weight <= 0 or maximum_weight <= 0 or weight > maximum_weight:
+        raise ValueError("boundary weights must be positive and bounded by the panel maximum")
+    if minimum <= 0 or maximum < minimum:
+        raise ValueError("boundary width bounds are invalid")
+    return minimum + (maximum - minimum) * math.sqrt(weight / maximum_weight)
 
 
 def _wrapped_simple_name(class_id: str) -> str:
@@ -223,8 +307,8 @@ def _wrapped_simple_name(class_id: str) -> str:
 
 def figure_dot(config: VisualizationConfig, data: FigureData) -> str:
     spec=config.figures[FIGURE_ID]; style=config.style["cluster_contribution_comparison"]; font=config.style["fonts"]["family"]
-    x_centres={"highest":125.0,"lowest":375.0}; y_centres={1:580.0,2:365.0,3:150.0}
-    lines=[f"graph {dot_quote(spec.title)} {{", "  graph "+stable_attributes({"bb":"0,0,500,710","bgcolor":"white","margin":0,"outputorder":"edgesfirst","overlap":True,"pad":0.02,"size":"6.944,9.861!","splines":"true","start":42})+";",
+    x_centres={"highest":125.0,"lowest":375.0}; y_centres={1:600.0,2:385.0,3:170.0}
+    lines=[f"graph {dot_quote(spec.title)} {{", "  graph "+stable_attributes({"bb":"0,0,500,730","bgcolor":"white","margin":0,"outputorder":"edgesfirst","overlap":True,"pad":0.02,"size":"6.944,10.139!","splines":"true","start":42})+";",
            "  node "+stable_attributes({"fontname":font,"fontsize":style["node_font_size"],"height":0.18,"margin":"0.025,0.012","shape":"box","style":"rounded,filled","width":0.1})+";",
            "  edge "+stable_attributes({"fontname":font,"fontsize":5})+";"]
     for panel_index,(role,profile) in enumerate(data.selected,1):
@@ -236,23 +320,40 @@ def figure_dot(config: VisualizationConfig, data: FigureData) -> str:
         plain={"color":"transparent","fillcolor":"transparent","fontname":font,"shape":"plain","style":""}
         lines.append(f"  {dot_quote(prefix+'_title')} "+stable_attributes({**plain,"fontsize":style["title_font_size"],"label":title,"pos":f"{cx},{cy+82}!"})+";")
         lines.append(f"  {dot_quote(prefix+'_metric')} "+stable_attributes({**plain,"fontsize":style["metric_font_size"],"label":metric,"pos":f"{cx},{cy+59}!"})+";")
-        visible=sorted((*profile.members,*profile.external)); ids={class_id:f"{prefix}_n{i:03d}" for i,class_id in enumerate(visible,1)}
-        for class_id in visible:
-            x,y=local[class_id]; focal=class_id in profile.members
-            lines.append(f"  {dot_quote(ids[class_id])} "+stable_attributes({"color":style["focal_border"] if focal else style["external_border"],"fillcolor":style["focal_fill"] if focal else style["external_fill"],"label":_wrapped_simple_name(class_id),"penwidth":1.1 if focal else 0.7,"pos":f"{cx+x},{cy+y-12}!","tooltip":class_id})+";")
+        ids={class_id:f"{prefix}_f{i:03d}" for i,class_id in enumerate(profile.members,1)}
+        summary_ids={aggregate.external_cluster_id:f"{prefix}_x{aggregate.external_cluster_id}" for aggregate in profile.boundary_aggregates}
+        for class_id in profile.members:
+            x,y=local[class_id]
+            lines.append(f"  {dot_quote(ids[class_id])} "+stable_attributes({"color":style["focal_border"],"fillcolor":style["focal_fill"],"label":_wrapped_simple_name(class_id),"penwidth":1.1,"pos":f"{cx+x},{cy+y-12}!","tooltip":class_id})+";")
+        for aggregate in profile.boundary_aggregates:
+            x,y=local[aggregate.external_cluster_id]
+            tooltip=(f"{aggregate.external_cluster_id}: {len(aggregate.external_classes)} external classes; "
+                     f"{aggregate.boundary_edge_count} boundary edges; weight {aggregate.boundary_weight:g}; "
+                     + "; ".join(aggregate.external_classes))
+            label=f"External {aggregate.external_cluster_id}\n{len(aggregate.external_classes)} class{'es' if len(aggregate.external_classes) != 1 else ''}"
+            lines.append(f"  {dot_quote(summary_ids[aggregate.external_cluster_id])} "+stable_attributes({"color":style["external_border"],"fillcolor":style["external_fill"],"label":label,"penwidth":0.8,"pos":f"{cx+x},{cy+y-12}!","shape":"box","style":"rounded,dashed,filled","tooltip":tooltip})+";")
         for left,right,_ in profile.internal_edges:
             lines.append(f"  {dot_quote(ids[left])} -- {dot_quote(ids[right])} "+stable_attributes({"color":style["internal_edge"],"penwidth":0.8,"style":"solid"})+";")
-        for left,right,_ in profile.boundary_edges:
-            lines.append(f"  {dot_quote(ids[left])} -- {dot_quote(ids[right])} "+stable_attributes({"color":style["boundary_edge"],"penwidth":0.65,"style":"dashed"})+";")
+        connection_weights=[connection.boundary_weight for aggregate in profile.boundary_aggregates for connection in aggregate.connections]
+        maximum_weight=max(connection_weights,default=0.0)
+        for aggregate in profile.boundary_aggregates:
+            for connection in aggregate.connections:
+                width=boundary_penwidth(connection.boundary_weight,maximum_weight,float(style["boundary_width_min"]),float(style["boundary_width_max"]))
+                tooltip=(f"{connection.boundary_edge_count} aggregated boundary edge(s); weight {connection.boundary_weight:g}; "
+                         + "; ".join(connection.external_classes))
+                lines.append(f"  {dot_quote(ids[connection.focal_class])} -- {dot_quote(summary_ids[aggregate.external_cluster_id])} "+stable_attributes({"color":style["boundary_edge"],"penwidth":width,"style":"dashed","tooltip":tooltip})+";")
+        if not profile.internal_edges and not profile.boundary_edges:
+            lines.append(f"  {dot_quote(prefix+'_isolated')} "+stable_attributes({**plain,"fontsize":6.2,"label":"Isolated singleton\nNo internal or boundary relations","pos":f"{cx},{cy-52}!"})+";")
     lines.extend([
-        '  "legend_focal" '+stable_attributes({"color":style["focal_border"],"fillcolor":style["focal_fill"],"label":"Focal-cluster class","pos":"65,26!"})+";",
-        '  "legend_external" '+stable_attributes({"color":style["external_border"],"fillcolor":style["external_fill"],"label":"One-hop external class","pos":"190,26!"})+";",
-        '  "legend_i1" '+stable_attributes({"label":"","pos":"300,26!","shape":"point","width":0.04})+";",
-        '  "legend_i2" '+stable_attributes({"label":"","pos":"330,26!","shape":"point","width":0.04})+";",
-        '  "legend_b1" '+stable_attributes({"label":"","pos":"405,26!","shape":"point","width":0.04})+";",
-        '  "legend_b2" '+stable_attributes({"label":"","pos":"435,26!","shape":"point","width":0.04})+";",
-        '  "legend_internal" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":"Solid: internal","pos":"315,18!","shape":"plain","style":"","fontsize":6})+";",
-        '  "legend_boundary" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":"Dashed: boundary","pos":"420,18!","shape":"plain","style":"","fontsize":6})+";",
+        '  "comparison_note" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":"The highest-contributing cluster is unchanged across the three stages.","pos":"250,57!","shape":"plain","style":"","fontsize":6.5})+";",
+        '  "legend_focal" '+stable_attributes({"color":style["focal_border"],"fillcolor":style["focal_fill"],"label":"Focal-cluster class","pos":"60,29!"})+";",
+        '  "legend_external" '+stable_attributes({"color":style["external_border"],"fillcolor":style["external_fill"],"label":"External-cluster summary","pos":"185,29!","shape":"box","style":"rounded,dashed,filled"})+";",
+        '  "legend_i1" '+stable_attributes({"label":"","pos":"290,34!","shape":"point","width":0.04})+";",
+        '  "legend_i2" '+stable_attributes({"label":"","pos":"320,34!","shape":"point","width":0.04})+";",
+        '  "legend_b1" '+stable_attributes({"label":"","pos":"395,34!","shape":"point","width":0.04})+";",
+        '  "legend_b2" '+stable_attributes({"label":"","pos":"425,34!","shape":"point","width":0.04})+";",
+        '  "legend_internal" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":"Solid: internal","pos":"305,20!","shape":"plain","style":"","fontsize":6})+";",
+        '  "legend_boundary" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":"Dashed: aggregated boundary\nwidth = boundary weight","pos":"410,17!","shape":"plain","style":"","fontsize":6})+";",
         '  "legend_i1" -- "legend_i2" '+stable_attributes({"color":style["internal_edge"],"style":"solid"})+";",
         '  "legend_b1" -- "legend_b2" '+stable_attributes({"color":style["boundary_edge"],"style":"dashed"})+";",
         "}"])
@@ -263,11 +364,12 @@ def _targets(config: VisualizationConfig, output_root: Path | None):
     if output_root is None:
         targets={"profiles":config.output.data/DIRECTORY/"daytrader_cluster_profiles.csv",
                  "selected":config.output.data/DIRECTORY/"daytrader_highest_lowest_clusters.csv",
+                 "aggregation":config.output.data/DIRECTORY/"daytrader_boundary_aggregation.csv",
                  "dot":config.output.dot/DIRECTORY/f"{BASENAME}.dot","svg":config.output.svg/DIRECTORY/f"{BASENAME}.svg",
                  "pdf":config.output.pdf/DIRECTORY/f"{BASENAME}.pdf","provenance":config.output.data/DIRECTORY/f"{BASENAME}.provenance.json"}
         return targets, config.repository_root/"reports/figures/manifest.json", None
     root=output_root.resolve(); targets={"profiles":root/"data"/DIRECTORY/"daytrader_cluster_profiles.csv",
-        "selected":root/"data"/DIRECTORY/"daytrader_highest_lowest_clusters.csv","dot":root/"source"/DIRECTORY/f"{BASENAME}.dot",
+        "selected":root/"data"/DIRECTORY/"daytrader_highest_lowest_clusters.csv","aggregation":root/"data"/DIRECTORY/"daytrader_boundary_aggregation.csv","dot":root/"source"/DIRECTORY/f"{BASENAME}.dot",
         "svg":root/"preview"/DIRECTORY/f"{BASENAME}.svg","pdf":root/"pdf"/DIRECTORY/f"{BASENAME}.pdf",
         "provenance":root/"data"/DIRECTORY/f"{BASENAME}.provenance.json"}
     return targets,root/"manifest.json",root
@@ -285,9 +387,10 @@ def build_figure(config: VisualizationConfig, *, output_root: str|Path|None=None
     with tempfile.TemporaryDirectory(prefix=f".{FIGURE_ID}.",dir=staging_parent) as temporary:
         stage=Path(temporary); staged={name:stage/f"figure.{name}" for name in targets}; staged["provenance"]=stage/"figure.provenance.json"
         staged["profiles"].write_text(profiles_csv(data),encoding="utf-8",newline="\n"); staged["selected"].write_text(selected_csv(data),encoding="utf-8",newline="\n")
+        staged["aggregation"].write_text(boundary_aggregation_csv(data),encoding="utf-8",newline="\n")
         write_dot(staged["dot"],figure_dot(config,data))
         renders=[renderer(GraphvizRenderRequest(staged["dot"],staged[fmt],fmt,"neato",fixed_coordinates=True)) for fmt in ("svg","pdf")]
-        for name in ("profiles","selected","dot","svg","pdf"):
+        for name in ("profiles","selected","aggregation","dot","svg","pdf"):
             if not staged[name].is_file() or not staged[name].stat().st_size: raise ValueError(f"missing staged {name}")
         commands=tuple(("neato","-n2",f"-T{fmt}",str(targets["dot"]),"-o",str(targets[fmt])) for fmt in ("svg","pdf"))
         record=build_provenance(figure_id=FIGURE_ID,stage=spec.stage,generator="src/"+spec.generator.replace(".","/")+".py",repository_root=config.repository_root,
