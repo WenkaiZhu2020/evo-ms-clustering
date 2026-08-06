@@ -4,27 +4,31 @@
     "configs/visualization/style.yml"
   ],
   "config_sha256": {
-    "configs/visualization/figures.yml": "b1ef65135e0094ca3540b3e5c2b5177ee79a600d8d09dbe5e05e8ff806d21496",
+    "configs/visualization/figures.yml": "8ba59a49f90e809238f5b70251f7f403dda5927303953dcd23b7cebb321ad209",
     "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
   },
-  "dot_sha256": "74ba18cfc7e5aaed39709504eff08e7da549b7b4985bfbc973a63fd896d6d45e",
-  "figure_id": "stage1_xerces_highest_lowest_clusters",
-  "generated_at": "2026-08-06T20:01:27Z",
+  "dot_sha256": "ac8ebbe662d6feadf0a3d8d157b57c20b95bfe258c2f42f302d8b897faee0756",
+  "figure_id": "stage13_xerces_shared_highest_lowest_clusters",
+  "generated_at": "2026-08-06T20:28:09Z",
   "generated_outputs": [
     "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
     "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
-    "reports/figures/data/cross_stage/xerces_stage1_boundary_aggregation.csv",
-    "reports/figures/data/cross_stage/xerces_stage1_focal_node_map.csv",
-    "reports/figures/data/cross_stage/xerces_stage1_highest_lowest_clusters.provenance.json",
-    "reports/figures/pdf/cross_stage/xerces_stage1_highest_lowest_clusters.pdf",
-    "reports/figures/preview/cross_stage/xerces_stage1_highest_lowest_clusters.svg",
-    "reports/figures/source/cross_stage/xerces_stage1_highest_lowest_clusters.dot"
+    "reports/figures/data/cross_stage/xerces_stage13_boundary_aggregation.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_class_boundary_edges.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_class_internal_edges.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_class_membership.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_package_profiles.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_package_relations.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_shared_highest_lowest_clusters.provenance.json",
+    "reports/figures/pdf/cross_stage/xerces_stage13_shared_highest_lowest_clusters.pdf",
+    "reports/figures/preview/cross_stage/xerces_stage13_shared_highest_lowest_clusters.svg",
+    "reports/figures/source/cross_stage/xerces_stage13_shared_highest_lowest_clusters.dot"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
-  "git_commit": "2721949a574f90b5ca735601c03239f4d4c98521",
+  "git_commit": "a110a547bd10c2e23f60d3a652fa21ea8deed764",
   "git_dirty": true,
-  "graphviz_engine": "neato",
-  "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",
+  "graphviz_engine": "dot",
+  "graphviz_version": "dot - graphviz version 14.0.4 (20251115.1723)",
   "input_files": [
     "data/extracted/xerces-j/class_nodes.csv",
     "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
@@ -49,21 +53,19 @@
   },
   "render_command": [
     [
-      "neato",
-      "-n2",
+      "dot",
       "-Tpdf",
-      "reports/figures/source/cross_stage/xerces_stage1_highest_lowest_clusters.dot",
+      "reports/figures/source/cross_stage/xerces_stage13_shared_highest_lowest_clusters.dot",
       "-o",
-      "reports/figures/pdf/cross_stage/xerces_stage1_highest_lowest_clusters.pdf"
+      "reports/figures/pdf/cross_stage/xerces_stage13_shared_highest_lowest_clusters.pdf"
     ],
     [
-      "neato",
-      "-n2",
+      "dot",
       "-Tsvg",
-      "reports/figures/source/cross_stage/xerces_stage1_highest_lowest_clusters.dot",
+      "reports/figures/source/cross_stage/xerces_stage13_shared_highest_lowest_clusters.dot",
       "-o",
-      "reports/figures/preview/cross_stage/xerces_stage1_highest_lowest_clusters.svg"
+      "reports/figures/preview/cross_stage/xerces_stage13_shared_highest_lowest_clusters.svg"
     ]
   ],
-  "stage": "stage1"
+  "stage": "stage3"
 }

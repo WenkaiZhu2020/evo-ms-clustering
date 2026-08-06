@@ -60,9 +60,8 @@ def test_registration_and_approved_representative() -> None:
         FIGURE_ID,
         "stage3_four_to_three_projection",
         "stage3_jpetstore_semantic_evidence_comparison",
-        "stage1_xerces_highest_lowest_clusters",
+        "stage13_xerces_shared_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
-        "stage3_xerces_highest_lowest_clusters",
     }
     specification = config.figures[FIGURE_ID]
     assert specification.stage == "stage2"
@@ -191,9 +190,8 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
         renderer=_deterministic_renderer,
     )
     for xerces_figure_id in (
-        "stage1_xerces_highest_lowest_clusters",
+        "stage13_xerces_shared_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
-        "stage3_xerces_highest_lowest_clusters",
     ):
         build_xerces_clusters(
             config,
@@ -211,9 +209,8 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
         FIGURE_ID,
         "stage3_four_to_three_projection",
         "stage3_jpetstore_semantic_evidence_comparison",
-        "stage1_xerces_highest_lowest_clusters",
+        "stage13_xerces_shared_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
-        "stage3_xerces_highest_lowest_clusters",
     }
 
 

@@ -17,9 +17,9 @@ output:
   pdf: reports/figures/pdf
 
 figures:
-  stage1_xerces_highest_lowest_clusters:
-    stage: stage1
-    title: Stage 1 Xerces-J cluster contribution
+  stage13_xerces_shared_highest_lowest_clusters:
+    stage: stage3
+    title: "Xerces-J cluster contribution: shared Stage 1 and Stage 3 profile"
     destination: appendix
     inputs: &xerces_cluster_inputs
       - data/extracted/xerces-j/class_nodes.csv
@@ -35,29 +35,28 @@ figures:
     enabled: true
     formats: [dot, svg, pdf]
     generator: evo_ms.visualization.figures.stage123_xerces_clusters
-    metadata: {subject: xerces-j, representative: "seed 42 / raw_reference_leiden", highest_cluster: C11, lowest_cluster: C07}
+    metadata:
+      subject: xerces-j
+      representatives: "Stage 1 seed 42 / raw_reference_leiden; Stage 3 seed 22 / seed22_solution015"
+      highest_cluster: C11
+      lowest_cluster: C07
+      aggregation: focal classes grouped by package
 
   stage2_xerces_highest_lowest_clusters:
     stage: stage2
-    title: Stage 2 Xerces-J cluster contribution
+    title: "Xerces-J cluster contribution: Stage 2 profile"
     destination: appendix
     inputs: *xerces_cluster_inputs
     layout_profile: fixed_comparison
     enabled: true
     formats: [dot, svg, pdf]
     generator: evo_ms.visualization.figures.stage123_xerces_clusters
-    metadata: {subject: xerces-j, representative: "seed 21 / seed21_solution022", highest_cluster: C13, lowest_cluster: C27}
-
-  stage3_xerces_highest_lowest_clusters:
-    stage: stage3
-    title: Stage 3 Xerces-J cluster contribution
-    destination: appendix
-    inputs: *xerces_cluster_inputs
-    layout_profile: fixed_comparison
-    enabled: true
-    formats: [dot, svg, pdf]
-    generator: evo_ms.visualization.figures.stage123_xerces_clusters
-    metadata: {subject: xerces-j, representative: "seed 22 / seed22_solution015", highest_cluster: C11, lowest_cluster: C07}
+    metadata:
+      subject: xerces-j
+      representative: "seed 21 / seed21_solution022"
+      highest_cluster: C13
+      lowest_cluster: C27
+      aggregation: focal classes grouped by package
 
   stage123_jpetstore_highest_lowest_clusters:
     stage: stage3

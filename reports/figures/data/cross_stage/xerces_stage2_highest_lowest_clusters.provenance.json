@@ -4,27 +4,31 @@
     "configs/visualization/style.yml"
   ],
   "config_sha256": {
-    "configs/visualization/figures.yml": "b1ef65135e0094ca3540b3e5c2b5177ee79a600d8d09dbe5e05e8ff806d21496",
+    "configs/visualization/figures.yml": "8ba59a49f90e809238f5b70251f7f403dda5927303953dcd23b7cebb321ad209",
     "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
   },
-  "dot_sha256": "3f73e6ab78fab0e9091854481cf5549f7a7784d687c085e5dd83f34e31af8102",
+  "dot_sha256": "aedfd6e9572ff50a8746ddc3b105feecb894869ee3f08c718504b52eb5ef458d",
   "figure_id": "stage2_xerces_highest_lowest_clusters",
-  "generated_at": "2026-08-06T20:01:28Z",
+  "generated_at": "2026-08-06T20:28:09Z",
   "generated_outputs": [
     "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
     "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
     "reports/figures/data/cross_stage/xerces_stage2_boundary_aggregation.csv",
-    "reports/figures/data/cross_stage/xerces_stage2_focal_node_map.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_class_boundary_edges.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_class_internal_edges.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_class_membership.csv",
     "reports/figures/data/cross_stage/xerces_stage2_highest_lowest_clusters.provenance.json",
+    "reports/figures/data/cross_stage/xerces_stage2_package_profiles.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_package_relations.csv",
     "reports/figures/pdf/cross_stage/xerces_stage2_highest_lowest_clusters.pdf",
     "reports/figures/preview/cross_stage/xerces_stage2_highest_lowest_clusters.svg",
     "reports/figures/source/cross_stage/xerces_stage2_highest_lowest_clusters.dot"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
-  "git_commit": "2721949a574f90b5ca735601c03239f4d4c98521",
+  "git_commit": "a110a547bd10c2e23f60d3a652fa21ea8deed764",
   "git_dirty": true,
-  "graphviz_engine": "neato",
-  "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",
+  "graphviz_engine": "dot",
+  "graphviz_version": "dot - graphviz version 14.0.4 (20251115.1723)",
   "input_files": [
     "data/extracted/xerces-j/class_nodes.csv",
     "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
@@ -49,16 +53,14 @@
   },
   "render_command": [
     [
-      "neato",
-      "-n2",
+      "dot",
       "-Tpdf",
       "reports/figures/source/cross_stage/xerces_stage2_highest_lowest_clusters.dot",
       "-o",
       "reports/figures/pdf/cross_stage/xerces_stage2_highest_lowest_clusters.pdf"
     ],
     [
-      "neato",
-      "-n2",
+      "dot",
       "-Tsvg",
       "reports/figures/source/cross_stage/xerces_stage2_highest_lowest_clusters.dot",
       "-o",

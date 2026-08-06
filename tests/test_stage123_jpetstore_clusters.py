@@ -41,8 +41,8 @@ def _fake_renderer(request) -> GraphvizRenderResult:
     return GraphvizRenderResult(request.output_path.resolve(),"neato","neato test",("neato","-n2",f"-T{request.output_format}",str(request.dot_path),"-o",str(request.output_path)))
 
 
-def test_appendix_registration_and_exactly_five_figures() -> None:
-    config=load_visualization_config(); assert len(config.figures)==8 and FIGURE_ID in config.figures
+def test_appendix_registration_and_exactly_seven_figures() -> None:
+    config=load_visualization_config(); assert len(config.figures)==7 and FIGURE_ID in config.figures
     spec=config.figures[FIGURE_ID]
     assert spec.destination=="appendix" and spec.formats==("dot","svg","pdf")
     assert spec.metadata["stage2_representative"]=="seed 1 / seed1_solution007"
