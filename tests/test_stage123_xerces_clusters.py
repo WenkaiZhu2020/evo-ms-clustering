@@ -5,25 +5,25 @@ import hashlib
 from io import StringIO
 import json
 from pathlib import Path
-import re
 
+import numpy as np
 import pytest
 
 from evo_ms.visualization.config import load_visualization_config
 from evo_ms.visualization.figures.stage123_xerces_clusters import (
     EXPECTED,
     FIGURE_IDS,
+    boundary_profile_csv,
     build_figure,
-    class_membership_csv,
-    figure_dot,
-    package_aggregation,
-    package_boundary_csv,
+    create_figure,
+    interaction_matrix,
+    lowest_profile_csv,
+    membership_csv,
     package_profiles_csv,
     package_relations_csv,
+    prepare_composite_data,
     prepare_figure_data,
 )
-from evo_ms.visualization.layout import GraphvizError
-from evo_ms.visualization.model import GraphvizRenderResult
 
 ROOT = Path(__file__).resolve().parents[1]
 OBSOLETE_IDS = {
@@ -42,29 +42,18 @@ NON_XERCES_IDS = {
 @pytest.fixture(scope="module")
 def prepared():
     config = load_visualization_config()
-    return config, prepare_figure_data(config)
+    data = prepare_figure_data(config)
+    return config, data
 
 
 def _hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _fake_renderer(request) -> GraphvizRenderResult:
-    request.output_path.parent.mkdir(parents=True, exist_ok=True)
-    request.output_path.write_bytes(
-        b"<svg/>\n" if request.output_format == "svg" else b"%PDF-1.4\n%%EOF\n"
-    )
-    return GraphvizRenderResult(
-        request.output_path.resolve(),
-        "dot",
-        "dot test",
-        (
-            "dot",
-            f"-T{request.output_format}",
-            str(request.dot_path),
-            "-o",
-            str(request.output_path),
-        ),
+def _fake_renderer(_figure, output_path: Path, output_format: str) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_bytes(
+        b"<svg/>\n" if output_format == "svg" else b"%PDF-1.4\n%%EOF\n"
     )
 
 
@@ -76,7 +65,7 @@ def _selected(data, stage: int, role: str):
     )
 
 
-def test_exactly_seven_figures_and_two_corrected_xerces_registrations() -> None:
+def test_exactly_seven_figures_and_two_matplotlib_xerces_registrations() -> None:
     config = load_visualization_config()
     assert set(config.figures) == NON_XERCES_IDS | set(FIGURE_IDS.values())
     assert not OBSOLETE_IDS & set(config.figures)
@@ -84,7 +73,8 @@ def test_exactly_seven_figures_and_two_corrected_xerces_registrations() -> None:
     for figure_id in FIGURE_IDS.values():
         specification = config.figures[figure_id]
         assert specification.destination == "appendix"
-        assert specification.formats == ("dot", "svg", "pdf")
+        assert specification.formats == ("svg", "pdf")
+        assert "dot" not in specification.formats
         assert (
             specification.generator
             == "evo_ms.visualization.figures.stage123_xerces_clusters"
@@ -126,99 +116,147 @@ def test_scope_modularity_representatives_and_accepted_clusters(prepared) -> Non
 
 
 @pytest.mark.parametrize("page,stage", [("stage13", 1), ("stage2", 2)])
-def test_package_aggregation_is_complete_exact_and_deterministic(
+def test_composition_matrix_boundary_and_lowest_reconcile(
     prepared, page: str, stage: int
 ) -> None:
     config, data = prepared
-    high = _selected(data, stage, "highest")
-    label = "stage1+stage3" if page == "stage13" else "stage2"
-    first = package_aggregation(config, label, high)
-    second = package_aggregation(config, label, high)
+    first = prepare_composite_data(config, data, page)
+    second = prepare_composite_data(config, data, page)
     assert first == second
-    assert len(first.profiles) == 10
-    assigned = [class_id for class_id, _package_id in first.class_to_package]
-    assert assigned == sorted(high.members)
-    assert len(assigned) == len(set(assigned)) == len(high.members)
-    assert sum(profile.within_edge_count for profile in first.profiles) + sum(
-        relation.class_edge_count for relation in first.relations
-    ) == len(high.internal_edges)
-    assert sum(profile.within_weight for profile in first.profiles) + sum(
-        relation.aggregated_weight for relation in first.relations
-    ) == pytest.approx(high.internal_weight)
-    assert sum(
-        relation.boundary_edge_count for relation in first.boundary_relations
-    ) == len(high.boundary_edges)
-    assert sum(
-        relation.aggregated_weight for relation in first.boundary_relations
-    ) == pytest.approx(high.boundary_weight)
-    for exporter in (
-        class_membership_csv,
+    assert len(first.packages) == 10
+    expected_classes = 118 if page == "stage13" else 115
+    assert len(first.class_to_package) == expected_classes
+    assert len({class_id for class_id, _package in first.class_to_package}) == expected_classes
+    assert sum(len(profile.member_classes) for profile in first.packages) == expected_classes
+    by_id = {profile.package_id: profile for profile in first.packages}
+    expected_order = tuple(
+        profile.package_id
+        for profile in sorted(
+            first.packages,
+            key=lambda profile: (-len(profile.member_classes), profile.package_name),
+        )
+    )
+    assert first.package_order == expected_order
+    assert len([relation for relation in first.relations if relation.source_package == relation.target_package]) == 10
+    assert all(
+        relation.source_package <= relation.target_package
+        for relation in first.relations
+    )
+    assert sum(relation.class_edge_count for relation in first.relations) == len(
+        first.high.internal_edges
+    )
+    assert sum(relation.aggregated_weight for relation in first.relations) == pytest.approx(
+        first.high.internal_weight
+    )
+    matrix = interaction_matrix(first)
+    assert matrix.shape == (10, 10)
+    assert np.array_equal(matrix, matrix.T)
+    assert np.triu(matrix).sum() == pytest.approx(first.high.internal_weight)
+    for index, package_id in enumerate(first.package_order):
+        assert matrix[index, index] == pytest.approx(by_id[package_id].within_weight)
+    assert sum(boundary.boundary_edge_count for boundary in first.boundaries) == len(
+        first.high.boundary_edges
+    )
+    assert sum(boundary.aggregated_weight for boundary in first.boundaries) == pytest.approx(
+        first.high.boundary_weight
+    )
+    assert list(first.boundaries) == sorted(
+        first.boundaries,
+        key=lambda boundary: (-boundary.aggregated_weight, boundary.external_cluster_id),
+    )
+    assert first.low.cluster_id == ("C07" if page == "stage13" else "C27")
+    assert len(first.low.members) == (1 if page == "stage13" else 2)
+
+
+@pytest.mark.parametrize("page", ["stage13", "stage2"])
+def test_csv_contracts_are_deterministic_complete_and_relative(prepared, page: str) -> None:
+    config, data = prepared
+    first = prepare_composite_data(config, data, page)
+    second = prepare_composite_data(config, data, page)
+    exporters = (
+        membership_csv,
         package_profiles_csv,
         package_relations_csv,
-        package_boundary_csv,
-    ):
+        boundary_profile_csv,
+        lowest_profile_csv,
+    )
+    for exporter in exporters:
         text = exporter(first)
         assert text == exporter(second)
         assert text.endswith("\n")
-        assert "/Users/" not in text
+        assert "/Users/" not in text and "/tmp/" not in text
+    memberships = list(csv.DictReader(StringIO(membership_csv(first))))
+    packages = list(csv.DictReader(StringIO(package_profiles_csv(first))))
+    relations = list(csv.DictReader(StringIO(package_relations_csv(first))))
+    boundaries = list(csv.DictReader(StringIO(boundary_profile_csv(first))))
+    lowest = list(csv.DictReader(StringIO(lowest_profile_csv(first))))
+    assert len(memberships) == len(first.high.members)
+    assert len(packages) == 10
+    assert len(relations) == 37
+    assert len(boundaries) == (12 if page == "stage13" else 16)
+    assert len(lowest) == (1 if page == "stage13" else 2)
 
 
-@pytest.mark.parametrize("page,stage", [("stage13", 1), ("stage2", 2)])
-def test_dot_has_explicit_focal_frame_and_separates_external_nodes(
-    prepared, page: str, stage: int
-) -> None:
+@pytest.mark.parametrize("page", ["stage13", "stage2"])
+def test_composite_figure_contains_required_areas_and_no_network(prepared, page: str) -> None:
     config, data = prepared
-    high = _selected(data, stage, "highest")
-    low = _selected(data, stage, "lowest")
-    label = "stage1+stage3" if page == "stage13" else "stage2"
-    aggregation = package_aggregation(config, label, high)
-    dot = figure_dot(config, page, high, low, aggregation)
-    assert dot == figure_dot(config, page, high, low, aggregation)
-    assert "subgraph cluster_focal" in dot
-    assert "subgraph cluster_lowest" in dot
-    assert "Package nodes are internal subdivisions of the framed focal cluster." in dot
-    assert f"{high.cluster_id} - Highest-contributing focal cluster" in dot
-    assert f"{len(high.members)} classes aggregated into 10 package nodes" in dot
-    assert f"q_c = {high.contribution:.6f}" in dot
-    assert f"W_in = {high.internal_weight:.0f}" in dot
-    assert f"W_boundary = {high.boundary_weight:.0f}" in dot
-    focal_body = dot.split("subgraph cluster_focal", 1)[1].split("\n  }", 1)[0]
-    for profile in aggregation.profiles:
-        assert f'"pkg_{profile.package_id}"' in focal_body
-    assert '"ext_' not in focal_body
-    assert not re.search(r'"f_F\d{3}"', dot)
-    assert low.cluster_id + " - Lowest-contributing cluster" in dot
-    for class_id in low.members:
-        assert class_id.rsplit(".", 1)[-1] in dot
-    if page == "stage13":
-        assert "Isolated singleton" in dot
-        assert "Stage 1 and Stage 3 select the same highest- and lowest-contributing clusters." in dot
-    else:
-        assert "Isolated singleton" not in dot
-        assert '"low_01"' in dot and '"low_02"' in dot
+    composite = prepare_composite_data(config, data, page)
+    figure = create_figure(composite)
+    try:
+        titles = [
+            axis.get_title(location)
+            for axis in figure.axes
+            for location in ("left", "center", "right")
+        ]
+        all_text = "\n".join(
+            text.get_text() for axis in figure.axes for text in axis.texts
+        )
+        assert f"Package composition of {composite.high.cluster_id}" in "\n".join(titles)
+        assert "Internal package interaction" in "\n".join(titles)
+        assert "Boundary-weight profile" in "\n".join(titles)
+        assert f"{composite.high.cluster_id} - Highest-contributing focal cluster" in all_text
+        assert f"{composite.low.cluster_id} - Lowest-contributing cluster" in all_text
+        assert all(not axis.lines for axis in figure.axes)
+    finally:
+        import matplotlib.pyplot as plt
+
+        plt.close(figure)
 
 
-def test_two_real_dot_renders_relative_provenance_and_manifest(tmp_path: Path) -> None:
+def test_two_real_matplotlib_renders_are_deterministic_and_relative(tmp_path: Path) -> None:
     config = load_visualization_config()
+    first_root = tmp_path / "first"
+    second_root = tmp_path / "second"
     for figure_id in FIGURE_IDS.values():
-        outputs = build_figure(
+        first = build_figure(
             config,
             figure_id=figure_id,
-            output_root=tmp_path,
-            generated_at="2026-08-06T23:00:00Z",
+            output_root=first_root,
+            generated_at="2026-08-07T01:00:00Z",
             git_commit="abc",
             git_dirty=True,
         )
-        assert outputs["svg"].read_text().lstrip().startswith("<?xml")
-        assert outputs["pdf"].read_bytes().startswith(b"%PDF")
-        provenance = json.loads(outputs["provenance"].read_text())
-        assert provenance["graphviz_engine"] == "dot"
-        assert all(command[0] == "dot" for command in provenance["render_command"])
-        assert "/Users/" not in outputs["provenance"].read_text()
-        assert "/tmp/" not in outputs["provenance"].read_text()
-    figures = json.loads((tmp_path / "manifest.json").read_text())["figures"]
+        second = build_figure(
+            config,
+            figure_id=figure_id,
+            output_root=second_root,
+            generated_at="2026-08-07T01:00:00Z",
+            git_commit="abc",
+            git_dirty=True,
+        )
+        assert first["svg"].read_text().lstrip().startswith("<?xml")
+        assert first["pdf"].read_bytes().startswith(b"%PDF")
+        assert _hash(first["svg"]) == _hash(second["svg"])
+        assert _hash(first["pdf"]) == _hash(second["pdf"])
+        assert "dot" not in first
+        provenance = json.loads(first["provenance"].read_text())
+        assert provenance["renderer"] == "matplotlib"
+        assert "/Users/" not in first["provenance"].read_text()
+        assert "/tmp/" not in first["provenance"].read_text()
+    figures = json.loads((first_root / "manifest.json").read_text())["figures"]
     assert set(figures) == set(FIGURE_IDS.values())
-    assert not OBSOLETE_IDS & set(figures)
+    assert all(figure["formats"] == ["svg", "pdf"] for figure in figures.values())
+    assert all("dot" not in figure["outputs"] for figure in figures.values())
 
 
 def test_render_failure_is_atomic(tmp_path: Path) -> None:
@@ -226,10 +264,10 @@ def test_render_failure_is_atomic(tmp_path: Path) -> None:
     manifest.write_text('{"schema_version":1,"figures":{}}\n')
     before = manifest.read_bytes()
 
-    def fail(_request):
-        raise GraphvizError("synthetic Xerces render failure")
+    def fail(_figure, _path, _format):
+        raise RuntimeError("synthetic Matplotlib render failure")
 
-    with pytest.raises(GraphvizError, match="synthetic Xerces render failure"):
+    with pytest.raises(RuntimeError, match="synthetic Matplotlib render failure"):
         build_figure(
             load_visualization_config(),
             figure_id=FIGURE_IDS["stage13"],
@@ -240,8 +278,9 @@ def test_render_failure_is_atomic(tmp_path: Path) -> None:
     assert manifest.read_bytes() == before
     assert not (
         tmp_path
-        / "source/cross_stage/xerces_stage13_shared_highest_lowest_clusters.dot"
+        / "preview/cross_stage/xerces_stage13_shared_highest_lowest_clusters.svg"
     ).exists()
+    assert not (tmp_path / "source/cross_stage").exists()
 
 
 def test_temporary_build_preserves_formal_inputs_and_non_xerces_figures(
@@ -268,17 +307,3 @@ def test_temporary_build_preserves_formal_inputs_and_non_xerces_figures(
             renderer=_fake_renderer,
         )
     assert {path: _hash(path) for path in before} == before
-
-
-def test_generated_package_csvs_have_expected_row_counts(tmp_path: Path) -> None:
-    outputs = build_figure(
-        load_visualization_config(),
-        figure_id=FIGURE_IDS["stage13"],
-        output_root=tmp_path,
-        generated_at="fixed",
-        git_commit="abc",
-        git_dirty=True,
-        renderer=_fake_renderer,
-    )
-    assert len(list(csv.DictReader(StringIO(outputs["class_membership"].read_text())))) == 118
-    assert len(list(csv.DictReader(StringIO(outputs["package_profiles"].read_text())))) == 10

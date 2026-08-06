@@ -1,4 +1,4 @@
-"""Two package-level Xerces-J cluster-contribution appendix pages."""
+"""Two deterministic matrix-and-bar Xerces-J appendix figures."""
 
 from __future__ import annotations
 
@@ -6,16 +6,23 @@ from collections import defaultdict
 from collections.abc import Callable, Iterable
 import csv
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from io import StringIO
 import json
 import math
 import os
 from pathlib import Path
+import subprocess
 import tempfile
 
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+import numpy as np
 import pandas as pd
 
-from evo_ms.visualization.dot import dot_quote, stable_attributes, write_dot
 from evo_ms.visualization.figures.stage123_daytrader_clusters import (
     BoundaryAggregate,
     BoundaryConnection,
@@ -26,18 +33,8 @@ from evo_ms.visualization.figures.stage123_daytrader_clusters import (
     profiles_csv,
     selected_csv,
 )
-from evo_ms.visualization.layout import render_graphviz
-from evo_ms.visualization.model import (
-    GraphvizRenderRequest,
-    GraphvizRenderResult,
-    VisualizationConfig,
-)
-from evo_ms.visualization.provenance import (
-    build_provenance,
-    sha256_file,
-    write_json_atomic,
-    write_provenance,
-)
+from evo_ms.visualization.model import VisualizationConfig
+from evo_ms.visualization.provenance import sha256_file, write_json_atomic
 
 FIGURE_IDS = {
     "stage13": "stage13_xerces_shared_highest_lowest_clusters",
@@ -53,6 +50,7 @@ EXPECTED = {
     3: (22, "seed22_solution015", "C11", 118, 624, "C07", 1, 12),
 }
 DIRECTORY = "cross_stage"
+FIGURE_SIZE = (11.1, 7.3)
 
 
 @dataclass(frozen=True)
@@ -62,7 +60,6 @@ class PackageProfile:
     member_classes: tuple[str, ...]
     within_edge_count: int
     within_weight: float
-    weighted_degree: float
 
 
 @dataclass(frozen=True)
@@ -74,8 +71,7 @@ class PackageRelation:
 
 
 @dataclass(frozen=True)
-class PackageBoundaryRelation:
-    source_package: str
+class BoundaryProfile:
     external_cluster_id: str
     external_classes: tuple[str, ...]
     boundary_edge_count: int
@@ -83,100 +79,129 @@ class PackageBoundaryRelation:
 
 
 @dataclass(frozen=True)
-class PackageAggregation:
+class CompositeData:
+    page: str
     stage_label: str
-    focal_cluster_id: str
-    profiles: tuple[PackageProfile, ...]
+    high: ClusterProfile
+    low: ClusterProfile
+    packages: tuple[PackageProfile, ...]
+    package_order: tuple[str, ...]
     relations: tuple[PackageRelation, ...]
-    boundary_relations: tuple[PackageBoundaryRelation, ...]
+    boundaries: tuple[BoundaryProfile, ...]
     class_to_package: tuple[tuple[str, str], ...]
 
 
 def _partitions(root: Path):
-    p1 = "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv"
-    p2 = "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz"
-    p3 = "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv"
-    stage1 = pd.read_csv(root / p1)
-    q1 = float(
+    stage1_path = (
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/"
+        "clustering/stage1_clusters.csv"
+    )
+    stage2_path = (
+        "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/"
+        "seed_21/pareto_labels.csv.xz"
+    )
+    stage3_path = (
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/"
+        "seed_22/selected_partition.csv"
+    )
+    stage1 = pd.read_csv(root / stage1_path)
+    stage1_modularity = float(
         pd.read_csv(
             root
-            / "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv"
+            / "results/stage1/subjects/xerces-j/leiden_baseline/"
+            "raw_reference_leiden/metrics/stage1_metrics.csv"
         ).iloc[0].modularity
     )
     canonical = pd.read_csv(
         root
-        / "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv"
+        / "results/stage2/cross_subject/operating_profile/"
+        "canonical_operating_solution_per_seed.csv"
     )
     record = canonical.loc[(canonical.subject == "xerces-j") & (canonical.seed == 21)]
     if len(record) != 1 or str(record.iloc[0].solution_id) != "seed21_solution022":
         raise ValueError("Xerces-J Stage 2 representative changed")
-    labels = pd.read_csv(root / p2)
+    labels = pd.read_csv(root / stage2_path)
     stage2 = labels.loc[
         labels.solution_id == "seed21_solution022",
         ["class_id", "class_name", "cluster_id"],
     ].copy()
-    payload = json.loads(
+    selected_solution = json.loads(
         (
             root
-            / "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
-        ).read_text()
+            / "results/stage3/subjects/xerces-j/declaration_method_body/formal/"
+            "seed_22/selected_solution.json"
+        ).read_text(encoding="utf-8")
     )
     if (
-        int(payload["seed"]) != 22
-        or payload["selected_four_objective_row"]["solution_id"]
+        int(selected_solution["seed"]) != 22
+        or selected_solution["selected_four_objective_row"]["solution_id"]
         != "seed22_solution015"
     ):
         raise ValueError("Xerces-J Stage 3 representative changed")
-    stage3 = pd.read_csv(root / p3)
+    stage3 = pd.read_csv(root / stage3_path)
     posthoc = pd.read_csv(
         root
-        / "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv"
+        / "results/stage3/subjects/xerces-j/declaration_method_body/formal/"
+        "seed_22/posthoc_metrics.csv"
     )
-    q3 = posthoc.loc[
+    stage3_modularity = posthoc.loc[
         posthoc.solution_id == "seed22_solution015", "weighted_modularity"
     ]
-    if len(q3) != 1:
+    if len(stage3_modularity) != 1:
         raise ValueError("Xerces-J Stage 3 modularity is not unique")
     return (
-        (1, 42, "stage1_seed42", p1, stage1, q1),
+        (1, 42, "stage1_seed42", stage1_path, stage1, stage1_modularity),
         (
             2,
             21,
             "seed21_solution022",
-            p2,
+            stage2_path,
             stage2,
             float(record.iloc[0].weighted_modularity),
         ),
-        (3, 22, "seed22_solution015", p3, stage3, float(q3.iloc[0])),
+        (
+            3,
+            22,
+            "seed22_solution015",
+            stage3_path,
+            stage3,
+            float(stage3_modularity.iloc[0]),
+        ),
     )
 
 
 def prepare_figure_data(config: VisualizationConfig) -> FigureData:
     root = config.repository_root
     nodes = pd.read_csv(root / "data/extracted/xerces-j/class_nodes.csv")
-    expected = set(nodes.class_id.astype(str))
-    if len(nodes) != 814 or len(expected) != 814:
+    expected_classes = set(nodes.class_id.astype(str))
+    if len(nodes) != 814 or len(expected_classes) != 814:
         raise ValueError("Xerces-J scope must contain 814 unique classes")
     edges = pd.read_csv(
         root
-        / "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv"
+        / "results/stage1/subjects/xerces-j/leiden_baseline/"
+        "raw_reference_leiden/graph/stage1_edges.csv"
     )
-    pairs = [tuple(sorted((str(e.source), str(e.target)))) for e in edges.itertuples()]
-    if any(a == b for a, b in pairs) or len(pairs) != len(set(pairs)):
+    pairs = [tuple(sorted((str(edge.source), str(edge.target)))) for edge in edges.itertuples()]
+    if any(source == target for source, target in pairs) or len(pairs) != len(set(pairs)):
         raise ValueError("Xerces-J raw graph has invalid undirected edges")
-    total = float(edges.raw_weight.sum())
-    degree = {class_id: 0.0 for class_id in expected}
+    total_weight = float(edges.raw_weight.sum())
+    degree = {class_id: 0.0 for class_id in expected_classes}
     for edge in edges.itertuples():
         degree[str(edge.source)] += float(edge.raw_weight)
         degree[str(edge.target)] += float(edge.raw_weight)
+
     profiles: list[ClusterProfile] = []
-    formal = []
-    for stage, seed, solution, source, raw, formal_q in _partitions(root):
-        ids = raw.class_id.astype(str)
-        if len(ids) != 814 or ids.duplicated().any() or set(ids) != expected:
+    formal_modularity = []
+    for stage, seed, solution, source_path, raw, formal_value in _partitions(root):
+        class_ids = raw.class_id.astype(str)
+        if (
+            len(class_ids) != 814
+            or class_ids.duplicated().any()
+            or set(class_ids) != expected_classes
+        ):
             raise ValueError(f"Xerces-J Stage {stage} scope changed")
         partition = _canonical_partition(raw)
-        cluster_map = dict(
+        cluster_by_class = dict(
             zip(
                 partition.class_id.astype(str),
                 partition.cluster_id.astype(str),
@@ -189,19 +214,19 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
             internal = []
             boundary = []
             for edge in edges.itertuples():
-                a, b, weight = (
-                    str(edge.source),
-                    str(edge.target),
-                    float(edge.raw_weight),
-                )
-                if a in member_set and b in member_set:
-                    internal.append((min(a, b), max(a, b), weight))
-                elif (a in member_set) ^ (b in member_set):
-                    boundary.append((min(a, b), max(a, b), weight))
+                source = str(edge.source)
+                target = str(edge.target)
+                weight = float(edge.raw_weight)
+                if source in member_set and target in member_set:
+                    internal.append((min(source, target), max(source, target), weight))
+                elif (source in member_set) ^ (target in member_set):
+                    boundary.append((min(source, target), max(source, target), weight))
             grouped: dict[str, list[tuple[str, str, float]]] = {}
-            for a, b, weight in boundary:
-                focal, outside = (a, b) if a in member_set else (b, a)
-                grouped.setdefault(cluster_map[outside], []).append(
+            for source, target, weight in boundary:
+                focal, outside = (
+                    (source, target) if source in member_set else (target, source)
+                )
+                grouped.setdefault(cluster_by_class[outside], []).append(
                     (focal, outside, weight)
                 )
             aggregates = []
@@ -213,7 +238,11 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
                 connections = tuple(
                     BoundaryConnection(
                         focal,
-                        tuple(sorted({outside for outside, _weight in by_focal[focal]})),
+                        tuple(
+                            sorted(
+                                {outside for outside, _weight in by_focal[focal]}
+                            )
+                        ),
                         len(by_focal[focal]),
                         sum(weight for _outside, weight in by_focal[focal]),
                     )
@@ -222,33 +251,47 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
                 aggregates.append(
                     BoundaryAggregate(
                         destination,
-                        tuple(sorted({outside for _focal, outside, _weight in records})),
+                        tuple(
+                            sorted(
+                                {
+                                    outside
+                                    for _focal, outside, _weight in records
+                                }
+                            )
+                        ),
                         len(records),
                         sum(weight for _focal, _outside, weight in records),
                         tuple(sorted(by_focal)),
                         connections,
                     )
                 )
-            internal_weight = sum(edge[2] for edge in internal)
-            boundary_weight = sum(edge[2] for edge in boundary)
+            internal_weight = sum(weight for _a, _b, weight in internal)
+            boundary_weight = sum(weight for _a, _b, weight in boundary)
             strength = sum(degree[class_id] for class_id in members)
-            contribution = internal_weight / total - (strength / (2 * total)) ** 2
+            contribution = internal_weight / total_weight - (
+                strength / (2 * total_weight)
+            ) ** 2
+            external = tuple(
+                sorted(
+                    {
+                        endpoint
+                        for source, target, _weight in boundary
+                        for endpoint in (source, target)
+                    }
+                    - member_set
+                )
+            )
             profiles.append(
                 ClusterProfile(
                     stage,
                     seed,
                     solution,
-                    source,
+                    source_path,
                     str(cluster_id),
                     members,
                     tuple(sorted(internal)),
                     tuple(sorted(boundary)),
-                    tuple(
-                        sorted(
-                            {value for a, b, _weight in boundary for value in (a, b)}
-                            - member_set
-                        )
-                    ),
+                    external,
                     internal_weight,
                     boundary_weight,
                     strength,
@@ -256,17 +299,13 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
                     tuple(aggregates),
                 )
             )
-        if (
-            abs(
-                sum(profile.contribution for profile in profiles if profile.stage == stage)
-                - formal_q
-            )
-            > 1e-12
-        ):
-            raise ValueError(
-                f"Xerces-J Stage {stage} modularity reconstruction failed"
-            )
-        formal.append((stage, formal_q))
+        reconstructed = sum(
+            profile.contribution for profile in profiles if profile.stage == stage
+        )
+        if not math.isclose(reconstructed, formal_value, abs_tol=1e-12):
+            raise ValueError(f"Xerces-J Stage {stage} modularity reconstruction failed")
+        formal_modularity.append((stage, formal_value))
+
     selected = []
     for stage in (1, 2, 3):
         candidates = [profile for profile in profiles if profile.stage == stage]
@@ -288,11 +327,9 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
                 ),
             )
         )
-    data = FigureData(tuple(profiles), tuple(selected), tuple(formal))
-    for stage, expected_values in EXPECTED.items():
-        seed, solution, high_id, high_n, high_edges, low_id, low_n, destinations = (
-            expected_values
-        )
+    data = FigureData(tuple(profiles), tuple(selected), tuple(formal_modularity))
+    for stage, expected in EXPECTED.items():
+        seed, solution, high_id, high_n, high_edges, low_id, low_n, destinations = expected
         chosen = {
             role: profile
             for role, profile in data.selected
@@ -321,29 +358,181 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
             destinations,
         ):
             raise ValueError(f"accepted Xerces-J Stage {stage} selection changed")
-    stage1_high = next(
-        profile
-        for role, profile in data.selected
-        if role == "highest" and profile.stage == 1
-    )
-    stage3_high = next(
-        profile
-        for role, profile in data.selected
-        if role == "highest" and profile.stage == 3
-    )
-    stage1_low = next(
-        profile
-        for role, profile in data.selected
-        if role == "lowest" and profile.stage == 1
-    )
-    stage3_low = next(
-        profile
-        for role, profile in data.selected
-        if role == "lowest" and profile.stage == 3
-    )
-    if stage1_high.members != stage3_high.members or stage1_low.members != stage3_low.members:
-        raise ValueError("Xerces-J Stage 1 and Stage 3 selected memberships diverged")
+    stage1_high = _selected(data, 1, "highest")
+    stage3_high = _selected(data, 3, "highest")
+    stage1_low = _selected(data, 1, "lowest")
+    stage3_low = _selected(data, 3, "lowest")
+    if stage1_high.members != stage3_high.members:
+        raise ValueError("Xerces-J Stage 1 and Stage 3 highest memberships diverged")
+    if stage1_low.members != stage3_low.members:
+        raise ValueError("Xerces-J Stage 1 and Stage 3 lowest memberships diverged")
     return data
+
+
+def _selected(data: FigureData, stage: int, role: str) -> ClusterProfile:
+    return next(
+        profile
+        for selected_role, profile in data.selected
+        if selected_role == role and profile.stage == stage
+    )
+
+
+def prepare_composite_data(
+    config: VisualizationConfig, data: FigureData, page: str
+) -> CompositeData:
+    if page not in FIGURE_IDS:
+        raise ValueError(f"unknown Xerces-J page: {page}")
+    stage = 1 if page == "stage13" else 2
+    stage_label = "stage1+stage3" if page == "stage13" else "stage2"
+    high = _selected(data, stage, "highest")
+    low = _selected(data, stage, "lowest")
+    nodes = pd.read_csv(
+        config.repository_root / "data/extracted/xerces-j/class_nodes.csv"
+    )
+    package_by_class = dict(
+        zip(nodes.class_id.astype(str), nodes.package.astype(str), strict=True)
+    )
+    canonical_packages = sorted(
+        {package_by_class[class_id] for class_id in high.members}
+    )
+    package_id = {
+        package_name: f"P{index:02d}"
+        for index, package_name in enumerate(canonical_packages, 1)
+    }
+    members: dict[str, list[str]] = {
+        package_name: [] for package_name in canonical_packages
+    }
+    for class_id in high.members:
+        members[package_by_class[class_id]].append(class_id)
+    within_count: defaultdict[str, int] = defaultdict(int)
+    within_weight: defaultdict[str, float] = defaultdict(float)
+    pair_values: dict[tuple[str, str], list[float]] = {
+        (package_name, package_name): [0.0, 0.0]
+        for package_name in canonical_packages
+    }
+    for source, target, weight in high.internal_edges:
+        source_package = package_by_class[source]
+        target_package = package_by_class[target]
+        pair = tuple(sorted((source_package, target_package)))
+        record = pair_values.setdefault(pair, [0.0, 0.0])
+        record[0] += 1
+        record[1] += weight
+        if source_package == target_package:
+            within_count[source_package] += 1
+            within_weight[source_package] += weight
+    profiles = tuple(
+        PackageProfile(
+            package_id[name],
+            name,
+            tuple(sorted(members[name])),
+            within_count[name],
+            within_weight[name],
+        )
+        for name in canonical_packages
+    )
+    package_order = tuple(
+        profile.package_id
+        for profile in sorted(
+            profiles,
+            key=lambda profile: (-len(profile.member_classes), profile.package_name),
+        )
+    )
+    relations = tuple(
+        PackageRelation(
+            package_id[source],
+            package_id[target],
+            int(values[0]),
+            float(values[1]),
+        )
+        for (source, target), values in sorted(pair_values.items())
+    )
+    boundaries = tuple(
+        BoundaryProfile(
+            aggregate.external_cluster_id,
+            aggregate.external_classes,
+            aggregate.boundary_edge_count,
+            aggregate.boundary_weight,
+        )
+        for aggregate in sorted(
+            high.boundary_aggregates,
+            key=lambda aggregate: (
+                -aggregate.boundary_weight,
+                aggregate.external_cluster_id,
+            ),
+        )
+    )
+    composite = CompositeData(
+        page,
+        stage_label,
+        high,
+        low,
+        profiles,
+        package_order,
+        relations,
+        boundaries,
+        tuple(
+            sorted(
+                (
+                    class_id,
+                    package_id[package_by_class[class_id]],
+                )
+                for class_id in high.members
+            )
+        ),
+    )
+    validate_composite_data(composite)
+    return composite
+
+
+def interaction_matrix(composite: CompositeData) -> np.ndarray:
+    index = {
+        package_id: position
+        for position, package_id in enumerate(composite.package_order)
+    }
+    matrix = np.zeros((len(index), len(index)), dtype=float)
+    for relation in composite.relations:
+        source = index[relation.source_package]
+        target = index[relation.target_package]
+        matrix[source, target] = relation.aggregated_weight
+        matrix[target, source] = relation.aggregated_weight
+    return matrix
+
+
+def validate_composite_data(composite: CompositeData) -> None:
+    high = composite.high
+    assigned = [class_id for class_id, _package_id in composite.class_to_package]
+    if assigned != sorted(high.members) or len(set(assigned)) != len(high.members):
+        raise ValueError("focal class-to-package assignment is incomplete")
+    if sum(len(profile.member_classes) for profile in composite.packages) != len(
+        high.members
+    ):
+        raise ValueError("package composition does not reconcile focal classes")
+    if len(composite.packages) != 10:
+        raise ValueError("accepted Xerces-J focal cluster must contain 10 packages")
+    if sum(relation.class_edge_count for relation in composite.relations) != len(
+        high.internal_edges
+    ):
+        raise ValueError("package matrix does not reconcile internal edge count")
+    if not math.isclose(
+        sum(relation.aggregated_weight for relation in composite.relations),
+        high.internal_weight,
+    ):
+        raise ValueError("package matrix does not reconstruct W_in")
+    if sum(boundary.boundary_edge_count for boundary in composite.boundaries) != len(
+        high.boundary_edges
+    ):
+        raise ValueError("boundary profile does not reconcile boundary edge count")
+    if not math.isclose(
+        sum(boundary.aggregated_weight for boundary in composite.boundaries),
+        high.boundary_weight,
+    ):
+        raise ValueError("boundary profile does not reconstruct W_boundary")
+    matrix = interaction_matrix(composite)
+    if not np.array_equal(matrix, matrix.T):
+        raise ValueError("plotted package matrix is not symmetric")
+    reconstructed = float(np.triu(matrix).sum())
+    if not math.isclose(reconstructed, high.internal_weight):
+        raise ValueError("symmetric package matrix does not reconstruct W_in")
 
 
 def _csv(fields: Iterable[str], rows: Iterable[dict[str, object]]) -> str:
@@ -354,163 +543,26 @@ def _csv(fields: Iterable[str], rows: Iterable[dict[str, object]]) -> str:
     return buffer.getvalue()
 
 
-def package_aggregation(
-    config: VisualizationConfig,
-    stage_label: str,
-    profile: ClusterProfile,
-) -> PackageAggregation:
-    nodes = pd.read_csv(
-        config.repository_root / "data/extracted/xerces-j/class_nodes.csv"
-    )
-    package_by_class = dict(
-        zip(nodes.class_id.astype(str), nodes.package.astype(str), strict=True)
-    )
-    package_names = sorted({package_by_class[class_id] for class_id in profile.members})
-    package_ids = {
-        package_name: f"P{index:02d}"
-        for index, package_name in enumerate(package_names, 1)
+def membership_csv(composite: CompositeData) -> str:
+    profile_by_id = {
+        profile.package_id: profile for profile in composite.packages
     }
-    members_by_package: dict[str, list[str]] = {name: [] for name in package_names}
-    for class_id in profile.members:
-        members_by_package[package_by_class[class_id]].append(class_id)
-
-    within_count: defaultdict[str, int] = defaultdict(int)
-    within_weight: defaultdict[str, float] = defaultdict(float)
-    weighted_degree: defaultdict[str, float] = defaultdict(float)
-    between: dict[tuple[str, str], list[float]] = {}
-    for source, target, weight in profile.internal_edges:
-        source_package = package_by_class[source]
-        target_package = package_by_class[target]
-        weighted_degree[source_package] += weight
-        weighted_degree[target_package] += weight
-        if source_package == target_package:
-            within_count[source_package] += 1
-            within_weight[source_package] += weight
-        else:
-            pair = tuple(sorted((source_package, target_package)))
-            record = between.setdefault(pair, [0.0, 0.0])
-            record[0] += 1
-            record[1] += weight
-
-    boundary: dict[tuple[str, str], dict[str, object]] = {}
-    member_set = set(profile.members)
-    destination_by_class = {
-        outside: aggregate.external_cluster_id
-        for aggregate in profile.boundary_aggregates
-        for outside in aggregate.external_classes
-    }
-    for source, target, weight in profile.boundary_edges:
-        focal, outside = (source, target) if source in member_set else (target, source)
-        key = (package_by_class[focal], destination_by_class[outside])
-        record = boundary.setdefault(
-            key, {"count": 0, "weight": 0.0, "classes": set()}
-        )
-        record["count"] = int(record["count"]) + 1
-        record["weight"] = float(record["weight"]) + weight
-        classes = record["classes"]
-        assert isinstance(classes, set)
-        classes.add(outside)
-
-    profiles = tuple(
-        PackageProfile(
-            package_ids[name],
-            name,
-            tuple(sorted(members_by_package[name])),
-            within_count[name],
-            within_weight[name],
-            weighted_degree[name],
-        )
-        for name in package_names
-    )
-    relations = tuple(
-        PackageRelation(
-            package_ids[source],
-            package_ids[target],
-            int(values[0]),
-            values[1],
-        )
-        for (source, target), values in sorted(between.items())
-    )
-    boundary_relations = tuple(
-        PackageBoundaryRelation(
-            package_ids[source],
-            destination,
-            tuple(sorted(record["classes"])),
-            int(record["count"]),
-            float(record["weight"]),
-        )
-        for (source, destination), record in sorted(boundary.items())
-    )
-    aggregation = PackageAggregation(
-        stage_label,
-        profile.cluster_id,
-        profiles,
-        relations,
-        boundary_relations,
-        tuple(
-            sorted(
-                (class_id, package_ids[package_by_class[class_id]])
-                for class_id in profile.members
-            )
-        ),
-    )
-    _validate_aggregation(profile, aggregation)
-    return aggregation
-
-
-def _validate_aggregation(
-    profile: ClusterProfile, aggregation: PackageAggregation
-) -> None:
-    assigned = [class_id for class_id, _package_id in aggregation.class_to_package]
-    if assigned != sorted(profile.members) or len(set(assigned)) != len(profile.members):
-        raise ValueError("focal class-to-package assignment is incomplete")
-    internal_count = sum(item.within_edge_count for item in aggregation.profiles) + sum(
-        item.class_edge_count for item in aggregation.relations
-    )
-    internal_weight = sum(item.within_weight for item in aggregation.profiles) + sum(
-        item.aggregated_weight for item in aggregation.relations
-    )
-    if internal_count != len(profile.internal_edges) or not math.isclose(
-        internal_weight, profile.internal_weight
-    ):
-        raise ValueError("package relations do not reconcile internal edges")
-    if sum(item.boundary_edge_count for item in aggregation.boundary_relations) != len(
-        profile.boundary_edges
-    ) or not math.isclose(
-        sum(item.aggregated_weight for item in aggregation.boundary_relations),
-        profile.boundary_weight,
-    ):
-        raise ValueError("package boundary relations do not reconcile boundary edges")
-
-
-def class_membership_csv(aggregation: PackageAggregation) -> str:
-    profile_by_id = {profile.package_id: profile for profile in aggregation.profiles}
     return _csv(
-        (
-            "stage",
-            "focal_cluster_id",
-            "class_id",
-            "fully_qualified_name",
-            "simple_name",
-            "package_id",
-            "package_name",
-        ),
+        ("stage", "focal_cluster_id", "class_id", "fully_qualified_name", "package"),
         (
             {
-                "stage": aggregation.stage_label,
-                "focal_cluster_id": aggregation.focal_cluster_id,
+                "stage": composite.stage_label,
+                "focal_cluster_id": composite.high.cluster_id,
                 "class_id": class_id,
                 "fully_qualified_name": class_id,
-                "simple_name": class_id.rsplit(".", 1)[-1],
-                "package_id": package_id,
-                "package_name": profile_by_id[package_id].package_name,
+                "package": profile_by_id[package_id].package_name,
             }
-            for class_id, package_id in aggregation.class_to_package
+            for class_id, package_id in composite.class_to_package
         ),
     )
 
 
-def package_profiles_csv(aggregation: PackageAggregation) -> str:
+def package_profiles_csv(composite: CompositeData) -> str:
     return _csv(
         (
             "stage",
@@ -521,28 +573,26 @@ def package_profiles_csv(aggregation: PackageAggregation) -> str:
             "member_classes",
             "within_package_edge_count",
             "within_package_weight",
-            "weighted_degree_within_focal_cluster",
         ),
         (
             {
-                "stage": aggregation.stage_label,
-                "focal_cluster_id": aggregation.focal_cluster_id,
+                "stage": composite.stage_label,
+                "focal_cluster_id": composite.high.cluster_id,
                 "package_id": profile.package_id,
                 "package_name": profile.package_name,
                 "class_count": len(profile.member_classes),
-                "member_classes": json.dumps(profile.member_classes, separators=(",", ":")),
+                "member_classes": json.dumps(
+                    profile.member_classes, separators=(",", ":")
+                ),
                 "within_package_edge_count": profile.within_edge_count,
                 "within_package_weight": format(profile.within_weight, ".12g"),
-                "weighted_degree_within_focal_cluster": format(
-                    profile.weighted_degree, ".12g"
-                ),
             }
-            for profile in aggregation.profiles
+            for profile in composite.packages
         ),
     )
 
 
-def package_relations_csv(aggregation: PackageAggregation) -> str:
+def package_relations_csv(composite: CompositeData) -> str:
     return _csv(
         (
             "stage",
@@ -554,8 +604,8 @@ def package_relations_csv(aggregation: PackageAggregation) -> str:
         ),
         (
             {
-                "stage": aggregation.stage_label,
-                "focal_cluster_id": aggregation.focal_cluster_id,
+                "stage": composite.stage_label,
+                "focal_cluster_id": composite.high.cluster_id,
                 "source_package": relation.source_package,
                 "target_package": relation.target_package,
                 "class_edge_count": relation.class_edge_count,
@@ -563,20 +613,16 @@ def package_relations_csv(aggregation: PackageAggregation) -> str:
                     relation.aggregated_weight, ".12g"
                 ),
             }
-            for relation in aggregation.relations
+            for relation in composite.relations
         ),
     )
 
 
-def package_boundary_csv(aggregation: PackageAggregation) -> str:
-    external_counts: defaultdict[str, set[str]] = defaultdict(set)
-    for relation in aggregation.boundary_relations:
-        external_counts[relation.external_cluster_id].update(relation.external_classes)
+def boundary_profile_csv(composite: CompositeData) -> str:
     return _csv(
         (
             "stage",
             "focal_cluster_id",
-            "source_package",
             "external_cluster_id",
             "external_class_count",
             "external_classes",
@@ -585,34 +631,90 @@ def package_boundary_csv(aggregation: PackageAggregation) -> str:
         ),
         (
             {
-                "stage": aggregation.stage_label,
-                "focal_cluster_id": aggregation.focal_cluster_id,
-                "source_package": relation.source_package,
-                "external_cluster_id": relation.external_cluster_id,
-                "external_class_count": len(
-                    external_counts[relation.external_cluster_id]
-                ),
+                "stage": composite.stage_label,
+                "focal_cluster_id": composite.high.cluster_id,
+                "external_cluster_id": boundary.external_cluster_id,
+                "external_class_count": len(boundary.external_classes),
                 "external_classes": json.dumps(
-                    relation.external_classes, separators=(",", ":")
+                    boundary.external_classes, separators=(",", ":")
                 ),
-                "boundary_edge_count": relation.boundary_edge_count,
+                "boundary_edge_count": boundary.boundary_edge_count,
                 "aggregated_boundary_weight": format(
-                    relation.aggregated_weight, ".12g"
+                    boundary.aggregated_weight, ".12g"
                 ),
             }
-            for relation in aggregation.boundary_relations
+            for boundary in composite.boundaries
         ),
     )
 
 
-def class_edges_csv(
-    stage_label: str, role: str, profile: ClusterProfile, edge_kind: str
-) -> str:
-    edges = profile.internal_edges if edge_kind == "internal" else profile.boundary_edges
+def lowest_profile_csv(composite: CompositeData) -> str:
+    low = composite.low
+    rows = []
+    if low.boundary_aggregates:
+        for aggregate in sorted(
+            low.boundary_aggregates,
+            key=lambda item: (-item.boundary_weight, item.external_cluster_id),
+        ):
+            rows.append(
+                {
+                    "stage": composite.stage_label,
+                    "cluster_id": low.cluster_id,
+                    "class_count": len(low.members),
+                    "member_classes": json.dumps(low.members, separators=(",", ":")),
+                    "q_c": format(low.contribution, ".12g"),
+                    "internal_weight": format(low.internal_weight, ".12g"),
+                    "boundary_weight": format(low.boundary_weight, ".12g"),
+                    "external_cluster_id": aggregate.external_cluster_id,
+                    "external_class_count": len(aggregate.external_classes),
+                    "aggregated_boundary_weight": format(
+                        aggregate.boundary_weight, ".12g"
+                    ),
+                }
+            )
+    else:
+        rows.append(
+            {
+                "stage": composite.stage_label,
+                "cluster_id": low.cluster_id,
+                "class_count": len(low.members),
+                "member_classes": json.dumps(low.members, separators=(",", ":")),
+                "q_c": format(low.contribution, ".12g"),
+                "internal_weight": format(low.internal_weight, ".12g"),
+                "boundary_weight": format(low.boundary_weight, ".12g"),
+                "external_cluster_id": "",
+                "external_class_count": 0,
+                "aggregated_boundary_weight": 0,
+            }
+        )
     return _csv(
         (
             "stage",
-            "rank_role",
+            "cluster_id",
+            "class_count",
+            "member_classes",
+            "q_c",
+            "internal_weight",
+            "boundary_weight",
+            "external_cluster_id",
+            "external_class_count",
+            "aggregated_boundary_weight",
+        ),
+        rows,
+    )
+
+
+def class_edges_csv(
+    composite: CompositeData, edge_kind: str
+) -> str:
+    edges = (
+        composite.high.internal_edges
+        if edge_kind == "internal"
+        else composite.high.boundary_edges
+    )
+    return _csv(
+        (
+            "stage",
             "focal_cluster_id",
             "source_class",
             "target_class",
@@ -620,9 +722,8 @@ def class_edges_csv(
         ),
         (
             {
-                "stage": stage_label,
-                "rank_role": role,
-                "focal_cluster_id": profile.cluster_id,
+                "stage": composite.stage_label,
+                "focal_cluster_id": composite.high.cluster_id,
                 "source_class": source,
                 "target_class": target,
                 "weight": format(weight, ".12g"),
@@ -632,440 +733,337 @@ def class_edges_csv(
     )
 
 
-def _package_label(package_name: str) -> str:
+def _abbreviation(package_name: str) -> str:
     prefix = "org.apache.xerces."
     return package_name[len(prefix) :] if package_name.startswith(prefix) else package_name
 
 
-def _width(value: float, maximum: float, minimum: float = 0.7, top: float = 4.0) -> float:
-    if maximum <= 0:
-        return minimum
-    return minimum + (top - minimum) * math.sqrt(value / maximum)
+def _style_axis(axis) -> None:
+    axis.spines[["top", "right"]].set_visible(False)
+    axis.spines[["left", "bottom"]].set_color("#A7A7A7")
+    axis.tick_params(colors="#3F3F3F", labelsize=7)
+    axis.grid(axis="x", color="#E5E5E5", linewidth=0.6)
+    axis.set_axisbelow(True)
 
 
-def _profile_for_page(data: FigureData, page: str, role: str) -> ClusterProfile:
-    stage = 1 if page == "stage13" else 2
-    return next(
-        profile
-        for selected_role, profile in data.selected
-        if selected_role == role and profile.stage == stage
+def _draw_header(axis, composite: CompositeData) -> None:
+    axis.axis("off")
+    high = composite.high
+    axis.add_patch(
+        plt.Rectangle(
+            (0, 0.04),
+            1,
+            0.92,
+            transform=axis.transAxes,
+            facecolor="#F2F6FA",
+            edgecolor="#315A7D",
+            linewidth=1.2,
+        )
     )
+    axis.text(
+        0.02,
+        0.72,
+        f"{high.cluster_id} - Highest-contributing focal cluster",
+        transform=axis.transAxes,
+        fontsize=14,
+        fontweight="bold",
+        color="#17365D",
+        va="center",
+    )
+    axis.text(
+        0.02,
+        0.38,
+        (
+            f"{len(high.members)} classes in {len(composite.packages)} packages     "
+            f"q_c = {high.contribution:.6f}     W_in = {high.internal_weight:.0f}     "
+            f"W_boundary = {high.boundary_weight:.0f}"
+        ),
+        transform=axis.transAxes,
+        fontsize=9.5,
+        color="#263746",
+        va="center",
+    )
+    if composite.page == "stage13":
+        axis.text(
+            0.98,
+            0.72,
+            "Shared Stage 1 and Stage 3 profile",
+            transform=axis.transAxes,
+            fontsize=9.5,
+            fontweight="bold",
+            ha="right",
+            color="#315A7D",
+            va="center",
+        )
+        axis.text(
+            0.98,
+            0.18,
+            "Stage 1 and Stage 3 select the same highest- and lowest-contributing clusters.",
+            transform=axis.transAxes,
+            fontsize=7.5,
+            ha="right",
+            color="#4C4C4C",
+            va="center",
+        )
 
 
-def figure_dot(
-    config: VisualizationConfig,
-    page: str,
-    high: ClusterProfile,
-    low: ClusterProfile,
-    aggregation: PackageAggregation,
-) -> str:
-    spec = config.figures[FIGURE_IDS[page]]
-    package_names = {
-        profile.package_id: profile.package_name for profile in aggregation.profiles
+def _draw_composition(axis, composite: CompositeData) -> None:
+    by_id = {profile.package_id: profile for profile in composite.packages}
+    profiles = [by_id[package_id] for package_id in composite.package_order]
+    values = [len(profile.member_classes) for profile in profiles]
+    positions = np.arange(len(profiles))
+    axis.barh(positions, values, color="#587FA4", height=0.62)
+    axis.set_yticks(
+        positions,
+        [_abbreviation(profile.package_name) for profile in profiles],
+        fontsize=7,
+    )
+    axis.invert_yaxis()
+    axis.set_xlabel("Number of focal classes", fontsize=8)
+    axis.set_title(
+        f"Package composition of {composite.high.cluster_id}\nInternal subdivisions",
+        loc="left",
+        fontsize=10,
+        fontweight="bold",
+        pad=8,
+    )
+    maximum = max(values)
+    axis.set_xlim(0, maximum * 1.18)
+    for position, value in zip(positions, values, strict=True):
+        axis.text(
+            value + maximum * 0.025,
+            position,
+            str(value),
+            va="center",
+            fontsize=7,
+            color="#2F2F2F",
+        )
+    _style_axis(axis)
+
+
+def _draw_matrix(axis, figure: Figure, composite: CompositeData) -> None:
+    matrix = interaction_matrix(composite)
+    by_id = {profile.package_id: profile for profile in composite.packages}
+    labels = [
+        _abbreviation(by_id[package_id].package_name)
+        for package_id in composite.package_order
+    ]
+    image = axis.imshow(matrix, cmap="Blues", interpolation="nearest", aspect="equal")
+    axis.set_xticks(np.arange(len(labels)), labels, rotation=52, ha="right", fontsize=6)
+    axis.set_yticks(np.arange(len(labels)), labels, fontsize=6)
+    axis.set_title(
+        "Internal package interaction\nDiagonal = within; off-diagonal = between",
+        fontsize=8.8,
+        fontweight="bold",
+        pad=8,
+    )
+    maximum = float(matrix.max())
+    for row in range(matrix.shape[0]):
+        for column in range(matrix.shape[1]):
+            value = matrix[row, column]
+            if value <= 0:
+                continue
+            axis.text(
+                column,
+                row,
+                f"{value:.0f}",
+                ha="center",
+                va="center",
+                fontsize=5.2,
+                color="white" if value > maximum * 0.48 else "#1E2C36",
+            )
+    axis.set_xticks(np.arange(-0.5, len(labels), 1), minor=True)
+    axis.set_yticks(np.arange(-0.5, len(labels), 1), minor=True)
+    axis.grid(which="minor", color="white", linestyle="-", linewidth=0.6)
+    axis.tick_params(which="minor", bottom=False, left=False)
+    colorbar = figure.colorbar(image, ax=axis, fraction=0.042, pad=0.025)
+    colorbar.ax.tick_params(labelsize=6)
+    colorbar.ax.set_title("Aggregated\nstructural weight", fontsize=6.2, pad=4)
+
+
+def _draw_boundary(axis, composite: CompositeData) -> None:
+    boundaries = composite.boundaries
+    values = [boundary.aggregated_weight for boundary in boundaries]
+    labels = [
+        f"External {boundary.external_cluster_id} ({len(boundary.external_classes)} classes)"
+        for boundary in boundaries
+    ]
+    positions = np.arange(len(boundaries))
+    axis.barh(positions, values, color="#7C8D92", height=0.62)
+    axis.set_yticks(positions, labels, fontsize=6.3)
+    axis.invert_yaxis()
+    axis.set_xlabel("Aggregated boundary weight", fontsize=8)
+    axis.set_title(
+        "Boundary-weight profile\nOutside-cluster destinations",
+        loc="left",
+        fontsize=10,
+        fontweight="bold",
+        pad=8,
+    )
+    maximum = max(values)
+    axis.set_xlim(0, maximum * 1.23)
+    for position, value in zip(positions, values, strict=True):
+        axis.text(
+            value + maximum * 0.025,
+            position,
+            f"{value:.0f}",
+            va="center",
+            fontsize=6.3,
+            color="#2F2F2F",
+        )
+    _style_axis(axis)
+
+
+def _draw_lowest(axis, composite: CompositeData) -> None:
+    low = composite.low
+    axis.set_facecolor("#F8F8F8")
+    for spine in axis.spines.values():
+        spine.set_color("#B5B5B5")
+        spine.set_linewidth(0.8)
+    axis.set_xticks([])
+    axis.set_yticks([])
+    members = [class_id.rsplit(".", 1)[-1] for class_id in low.members]
+    axis.text(
+        0.04,
+        0.9,
+        f"{low.cluster_id} - Lowest-contributing cluster",
+        transform=axis.transAxes,
+        fontsize=9,
+        fontweight="bold",
+        color="#333333",
+        va="top",
+    )
+    axis.text(
+        0.04,
+        0.69,
+        "\n".join(members),
+        transform=axis.transAxes,
+        fontsize=7.5,
+        color="#315A7D",
+        va="top",
+    )
+    axis.text(
+        0.52,
+        0.7,
+        (
+            f"{len(low.members)} {'class' if len(low.members) == 1 else 'classes'}\n"
+            f"q_c = {low.contribution:.6f}\n"
+            f"W_in = {low.internal_weight:.0f}\n"
+            f"W_boundary = {low.boundary_weight:.0f}"
+        ),
+        transform=axis.transAxes,
+        fontsize=7,
+        color="#404040",
+        va="top",
+    )
+    if not low.boundary_aggregates:
+        axis.text(
+            0.04,
+            0.25,
+            "Isolated singleton\nNo internal or boundary relations",
+            transform=axis.transAxes,
+            fontsize=7.5,
+            color="#555555",
+            va="top",
+        )
+        return
+    summary = sorted(
+        low.boundary_aggregates,
+        key=lambda item: (-item.boundary_weight, item.external_cluster_id),
+    )
+    inset = axis.inset_axes([0.46, 0.02, 0.51, 0.25])
+    values = [item.boundary_weight for item in summary]
+    labels = [f"External {item.external_cluster_id}" for item in summary]
+    positions = np.arange(len(summary))
+    inset.barh(positions, values, color="#9AA8AC", height=0.55)
+    inset.set_yticks(positions, labels, fontsize=6)
+    inset.invert_yaxis()
+    inset.tick_params(axis="x", labelsize=5.5)
+    inset.spines[["top", "right"]].set_visible(False)
+    inset.set_title("Boundary summary", fontsize=6.5, loc="left", pad=3)
+    maximum = max(values)
+    inset.set_xlim(0, maximum * 1.25)
+    for position, value in zip(positions, values, strict=True):
+        inset.text(
+            value + maximum * 0.03,
+            position,
+            f"{value:.0f}",
+            va="center",
+            fontsize=5.8,
+        )
+
+
+def create_figure(composite: CompositeData) -> Figure:
+    with plt.rc_context(
+        {
+            "font.family": "DejaVu Sans",
+            "font.size": 8,
+            "axes.titlecolor": "#252525",
+            "axes.labelcolor": "#353535",
+            "svg.hashsalt": "evo-ms-xerces-matrix-v1",
+            "pdf.fonttype": 42,
+        }
+    ):
+        figure = plt.figure(figsize=FIGURE_SIZE, facecolor="white")
+        outer = figure.add_gridspec(
+            2,
+            1,
+            height_ratios=(0.15, 0.85),
+            left=0.095,
+            right=0.98,
+            top=0.965,
+            bottom=0.075,
+            hspace=0.2,
+        )
+        header = figure.add_subplot(outer[0])
+        content = outer[1].subgridspec(
+            2,
+            3,
+            width_ratios=(1.08, 1.22, 1.28),
+            height_ratios=(0.72, 0.28),
+            wspace=0.72,
+            hspace=0.34,
+        )
+        composition = figure.add_subplot(content[:, 0])
+        matrix = figure.add_subplot(content[:, 1])
+        boundary = figure.add_subplot(content[0, 2])
+        lowest = figure.add_subplot(content[1, 2])
+        _draw_header(header, composite)
+        _draw_composition(composition, composite)
+        _draw_matrix(matrix, figure, composite)
+        _draw_boundary(boundary, composite)
+        _draw_lowest(lowest, composite)
+        return figure
+
+
+def _save_figure(figure: Figure, path: Path, output_format: str) -> None:
+    metadata = {
+        "Title": figure._suptitle.get_text() if figure._suptitle else "Xerces-J cluster contribution",
+        "Creator": "evo-ms-clustering Matplotlib visualisation pipeline",
     }
-    external_classes: defaultdict[str, set[str]] = defaultdict(set)
-    for relation in aggregation.boundary_relations:
-        external_classes[relation.external_cluster_id].update(relation.external_classes)
-    max_internal = max(
-        (relation.aggregated_weight for relation in aggregation.relations), default=1.0
-    )
-    max_boundary = max(
-        (relation.aggregated_weight for relation in aggregation.boundary_relations),
-        default=1.0,
-    )
-    frame_label = (
-        f"{high.cluster_id} - Highest-contributing focal cluster\n"
-        f"{len(high.members)} classes aggregated into {len(aggregation.profiles)} package nodes\n"
-        f"q_c = {high.contribution:.6f}    W_in = {high.internal_weight:.0f}    "
-        f"W_boundary = {high.boundary_weight:.0f}"
-    )
-    low_label = (
-        f"{low.cluster_id} - Lowest-contributing cluster\n"
-        f"{len(low.members)} {'class' if len(low.members) == 1 else 'classes'}    "
-        f"q_c = {low.contribution:.6f}    W_in = {low.internal_weight:.0f}    "
-        f"W_boundary = {low.boundary_weight:.0f}"
-    )
-    lines = [
-        f"digraph {dot_quote(spec.title)} {{",
-        "  graph "
-        + stable_attributes(
-            {
-                "bgcolor": "white",
-                "compound": True,
-                "concentrate": True,
-                "fontname": "Helvetica",
-                "fontsize": 11,
-                "label": spec.title,
-                "labelloc": "t",
-                "margin": 0.05,
-                "newrank": True,
-                "nodesep": 0.28,
-                "outputorder": "edgesfirst",
-                "pad": 0.12,
-                "rankdir": "LR",
-                "ranksep": 0.55,
-                "ratio": "fill",
-                "size": "11.1,7.3!",
-                "splines": "polyline",
-            }
-        )
-        + ";",
-        "  node "
-        + stable_attributes(
-            {
-                "fontname": "Helvetica",
-                "fontsize": 8.5,
-                "margin": "0.08,0.05",
-                "shape": "box",
-                "style": "rounded,filled",
-            }
-        )
-        + ";",
-        "  edge "
-        + stable_attributes({"fontname": "Helvetica", "fontsize": 7})
-        + ";",
-        "  subgraph cluster_focal {",
-        "    graph "
-        + stable_attributes(
-            {
-                "color": "#4472A5",
-                "fillcolor": "#F8FBFE",
-                "fontcolor": "#17365D",
-                "fontname": "Helvetica-Bold",
-                "fontsize": 11,
-                "label": frame_label,
-                "labeljust": "l",
-                "labelloc": "t",
-                "margin": 18,
-                "penwidth": 1.8,
-                "style": "rounded,filled",
-                "tooltip": f"The entire framed region is focal cluster {high.cluster_id}",
-            }
-        )
-        + ";",
-        "    \"focal_note\" "
-        + stable_attributes(
-            {
-                "color": "transparent",
-                "fillcolor": "transparent",
-                "fontcolor": "#35546F",
-                "fontsize": 8,
-                "label": "Package nodes are internal subdivisions of the framed focal cluster.",
-                "shape": "plain",
-                "style": "",
-            }
-        )
-        + ";",
-    ]
-    for profile in aggregation.profiles:
-        node_size = 0.55 + 0.035 * math.sqrt(len(profile.member_classes))
-        lines.append(
-            f"    {dot_quote('pkg_' + profile.package_id)} "
-            + stable_attributes(
-                {
-                    "color": "#4472A5",
-                    "fillcolor": "#DCEAF7",
-                    "height": node_size,
-                    "label": f"{_package_label(profile.package_name)}\n{len(profile.member_classes)} classes",
-                    "penwidth": 1.0,
-                    "tooltip": "; ".join(profile.member_classes),
-                    "width": 1.35 + 0.025 * math.sqrt(len(profile.member_classes)),
-                }
-            )
-            + ";"
-        )
-    focal_columns = [
-        aggregation.profiles[index : index + 5]
-        for index in range(0, len(aggregation.profiles), 5)
-    ]
-    for column_index, column in enumerate(focal_columns, 1):
-        lines.append(f"    subgraph focal_rank_{column_index:02d} {{")
-        lines.append("      rank=same;")
-        for profile in column:
-            lines.append(f"      {dot_quote('pkg_' + profile.package_id)};")
-        lines.append("    }")
-    if len(focal_columns) > 1:
-        focal_leaders = ["pkg_" + column[0].package_id for column in focal_columns]
-        lines.append(
-            "    "
-            + " -> ".join(dot_quote(leader) for leader in focal_leaders)
-            + " "
-            + stable_attributes({"style": "invis", "weight": 30})
-            + ";"
-        )
-    for relation in aggregation.relations:
-        lines.append(
-            f"    {dot_quote('pkg_' + relation.source_package)} -> "
-            f"{dot_quote('pkg_' + relation.target_package)} "
-            + stable_attributes(
-                {
-                    "color": "#4D4D4D",
-                    "constraint": False,
-                    "dir": "none",
-                    "penwidth": _width(relation.aggregated_weight, max_internal),
-                    "style": "solid",
-                    "tooltip": f"{relation.class_edge_count} internal class edges; weight {relation.aggregated_weight:g}",
-                }
-            )
-            + ";"
-        )
-    lines.append("  }")
-    external_ids = sorted(external_classes)
-    external_column_size = math.ceil(len(external_ids) / 2)
-    external_columns = [
-        external_ids[index : index + external_column_size]
-        for index in range(0, len(external_ids), external_column_size)
-    ]
-    for column_index, column in enumerate(external_columns, 1):
-        lines.extend(
-            [
-                f"  subgraph external_rank_{column_index:02d} {{",
-                "    rank=same;",
-            ]
-        )
-        for cluster_id in column:
-            classes = sorted(external_classes[cluster_id])
-            lines.append(
-                f"    {dot_quote('ext_' + cluster_id)} "
-                + stable_attributes(
-                    {
-                        "color": "#888888",
-                        "fillcolor": "#F2F2F2",
-                        "fontcolor": "#4D4D4D",
-                        "label": f"External {cluster_id}\n{len(classes)} classes",
-                        "penwidth": 1.0,
-                        "shape": "box",
-                        "style": "rounded,dashed,filled",
-                        "tooltip": "; ".join(classes),
-                    }
-                )
-                + ";"
-            )
-        lines.append("  }")
-    if external_columns:
-        external_leaders = ["ext_" + column[0] for column in external_columns]
-        lines.append(
-            "  \"focal_note\" -> "
-            + " -> ".join(dot_quote(leader) for leader in external_leaders)
-            + " "
-            + stable_attributes({"style": "invis", "weight": 20})
-            + ";"
-        )
-    for relation in aggregation.boundary_relations:
-        lines.append(
-            f"  {dot_quote('pkg_' + relation.source_package)} -> "
-            f"{dot_quote('ext_' + relation.external_cluster_id)} "
-            + stable_attributes(
-                {
-                    "color": "#8A8A8A",
-                    "constraint": False,
-                    "dir": "none",
-                    "penwidth": _width(
-                        relation.aggregated_weight, max_boundary, 0.6, 2.6
-                    ),
-                    "style": "dashed",
-                    "tooltip": f"{relation.boundary_edge_count} boundary class edges; weight {relation.aggregated_weight:g}",
-                }
-            )
-            + ";"
-        )
-    lines.extend(
-        [
-            "  subgraph cluster_lowest {",
-            "    graph "
-            + stable_attributes(
-                {
-                    "color": "#A6A6A6",
-                    "fontname": "Helvetica-Bold",
-                    "fontsize": 9,
-                    "label": low_label,
-                    "labeljust": "l",
-                    "labelloc": "t",
-                    "margin": 14,
-                    "penwidth": 1.1,
-                    "style": "rounded",
-                }
-            )
-            + ";",
-        ]
-    )
-    low_member_ids = {
-        class_id: f"low_{index:02d}"
-        for index, class_id in enumerate(low.members, 1)
-    }
-    for class_id in low.members:
-        lines.append(
-            f"    {dot_quote(low_member_ids[class_id])} "
-            + stable_attributes(
-                {
-                    "color": "#4472A5",
-                    "fillcolor": "#DCEAF7",
-                    "fontsize": 8,
-                    "label": class_id.rsplit(".", 1)[-1],
-                    "tooltip": class_id,
-                }
-            )
-            + ";"
-        )
-    if len(low.members) == 1 and not low.boundary_edges:
-        lines.append(
-            "    \"isolated_note\" "
-            + stable_attributes(
-                {
-                    "color": "transparent",
-                    "fillcolor": "transparent",
-                    "fontcolor": "#555555",
-                    "fontsize": 8,
-                    "label": "Isolated singleton\nNo internal or boundary relations",
-                    "shape": "plain",
-                    "style": "",
-                }
-            )
-            + ";"
-        )
-        lines.append(
-            "    \"low_01\" -> \"isolated_note\" "
-            + stable_attributes({"style": "invis", "weight": 5})
-            + ";"
-        )
+    if output_format == "pdf":
+        metadata.update({"CreationDate": None, "ModDate": None})
     else:
-        low_member_set = set(low.members)
-        for source, target, weight in low.internal_edges:
-            lines.append(
-                f"    {dot_quote(low_member_ids[source])} -> {dot_quote(low_member_ids[target])} "
-                + stable_attributes(
-                    {
-                        "color": "#4D4D4D",
-                        "dir": "none",
-                        "penwidth": _width(weight, max(low.internal_weight, 1.0)),
-                        "tooltip": f"internal structural weight {weight:g}",
-                    }
-                )
-                + ";"
-            )
-        for aggregate in low.boundary_aggregates:
-            node_id = "low_ext_" + aggregate.external_cluster_id
-            lines.append(
-                f"    {dot_quote(node_id)} "
-                + stable_attributes(
-                    {
-                        "color": "#888888",
-                        "fillcolor": "#F2F2F2",
-                        "fontsize": 7.5,
-                        "label": f"External {aggregate.external_cluster_id}\n{len(aggregate.external_classes)} classes",
-                        "style": "rounded,dashed,filled",
-                        "tooltip": "; ".join(aggregate.external_classes),
-                    }
-                )
-                + ";"
-            )
-            for connection in aggregate.connections:
-                if connection.focal_class not in low_member_set:
-                    raise ValueError("lowest boundary connection has no focal endpoint")
-                lines.append(
-                    f"    {dot_quote(low_member_ids[connection.focal_class])} -> {dot_quote(node_id)} "
-                    + stable_attributes(
-                        {
-                            "color": "#7A7A7A",
-                            "dir": "none",
-                            "penwidth": _width(
-                                connection.boundary_weight,
-                                max(low.boundary_weight, 1.0),
-                                0.6,
-                                2.2,
-                            ),
-                            "style": "dashed",
-                            "tooltip": f"{connection.boundary_edge_count} boundary class edges; weight {connection.boundary_weight:g}",
-                        }
-                    )
-                    + ";"
-                )
-    lines.extend(
-        [
-            "  }",
-            "  subgraph cluster_legend {",
-            "    graph "
-            + stable_attributes(
-                {
-                    "color": "#D0D0D0",
-                    "fontname": "Helvetica-Bold",
-                    "fontsize": 8,
-                    "label": "Legend",
-                    "labeljust": "l",
-                    "margin": 10,
-                    "style": "rounded",
-                }
-            )
-            + ";",
-            "    \"legend_package\" "
-            + stable_attributes(
-                {
-                    "color": "#4472A5",
-                    "fillcolor": "#DCEAF7",
-                    "fontsize": 7.5,
-                    "label": "Focal package node\nsize = focal class count",
-                }
-            )
-            + ";",
-            "    \"legend_external\" "
-            + stable_attributes(
-                {
-                    "color": "#888888",
-                    "fillcolor": "#F2F2F2",
-                    "fontsize": 7.5,
-                    "label": "External cluster summary",
-                    "style": "rounded,dashed,filled",
-                }
-            )
-            + ";",
-            "    \"legend_relations\" "
-            + stable_attributes(
-                {
-                    "color": "transparent",
-                    "fillcolor": "transparent",
-                    "fontsize": 7.5,
-                    "label": "Solid edge = aggregated internal structural weight\nDashed edge = aggregated boundary weight",
-                    "shape": "plain",
-                    "style": "",
-                }
-            )
-            + ";",
-            "  }",
-        ]
-    )
-    if page == "stage13":
-        lines.append(
-            "  \"shared_note\" "
-            + stable_attributes(
-                {
-                    "color": "transparent",
-                    "fillcolor": "transparent",
-                    "fontname": "Helvetica-Bold",
-                    "fontsize": 9,
-                    "label": "Stage 1 and Stage 3 select the same highest- and lowest-contributing clusters.",
-                    "shape": "plain",
-                    "style": "",
-                }
-            )
-            + ";"
+        metadata["Date"] = None
+    with plt.rc_context(
+        {
+            "font.family": "DejaVu Sans",
+            "svg.hashsalt": "evo-ms-xerces-matrix-v1",
+            "pdf.fonttype": 42,
+        }
+    ):
+        figure.savefig(
+            path,
+            format=output_format,
+            dpi=150,
+            facecolor="white",
+            metadata=metadata,
         )
-    lines.append(
-        "  \"audit_note\" "
-        + stable_attributes(
-            {
-                "color": "transparent",
-                "fillcolor": "transparent",
-                "fontcolor": "#555555",
-                "fontsize": 7.5,
-                "label": "Complete class-level membership and edge data are provided in companion CSV files.",
-                "shape": "plain",
-                "style": "",
-            }
+    if output_format == "svg":
+        normalized = "\n".join(
+            line.rstrip() for line in path.read_text(encoding="utf-8").splitlines()
         )
-        + ";"
-    )
-    lines.append("}")
-    return "\n".join(lines) + "\n"
+        path.write_text(normalized + "\n", encoding="utf-8", newline="\n")
 
 
 def _targets(config: VisualizationConfig, page: str, output_root: Path | None):
@@ -1076,13 +1074,13 @@ def _targets(config: VisualizationConfig, page: str, output_root: Path | None):
         targets = {
             "profiles": data_root / "xerces_cluster_profiles.csv",
             "selected": data_root / "xerces_highest_lowest_clusters.csv",
-            "class_membership": data_root / f"{prefix}_class_membership.csv",
+            "membership": data_root / f"{prefix}_class_membership.csv",
             "package_profiles": data_root / f"{prefix}_package_profiles.csv",
             "package_relations": data_root / f"{prefix}_package_relations.csv",
-            "boundary_aggregation": data_root / f"{prefix}_boundary_aggregation.csv",
+            "boundary_profile": data_root / f"{prefix}_boundary_profile.csv",
+            "lowest_profile": data_root / f"{prefix}_lowest_cluster_profile.csv",
             "internal_edges": data_root / f"{prefix}_class_internal_edges.csv",
             "boundary_edges": data_root / f"{prefix}_class_boundary_edges.csv",
-            "dot": config.output.dot / DIRECTORY / f"{basename}.dot",
             "svg": config.output.svg / DIRECTORY / f"{basename}.svg",
             "pdf": config.output.pdf / DIRECTORY / f"{basename}.pdf",
             "provenance": data_root / f"{basename}.provenance.json",
@@ -1093,18 +1091,97 @@ def _targets(config: VisualizationConfig, page: str, output_root: Path | None):
     targets = {
         "profiles": data_root / "xerces_cluster_profiles.csv",
         "selected": data_root / "xerces_highest_lowest_clusters.csv",
-        "class_membership": data_root / f"{prefix}_class_membership.csv",
+        "membership": data_root / f"{prefix}_class_membership.csv",
         "package_profiles": data_root / f"{prefix}_package_profiles.csv",
         "package_relations": data_root / f"{prefix}_package_relations.csv",
-        "boundary_aggregation": data_root / f"{prefix}_boundary_aggregation.csv",
+        "boundary_profile": data_root / f"{prefix}_boundary_profile.csv",
+        "lowest_profile": data_root / f"{prefix}_lowest_cluster_profile.csv",
         "internal_edges": data_root / f"{prefix}_class_internal_edges.csv",
         "boundary_edges": data_root / f"{prefix}_class_boundary_edges.csv",
-        "dot": root / "source" / DIRECTORY / f"{basename}.dot",
         "svg": root / "preview" / DIRECTORY / f"{basename}.svg",
         "pdf": root / "pdf" / DIRECTORY / f"{basename}.pdf",
         "provenance": data_root / f"{basename}.provenance.json",
     }
     return targets, root / "manifest.json", root
+
+
+def _git_state(repository_root: Path) -> tuple[str, bool]:
+    commit = subprocess.run(
+        ["git", "-C", str(repository_root), "rev-parse", "HEAD"],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.strip()
+    status = subprocess.run(
+        ["git", "-C", str(repository_root), "status", "--porcelain=v1"],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    return commit, bool(status.strip())
+
+
+def _provenance(
+    config: VisualizationConfig,
+    figure_id: str,
+    targets: dict[str, Path],
+    staged: dict[str, Path],
+    artifact_root: Path | None,
+    generated_at: str | None,
+    git_commit: str | None,
+    git_dirty: bool | None,
+) -> dict[str, object]:
+    specification = config.figures[figure_id]
+    actual_commit, actual_dirty = (
+        _git_state(config.repository_root)
+        if git_commit is None or git_dirty is None
+        else (git_commit, git_dirty)
+    )
+    timestamp = generated_at or (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
+    return {
+        "schema_version": 1,
+        "figure_id": figure_id,
+        "stage": specification.stage,
+        "generator": "src/"
+        + specification.generator.replace(".", "/")
+        + ".py",
+        "renderer": "matplotlib",
+        "renderer_version": matplotlib.__version__,
+        "git_commit": actual_commit if git_commit is None else git_commit,
+        "git_dirty": actual_dirty if git_dirty is None else git_dirty,
+        "input_files": list(specification.inputs),
+        "input_sha256": {
+            path: sha256_file(config.repository_root / path)
+            for path in specification.inputs
+        },
+        "config_files": [
+            config.figures_config_path.relative_to(config.repository_root).as_posix(),
+            config.style_config_path.relative_to(config.repository_root).as_posix(),
+        ],
+        "config_sha256": {
+            path.relative_to(config.repository_root).as_posix(): sha256_file(path)
+            for path in (config.figures_config_path, config.style_config_path)
+        },
+        "render_command": [
+            ["matplotlib", "savefig", "--format", output_format]
+            for output_format in ("svg", "pdf")
+        ],
+        "generated_outputs": sorted(
+            _relative(path, config.repository_root, artifact_root)
+            for path in targets.values()
+        ),
+        "generated_at": timestamp,
+        "sha256": {
+            name: sha256_file(path)
+            for name, path in sorted(staged.items())
+            if name != "provenance"
+        },
+    }
 
 
 def build_figure(
@@ -1116,10 +1193,8 @@ def build_figure(
     generated_at: str | None = None,
     git_commit: str | None = None,
     git_dirty: bool | None = None,
-    renderer: Callable[
-        [GraphvizRenderRequest], GraphvizRenderResult
-    ] = render_graphviz,
-):
+    renderer: Callable[[Figure, Path, str], None] = _save_figure,
+) -> dict[str, Path]:
     page = next(
         (candidate for candidate, registered in FIGURE_IDS.items() if registered == figure_id),
         None,
@@ -1127,98 +1202,74 @@ def build_figure(
     specification = config.figures.get(figure_id)
     if page is None or specification is None or not specification.enabled:
         raise ValueError(f"Xerces-J figure is not registered: {figure_id}")
+    if specification.formats != ("svg", "pdf"):
+        raise ValueError("Xerces-J matrix figures must use SVG and PDF only")
     data = prepare_figure_data(config)
-    high = _profile_for_page(data, page, "highest")
-    low = _profile_for_page(data, page, "lowest")
-    stage_label = "stage1+stage3" if page == "stage13" else "stage2"
-    aggregation = package_aggregation(config, stage_label, high)
+    composite = prepare_composite_data(config, data, page)
     targets, default_manifest, artifact_root = _targets(
         config, page, None if output_root is None else Path(output_root)
     )
     manifest = default_manifest if manifest_path is None else Path(manifest_path)
     for path in (*targets.values(), manifest):
         path.parent.mkdir(parents=True, exist_ok=True)
+    staging_parent = artifact_root or config.repository_root / "reports/figures"
     with tempfile.TemporaryDirectory(
-        prefix=f".{figure_id}.",
-        dir=artifact_root or config.repository_root / "reports/figures",
+        prefix=f".{figure_id}.", dir=staging_parent
     ) as temporary:
-        temporary_root = Path(temporary)
-        staged = {name: temporary_root / f"figure.{name}" for name in targets}
-        staged["provenance"] = temporary_root / "figure.provenance.json"
+        root = Path(temporary)
+        staged = {name: root / f"figure.{name}" for name in targets}
+        staged["provenance"] = root / "figure.provenance.json"
         staged["profiles"].write_text(
             profiles_csv(data), encoding="utf-8", newline="\n"
         )
         staged["selected"].write_text(
             selected_csv(data), encoding="utf-8", newline="\n"
         )
-        staged["class_membership"].write_text(
-            class_membership_csv(aggregation), encoding="utf-8", newline="\n"
+        staged["membership"].write_text(
+            membership_csv(composite), encoding="utf-8", newline="\n"
         )
         staged["package_profiles"].write_text(
-            package_profiles_csv(aggregation), encoding="utf-8", newline="\n"
+            package_profiles_csv(composite), encoding="utf-8", newline="\n"
         )
         staged["package_relations"].write_text(
-            package_relations_csv(aggregation), encoding="utf-8", newline="\n"
+            package_relations_csv(composite), encoding="utf-8", newline="\n"
         )
-        staged["boundary_aggregation"].write_text(
-            package_boundary_csv(aggregation), encoding="utf-8", newline="\n"
+        staged["boundary_profile"].write_text(
+            boundary_profile_csv(composite), encoding="utf-8", newline="\n"
+        )
+        staged["lowest_profile"].write_text(
+            lowest_profile_csv(composite), encoding="utf-8", newline="\n"
         )
         staged["internal_edges"].write_text(
-            class_edges_csv(stage_label, "highest", high, "internal"),
-            encoding="utf-8",
-            newline="\n",
+            class_edges_csv(composite, "internal"), encoding="utf-8", newline="\n"
         )
         staged["boundary_edges"].write_text(
-            class_edges_csv(stage_label, "highest", high, "boundary"),
-            encoding="utf-8",
-            newline="\n",
+            class_edges_csv(composite, "boundary"), encoding="utf-8", newline="\n"
         )
-        write_dot(staged["dot"], figure_dot(config, page, high, low, aggregation))
-        renders = [
-            renderer(
-                GraphvizRenderRequest(
-                    staged["dot"], staged[output_format], output_format, "dot"
-                )
-            )
-            for output_format in ("svg", "pdf")
-        ]
-        for name in targets:
+        figure = create_figure(composite)
+        try:
+            for output_format in ("svg", "pdf"):
+                renderer(figure, staged[output_format], output_format)
+        finally:
+            plt.close(figure)
+        for name, path in staged.items():
             if name == "provenance":
                 continue
-            if not staged[name].is_file() or not staged[name].stat().st_size:
+            if not path.is_file() or not path.stat().st_size:
                 raise ValueError(f"missing staged {name}")
-        commands = tuple(
-            (
-                "dot",
-                f"-T{output_format}",
-                str(targets["dot"]),
-                "-o",
-                str(targets[output_format]),
-            )
-            for output_format in ("svg", "pdf")
+        provenance = _provenance(
+            config,
+            figure_id,
+            targets,
+            staged,
+            artifact_root,
+            generated_at,
+            git_commit,
+            git_dirty,
         )
-        record = build_provenance(
-            figure_id=figure_id,
-            stage=specification.stage,
-            generator="src/" + specification.generator.replace(".", "/") + ".py",
-            repository_root=config.repository_root,
-            input_files=(
-                config.repository_root / path for path in specification.inputs
-            ),
-            config_files=(config.figures_config_path, config.style_config_path),
-            dot_path=staged["dot"],
-            graphviz_engine="dot",
-            graphviz_version=renders[0].version,
-            render_commands=commands,
-            generated_outputs=targets.values(),
-            artifact_root=artifact_root,
-            generated_at=generated_at,
-            git_commit=git_commit,
-            git_dirty=git_dirty,
-        )
-        write_provenance(staged["provenance"], record)
+        write_json_atomic(staged["provenance"], provenance)
         document = (
-            json.loads(manifest.read_text())
+            json.loads(manifest.read_text(encoding="utf-8"))
             if manifest.exists()
             else {"schema_version": 1, "figures": {}}
         )
@@ -1226,16 +1277,10 @@ def build_figure(
             document.get("figures"), dict
         ):
             raise ValueError("invalid figure manifest")
-        for obsolete in (
-            "stage1_xerces_highest_lowest_clusters",
-            "stage2_xerces_highest_lowest_clusters",
-            "stage3_xerces_highest_lowest_clusters",
-        ):
-            document["figures"].pop(obsolete, None)
         document["figures"][figure_id] = {
             "destination": specification.destination,
             "formats": list(specification.formats),
-            "generated_at": record.generated_at,
+            "generated_at": provenance["generated_at"],
             "generator": specification.generator,
             "inputs": list(specification.inputs),
             "metadata": dict(specification.metadata or {}),
@@ -1249,7 +1294,7 @@ def build_figure(
             "stage": specification.stage,
             "title": specification.title,
         }
-        staged_manifest = temporary_root / "manifest.json"
+        staged_manifest = root / "manifest.json"
         write_json_atomic(staged_manifest, document)
         for name in targets:
             os.replace(staged[name], targets[name])

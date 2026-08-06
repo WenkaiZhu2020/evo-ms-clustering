@@ -200,7 +200,6 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
             generated_at=FIXED_TIME,
             git_commit="abc123",
             git_dirty=True,
-            renderer=_deterministic_renderer,
         )
     figures = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))["figures"]
     assert set(figures) == {

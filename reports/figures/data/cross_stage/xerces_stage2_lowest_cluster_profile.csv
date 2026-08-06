@@ -1,0 +1,3 @@
+stage,cluster_id,class_count,member_classes,q_c,internal_weight,boundary_weight,external_cluster_id,external_class_count,aggregated_boundary_weight
+stage2,C27,2,"[""org.apache.xml.serialize.HTMLSerializer"",""org.apache.xml.serialize.LineSeparator""]",-2.26496616588e-05,0,331,C03,6,327
+stage2,C27,2,"[""org.apache.xml.serialize.HTMLSerializer"",""org.apache.xml.serialize.LineSeparator""]",-2.26496616588e-05,0,331,C01,1,4

@@ -33,7 +33,7 @@ figures:
       - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv
     layout_profile: fixed_comparison
     enabled: true
-    formats: [dot, svg, pdf]
+    formats: [svg, pdf]
     generator: evo_ms.visualization.figures.stage123_xerces_clusters
     metadata:
       subject: xerces-j
@@ -49,7 +49,7 @@ figures:
     inputs: *xerces_cluster_inputs
     layout_profile: fixed_comparison
     enabled: true
-    formats: [dot, svg, pdf]
+    formats: [svg, pdf]
     generator: evo_ms.visualization.figures.stage123_xerces_clusters
     metadata:
       subject: xerces-j

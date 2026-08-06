@@ -4,31 +4,28 @@
     "configs/visualization/style.yml"
   ],
   "config_sha256": {
-    "configs/visualization/figures.yml": "8ba59a49f90e809238f5b70251f7f403dda5927303953dcd23b7cebb321ad209",
+    "configs/visualization/figures.yml": "61abdcf67a0fbee732db46ebe3df023fbb6534952234ba951f9009ef1f3adaa5",
     "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
   },
-  "dot_sha256": "aedfd6e9572ff50a8746ddc3b105feecb894869ee3f08c718504b52eb5ef458d",
   "figure_id": "stage2_xerces_highest_lowest_clusters",
-  "generated_at": "2026-08-06T20:28:09Z",
+  "generated_at": "2026-08-06T21:07:05Z",
   "generated_outputs": [
     "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
     "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
-    "reports/figures/data/cross_stage/xerces_stage2_boundary_aggregation.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_boundary_profile.csv",
     "reports/figures/data/cross_stage/xerces_stage2_class_boundary_edges.csv",
     "reports/figures/data/cross_stage/xerces_stage2_class_internal_edges.csv",
     "reports/figures/data/cross_stage/xerces_stage2_class_membership.csv",
     "reports/figures/data/cross_stage/xerces_stage2_highest_lowest_clusters.provenance.json",
+    "reports/figures/data/cross_stage/xerces_stage2_lowest_cluster_profile.csv",
     "reports/figures/data/cross_stage/xerces_stage2_package_profiles.csv",
     "reports/figures/data/cross_stage/xerces_stage2_package_relations.csv",
     "reports/figures/pdf/cross_stage/xerces_stage2_highest_lowest_clusters.pdf",
-    "reports/figures/preview/cross_stage/xerces_stage2_highest_lowest_clusters.svg",
-    "reports/figures/source/cross_stage/xerces_stage2_highest_lowest_clusters.dot"
+    "reports/figures/preview/cross_stage/xerces_stage2_highest_lowest_clusters.svg"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
-  "git_commit": "a110a547bd10c2e23f60d3a652fa21ea8deed764",
+  "git_commit": "debb0f3eb187cfa1e21563c83a3d92f220530402",
   "git_dirty": true,
-  "graphviz_engine": "dot",
-  "graphviz_version": "dot - graphviz version 14.0.4 (20251115.1723)",
   "input_files": [
     "data/extracted/xerces-j/class_nodes.csv",
     "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
@@ -53,19 +50,33 @@
   },
   "render_command": [
     [
-      "dot",
-      "-Tpdf",
-      "reports/figures/source/cross_stage/xerces_stage2_highest_lowest_clusters.dot",
-      "-o",
-      "reports/figures/pdf/cross_stage/xerces_stage2_highest_lowest_clusters.pdf"
+      "matplotlib",
+      "savefig",
+      "--format",
+      "svg"
     ],
     [
-      "dot",
-      "-Tsvg",
-      "reports/figures/source/cross_stage/xerces_stage2_highest_lowest_clusters.dot",
-      "-o",
-      "reports/figures/preview/cross_stage/xerces_stage2_highest_lowest_clusters.svg"
+      "matplotlib",
+      "savefig",
+      "--format",
+      "pdf"
     ]
   ],
+  "renderer": "matplotlib",
+  "renderer_version": "3.10.8",
+  "schema_version": 1,
+  "sha256": {
+    "boundary_edges": "16e8e733280fa06658aee3349f5f6315e7e99f49ef0b39960e1523824eab2fe9",
+    "boundary_profile": "3325687aed6ac05d63f04f0b8f835b950c1c3c78d24bc2a8c9739a4c67e1cc7c",
+    "internal_edges": "904363b3de2306d9667fdf005fc3655b55121ef8917d84109d00d22fa3eed92d",
+    "lowest_profile": "c020cdd91f07e89f70a957b4c078900240a88360ca01c11455b8be25db148645",
+    "membership": "6849b68c42a785c96d1afa2a85ec4adc7b79d7fbf25d5128c861f6a0598db396",
+    "package_profiles": "50b2eb56bfdc635da14fe6f7a5ab77820dc8d9e1cb39132ee9fafd8099ed5157",
+    "package_relations": "ecf70d615e5c2f1e6edfb8ab28322a833c38b09a9f2a47fda981e54afe4cc0e5",
+    "pdf": "ee9b85f02b1963c1be09edf9f1d4841338a02bb928d0db314a2e54e70bfbb27b",
+    "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
+    "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
+    "svg": "70bba5d2ef4321e01f89345822bab1ebb006020ff8883d18a7bf1787e362f8bc"
+  },
   "stage": "stage2"
 }
