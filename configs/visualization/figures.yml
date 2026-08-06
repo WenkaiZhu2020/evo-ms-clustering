@@ -16,7 +16,17 @@ output:
   svg: reports/figures/preview
   pdf: reports/figures/pdf
 
-# Formal figures will be registered in later, stage-specific steps.
-# Future entries support: stage, title, destination, inputs,
-# layout_profile, and enabled.
-figures: {}
+figures:
+  stage3_four_to_three_projection:
+    stage: stage3
+    title: Projection of the Stage 3 Pareto set into the common structural objective space
+    destination: main_text
+    inputs:
+      - experiments/05_stage3_declaration_method_body/run.py
+    layout_profile: hierarchical
+    enabled: true
+    formats:
+      - dot
+      - svg
+      - pdf
+    generator: evo_ms.visualization.figures.stage3_projection

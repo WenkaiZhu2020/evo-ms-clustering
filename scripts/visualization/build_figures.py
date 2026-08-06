@@ -57,6 +57,24 @@ def _validate_config() -> int:
     return 0
 
 
+def _build_registered_figure(figure_id: str) -> int:
+    config = load_visualization_config()
+    specification = config.figures.get(figure_id)
+    if specification is None:
+        raise ValueError(f"unknown figure ID: {figure_id}")
+    if not specification.enabled:
+        raise ValueError(f"figure is disabled: {figure_id}")
+    if figure_id != "stage3_four_to_three_projection":
+        raise ValueError(f"no implemented generator for figure: {figure_id}")
+    from evo_ms.visualization.figures.stage3_projection import build_figure
+
+    outputs = build_figure(config)
+    for name in sorted(outputs):
+        path = outputs[name]
+        print(f"{name}\t{path.relative_to(config.repository_root)}\t{path.stat().st_size}\t{sha256_file(path)}")
+    return 0
+
+
 def _smoke_output_directory(value: Path, config) -> Path:
     output = value.resolve()
     if output == config.repository_root or output.is_relative_to(config.repository_root):
@@ -138,6 +156,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     operation.add_argument("--list", action="store_true", dest="list_figures")
     operation.add_argument("--validate-config", action="store_true")
     operation.add_argument("--smoke-test", action="store_true")
+    operation.add_argument("--figure")
     parser.add_argument("--output-dir", type=Path)
     return parser.parse_args(argv)
 
@@ -153,6 +172,10 @@ def main(argv: list[str] | None = None) -> int:
             if args.output_dir is not None:
                 raise ValueError("--output-dir is valid only with --smoke-test")
             return _validate_config()
+        if args.figure is not None:
+            if args.output_dir is not None:
+                raise ValueError("--output-dir is valid only with --smoke-test")
+            return _build_registered_figure(args.figure)
         if args.output_dir is None:
             raise ValueError("--smoke-test requires --output-dir")
         return _smoke_test(args.output_dir)

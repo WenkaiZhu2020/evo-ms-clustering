@@ -125,7 +125,7 @@ def provenance_json(record: ProvenanceRecord) -> str:
     return json.dumps(record.as_dict(), indent=2, sort_keys=True, ensure_ascii=False) + "\n"
 
 
-def write_provenance(path: str | Path, record: ProvenanceRecord) -> Path:
+def write_json_atomic(path: str | Path, document: object) -> Path:
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary_name = tempfile.mkstemp(
@@ -133,9 +133,13 @@ def write_provenance(path: str | Path, record: ProvenanceRecord) -> Path:
     )
     try:
         with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
-            handle.write(provenance_json(record))
+            handle.write(json.dumps(document, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
         os.replace(temporary_name, output)
     except Exception:
         Path(temporary_name).unlink(missing_ok=True)
         raise
     return output
+
+
+def write_provenance(path: str | Path, record: ProvenanceRecord) -> Path:
+    return write_json_atomic(path, record.as_dict())

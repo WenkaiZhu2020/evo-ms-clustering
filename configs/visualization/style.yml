@@ -51,6 +51,20 @@ graph:
   pad: 0.12
   background: white
 
+workflow:
+  stage3_space:
+    fillcolor: "#DCEAF7"
+    color: "#0072B2"
+  operation:
+    fillcolor: "#F2F2F2"
+    color: "#666666"
+  common_space:
+    fillcolor: "#DFF0E8"
+    color: "#009E73"
+  comparison:
+    fillcolor: "#EDF4FA"
+    color: "#5B7FA3"
+
 page_profiles:
   main_text:
     width_in: 6.25

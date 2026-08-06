@@ -36,6 +36,8 @@ class FigureSpecification:
     inputs: tuple[str, ...]
     layout_profile: str
     enabled: bool
+    formats: tuple[str, ...]
+    generator: str
 
 
 @dataclass(frozen=True)

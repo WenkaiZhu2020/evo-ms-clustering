@@ -20,10 +20,10 @@ def _run(*arguments: str, cwd: Path | None = None) -> subprocess.CompletedProces
     )
 
 
-def test_list_succeeds_with_empty_catalogue_from_another_cwd(tmp_path: Path) -> None:
+def test_list_succeeds_with_registered_catalogue_from_another_cwd(tmp_path: Path) -> None:
     completed = _run("--list", cwd=tmp_path)
     assert completed.returncode == 0
-    assert completed.stdout.strip() == "No formal figures registered."
+    assert "stage3_four_to_three_projection\tstage3\tenabled" in completed.stdout
 
 
 def test_validate_config_succeeds() -> None:

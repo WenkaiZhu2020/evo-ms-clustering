@@ -1,0 +1,47 @@
+{
+  "config_files": [
+    "configs/visualization/figures.yml",
+    "configs/visualization/style.yml"
+  ],
+  "config_sha256": {
+    "configs/visualization/figures.yml": "de53d6f9011e759841d5f98b764a7c45cd9aa474c74e7d8dbf6497a8ae97a6b1",
+    "configs/visualization/style.yml": "256647c3c848262090238cd012015b2385d467de342798e6286f21bae07af465"
+  },
+  "dot_sha256": "5c084e484b6101ec0e0c9fea38d293618a6c909938240dad869ff3064664b366",
+  "figure_id": "stage3_four_to_three_projection",
+  "generated_at": "2026-08-06T16:50:47Z",
+  "generated_outputs": [
+    "reports/figures/data/stage3/stage3_four_to_three_projection.provenance.json",
+    "reports/figures/pdf/stage3/stage3_four_to_three_projection.pdf",
+    "reports/figures/preview/stage3/stage3_four_to_three_projection.svg",
+    "reports/figures/source/stage3/stage3_four_to_three_projection.dot"
+  ],
+  "generator": "src/evo_ms/visualization/figures/stage3_projection.py",
+  "git_commit": "2d8657e631d18f358dc1b144bc88bf1f8778d1cc",
+  "git_dirty": true,
+  "graphviz_engine": "dot",
+  "graphviz_version": "dot - graphviz version 14.0.4 (20251115.1723)",
+  "input_files": [
+    "experiments/05_stage3_declaration_method_body/run.py"
+  ],
+  "input_sha256": {
+    "experiments/05_stage3_declaration_method_body/run.py": "16b3f0df361acc5d8789eb8cd5413ac930f0f22354ccebb4cfefdd375bdf0176"
+  },
+  "render_command": [
+    [
+      "dot",
+      "-Tpdf",
+      "reports/figures/source/stage3/stage3_four_to_three_projection.dot",
+      "-o",
+      "reports/figures/pdf/stage3/stage3_four_to_three_projection.pdf"
+    ],
+    [
+      "dot",
+      "-Tsvg",
+      "reports/figures/source/stage3/stage3_four_to_three_projection.dot",
+      "-o",
+      "reports/figures/preview/stage3/stage3_four_to_three_projection.svg"
+    ]
+  ],
+  "stage": "stage3"
+}

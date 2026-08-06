@@ -1,0 +1,16 @@
+digraph "Projection of the Stage 3 Pareto set into the common structural objective space" {
+  graph [bgcolor="white", fontname="Helvetica", margin=0.08, nodesep=0.28, outputorder="edgesfirst", pad=0.12, rankdir="TB", ranksep=0.55, size="6.25,7.8"];
+  "n1" [color="#0072B2", fillcolor="#DCEAF7", fontname="Helvetica", fontsize=10, margin="0.16,0.10", penwidth=1, shape="box", style="rounded,filled", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="CENTER">Stage 3 four-objective Pareto set</TD></TR><TR><TD ALIGN="CENTER">(coupling, −cohesion, imbalance, <I>f</I><SUB>sem</SUB>)</TD></TR></TABLE>>];
+  "n2" [color="#666666", fillcolor="#F2F2F2", fontname="Helvetica", fontsize=10, margin="0.16,0.10", penwidth=1, shape="box", style="rounded,filled", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="CENTER">Project onto the structural objectives</TD></TR><TR><TD ALIGN="CENTER">(coupling, −cohesion, imbalance)</TD></TR></TABLE>>];
+  "n3" [color="#666666", fillcolor="#F2F2F2", fontname="Helvetica", fontsize=10, margin="0.16,0.10", penwidth=1, shape="box", style="rounded,filled", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="CENTER">Recompute non-dominance in 3D</TD></TR><TR><TD ALIGN="CENTER">Remove exact duplicate triples</TD></TR></TABLE>>];
+  "n4" [color="#009E73", fillcolor="#DFF0E8", fontname="Helvetica", fontsize=10, margin="0.16,0.10", penwidth=1, shape="box", style="rounded,filled", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="CENTER">Projected Stage 3 front</TD></TR><TR><TD ALIGN="CENTER">(coupling, −cohesion, imbalance)</TD></TR></TABLE>>];
+  "n5" [color="#5B7FA3", fillcolor="#EDF4FA", fontname="Helvetica", fontsize=10, margin="0.16,0.10", penwidth=1, shape="box", style="rounded,filled", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="CENTER">Common structural comparison</TD></TR><TR><TD ALIGN="CENTER">Stage 2 front vs projected Stage 3 front</TD></TR></TABLE>>];
+
+  subgraph "top_row" { rank=same; "n1"; "n2"; "n3"; }
+  subgraph "bottom_row" { rank=same; "n4"; "n5"; }
+
+  "n1" -> "n2" [arrowsize=0.75, color="#666666", fontname="Helvetica", penwidth=1, style="solid"];
+  "n2" -> "n3" [arrowsize=0.75, color="#666666", fontname="Helvetica", penwidth=1, style="solid"];
+  "n3" -> "n4" [arrowsize=0.75, color="#666666", fontname="Helvetica", penwidth=1, style="solid"];
+  "n4" -> "n5" [arrowsize=0.75, color="#666666", fontname="Helvetica", penwidth=1, style="solid"];
+}

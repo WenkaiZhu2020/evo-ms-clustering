@@ -1,4 +1,32 @@
 {
-  "schema_version": 1,
-  "figures": {}
+  "figures": {
+    "stage3_four_to_three_projection": {
+      "destination": "main_text",
+      "formats": [
+        "dot",
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-06T16:50:47Z",
+      "generator": "evo_ms.visualization.figures.stage3_projection",
+      "inputs": [
+        "experiments/05_stage3_declaration_method_body/run.py"
+      ],
+      "outputs": {
+        "dot": "reports/figures/source/stage3/stage3_four_to_three_projection.dot",
+        "pdf": "reports/figures/pdf/stage3/stage3_four_to_three_projection.pdf",
+        "provenance": "reports/figures/data/stage3/stage3_four_to_three_projection.provenance.json",
+        "svg": "reports/figures/preview/stage3/stage3_four_to_three_projection.svg"
+      },
+      "sha256": {
+        "dot": "5c084e484b6101ec0e0c9fea38d293618a6c909938240dad869ff3064664b366",
+        "pdf": "f52e68ea070100000f0956dcaa8c71fa7177084a669e362af845fcfc3002eb52",
+        "provenance": "294fb754a1041122e405845948a4927b354dff71ba0b5cb94acfa8368d8b1095",
+        "svg": "e90a881ce0d694f9a0931e5e8fd37a29dbf6fcc6bd17bb134b7f5de82007c5f0"
+      },
+      "stage": "stage3",
+      "title": "Projection of the Stage 3 Pareto set into the common structural objective space"
+    }
+  },
+  "schema_version": 1
 }

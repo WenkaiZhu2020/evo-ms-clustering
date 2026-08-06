@@ -27,6 +27,7 @@ REQUIRED_STYLE_KEYS = (
     "edge_categories",
     "transition_flow",
     "graph",
+    "workflow",
     "page_profiles",
     "graphviz",
     "layout_profiles",
@@ -115,11 +116,22 @@ def _layout_profiles(style: Mapping[str, Any]) -> Mapping[str, LayoutProfile]:
 def _figures(
     raw_figures: Mapping[str, Any],
     allowed_stages: tuple[str, ...],
+    allowed_formats: tuple[str, ...],
     profiles: Mapping[str, LayoutProfile],
     page_profiles: Mapping[str, Any],
+    repository_root: Path,
 ) -> Mapping[str, FigureSpecification]:
     figures: dict[str, FigureSpecification] = {}
-    required = ("stage", "title", "destination", "inputs", "layout_profile", "enabled")
+    required = (
+        "stage",
+        "title",
+        "destination",
+        "inputs",
+        "layout_profile",
+        "enabled",
+        "formats",
+        "generator",
+    )
     for figure_id in sorted(raw_figures):
         if not isinstance(figure_id, str) or not figure_id:
             raise ValueError("figure IDs must be non-empty strings")
@@ -137,16 +149,33 @@ def _figures(
             raise ValueError(f"figure {figure_id}.title must be a non-empty string")
         if not isinstance(raw["inputs"], list) or not all(isinstance(item, str) for item in raw["inputs"]):
             raise ValueError(f"figure {figure_id}.inputs must be a list of paths")
+        inputs = tuple(sorted(raw["inputs"]))
+        for input_path in inputs:
+            resolved, _relative = _path_within(
+                repository_root, input_path, f"figure {figure_id} input"
+            )
+            if not resolved.is_file():
+                raise ValueError(f"figure {figure_id} input does not exist: {input_path}")
         if not isinstance(raw["enabled"], bool):
             raise ValueError(f"figure {figure_id}.enabled must be boolean")
+        figure_formats = _string_list(raw["formats"], f"figure {figure_id}.formats")
+        unsupported = sorted(set(figure_formats) - set(allowed_formats))
+        if unsupported:
+            raise ValueError(
+                f"figure {figure_id} has unsupported formats: {', '.join(unsupported)}"
+            )
+        if not isinstance(raw["generator"], str) or not raw["generator"]:
+            raise ValueError(f"figure {figure_id}.generator must be a non-empty string")
         figures[figure_id] = FigureSpecification(
             figure_id=figure_id,
             stage=raw["stage"],
             title=raw["title"],
             destination=raw["destination"],
-            inputs=tuple(sorted(raw["inputs"])),
+            inputs=inputs,
             layout_profile=raw["layout_profile"],
             enabled=raw["enabled"],
+            formats=figure_formats,
+            generator=raw["generator"],
         )
     return MappingProxyType(figures)
 
@@ -201,7 +230,14 @@ def load_visualization_config(
     page_profiles = _mapping(style["page_profiles"], "style.page_profiles")
     profiles = _layout_profiles(style)
     raw_figures = _mapping(catalogue.get("figures"), "figures")
-    figures = _figures(raw_figures, allowed_stages, profiles, page_profiles)
+    figures = _figures(
+        raw_figures,
+        allowed_stages,
+        formats,
+        profiles,
+        page_profiles,
+        root,
+    )
 
     return VisualizationConfig(
         repository_root=root,

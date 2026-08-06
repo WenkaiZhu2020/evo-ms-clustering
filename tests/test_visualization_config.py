@@ -23,13 +23,16 @@ def _write_configs(root: Path, figures: dict, style: dict) -> None:
     directory.mkdir(parents=True)
     (directory / "figures.yml").write_text(yaml.safe_dump(figures, sort_keys=False), encoding="utf-8")
     (directory / "style.yml").write_text(yaml.safe_dump(style, sort_keys=False), encoding="utf-8")
+    implementation = root / "experiments/05_stage3_declaration_method_body/run.py"
+    implementation.parent.mkdir(parents=True)
+    implementation.write_text("# synthetic implementation source\n", encoding="utf-8")
 
 
 def test_default_configs_load_from_repository_root() -> None:
     config = load_visualization_config()
     assert config.repository_root == ROOT
     assert config.schema_version == 1
-    assert config.figures == {}
+    assert set(config.figures) == {"stage3_four_to_three_projection"}
     assert config.output.dot == ROOT / "reports/figures/source"
 
 
@@ -78,8 +81,9 @@ def test_subject_display_names_are_canonical() -> None:
     }
 
 
-def test_manifest_is_an_empty_schema_valid_catalogue() -> None:
+def test_manifest_is_a_schema_valid_catalogue() -> None:
     import json
 
     manifest = json.loads((ROOT / "reports/figures/manifest.json").read_text(encoding="utf-8"))
-    assert manifest == {"schema_version": 1, "figures": {}}
+    assert manifest["schema_version"] == 1
+    assert isinstance(manifest["figures"], dict)
