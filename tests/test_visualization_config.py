@@ -36,6 +36,7 @@ def test_default_configs_load_from_repository_root() -> None:
     assert config.schema_version == 1
     assert set(config.figures) == {
         "stage123_daytrader_highest_lowest_clusters",
+        "stage123_jpetstore_highest_lowest_clusters",
         "stage2_daytrader_partition_transition",
         "stage3_four_to_three_projection",
         "stage3_jpetstore_semantic_evidence_comparison",

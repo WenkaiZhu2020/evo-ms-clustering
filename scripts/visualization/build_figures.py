@@ -72,6 +72,8 @@ def _build_registered_figure(figure_id: str) -> int:
         from evo_ms.visualization.figures.stage3_jpetstore_semantic_evidence import build_figure
     elif figure_id == "stage123_daytrader_highest_lowest_clusters":
         from evo_ms.visualization.figures.stage123_daytrader_clusters import build_figure
+    elif figure_id == "stage123_jpetstore_highest_lowest_clusters":
+        from evo_ms.visualization.figures.stage123_jpetstore_clusters import build_figure
     else:
         raise ValueError(f"no implemented generator for figure: {figure_id}")
 

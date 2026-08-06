@@ -305,8 +305,14 @@ def _wrapped_simple_name(class_id: str) -> str:
     return "\n".join(lines)
 
 
-def figure_dot(config: VisualizationConfig, data: FigureData) -> str:
-    spec=config.figures[FIGURE_ID]; style=config.style["cluster_contribution_comparison"]; font=config.style["fonts"]["family"]
+def figure_dot(
+    config: VisualizationConfig,
+    data: FigureData,
+    *,
+    figure_id: str = FIGURE_ID,
+    comparison_note: str | None = "The highest-contributing cluster is unchanged across the three stages.",
+) -> str:
+    spec=config.figures[figure_id]; style=config.style["cluster_contribution_comparison"]; font=config.style["fonts"]["family"]
     x_centres={"highest":125.0,"lowest":375.0}; y_centres={1:600.0,2:385.0,3:170.0}
     lines=[f"graph {dot_quote(spec.title)} {{", "  graph "+stable_attributes({"bb":"0,0,500,730","bgcolor":"white","margin":0,"outputorder":"edgesfirst","overlap":True,"pad":0.02,"size":"6.944,10.139!","splines":"true","start":42})+";",
            "  node "+stable_attributes({"fontname":font,"fontsize":style["node_font_size"],"height":0.18,"margin":"0.025,0.012","shape":"box","style":"rounded,filled","width":0.1})+";",
@@ -344,8 +350,9 @@ def figure_dot(config: VisualizationConfig, data: FigureData) -> str:
                 lines.append(f"  {dot_quote(ids[connection.focal_class])} -- {dot_quote(summary_ids[aggregate.external_cluster_id])} "+stable_attributes({"color":style["boundary_edge"],"penwidth":width,"style":"dashed","tooltip":tooltip})+";")
         if not profile.internal_edges and not profile.boundary_edges:
             lines.append(f"  {dot_quote(prefix+'_isolated')} "+stable_attributes({**plain,"fontsize":6.2,"label":"Isolated singleton\nNo internal or boundary relations","pos":f"{cx},{cy-52}!"})+";")
+    if comparison_note:
+        lines.append('  "comparison_note" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":comparison_note,"pos":"250,57!","shape":"plain","style":"","fontsize":6.5})+";")
     lines.extend([
-        '  "comparison_note" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":"The highest-contributing cluster is unchanged across the three stages.","pos":"250,57!","shape":"plain","style":"","fontsize":6.5})+";",
         '  "legend_focal" '+stable_attributes({"color":style["focal_border"],"fillcolor":style["focal_fill"],"label":"Focal-cluster class","pos":"60,29!"})+";",
         '  "legend_external" '+stable_attributes({"color":style["external_border"],"fillcolor":style["external_fill"],"label":"External-cluster summary","pos":"185,29!","shape":"box","style":"rounded,dashed,filled"})+";",
         '  "legend_i1" '+stable_attributes({"label":"","pos":"290,34!","shape":"point","width":0.04})+";",

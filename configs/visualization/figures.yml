@@ -17,6 +17,38 @@ output:
   pdf: reports/figures/pdf
 
 figures:
+  stage123_jpetstore_highest_lowest_clusters:
+    stage: stage3
+    title: Highest- and lowest-contributing JPetStore clusters across the three stages
+    destination: appendix
+    inputs:
+      - data/extracted/jpetstore/class_nodes.csv
+      - results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
+      - results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
+      - results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv
+      - results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv
+      - results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz
+      - results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv
+      - results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json
+      - results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/posthoc_metrics.csv
+    layout_profile: fixed_comparison
+    enabled: true
+    formats:
+      - dot
+      - svg
+      - pdf
+    generator: evo_ms.visualization.figures.stage123_jpetstore_clusters
+    metadata:
+      subject: jpetstore
+      ranking_metric: local weighted-modularity contribution
+      raw_structural_graph: results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
+      stage1_partition: results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
+      stage1_representative: seed 42
+      stage2_partition: results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz
+      stage2_representative: seed 1 / seed1_solution007
+      stage3_partition: results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv
+      stage3_representative: seed 0 / seed0_solution000
+
   stage123_daytrader_highest_lowest_clusters:
     stage: stage3
     title: Highest- and lowest-contributing DayTrader clusters across the three stages
