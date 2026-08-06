@@ -50,3 +50,23 @@ figures:
       - svg
       - pdf
     generator: evo_ms.visualization.figures.stage3_projection
+
+  stage3_jpetstore_semantic_evidence_comparison:
+    stage: stage3
+    title: Structural and semantic evidence in JPetStore
+    destination: main_text
+    inputs:
+      - data/extracted/jpetstore/class_nodes.csv
+      - results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
+      - data/semantic_graphs/declaration_method_body/jpetstore/semantic_edges.csv
+      - data/semantic_graphs/declaration_method_body/jpetstore/class_mapping.csv
+      - data/semantic_graphs/declaration_method_body/jpetstore/graph_metadata.json
+    layout_profile: fixed_comparison
+    layout_coordinate_path: reports/figures/data/common/jpetstore_union_positions.csv
+    edge_category_data_path: reports/figures/data/stage3/jpetstore_semantic_edge_categories.csv
+    enabled: true
+    formats:
+      - dot
+      - svg
+      - pdf
+    generator: evo_ms.visualization.figures.stage3_jpetstore_semantic_evidence

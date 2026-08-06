@@ -61,6 +61,43 @@
       },
       "stage": "stage3",
       "title": "Projection of the Stage 3 Pareto set into the common structural objective space"
+    },
+    "stage3_jpetstore_semantic_evidence_comparison": {
+      "destination": "main_text",
+      "edge_category_data_path": "reports/figures/data/stage3/jpetstore_semantic_edge_categories.csv",
+      "formats": [
+        "dot",
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-06T18:23:24Z",
+      "generator": "evo_ms.visualization.figures.stage3_jpetstore_semantic_evidence",
+      "inputs": [
+        "data/extracted/jpetstore/class_nodes.csv",
+        "data/semantic_graphs/declaration_method_body/jpetstore/class_mapping.csv",
+        "data/semantic_graphs/declaration_method_body/jpetstore/graph_metadata.json",
+        "data/semantic_graphs/declaration_method_body/jpetstore/semantic_edges.csv",
+        "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv"
+      ],
+      "layout_coordinate_path": "reports/figures/data/common/jpetstore_union_positions.csv",
+      "outputs": {
+        "categories": "reports/figures/data/stage3/jpetstore_semantic_edge_categories.csv",
+        "dot": "reports/figures/source/stage3/jpetstore_semantic_evidence_comparison.dot",
+        "pdf": "reports/figures/pdf/stage3/jpetstore_semantic_evidence_comparison.pdf",
+        "positions": "reports/figures/data/common/jpetstore_union_positions.csv",
+        "provenance": "reports/figures/data/stage3/jpetstore_semantic_evidence_comparison.provenance.json",
+        "svg": "reports/figures/preview/stage3/jpetstore_semantic_evidence_comparison.svg"
+      },
+      "sha256": {
+        "categories": "da3adfa7c065f22f0c0a93c12aad41911469d3eb2c88e2d99c38473af57783d0",
+        "dot": "7c34b22d1086337b07ce392646e8d9563d447a66de1fba1c6c201ab7ec572081",
+        "pdf": "a894cf776773328566fcfc8461dbfc6bc361bf69c53ab28de94ce9a739e9598e",
+        "positions": "032e1899fe6711b066ee71b67d4cd488a3874f01fcbd8c9a58b38903d7791821",
+        "provenance": "f27501ed2bc70d960c89bdcbe0c11ee665612204f89b50f33c8cf1a096d502c9",
+        "svg": "10e142104658f88f31d278669dcd908f11c190c29753a70c67c6da78f3e9c5c5"
+      },
+      "stage": "stage3",
+      "title": "Structural and semantic evidence in JPetStore"
     }
   },
   "schema_version": 1

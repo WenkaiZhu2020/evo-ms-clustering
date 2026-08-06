@@ -68,6 +68,8 @@ def _build_registered_figure(figure_id: str) -> int:
         from evo_ms.visualization.figures.stage3_projection import build_figure
     elif figure_id == "stage2_daytrader_partition_transition":
         from evo_ms.visualization.figures.stage2_daytrader_transition import build_figure
+    elif figure_id == "stage3_jpetstore_semantic_evidence_comparison":
+        from evo_ms.visualization.figures.stage3_jpetstore_semantic_evidence import build_figure
     else:
         raise ValueError(f"no implemented generator for figure: {figure_id}")
 

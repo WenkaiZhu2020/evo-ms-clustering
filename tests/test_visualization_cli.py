@@ -25,6 +25,7 @@ def test_list_succeeds_with_registered_catalogue_from_another_cwd(tmp_path: Path
     assert completed.returncode == 0
     assert "stage2_daytrader_partition_transition\tstage2\tenabled" in completed.stdout
     assert "stage3_four_to_three_projection\tstage3\tenabled" in completed.stdout
+    assert "stage3_jpetstore_semantic_evidence_comparison\tstage3\tenabled" in completed.stdout
 
 
 def test_validate_config_succeeds() -> None:

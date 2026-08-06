@@ -37,6 +37,7 @@ def test_default_configs_load_from_repository_root() -> None:
     assert set(config.figures) == {
         "stage2_daytrader_partition_transition",
         "stage3_four_to_three_projection",
+        "stage3_jpetstore_semantic_evidence_comparison",
     }
     assert config.output.dot == ROOT / "reports/figures/source"
 

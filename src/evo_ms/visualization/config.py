@@ -26,6 +26,7 @@ REQUIRED_STYLE_KEYS = (
     "changed_node",
     "edge_categories",
     "transition_flow",
+    "semantic_evidence_comparison",
     "graph",
     "workflow",
     "page_profiles",
@@ -168,6 +169,8 @@ def _figures(
             raise ValueError(f"figure {figure_id}.generator must be a non-empty string")
         representative_seed = raw.get("representative_seed")
         representative_solution = raw.get("representative_solution")
+        layout_coordinate_path = raw.get("layout_coordinate_path")
+        edge_category_data_path = raw.get("edge_category_data_path")
         if (representative_seed is None) != (representative_solution is None):
             raise ValueError(
                 f"figure {figure_id} must define representative_seed and "
@@ -181,6 +184,20 @@ def _figures(
             not isinstance(representative_solution, str) or not representative_solution
         ):
             raise ValueError(f"figure {figure_id}.representative_solution must be a non-empty string")
+        for field_name, field_value in (
+            ("layout_coordinate_path", layout_coordinate_path),
+            ("edge_category_data_path", edge_category_data_path),
+        ):
+            if field_value is not None:
+                if not isinstance(field_value, str) or not field_value:
+                    raise ValueError(f"figure {figure_id}.{field_name} must be a non-empty path")
+                _resolved, relative = _path_within(
+                    repository_root, field_value, f"figure {figure_id}.{field_name}"
+                )
+                if not relative.is_relative_to(Path("reports/figures/data")):
+                    raise ValueError(
+                        f"figure {figure_id}.{field_name} must be under reports/figures/data"
+                    )
         figures[figure_id] = FigureSpecification(
             figure_id=figure_id,
             stage=raw["stage"],
@@ -193,6 +210,8 @@ def _figures(
             generator=raw["generator"],
             representative_seed=representative_seed,
             representative_solution=representative_solution,
+            layout_coordinate_path=layout_coordinate_path,
+            edge_category_data_path=edge_category_data_path,
         )
     return MappingProxyType(figures)
 

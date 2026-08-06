@@ -24,6 +24,7 @@ from evo_ms.visualization.figures.stage2_daytrader_transition import (
     transition_dot,
 )
 from evo_ms.visualization.figures.stage3_projection import build_figure as build_stage3
+from evo_ms.visualization.figures.stage3_jpetstore_semantic_evidence import build_figure as build_semantic
 from evo_ms.visualization.layout import GraphvizError
 from evo_ms.visualization.model import GraphvizRenderResult
 
@@ -50,7 +51,11 @@ def _deterministic_renderer(request) -> GraphvizRenderResult:
 
 def test_registration_and_approved_representative() -> None:
     config = load_visualization_config()
-    assert set(config.figures) == {FIGURE_ID, "stage3_four_to_three_projection"}
+    assert set(config.figures) == {
+        FIGURE_ID,
+        "stage3_four_to_three_projection",
+        "stage3_jpetstore_semantic_evidence_comparison",
+    }
     specification = config.figures[FIGURE_ID]
     assert specification.stage == "stage2"
     assert specification.destination == "main_text"
@@ -135,7 +140,7 @@ def test_real_graphviz_svg_pdf_and_relative_provenance(tmp_path: Path) -> None:
     assert "/Users/" not in provenance and "/tmp/" not in provenance
 
 
-def test_manifest_can_contain_exactly_both_formal_figures(tmp_path: Path) -> None:
+def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None:
     config = load_visualization_config()
     build_stage3(
         config,
@@ -153,8 +158,20 @@ def test_manifest_can_contain_exactly_both_formal_figures(tmp_path: Path) -> Non
         git_dirty=True,
         renderer=_deterministic_renderer,
     )
+    build_semantic(
+        config,
+        output_root=tmp_path,
+        generated_at=FIXED_TIME,
+        git_commit="abc123",
+        git_dirty=True,
+        renderer=_deterministic_renderer,
+    )
     figures = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))["figures"]
-    assert set(figures) == {FIGURE_ID, "stage3_four_to_three_projection"}
+    assert set(figures) == {
+        FIGURE_ID,
+        "stage3_four_to_three_projection",
+        "stage3_jpetstore_semantic_evidence_comparison",
+    }
 
 
 def test_render_failure_does_not_update_manifest_or_publish_outputs(tmp_path: Path) -> None:

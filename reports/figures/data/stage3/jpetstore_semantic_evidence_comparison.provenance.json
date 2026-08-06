@@ -1,0 +1,59 @@
+{
+  "config_files": [
+    "configs/visualization/figures.yml",
+    "configs/visualization/style.yml"
+  ],
+  "config_sha256": {
+    "configs/visualization/figures.yml": "ceee85b7a42d9bfb4445bdbbee4c09634380cbd55cc929333211353eae80c78f",
+    "configs/visualization/style.yml": "f8ec67d2a550fd1e8e59598bc28f27c1f378881a1ebc9d1b19cb041f187981dd"
+  },
+  "dot_sha256": "7c34b22d1086337b07ce392646e8d9563d447a66de1fba1c6c201ab7ec572081",
+  "figure_id": "stage3_jpetstore_semantic_evidence_comparison",
+  "generated_at": "2026-08-06T18:23:24Z",
+  "generated_outputs": [
+    "reports/figures/data/common/jpetstore_union_positions.csv",
+    "reports/figures/data/stage3/jpetstore_semantic_edge_categories.csv",
+    "reports/figures/data/stage3/jpetstore_semantic_evidence_comparison.provenance.json",
+    "reports/figures/pdf/stage3/jpetstore_semantic_evidence_comparison.pdf",
+    "reports/figures/preview/stage3/jpetstore_semantic_evidence_comparison.svg",
+    "reports/figures/source/stage3/jpetstore_semantic_evidence_comparison.dot"
+  ],
+  "generator": "src/evo_ms/visualization/figures/stage3_jpetstore_semantic_evidence.py",
+  "git_commit": "a8b3af5e5e2366943715c2fb2a2bbf428ff4b23f",
+  "git_dirty": true,
+  "graphviz_engine": "neato",
+  "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",
+  "input_files": [
+    "data/extracted/jpetstore/class_nodes.csv",
+    "data/semantic_graphs/declaration_method_body/jpetstore/class_mapping.csv",
+    "data/semantic_graphs/declaration_method_body/jpetstore/graph_metadata.json",
+    "data/semantic_graphs/declaration_method_body/jpetstore/semantic_edges.csv",
+    "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv"
+  ],
+  "input_sha256": {
+    "data/extracted/jpetstore/class_nodes.csv": "69b59fef4e0cf7feb7402d14beac895b1790db0906b2b6dc11c54743f431e7e0",
+    "data/semantic_graphs/declaration_method_body/jpetstore/class_mapping.csv": "aca600c5c4cee3d35e1d0de04d84680884c0e58ebf298dff04f51d9e03f6c83b",
+    "data/semantic_graphs/declaration_method_body/jpetstore/graph_metadata.json": "10938f9b22a4abc99fe996932cfd06dffee303cabbf2948fee81f0c656053753",
+    "data/semantic_graphs/declaration_method_body/jpetstore/semantic_edges.csv": "62ea6b951eb2933400595468eb3acc71569f0ea22cd1a37714a1a99ba3fc7f5c",
+    "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv": "10327cabac7cc7bd0225b25e8cfd29163a9cc0ba67e11180e04bc88d59c36d80"
+  },
+  "render_command": [
+    [
+      "neato",
+      "-n2",
+      "-Tpdf",
+      "reports/figures/source/stage3/jpetstore_semantic_evidence_comparison.dot",
+      "-o",
+      "reports/figures/pdf/stage3/jpetstore_semantic_evidence_comparison.pdf"
+    ],
+    [
+      "neato",
+      "-n2",
+      "-Tsvg",
+      "reports/figures/source/stage3/jpetstore_semantic_evidence_comparison.dot",
+      "-o",
+      "reports/figures/preview/stage3/jpetstore_semantic_evidence_comparison.svg"
+    ]
+  ],
+  "stage": "stage3"
+}

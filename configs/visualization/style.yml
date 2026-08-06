@@ -32,15 +32,28 @@ edge_categories:
   structural:
     color: "#4D4D4D"
     style: solid
+    penwidth: 0.9
   ssa_only:
     color: "#D55E00"
     style: dashed
   semantic_only:
     color: "#0072B2"
-    style: dotted
+    style: dashed
+    penwidth: 0.9
   structural_semantic_overlap:
     color: "#CC79A7"
     style: bold
+    penwidth: 1.8
+
+semantic_evidence_comparison:
+  canvas_width_pt: 480
+  panel_height_pt: 225
+  panel_offset_pt: 280
+  coordinate_margin_x_pt: 55
+  coordinate_margin_y_pt: 34
+  node_font_size: 7
+  node_height_in: 0.24
+  node_margin: "0.035,0.018"
 
 transition_flow:
   line_width_min: 0.8
