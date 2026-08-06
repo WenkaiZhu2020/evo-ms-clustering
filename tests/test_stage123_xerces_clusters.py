@@ -8,6 +8,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+from matplotlib.text import Text
 
 from evo_ms.visualization.config import load_visualization_config
 from evo_ms.visualization.figures.stage123_xerces_clusters import (
@@ -258,6 +259,47 @@ def test_composite_figure_contains_required_areas_and_no_network(prepared, page:
         plt.close(figure)
 
 
+@pytest.mark.parametrize("page", ["stage13", "stage2"])
+def test_layout_panels_and_important_text_stay_inside_canvas(
+    prepared, page: str
+) -> None:
+    config, data = prepared
+    figure = create_figure(prepare_composite_data(config, data, page))
+    try:
+        figure.canvas.draw()
+        renderer = figure.canvas.get_renderer()
+        canvas = figure.bbox
+        tolerance = 2.0
+        for artist in figure.findobj(match=Text):
+            if not artist.get_visible() or not artist.get_text().strip():
+                continue
+            extent = artist.get_window_extent(renderer)
+            assert extent.x0 >= canvas.x0 - tolerance, artist.get_text()
+            assert extent.y0 >= canvas.y0 - tolerance, artist.get_text()
+            assert extent.x1 <= canvas.x1 + tolerance, artist.get_text()
+            assert extent.y1 <= canvas.y1 + tolerance, artist.get_text()
+
+        panels = {
+            axis.get_gid(): axis.get_position()
+            for axis in figure.axes
+            if axis.get_gid() in {"header", "composition", "structural", "boundary", "lowest"}
+        }
+        assert set(panels) == {"header", "composition", "structural", "boundary", "lowest"}
+        assert panels["lowest"].y1 < panels["boundary"].y0
+        assert panels["boundary"].y1 < panels["structural"].y0
+        assert panels["composition"].x1 < panels["structural"].x0
+        lowest_patch = next(axis for axis in figure.axes if axis.get_gid() == "lowest").patch
+        extent = lowest_patch.get_window_extent(renderer)
+        assert extent.x0 >= canvas.x0 - tolerance
+        assert extent.y0 >= canvas.y0 - tolerance
+        assert extent.x1 <= canvas.x1 + tolerance
+        assert extent.y1 <= canvas.y1 + tolerance
+    finally:
+        import matplotlib.pyplot as plt
+
+        plt.close(figure)
+
+
 def test_two_real_matplotlib_renders_are_deterministic_and_relative(tmp_path: Path) -> None:
     config = load_visualization_config()
     first_root = tmp_path / "first"
@@ -328,7 +370,9 @@ def test_temporary_build_preserves_formal_inputs_and_non_xerces_figures(
     existing = [
         path
         for path in (ROOT / "reports/figures").rglob("*")
-        if path.is_file() and "xerces" not in path.name.lower()
+        if path.is_file()
+        and not path.name.startswith(".")
+        and "xerces" not in path.name.lower()
     ]
     before = {path: _hash(path) for path in (*protected, *existing)}
     for figure_id in FIGURE_IDS.values():

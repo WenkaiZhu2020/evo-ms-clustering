@@ -8,7 +8,7 @@
     "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
   },
   "figure_id": "stage13_xerces_shared_highest_lowest_clusters",
-  "generated_at": "2026-08-06T21:22:00Z",
+  "generated_at": "2026-08-06T21:33:22Z",
   "generated_outputs": [
     "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
     "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
@@ -26,7 +26,7 @@
     "reports/figures/preview/cross_stage/xerces_stage13_shared_highest_lowest_clusters.svg"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
-  "git_commit": "8203f17697d76412c963f50a25e0d42e9db61cd5",
+  "git_commit": "f810def226284714468489bc2a763118e7ccc2ba",
   "git_dirty": true,
   "input_files": [
     "data/extracted/xerces-j/class_nodes.csv",
@@ -75,10 +75,10 @@
     "membership": "00fcb6501b8d052260a95c935a1efc6b20209f3379a23a102a571a181bd020c9",
     "package_profiles": "85efd9ce8065cb997575e9c9f66823fccaf3711b5f0a294e66a54da40db210a2",
     "package_relations": "e85fe92c40ebb5f8a90f924dde593dccde26f04faaf6bd9daa756e7815261104",
-    "pdf": "50129f9d764d9c9a9a673a7fb27f9610a996ff8c816b1fc4d8061bf9e9138e40",
+    "pdf": "fd940ceaa57f8141fe923bcfdb76d03de4b9a269ca22fabf6c2814766060c035",
     "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
     "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
-    "svg": "5cad234e529b66177a0b2b001333de713f2f920e373f4f1583b7be0e800314c2",
+    "svg": "38d11eb29e6aafd9d2652537771c2df8193133a0d1ac1d82b58ad1236dfe89d8",
     "top_boundary_destinations": "01604fc71f7eef6f5c610918821cbfda314e54f8d3136c1b0cc745dcd07caca1",
     "top_internal_relations": "c5cb7f3bea5211a80a0d2a301a442508db76cd3f58fc027f407b50382f1a0206"
   },

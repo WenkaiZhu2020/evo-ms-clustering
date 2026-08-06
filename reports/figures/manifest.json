@@ -110,7 +110,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-06T21:22:00Z",
+      "generated_at": "2026-08-06T21:33:22Z",
       "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
       "inputs": [
         "data/extracted/xerces-j/class_nodes.csv",
@@ -154,11 +154,11 @@
         "membership": "00fcb6501b8d052260a95c935a1efc6b20209f3379a23a102a571a181bd020c9",
         "package_profiles": "85efd9ce8065cb997575e9c9f66823fccaf3711b5f0a294e66a54da40db210a2",
         "package_relations": "e85fe92c40ebb5f8a90f924dde593dccde26f04faaf6bd9daa756e7815261104",
-        "pdf": "50129f9d764d9c9a9a673a7fb27f9610a996ff8c816b1fc4d8061bf9e9138e40",
+        "pdf": "fd940ceaa57f8141fe923bcfdb76d03de4b9a269ca22fabf6c2814766060c035",
         "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
-        "provenance": "9f5d8901e5ef4c8881caeaf558a25b505e0bc55d9de7e49e4cd43c96c56633c3",
+        "provenance": "b80edf793ca861eae4b01c782dcea6f2c1d8ef761bbe69cf98d538fa47c51fdf",
         "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
-        "svg": "5cad234e529b66177a0b2b001333de713f2f920e373f4f1583b7be0e800314c2",
+        "svg": "38d11eb29e6aafd9d2652537771c2df8193133a0d1ac1d82b58ad1236dfe89d8",
         "top_boundary_destinations": "01604fc71f7eef6f5c610918821cbfda314e54f8d3136c1b0cc745dcd07caca1",
         "top_internal_relations": "c5cb7f3bea5211a80a0d2a301a442508db76cd3f58fc027f407b50382f1a0206"
       },
@@ -206,7 +206,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-06T21:22:01Z",
+      "generated_at": "2026-08-06T21:33:23Z",
       "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
       "inputs": [
         "data/extracted/xerces-j/class_nodes.csv",
@@ -250,11 +250,11 @@
         "membership": "6849b68c42a785c96d1afa2a85ec4adc7b79d7fbf25d5128c861f6a0598db396",
         "package_profiles": "50b2eb56bfdc635da14fe6f7a5ab77820dc8d9e1cb39132ee9fafd8099ed5157",
         "package_relations": "ecf70d615e5c2f1e6edfb8ab28322a833c38b09a9f2a47fda981e54afe4cc0e5",
-        "pdf": "f1b0732f5c94843282cefe1c6fc2792ffc82118764749032b9bbdef73f4f160e",
+        "pdf": "71413f34d194f711de0d3c2d377bb7e520222f409779fa68e9675a230db24dac",
         "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
-        "provenance": "5075bfc1d803d63726fa8b1b6e509f7284293c109174a63acba83bd7b900233b",
+        "provenance": "157b81eb6d0ee651f976ba2518e8561306753437d80924ed8d6591e0c5597e49",
         "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
-        "svg": "c95670b6a034f727654032fdbff6e37d6e9976c85345e8e5edc254e20a3769f4",
+        "svg": "e826dc4d61c2f0a3690dd00d50bd299e7736a44dc569073cf99d662dd1b916f9",
         "top_boundary_destinations": "adaf602ca7b7b1b2316ef138972dfba614177ccdcdf51d764ec5368a0789ff53",
         "top_internal_relations": "7e8fb3493c093263188b29ed8818eff533a2b3c07950d7815f3e2acf207c5cfc"
       },

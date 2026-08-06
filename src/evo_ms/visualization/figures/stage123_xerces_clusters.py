@@ -20,6 +20,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
+from matplotlib.ticker import MaxNLocator
 import numpy as np
 import pandas as pd
 
@@ -876,6 +877,7 @@ def _style_axis(axis) -> None:
 
 
 def _draw_header(axis, composite: CompositeData) -> None:
+    axis.set_gid("header")
     axis.axis("off")
     high = composite.high
     axis.add_patch(
@@ -937,6 +939,7 @@ def _draw_header(axis, composite: CompositeData) -> None:
 
 
 def _draw_composition(axis, composite: CompositeData) -> None:
+    axis.set_gid("composition")
     by_id = {profile.package_id: profile for profile in composite.packages}
     profiles = [by_id[package_id] for package_id in composite.package_order]
     values = [len(profile.member_classes) for profile in profiles]
@@ -972,6 +975,7 @@ def _draw_composition(axis, composite: CompositeData) -> None:
 
 
 def _draw_structural_summary(axis, composite: CompositeData) -> None:
+    axis.set_gid("structural")
     by_id = {profile.package_id: profile for profile in composite.packages}
     relations = top_internal_relations(composite)
     axis.set_facecolor("#F8FAFC")
@@ -996,24 +1000,25 @@ def _draw_structural_summary(axis, composite: CompositeData) -> None:
         left = 0.025 + index * 0.325
         axis.add_patch(
             plt.Rectangle(
-                (left, 0.72), 0.305, 0.21,
+                (left, 0.67), 0.305, 0.28,
                 transform=axis.transAxes,
                 facecolor="white",
                 edgecolor="#CBD5DE",
                 linewidth=0.7,
             )
         )
-        axis.text(left + 0.015, 0.875, label, transform=axis.transAxes,
-                  fontsize=6.6, color="#4A5966", va="top")
-        axis.text(left + 0.015, 0.77, value, transform=axis.transAxes,
+        axis.text(left + 0.015, 0.89, label, transform=axis.transAxes,
+                  fontsize=5.9, color="#4A5966", va="top")
+        axis.text(left + 0.015, 0.69, value, transform=axis.transAxes,
                   fontsize=10, fontweight="bold", color="#17365D", va="bottom")
-    chart = axis.inset_axes([0.035, 0.12, 0.93, 0.49])
+    chart = axis.inset_axes([0.035, 0.13, 0.93, 0.42])
     values = [relation.aggregated_weight for relation in relations]
-    labels = [
-        f"{_abbreviation(by_id[relation.source_package].package_name)} ↔ "
-        f"{_abbreviation(by_id[relation.target_package].package_name)}"
-        for relation in relations
-    ]
+    labels = []
+    for relation in relations:
+        source = _abbreviation(by_id[relation.source_package].package_name)
+        target = _abbreviation(by_id[relation.target_package].package_name)
+        separator = "\n↔ " if len(source) + len(target) > 31 else " ↔ "
+        labels.append(f"{source}{separator}{target}")
     positions = np.arange(len(relations))
     chart.barh(positions, values, color="#6689A8", height=0.56)
     chart.set_yticks(positions, labels, fontsize=6.4)
@@ -1033,6 +1038,7 @@ def _draw_structural_summary(axis, composite: CompositeData) -> None:
 
 
 def _draw_boundary(axis, composite: CompositeData) -> None:
+    axis.set_gid("boundary")
     rows = boundary_display_rows(composite)
     values = [float(row["aggregated_boundary_weight"]) for row in rows]
     labels = []
@@ -1057,6 +1063,7 @@ def _draw_boundary(axis, composite: CompositeData) -> None:
     )
     maximum = max(values)
     axis.set_xlim(0, maximum * 1.23)
+    axis.xaxis.set_major_locator(MaxNLocator(nbins=6, prune="upper"))
     for position, value in zip(positions, values, strict=True):
         axis.text(
             value + maximum * 0.025,
@@ -1070,6 +1077,7 @@ def _draw_boundary(axis, composite: CompositeData) -> None:
 
 
 def _draw_lowest(axis, composite: CompositeData) -> None:
+    axis.set_gid("lowest")
     low = composite.low
     axis.set_facecolor("#F8F8F8")
     for spine in axis.spines.values():
@@ -1080,7 +1088,7 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
     members = [class_id.rsplit(".", 1)[-1] for class_id in low.members]
     axis.text(
         0.04,
-        0.9,
+        0.86,
         f"{low.cluster_id} - Lowest-contributing\ncluster",
         transform=axis.transAxes,
         fontsize=9,
@@ -1089,8 +1097,8 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
         va="top",
     )
     axis.text(
-        0.04,
-        0.66,
+        0.42,
+        0.5,
         "\n".join(members),
         transform=axis.transAxes,
         fontsize=7.5,
@@ -1099,7 +1107,7 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
     )
     axis.text(
         0.04,
-        0.48,
+        0.5,
         (
             f"{len(low.members)} {'class' if len(low.members) == 1 else 'classes'}   "
             f"q_c = {low.contribution:.6f}\n"
@@ -1107,15 +1115,16 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
             f"W_boundary = {low.boundary_weight:.0f}"
         ),
         transform=axis.transAxes,
-            fontsize=6.8,
+        fontsize=7.2,
         color="#404040",
         va="top",
+        ha="left",
     )
     if not low.boundary_aggregates:
         axis.text(
-            0.04,
-            0.18,
-            "Isolated singleton\nNo internal or boundary relations",
+            0.72,
+            0.5,
+            "Isolated singleton\nNo internal or\nboundary relations",
             transform=axis.transAxes,
             fontsize=7.5,
             color="#555555",
@@ -1126,7 +1135,7 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
         low.boundary_aggregates,
         key=lambda item: (-item.boundary_weight, item.external_cluster_id),
     )
-    inset = axis.inset_axes([0.08, 0.02, 0.84, 0.25])
+    inset = axis.inset_axes([0.70, 0.12, 0.27, 0.62])
     values = [item.boundary_weight for item in summary]
     labels = [f"External {item.external_cluster_id}" for item in summary]
     positions = np.arange(len(summary))
@@ -1171,15 +1180,14 @@ def create_figure(composite: CompositeData) -> Figure:
             hspace=0.2,
         )
         header = figure.add_subplot(outer[0])
-        content = outer[1].subgridspec(1, 2, width_ratios=(0.45, 0.55), wspace=0.37)
+        content = outer[1].subgridspec(1, 2, width_ratios=(0.43, 0.57), wspace=0.35)
         composition = figure.add_subplot(content[0, 0])
         summary = content[0, 1].subgridspec(
-            2, 2, height_ratios=(0.58, 0.42), width_ratios=(0.57, 0.43),
-            wspace=0.42, hspace=0.35,
+            3, 1, height_ratios=(0.43, 0.34, 0.23), hspace=0.48,
         )
-        structural = figure.add_subplot(summary[0, :])
+        structural = figure.add_subplot(summary[0, 0])
         boundary = figure.add_subplot(summary[1, 0])
-        lowest = figure.add_subplot(summary[1, 1])
+        lowest = figure.add_subplot(summary[2, 0])
         _draw_header(header, composite)
         _draw_composition(composition, composite)
         _draw_structural_summary(structural, composite)
