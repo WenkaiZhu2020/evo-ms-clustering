@@ -1,4 +1,4 @@
-"""Two deterministic matrix-and-bar Xerces-J appendix figures."""
+"""Two deterministic summary-profile Xerces-J appendix figures."""
 
 from __future__ import annotations
 
@@ -51,6 +51,8 @@ EXPECTED = {
 }
 DIRECTORY = "cross_stage"
 FIGURE_SIZE = (11.1, 7.3)
+TOP_RELATION_COUNT = 5
+TOP_BOUNDARY_COUNT = 5
 
 
 @dataclass(frozen=True)
@@ -498,6 +500,55 @@ def interaction_matrix(composite: CompositeData) -> np.ndarray:
     return matrix
 
 
+def top_internal_relations(composite: CompositeData) -> tuple[PackageRelation, ...]:
+    """Return the five strongest between-package relations deterministically."""
+    return tuple(
+        sorted(
+            (
+                relation
+                for relation in composite.relations
+                if relation.source_package != relation.target_package
+            ),
+            key=lambda relation: (
+                -relation.aggregated_weight,
+                relation.source_package,
+                relation.target_package,
+            ),
+        )[:TOP_RELATION_COUNT]
+    )
+
+
+def boundary_display_rows(composite: CompositeData) -> tuple[dict[str, object], ...]:
+    """Return the five strongest destinations plus a deterministic remainder."""
+    top = composite.boundaries[:TOP_BOUNDARY_COUNT]
+    rows: list[dict[str, object]] = [
+        {
+            "label": f"External {boundary.external_cluster_id}",
+            "external_cluster_id": boundary.external_cluster_id,
+            "destination_cluster_count": 1,
+            "external_class_count": len(boundary.external_classes),
+            "aggregated_boundary_weight": boundary.aggregated_weight,
+        }
+        for boundary in top
+    ]
+    remainder = composite.boundaries[TOP_BOUNDARY_COUNT:]
+    if remainder:
+        rows.append(
+            {
+                "label": "Other external clusters",
+                "external_cluster_id": "OTHER",
+                "destination_cluster_count": len(remainder),
+                "external_class_count": sum(
+                    len(boundary.external_classes) for boundary in remainder
+                ),
+                "aggregated_boundary_weight": sum(
+                    boundary.aggregated_weight for boundary in remainder
+                ),
+            }
+        )
+    return tuple(rows)
+
+
 def validate_composite_data(composite: CompositeData) -> None:
     high = composite.high
     assigned = [class_id for class_id, _package_id in composite.class_to_package]
@@ -533,6 +584,21 @@ def validate_composite_data(composite: CompositeData) -> None:
     reconstructed = float(np.triu(matrix).sum())
     if not math.isclose(reconstructed, high.internal_weight):
         raise ValueError("symmetric package matrix does not reconstruct W_in")
+    top_relations = top_internal_relations(composite)
+    if len(top_relations) != min(
+        TOP_RELATION_COUNT,
+        sum(
+            relation.source_package != relation.target_package
+            for relation in composite.relations
+        ),
+    ):
+        raise ValueError("top internal package relations are incomplete")
+    displayed_boundary_weight = sum(
+        float(row["aggregated_boundary_weight"])
+        for row in boundary_display_rows(composite)
+    )
+    if not math.isclose(displayed_boundary_weight, high.boundary_weight):
+        raise ValueError("displayed boundary summary does not reconstruct W_boundary")
 
 
 def _csv(fields: Iterable[str], rows: Iterable[dict[str, object]]) -> str:
@@ -644,6 +710,69 @@ def boundary_profile_csv(composite: CompositeData) -> str:
                 ),
             }
             for boundary in composite.boundaries
+        ),
+    )
+
+
+def top_internal_relations_csv(composite: CompositeData) -> str:
+    by_id = {profile.package_id: profile for profile in composite.packages}
+    return _csv(
+        (
+            "stage",
+            "focal_cluster_id",
+            "rank",
+            "source_package_id",
+            "source_package_name",
+            "target_package_id",
+            "target_package_name",
+            "class_edge_count",
+            "aggregated_internal_weight",
+        ),
+        (
+            {
+                "stage": composite.stage_label,
+                "focal_cluster_id": composite.high.cluster_id,
+                "rank": rank,
+                "source_package_id": relation.source_package,
+                "source_package_name": by_id[relation.source_package].package_name,
+                "target_package_id": relation.target_package,
+                "target_package_name": by_id[relation.target_package].package_name,
+                "class_edge_count": relation.class_edge_count,
+                "aggregated_internal_weight": format(
+                    relation.aggregated_weight, ".12g"
+                ),
+            }
+            for rank, relation in enumerate(top_internal_relations(composite), 1)
+        ),
+    )
+
+
+def top_boundary_destinations_csv(composite: CompositeData) -> str:
+    return _csv(
+        (
+            "stage",
+            "focal_cluster_id",
+            "rank",
+            "display_label",
+            "external_cluster_id",
+            "destination_cluster_count",
+            "external_class_count",
+            "aggregated_boundary_weight",
+        ),
+        (
+            {
+                "stage": composite.stage_label,
+                "focal_cluster_id": composite.high.cluster_id,
+                "rank": rank,
+                "display_label": row["label"],
+                "external_cluster_id": row["external_cluster_id"],
+                "destination_cluster_count": row["destination_cluster_count"],
+                "external_class_count": row["external_class_count"],
+                "aggregated_boundary_weight": format(
+                    float(row["aggregated_boundary_weight"]), ".12g"
+                ),
+            }
+            for rank, row in enumerate(boundary_display_rows(composite), 1)
         ),
     )
 
@@ -821,7 +950,8 @@ def _draw_composition(axis, composite: CompositeData) -> None:
     axis.invert_yaxis()
     axis.set_xlabel("Number of focal classes", fontsize=8)
     axis.set_title(
-        f"Package composition of {composite.high.cluster_id}\nInternal subdivisions",
+        f"Composition of {composite.high.cluster_id}\n"
+        "Packages are internal subdivisions of the focal cluster.",
         loc="left",
         fontsize=10,
         fontweight="bold",
@@ -841,60 +971,85 @@ def _draw_composition(axis, composite: CompositeData) -> None:
     _style_axis(axis)
 
 
-def _draw_matrix(axis, figure: Figure, composite: CompositeData) -> None:
-    matrix = interaction_matrix(composite)
+def _draw_structural_summary(axis, composite: CompositeData) -> None:
     by_id = {profile.package_id: profile for profile in composite.packages}
-    labels = [
-        _abbreviation(by_id[package_id].package_name)
-        for package_id in composite.package_order
-    ]
-    image = axis.imshow(matrix, cmap="Blues", interpolation="nearest", aspect="equal")
-    axis.set_xticks(np.arange(len(labels)), labels, rotation=52, ha="right", fontsize=6)
-    axis.set_yticks(np.arange(len(labels)), labels, fontsize=6)
+    relations = top_internal_relations(composite)
+    axis.set_facecolor("#F8FAFC")
+    for spine in axis.spines.values():
+        spine.set_color("#B8C4CE")
+        spine.set_linewidth(0.8)
+    axis.set_xticks([])
+    axis.set_yticks([])
     axis.set_title(
-        "Internal package interaction\nDiagonal = within; off-diagonal = between",
-        fontsize=8.8,
+        "Structural summary",
+        loc="left",
+        fontsize=10,
         fontweight="bold",
-        pad=8,
+        pad=7,
     )
-    maximum = float(matrix.max())
-    for row in range(matrix.shape[0]):
-        for column in range(matrix.shape[1]):
-            value = matrix[row, column]
-            if value <= 0:
-                continue
-            axis.text(
-                column,
-                row,
-                f"{value:.0f}",
-                ha="center",
-                va="center",
-                fontsize=5.2,
-                color="white" if value > maximum * 0.48 else "#1E2C36",
+    metrics = (
+        ("Local modularity contribution", f"{composite.high.contribution:.6f}"),
+        ("Internal structural weight", f"{composite.high.internal_weight:.0f}"),
+        ("Boundary structural weight", f"{composite.high.boundary_weight:.0f}"),
+    )
+    for index, (label, value) in enumerate(metrics):
+        left = 0.025 + index * 0.325
+        axis.add_patch(
+            plt.Rectangle(
+                (left, 0.72), 0.305, 0.21,
+                transform=axis.transAxes,
+                facecolor="white",
+                edgecolor="#CBD5DE",
+                linewidth=0.7,
             )
-    axis.set_xticks(np.arange(-0.5, len(labels), 1), minor=True)
-    axis.set_yticks(np.arange(-0.5, len(labels), 1), minor=True)
-    axis.grid(which="minor", color="white", linestyle="-", linewidth=0.6)
-    axis.tick_params(which="minor", bottom=False, left=False)
-    colorbar = figure.colorbar(image, ax=axis, fraction=0.042, pad=0.025)
-    colorbar.ax.tick_params(labelsize=6)
-    colorbar.ax.set_title("Aggregated\nstructural weight", fontsize=6.2, pad=4)
+        )
+        axis.text(left + 0.015, 0.875, label, transform=axis.transAxes,
+                  fontsize=6.6, color="#4A5966", va="top")
+        axis.text(left + 0.015, 0.77, value, transform=axis.transAxes,
+                  fontsize=10, fontweight="bold", color="#17365D", va="bottom")
+    chart = axis.inset_axes([0.035, 0.12, 0.93, 0.49])
+    values = [relation.aggregated_weight for relation in relations]
+    labels = [
+        f"{_abbreviation(by_id[relation.source_package].package_name)} ↔ "
+        f"{_abbreviation(by_id[relation.target_package].package_name)}"
+        for relation in relations
+    ]
+    positions = np.arange(len(relations))
+    chart.barh(positions, values, color="#6689A8", height=0.56)
+    chart.set_yticks(positions, labels, fontsize=6.4)
+    chart.invert_yaxis()
+    chart.set_title("Five strongest between-package relations", loc="left", fontsize=7.5, pad=4)
+    maximum = max(values)
+    chart.set_xlim(0, maximum * 1.18)
+    chart.set_xticks([])
+    for position, value in zip(positions, values, strict=True):
+        chart.text(value + maximum * 0.02, position, f"{value:.0f}", va="center", fontsize=6.4)
+    _style_axis(chart)
+    axis.text(
+        0.035, 0.025,
+        "Complete package-interaction data are available in the companion CSV.",
+        transform=axis.transAxes, fontsize=6.3, color="#59636B", va="bottom",
+    )
 
 
 def _draw_boundary(axis, composite: CompositeData) -> None:
-    boundaries = composite.boundaries
-    values = [boundary.aggregated_weight for boundary in boundaries]
-    labels = [
-        f"External {boundary.external_cluster_id} ({len(boundary.external_classes)} classes)"
-        for boundary in boundaries
-    ]
-    positions = np.arange(len(boundaries))
+    rows = boundary_display_rows(composite)
+    values = [float(row["aggregated_boundary_weight"]) for row in rows]
+    labels = []
+    for row in rows:
+        if row["external_cluster_id"] == "OTHER":
+            labels.append(
+                f"Other external clusters ({row['destination_cluster_count']} clusters)"
+            )
+        else:
+            labels.append(f"{row['label']} ({row['external_class_count']} classes)")
+    positions = np.arange(len(rows))
     axis.barh(positions, values, color="#7C8D92", height=0.62)
     axis.set_yticks(positions, labels, fontsize=6.3)
     axis.invert_yaxis()
     axis.set_xlabel("Aggregated boundary weight", fontsize=8)
     axis.set_title(
-        "Boundary-weight profile\nOutside-cluster destinations",
+        "Strongest external destinations\nTop five plus deterministic remainder",
         loc="left",
         fontsize=10,
         fontweight="bold",
@@ -908,7 +1063,7 @@ def _draw_boundary(axis, composite: CompositeData) -> None:
             position,
             f"{value:.0f}",
             va="center",
-            fontsize=6.3,
+            fontsize=6.6,
             color="#2F2F2F",
         )
     _style_axis(axis)
@@ -926,7 +1081,7 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
     axis.text(
         0.04,
         0.9,
-        f"{low.cluster_id} - Lowest-contributing cluster",
+        f"{low.cluster_id} - Lowest-contributing\ncluster",
         transform=axis.transAxes,
         fontsize=9,
         fontweight="bold",
@@ -935,7 +1090,7 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
     )
     axis.text(
         0.04,
-        0.69,
+        0.66,
         "\n".join(members),
         transform=axis.transAxes,
         fontsize=7.5,
@@ -943,23 +1098,23 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
         va="top",
     )
     axis.text(
-        0.52,
-        0.7,
+        0.04,
+        0.48,
         (
-            f"{len(low.members)} {'class' if len(low.members) == 1 else 'classes'}\n"
+            f"{len(low.members)} {'class' if len(low.members) == 1 else 'classes'}   "
             f"q_c = {low.contribution:.6f}\n"
-            f"W_in = {low.internal_weight:.0f}\n"
+            f"W_in = {low.internal_weight:.0f}   "
             f"W_boundary = {low.boundary_weight:.0f}"
         ),
         transform=axis.transAxes,
-        fontsize=7,
+            fontsize=6.8,
         color="#404040",
         va="top",
     )
     if not low.boundary_aggregates:
         axis.text(
             0.04,
-            0.25,
+            0.18,
             "Isolated singleton\nNo internal or boundary relations",
             transform=axis.transAxes,
             fontsize=7.5,
@@ -971,7 +1126,7 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
         low.boundary_aggregates,
         key=lambda item: (-item.boundary_weight, item.external_cluster_id),
     )
-    inset = axis.inset_axes([0.46, 0.02, 0.51, 0.25])
+    inset = axis.inset_axes([0.08, 0.02, 0.84, 0.25])
     values = [item.boundary_weight for item in summary]
     labels = [f"External {item.external_cluster_id}" for item in summary]
     positions = np.arange(len(summary))
@@ -1000,7 +1155,7 @@ def create_figure(composite: CompositeData) -> Figure:
             "font.size": 8,
             "axes.titlecolor": "#252525",
             "axes.labelcolor": "#353535",
-            "svg.hashsalt": "evo-ms-xerces-matrix-v1",
+            "svg.hashsalt": "evo-ms-xerces-summary-v1",
             "pdf.fonttype": 42,
         }
     ):
@@ -1016,21 +1171,18 @@ def create_figure(composite: CompositeData) -> Figure:
             hspace=0.2,
         )
         header = figure.add_subplot(outer[0])
-        content = outer[1].subgridspec(
-            2,
-            3,
-            width_ratios=(1.08, 1.22, 1.28),
-            height_ratios=(0.72, 0.28),
-            wspace=0.72,
-            hspace=0.34,
+        content = outer[1].subgridspec(1, 2, width_ratios=(0.45, 0.55), wspace=0.37)
+        composition = figure.add_subplot(content[0, 0])
+        summary = content[0, 1].subgridspec(
+            2, 2, height_ratios=(0.58, 0.42), width_ratios=(0.57, 0.43),
+            wspace=0.42, hspace=0.35,
         )
-        composition = figure.add_subplot(content[:, 0])
-        matrix = figure.add_subplot(content[:, 1])
-        boundary = figure.add_subplot(content[0, 2])
-        lowest = figure.add_subplot(content[1, 2])
+        structural = figure.add_subplot(summary[0, :])
+        boundary = figure.add_subplot(summary[1, 0])
+        lowest = figure.add_subplot(summary[1, 1])
         _draw_header(header, composite)
         _draw_composition(composition, composite)
-        _draw_matrix(matrix, figure, composite)
+        _draw_structural_summary(structural, composite)
         _draw_boundary(boundary, composite)
         _draw_lowest(lowest, composite)
         return figure
@@ -1048,7 +1200,7 @@ def _save_figure(figure: Figure, path: Path, output_format: str) -> None:
     with plt.rc_context(
         {
             "font.family": "DejaVu Sans",
-            "svg.hashsalt": "evo-ms-xerces-matrix-v1",
+            "svg.hashsalt": "evo-ms-xerces-summary-v1",
             "pdf.fonttype": 42,
         }
     ):
@@ -1078,6 +1230,8 @@ def _targets(config: VisualizationConfig, page: str, output_root: Path | None):
             "package_profiles": data_root / f"{prefix}_package_profiles.csv",
             "package_relations": data_root / f"{prefix}_package_relations.csv",
             "boundary_profile": data_root / f"{prefix}_boundary_profile.csv",
+            "top_internal_relations": data_root / f"{prefix}_top_internal_relations.csv",
+            "top_boundary_destinations": data_root / f"{prefix}_top_boundary_destinations.csv",
             "lowest_profile": data_root / f"{prefix}_lowest_cluster_profile.csv",
             "internal_edges": data_root / f"{prefix}_class_internal_edges.csv",
             "boundary_edges": data_root / f"{prefix}_class_boundary_edges.csv",
@@ -1095,6 +1249,8 @@ def _targets(config: VisualizationConfig, page: str, output_root: Path | None):
         "package_profiles": data_root / f"{prefix}_package_profiles.csv",
         "package_relations": data_root / f"{prefix}_package_relations.csv",
         "boundary_profile": data_root / f"{prefix}_boundary_profile.csv",
+        "top_internal_relations": data_root / f"{prefix}_top_internal_relations.csv",
+        "top_boundary_destinations": data_root / f"{prefix}_top_boundary_destinations.csv",
         "lowest_profile": data_root / f"{prefix}_lowest_cluster_profile.csv",
         "internal_edges": data_root / f"{prefix}_class_internal_edges.csv",
         "boundary_edges": data_root / f"{prefix}_class_boundary_edges.csv",
@@ -1203,7 +1359,7 @@ def build_figure(
     if page is None or specification is None or not specification.enabled:
         raise ValueError(f"Xerces-J figure is not registered: {figure_id}")
     if specification.formats != ("svg", "pdf"):
-        raise ValueError("Xerces-J matrix figures must use SVG and PDF only")
+        raise ValueError("Xerces-J summary figures must use SVG and PDF only")
     data = prepare_figure_data(config)
     composite = prepare_composite_data(config, data, page)
     targets, default_manifest, artifact_root = _targets(
@@ -1236,6 +1392,12 @@ def build_figure(
         )
         staged["boundary_profile"].write_text(
             boundary_profile_csv(composite), encoding="utf-8", newline="\n"
+        )
+        staged["top_internal_relations"].write_text(
+            top_internal_relations_csv(composite), encoding="utf-8", newline="\n"
+        )
+        staged["top_boundary_destinations"].write_text(
+            top_boundary_destinations_csv(composite), encoding="utf-8", newline="\n"
         )
         staged["lowest_profile"].write_text(
             lowest_profile_csv(composite), encoding="utf-8", newline="\n"

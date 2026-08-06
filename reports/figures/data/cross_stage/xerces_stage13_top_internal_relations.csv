@@ -1,0 +1,6 @@
+stage,focal_cluster_id,rank,source_package_id,source_package_name,target_package_id,target_package_name,class_edge_count,aggregated_internal_weight
+stage1+stage3,C11,1,P04,org.apache.xerces.impl.xs,P06,org.apache.xerces.impl.xs.traversers,71,1028
+stage1+stage3,C11,2,P06,org.apache.xerces.impl.xs.traversers,P08,org.apache.xerces.util,15,681
+stage1+stage3,C11,3,P04,org.apache.xerces.impl.xs,P08,org.apache.xerces.util,5,351
+stage1+stage3,C11,4,P04,org.apache.xerces.impl.xs,P09,org.apache.xerces.xs,96,314
+stage1+stage3,C11,5,P06,org.apache.xerces.impl.xs.traversers,P09,org.apache.xerces.xs,27,266

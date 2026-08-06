@@ -8,7 +8,7 @@
     "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
   },
   "figure_id": "stage2_xerces_highest_lowest_clusters",
-  "generated_at": "2026-08-06T21:07:05Z",
+  "generated_at": "2026-08-06T21:22:01Z",
   "generated_outputs": [
     "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
     "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
@@ -20,11 +20,13 @@
     "reports/figures/data/cross_stage/xerces_stage2_lowest_cluster_profile.csv",
     "reports/figures/data/cross_stage/xerces_stage2_package_profiles.csv",
     "reports/figures/data/cross_stage/xerces_stage2_package_relations.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_top_boundary_destinations.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_top_internal_relations.csv",
     "reports/figures/pdf/cross_stage/xerces_stage2_highest_lowest_clusters.pdf",
     "reports/figures/preview/cross_stage/xerces_stage2_highest_lowest_clusters.svg"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
-  "git_commit": "debb0f3eb187cfa1e21563c83a3d92f220530402",
+  "git_commit": "8203f17697d76412c963f50a25e0d42e9db61cd5",
   "git_dirty": true,
   "input_files": [
     "data/extracted/xerces-j/class_nodes.csv",
@@ -73,10 +75,12 @@
     "membership": "6849b68c42a785c96d1afa2a85ec4adc7b79d7fbf25d5128c861f6a0598db396",
     "package_profiles": "50b2eb56bfdc635da14fe6f7a5ab77820dc8d9e1cb39132ee9fafd8099ed5157",
     "package_relations": "ecf70d615e5c2f1e6edfb8ab28322a833c38b09a9f2a47fda981e54afe4cc0e5",
-    "pdf": "ee9b85f02b1963c1be09edf9f1d4841338a02bb928d0db314a2e54e70bfbb27b",
+    "pdf": "f1b0732f5c94843282cefe1c6fc2792ffc82118764749032b9bbdef73f4f160e",
     "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
     "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
-    "svg": "70bba5d2ef4321e01f89345822bab1ebb006020ff8883d18a7bf1787e362f8bc"
+    "svg": "c95670b6a034f727654032fdbff6e37d6e9976c85345e8e5edc254e20a3769f4",
+    "top_boundary_destinations": "adaf602ca7b7b1b2316ef138972dfba614177ccdcdf51d764ec5368a0789ff53",
+    "top_internal_relations": "7e8fb3493c093263188b29ed8818eff533a2b3c07950d7815f3e2acf207c5cfc"
   },
   "stage": "stage2"
 }

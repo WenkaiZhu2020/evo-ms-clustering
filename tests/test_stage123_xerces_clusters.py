@@ -14,6 +14,7 @@ from evo_ms.visualization.figures.stage123_xerces_clusters import (
     EXPECTED,
     FIGURE_IDS,
     boundary_profile_csv,
+    boundary_display_rows,
     build_figure,
     create_figure,
     interaction_matrix,
@@ -23,6 +24,9 @@ from evo_ms.visualization.figures.stage123_xerces_clusters import (
     package_relations_csv,
     prepare_composite_data,
     prepare_figure_data,
+    top_boundary_destinations_csv,
+    top_internal_relations,
+    top_internal_relations_csv,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -164,6 +168,27 @@ def test_composition_matrix_boundary_and_lowest_reconcile(
         first.boundaries,
         key=lambda boundary: (-boundary.aggregated_weight, boundary.external_cluster_id),
     )
+    top_relations = top_internal_relations(first)
+    assert len(top_relations) == 5
+    assert list(top_relations) == sorted(
+        (
+            relation
+            for relation in first.relations
+            if relation.source_package != relation.target_package
+        ),
+        key=lambda relation: (
+            -relation.aggregated_weight,
+            relation.source_package,
+            relation.target_package,
+        ),
+    )[:5]
+    displayed = boundary_display_rows(first)
+    assert len(displayed) == 6
+    assert displayed[-1]["external_cluster_id"] == "OTHER"
+    assert displayed[-1]["destination_cluster_count"] == len(first.boundaries) - 5
+    assert sum(float(row["aggregated_boundary_weight"]) for row in displayed) == pytest.approx(
+        first.high.boundary_weight
+    )
     assert first.low.cluster_id == ("C07" if page == "stage13" else "C27")
     assert len(first.low.members) == (1 if page == "stage13" else 2)
 
@@ -178,6 +203,8 @@ def test_csv_contracts_are_deterministic_complete_and_relative(prepared, page: s
         package_profiles_csv,
         package_relations_csv,
         boundary_profile_csv,
+        top_internal_relations_csv,
+        top_boundary_destinations_csv,
         lowest_profile_csv,
     )
     for exporter in exporters:
@@ -190,11 +217,15 @@ def test_csv_contracts_are_deterministic_complete_and_relative(prepared, page: s
     relations = list(csv.DictReader(StringIO(package_relations_csv(first))))
     boundaries = list(csv.DictReader(StringIO(boundary_profile_csv(first))))
     lowest = list(csv.DictReader(StringIO(lowest_profile_csv(first))))
+    top_internal = list(csv.DictReader(StringIO(top_internal_relations_csv(first))))
+    top_boundary = list(csv.DictReader(StringIO(top_boundary_destinations_csv(first))))
     assert len(memberships) == len(first.high.members)
     assert len(packages) == 10
     assert len(relations) == 37
     assert len(boundaries) == (12 if page == "stage13" else 16)
     assert len(lowest) == (1 if page == "stage13" else 2)
+    assert len(top_internal) == 5
+    assert len(top_boundary) == 6
 
 
 @pytest.mark.parametrize("page", ["stage13", "stage2"])
@@ -211,11 +242,15 @@ def test_composite_figure_contains_required_areas_and_no_network(prepared, page:
         all_text = "\n".join(
             text.get_text() for axis in figure.axes for text in axis.texts
         )
-        assert f"Package composition of {composite.high.cluster_id}" in "\n".join(titles)
-        assert "Internal package interaction" in "\n".join(titles)
-        assert "Boundary-weight profile" in "\n".join(titles)
+        assert f"Composition of {composite.high.cluster_id}" in "\n".join(titles)
+        assert "Structural summary" in "\n".join(titles)
+        assert "Strongest external destinations" in "\n".join(titles)
         assert f"{composite.high.cluster_id} - Highest-contributing focal cluster" in all_text
-        assert f"{composite.low.cluster_id} - Lowest-contributing cluster" in all_text
+        assert f"{composite.low.cluster_id} - Lowest-contributing\ncluster" in all_text
+        assert "Complete package-interaction data are available in the companion CSV." in all_text
+        assert not any(axis.images for axis in figure.axes)
+        assert "Internal package interaction" not in all_text
+        assert "Aggregated structural weight" not in all_text
         assert all(not axis.lines for axis in figure.axes)
     finally:
         import matplotlib.pyplot as plt
