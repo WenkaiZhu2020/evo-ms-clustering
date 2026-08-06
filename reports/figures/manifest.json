@@ -1,5 +1,55 @@
 {
   "figures": {
+    "stage123_daytrader_highest_lowest_clusters": {
+      "destination": "main_text",
+      "formats": [
+        "dot",
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-06T18:56:04Z",
+      "generator": "evo_ms.visualization.figures.stage123_daytrader_clusters",
+      "inputs": [
+        "data/extracted/daytrader/class_nodes.csv",
+        "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+        "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
+        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+        "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
+        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/posthoc_metrics.csv",
+        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv",
+        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json"
+      ],
+      "metadata": {
+        "ranking_metric": "local weighted-modularity contribution",
+        "raw_structural_graph": "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+        "stage1_partition": "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "stage1_representative": "seed 42",
+        "stage2_partition": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
+        "stage2_representative": "seed 25 / seed25_solution047",
+        "stage3_partition": "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv",
+        "stage3_representative": "seed 16 / seed16_solution036",
+        "subject": "daytrader"
+      },
+      "outputs": {
+        "dot": "reports/figures/source/cross_stage/daytrader_highest_lowest_clusters.dot",
+        "pdf": "reports/figures/pdf/cross_stage/daytrader_highest_lowest_clusters.pdf",
+        "profiles": "reports/figures/data/cross_stage/daytrader_cluster_profiles.csv",
+        "provenance": "reports/figures/data/cross_stage/daytrader_highest_lowest_clusters.provenance.json",
+        "selected": "reports/figures/data/cross_stage/daytrader_highest_lowest_clusters.csv",
+        "svg": "reports/figures/preview/cross_stage/daytrader_highest_lowest_clusters.svg"
+      },
+      "sha256": {
+        "dot": "93924870b19c86c20bdd1b629e13e0bb9349b982670210aed283b022253988c3",
+        "pdf": "7576cf17e2288967e53f335f6a858eed863285b3a725d3d6869c5bc4247c5acc",
+        "profiles": "666e822e48f9fa5c194606d28be804ca45432e7dd52b39ffebbc7c88a8519f88",
+        "provenance": "9cc7239e94d1225f025066dd65e60b8c7eb2375ac030b71949a7aac08abf60c4",
+        "selected": "b1690061c60e4e852896ea6da30c6c86dfba5c6430a981e4ca68a19a1ee42512",
+        "svg": "320b10bc137563cf144be5aea8996f459f0eb7f146f2a465f13510bd8149c8c5"
+      },
+      "stage": "stage3",
+      "title": "Highest- and lowest-contributing DayTrader clusters across the three stages"
+    },
     "stage2_daytrader_partition_transition": {
       "destination": "main_text",
       "formats": [

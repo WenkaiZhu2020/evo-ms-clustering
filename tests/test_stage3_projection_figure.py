@@ -22,6 +22,7 @@ FIXED_TIME = "2026-08-06T12:00:00Z"
 def test_figure_registration_loads_correctly() -> None:
     config = load_visualization_config()
     assert set(config.figures) == {
+        "stage123_daytrader_highest_lowest_clusters",
         FIGURE_ID,
         "stage2_daytrader_partition_transition",
         "stage3_jpetstore_semantic_evidence_comparison",

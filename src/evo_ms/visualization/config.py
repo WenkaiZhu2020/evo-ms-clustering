@@ -27,6 +27,7 @@ REQUIRED_STYLE_KEYS = (
     "edge_categories",
     "transition_flow",
     "semantic_evidence_comparison",
+    "cluster_contribution_comparison",
     "graph",
     "workflow",
     "page_profiles",
@@ -171,6 +172,9 @@ def _figures(
         representative_solution = raw.get("representative_solution")
         layout_coordinate_path = raw.get("layout_coordinate_path")
         edge_category_data_path = raw.get("edge_category_data_path")
+        metadata = raw.get("metadata")
+        if metadata is not None and not isinstance(metadata, dict):
+            raise ValueError(f"figure {figure_id}.metadata must be a mapping")
         if (representative_seed is None) != (representative_solution is None):
             raise ValueError(
                 f"figure {figure_id} must define representative_seed and "
@@ -212,6 +216,7 @@ def _figures(
             representative_solution=representative_solution,
             layout_coordinate_path=layout_coordinate_path,
             edge_category_data_path=edge_category_data_path,
+            metadata=None if metadata is None else MappingProxyType(dict(metadata)),
         )
     return MappingProxyType(figures)
 

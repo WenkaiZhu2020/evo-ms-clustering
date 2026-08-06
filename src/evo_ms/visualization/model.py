@@ -42,6 +42,7 @@ class FigureSpecification:
     representative_solution: str | None = None
     layout_coordinate_path: str | None = None
     edge_category_data_path: str | None = None
+    metadata: Mapping[str, Any] | None = None
 
 
 @dataclass(frozen=True)

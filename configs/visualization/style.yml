@@ -55,6 +55,21 @@ semantic_evidence_comparison:
   node_height_in: 0.24
   node_margin: "0.035,0.018"
 
+cluster_contribution_comparison:
+  canvas_width_pt: 500
+  canvas_height_pt: 710
+  focal_fill: "#DCEAF7"
+  focal_border: "#0072B2"
+  external_fill: "#F2F2F2"
+  external_border: "#888888"
+  internal_edge: "#4D4D4D"
+  boundary_edge: "#AAAAAA"
+  node_font_size: 5.8
+  title_font_size: 8.5
+  metric_font_size: 6.5
+  panel_width_pt: 232
+  panel_height_pt: 200
+
 transition_flow:
   line_width_min: 0.8
   line_width_max: 6.0
