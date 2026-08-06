@@ -21,7 +21,7 @@ FIXED_TIME = "2026-08-06T12:00:00Z"
 
 def test_figure_registration_loads_correctly() -> None:
     config = load_visualization_config()
-    assert set(config.figures) == {FIGURE_ID}
+    assert set(config.figures) == {FIGURE_ID, "stage2_daytrader_partition_transition"}
     specification = config.figures[FIGURE_ID]
     assert specification.stage == "stage3"
     assert specification.destination == "main_text"

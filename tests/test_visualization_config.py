@@ -23,16 +23,21 @@ def _write_configs(root: Path, figures: dict, style: dict) -> None:
     directory.mkdir(parents=True)
     (directory / "figures.yml").write_text(yaml.safe_dump(figures, sort_keys=False), encoding="utf-8")
     (directory / "style.yml").write_text(yaml.safe_dump(style, sort_keys=False), encoding="utf-8")
-    implementation = root / "experiments/05_stage3_declaration_method_body/run.py"
-    implementation.parent.mkdir(parents=True)
-    implementation.write_text("# synthetic implementation source\n", encoding="utf-8")
+    for figure in figures["figures"].values():
+        for relative in figure["inputs"]:
+            source = root / relative
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_text("synthetic input\n", encoding="utf-8")
 
 
 def test_default_configs_load_from_repository_root() -> None:
     config = load_visualization_config()
     assert config.repository_root == ROOT
     assert config.schema_version == 1
-    assert set(config.figures) == {"stage3_four_to_three_projection"}
+    assert set(config.figures) == {
+        "stage2_daytrader_partition_transition",
+        "stage3_four_to_three_projection",
+    }
     assert config.output.dot == ROOT / "reports/figures/source"
 
 
@@ -79,6 +84,12 @@ def test_subject_display_names_are_canonical() -> None:
         "daytrader": "DayTrader",
         "xerces-j": "Xerces-J",
     }
+
+
+def test_daytrader_representative_is_typed_and_frozen() -> None:
+    specification = load_visualization_config().figures["stage2_daytrader_partition_transition"]
+    assert specification.representative_seed == 25
+    assert specification.representative_solution == "seed25_solution047"
 
 
 def test_manifest_is_a_schema_valid_catalogue() -> None:

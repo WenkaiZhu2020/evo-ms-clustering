@@ -23,6 +23,7 @@ def _run(*arguments: str, cwd: Path | None = None) -> subprocess.CompletedProces
 def test_list_succeeds_with_registered_catalogue_from_another_cwd(tmp_path: Path) -> None:
     completed = _run("--list", cwd=tmp_path)
     assert completed.returncode == 0
+    assert "stage2_daytrader_partition_transition\tstage2\tenabled" in completed.stdout
     assert "stage3_four_to_three_projection\tstage3\tenabled" in completed.stdout
 
 

@@ -166,6 +166,21 @@ def _figures(
             )
         if not isinstance(raw["generator"], str) or not raw["generator"]:
             raise ValueError(f"figure {figure_id}.generator must be a non-empty string")
+        representative_seed = raw.get("representative_seed")
+        representative_solution = raw.get("representative_solution")
+        if (representative_seed is None) != (representative_solution is None):
+            raise ValueError(
+                f"figure {figure_id} must define representative_seed and "
+                "representative_solution together"
+            )
+        if representative_seed is not None and (
+            not isinstance(representative_seed, int) or representative_seed < 0
+        ):
+            raise ValueError(f"figure {figure_id}.representative_seed must be a non-negative integer")
+        if representative_solution is not None and (
+            not isinstance(representative_solution, str) or not representative_solution
+        ):
+            raise ValueError(f"figure {figure_id}.representative_solution must be a non-empty string")
         figures[figure_id] = FigureSpecification(
             figure_id=figure_id,
             stage=raw["stage"],
@@ -176,6 +191,8 @@ def _figures(
             enabled=raw["enabled"],
             formats=figure_formats,
             generator=raw["generator"],
+            representative_seed=representative_seed,
+            representative_solution=representative_solution,
         )
     return MappingProxyType(figures)
 

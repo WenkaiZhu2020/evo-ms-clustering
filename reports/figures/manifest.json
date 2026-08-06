@@ -1,5 +1,40 @@
 {
   "figures": {
+    "stage2_daytrader_partition_transition": {
+      "destination": "main_text",
+      "formats": [
+        "dot",
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-06T17:24:03Z",
+      "generator": "evo_ms.visualization.figures.stage2_daytrader_transition",
+      "inputs": [
+        "data/extracted/daytrader/class_nodes.csv",
+        "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+        "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_front.csv",
+        "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz"
+      ],
+      "outputs": {
+        "data": "reports/figures/data/stage2/daytrader_partition_transition.csv",
+        "dot": "reports/figures/source/stage2/daytrader_partition_transition.dot",
+        "pdf": "reports/figures/pdf/stage2/daytrader_partition_transition.pdf",
+        "provenance": "reports/figures/data/stage2/daytrader_partition_transition.provenance.json",
+        "svg": "reports/figures/preview/stage2/daytrader_partition_transition.svg"
+      },
+      "representative_seed": 25,
+      "representative_solution": "seed25_solution047",
+      "sha256": {
+        "data": "03c56740bc5b22e97c799f84573d5f21d28f88cfa58dd5b7b1d0e3b09c657caa",
+        "dot": "82c06d1daecb26da39c1a887e8844048b87a6ab27b9b873f5d8b885de6f47720",
+        "pdf": "b5e441b9a3f55843cb8f766cf62f9a07604f3c142e04cdec68b18e835a0bd471",
+        "provenance": "fc287265b024466cff35200fcbc73744d32658e1ccd80ed1e3ae5a498d5ca3ae",
+        "svg": "07543230d3888a17bdebbc62cba4d1fcf48402f13b99b2341b78dfd6b858ddf1"
+      },
+      "stage": "stage2",
+      "title": "DayTrader partition transition from Leiden to the Stage 2 representative solution"
+    },
     "stage3_four_to_three_projection": {
       "destination": "main_text",
       "formats": [

@@ -45,6 +45,7 @@ edge_categories:
 transition_flow:
   line_width_min: 0.8
   line_width_max: 6.0
+  color: "#77777788"
 
 graph:
   margin: 0.08
@@ -114,3 +115,6 @@ cluster_palette:
   - "#D55E00"
   - "#F0E442"
   - "#999999"
+  - "#882255"
+  - "#44AA99"
+  - "#AA4499"

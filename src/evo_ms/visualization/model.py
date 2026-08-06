@@ -38,6 +38,8 @@ class FigureSpecification:
     enabled: bool
     formats: tuple[str, ...]
     generator: str
+    representative_seed: int | None = None
+    representative_solution: str | None = None
 
 
 @dataclass(frozen=True)

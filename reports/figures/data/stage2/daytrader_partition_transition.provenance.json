@@ -1,0 +1,56 @@
+{
+  "config_files": [
+    "configs/visualization/figures.yml",
+    "configs/visualization/style.yml"
+  ],
+  "config_sha256": {
+    "configs/visualization/figures.yml": "f7b02a08bf0f33e2dd64f515fe48a700f3979664285ae43491c8d73f2961af9c",
+    "configs/visualization/style.yml": "e6b2d34b6c998bdb70055c303cd5e00f3cb44b52593468cdcd75f7fb8561802b"
+  },
+  "dot_sha256": "82c06d1daecb26da39c1a887e8844048b87a6ab27b9b873f5d8b885de6f47720",
+  "figure_id": "stage2_daytrader_partition_transition",
+  "generated_at": "2026-08-06T17:24:03Z",
+  "generated_outputs": [
+    "reports/figures/data/stage2/daytrader_partition_transition.csv",
+    "reports/figures/data/stage2/daytrader_partition_transition.provenance.json",
+    "reports/figures/pdf/stage2/daytrader_partition_transition.pdf",
+    "reports/figures/preview/stage2/daytrader_partition_transition.svg",
+    "reports/figures/source/stage2/daytrader_partition_transition.dot"
+  ],
+  "generator": "src/evo_ms/visualization/figures/stage2_daytrader_transition.py",
+  "git_commit": "ae77af747163f7fd9f6cdb91ab0a156c0349114e",
+  "git_dirty": true,
+  "graphviz_engine": "dot",
+  "graphviz_version": "dot - graphviz version 14.0.4 (20251115.1723)",
+  "input_files": [
+    "data/extracted/daytrader/class_nodes.csv",
+    "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+    "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_front.csv",
+    "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz"
+  ],
+  "input_sha256": {
+    "data/extracted/daytrader/class_nodes.csv": "52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd",
+    "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv": "90a727ad67cdb6f3c02b278d77b405b0acd65bb52019939dd3afd822c9132cd6",
+    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv": "9a0e9a1f40edf260bb06c719e6967aef9c18a81b28fac9f0895e5520341c91d3",
+    "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_front.csv": "ce7a1f1644e49e03164dc1a9e82e6aeb683bece5c0f3f1569178ed11b075bf89",
+    "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz": "ab32aef9c4c2b653028ea498be25fb7f35313ab62e07e2c634fa33293a2a7daf"
+  },
+  "render_command": [
+    [
+      "dot",
+      "-Tpdf",
+      "reports/figures/source/stage2/daytrader_partition_transition.dot",
+      "-o",
+      "reports/figures/pdf/stage2/daytrader_partition_transition.pdf"
+    ],
+    [
+      "dot",
+      "-Tsvg",
+      "reports/figures/source/stage2/daytrader_partition_transition.dot",
+      "-o",
+      "reports/figures/preview/stage2/daytrader_partition_transition.svg"
+    ]
+  ],
+  "stage": "stage2"
+}
