@@ -34,6 +34,9 @@ ALL_FIGURES = {
     "stage2_daytrader_partition_transition",
     "stage3_four_to_three_projection",
     "stage3_jpetstore_semantic_evidence_comparison",
+    "stage1_xerces_highest_lowest_clusters",
+    "stage2_xerces_highest_lowest_clusters",
+    "stage3_xerces_highest_lowest_clusters",
 }
 
 

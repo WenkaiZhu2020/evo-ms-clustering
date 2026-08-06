@@ -104,6 +104,55 @@
       "stage": "stage3",
       "title": "Highest- and lowest-contributing JPetStore clusters across the three stages"
     },
+    "stage1_xerces_highest_lowest_clusters": {
+      "destination": "appendix",
+      "formats": [
+        "dot",
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-06T20:01:27Z",
+      "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
+      "inputs": [
+        "data/extracted/xerces-j/class_nodes.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
+        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+        "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+      ],
+      "metadata": {
+        "highest_cluster": "C11",
+        "lowest_cluster": "C07",
+        "representative": "seed 42 / raw_reference_leiden",
+        "subject": "xerces-j"
+      },
+      "outputs": {
+        "aggregation": "reports/figures/data/cross_stage/xerces_stage1_boundary_aggregation.csv",
+        "dot": "reports/figures/source/cross_stage/xerces_stage1_highest_lowest_clusters.dot",
+        "node_map": "reports/figures/data/cross_stage/xerces_stage1_focal_node_map.csv",
+        "pdf": "reports/figures/pdf/cross_stage/xerces_stage1_highest_lowest_clusters.pdf",
+        "profiles": "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
+        "provenance": "reports/figures/data/cross_stage/xerces_stage1_highest_lowest_clusters.provenance.json",
+        "selected": "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
+        "svg": "reports/figures/preview/cross_stage/xerces_stage1_highest_lowest_clusters.svg"
+      },
+      "sha256": {
+        "aggregation": "8414726d795f443afff2ee8219e73d0fb39c4728565dd9a648610217971cb07d",
+        "dot": "74ba18cfc7e5aaed39709504eff08e7da549b7b4985bfbc973a63fd896d6d45e",
+        "node_map": "aedb40031897fb42d358a87ab198ee23fd6b969d792c7bfeaa1ddf3b182779bb",
+        "pdf": "52621aac141a8c2d6a3662a294cba874b12dbc2f64edd07d6d17c98cc790c3ed",
+        "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
+        "provenance": "12ae40227f3d8ea7eb93f9fce389ff786c462a27c7ae1193b0d8f7bb78051d5e",
+        "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
+        "svg": "2be8c9d8542f3abb83c1509ca54728036135e74aaf5d3b5b1fb4afb55c366ac8"
+      },
+      "stage": "stage1",
+      "title": "Stage 1 Xerces-J cluster contribution"
+    },
     "stage2_daytrader_partition_transition": {
       "destination": "main_text",
       "formats": [
@@ -138,6 +187,55 @@
       },
       "stage": "stage2",
       "title": "DayTrader partition transition from Leiden to the Stage 2 representative solution"
+    },
+    "stage2_xerces_highest_lowest_clusters": {
+      "destination": "appendix",
+      "formats": [
+        "dot",
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-06T20:01:28Z",
+      "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
+      "inputs": [
+        "data/extracted/xerces-j/class_nodes.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
+        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+        "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+      ],
+      "metadata": {
+        "highest_cluster": "C13",
+        "lowest_cluster": "C27",
+        "representative": "seed 21 / seed21_solution022",
+        "subject": "xerces-j"
+      },
+      "outputs": {
+        "aggregation": "reports/figures/data/cross_stage/xerces_stage2_boundary_aggregation.csv",
+        "dot": "reports/figures/source/cross_stage/xerces_stage2_highest_lowest_clusters.dot",
+        "node_map": "reports/figures/data/cross_stage/xerces_stage2_focal_node_map.csv",
+        "pdf": "reports/figures/pdf/cross_stage/xerces_stage2_highest_lowest_clusters.pdf",
+        "profiles": "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
+        "provenance": "reports/figures/data/cross_stage/xerces_stage2_highest_lowest_clusters.provenance.json",
+        "selected": "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
+        "svg": "reports/figures/preview/cross_stage/xerces_stage2_highest_lowest_clusters.svg"
+      },
+      "sha256": {
+        "aggregation": "a07a60aed4cbee342328c935f3fa461495b2f6cb8d2116c0787469bb8cc1c519",
+        "dot": "3f73e6ab78fab0e9091854481cf5549f7a7784d687c085e5dd83f34e31af8102",
+        "node_map": "81cb92fb75f5fb6825ef9422972485f5f5fb1b0d22116ae32ad272bb71101d7e",
+        "pdf": "dff8bbe0c1920c66ad7c517ef7932799454ed4be536f70bab1e861626ec4c3e4",
+        "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
+        "provenance": "e3c4ec225f825c0388a1f0b7c088fc87c1c6f988d3fe2fac370ae5c5dddc7d9a",
+        "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
+        "svg": "4a8f0219a7e1e7ae2bc08b4e045a3ee01f501c7010de7c22f88714f3ca1ffd4e"
+      },
+      "stage": "stage2",
+      "title": "Stage 2 Xerces-J cluster contribution"
     },
     "stage3_four_to_three_projection": {
       "destination": "main_text",
@@ -202,6 +300,55 @@
       },
       "stage": "stage3",
       "title": "Structural and semantic evidence in JPetStore"
+    },
+    "stage3_xerces_highest_lowest_clusters": {
+      "destination": "appendix",
+      "formats": [
+        "dot",
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-06T20:01:28Z",
+      "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
+      "inputs": [
+        "data/extracted/xerces-j/class_nodes.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
+        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+        "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+      ],
+      "metadata": {
+        "highest_cluster": "C11",
+        "lowest_cluster": "C07",
+        "representative": "seed 22 / seed22_solution015",
+        "subject": "xerces-j"
+      },
+      "outputs": {
+        "aggregation": "reports/figures/data/cross_stage/xerces_stage3_boundary_aggregation.csv",
+        "dot": "reports/figures/source/cross_stage/xerces_stage3_highest_lowest_clusters.dot",
+        "node_map": "reports/figures/data/cross_stage/xerces_stage3_focal_node_map.csv",
+        "pdf": "reports/figures/pdf/cross_stage/xerces_stage3_highest_lowest_clusters.pdf",
+        "profiles": "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
+        "provenance": "reports/figures/data/cross_stage/xerces_stage3_highest_lowest_clusters.provenance.json",
+        "selected": "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
+        "svg": "reports/figures/preview/cross_stage/xerces_stage3_highest_lowest_clusters.svg"
+      },
+      "sha256": {
+        "aggregation": "147e4caaf1a1a6df6b648e9cd98a112e14a349a8eece98928fec55052cc99c66",
+        "dot": "d2d6b9cc6fc5ac34c62a7df626b5e2b2911e43e7ad880aa0dea5230c7cf3c866",
+        "node_map": "e80a408288e9a24ef9fddae3352beb9dbe870b466b34b3252207492cbb6bb0d7",
+        "pdf": "8f234e30f713943d4c557727aea1def0ea7c4ef240c127e95f90d216415ebb2e",
+        "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
+        "provenance": "ba5dc58856127a344aba93170921c489b9146e68fa3e7e17f53ffc61287f0457",
+        "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
+        "svg": "2abd96ba1e4033238793df1041881c04b0323a041dd50db9fb83edb9841dee92"
+      },
+      "stage": "stage3",
+      "title": "Stage 3 Xerces-J cluster contribution"
     }
   },
   "schema_version": 1

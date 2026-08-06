@@ -42,7 +42,7 @@ def _fake_renderer(request) -> GraphvizRenderResult:
 
 
 def test_appendix_registration_and_exactly_five_figures() -> None:
-    config=load_visualization_config(); assert len(config.figures)==5 and FIGURE_ID in config.figures
+    config=load_visualization_config(); assert len(config.figures)==8 and FIGURE_ID in config.figures
     spec=config.figures[FIGURE_ID]
     assert spec.destination=="appendix" and spec.formats==("dot","svg","pdf")
     assert spec.metadata["stage2_representative"]=="seed 1 / seed1_solution007"

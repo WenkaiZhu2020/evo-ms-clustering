@@ -1,0 +1,69 @@
+{
+  "config_files": [
+    "configs/visualization/figures.yml",
+    "configs/visualization/style.yml"
+  ],
+  "config_sha256": {
+    "configs/visualization/figures.yml": "b1ef65135e0094ca3540b3e5c2b5177ee79a600d8d09dbe5e05e8ff806d21496",
+    "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
+  },
+  "dot_sha256": "74ba18cfc7e5aaed39709504eff08e7da549b7b4985bfbc973a63fd896d6d45e",
+  "figure_id": "stage1_xerces_highest_lowest_clusters",
+  "generated_at": "2026-08-06T20:01:27Z",
+  "generated_outputs": [
+    "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
+    "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
+    "reports/figures/data/cross_stage/xerces_stage1_boundary_aggregation.csv",
+    "reports/figures/data/cross_stage/xerces_stage1_focal_node_map.csv",
+    "reports/figures/data/cross_stage/xerces_stage1_highest_lowest_clusters.provenance.json",
+    "reports/figures/pdf/cross_stage/xerces_stage1_highest_lowest_clusters.pdf",
+    "reports/figures/preview/cross_stage/xerces_stage1_highest_lowest_clusters.svg",
+    "reports/figures/source/cross_stage/xerces_stage1_highest_lowest_clusters.dot"
+  ],
+  "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
+  "git_commit": "2721949a574f90b5ca735601c03239f4d4c98521",
+  "git_dirty": true,
+  "graphviz_engine": "neato",
+  "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",
+  "input_files": [
+    "data/extracted/xerces-j/class_nodes.csv",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
+    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+    "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+  ],
+  "input_sha256": {
+    "data/extracted/xerces-j/class_nodes.csv": "05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv": "d2478f556ca973c25a950bf5341f8a3585e41271cdb4533553da3f181f1d730b",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv": "3795b4ab2c33a48f521f6242b791bf29f5a1c67364a3938d504594bae9c6a12e",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv": "014e5ace715ed2a26ef45b4f021c96eb8b83b57c5b9d54bbc921679988fa9cf2",
+    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv": "9a0e9a1f40edf260bb06c719e6967aef9c18a81b28fac9f0895e5520341c91d3",
+    "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz": "47528c23b7a83c665c9d84d429308db9b5addc9d2a61b1eeda42bf1dc2985fde",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv": "dd3fd6e08ba6e17d62bd522b52dc1747111be06ce54d59b028255556662a109d",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv": "30f600cb2587ee183d84de3d82b3f6aeb72baab7080b5eac3bdd058658c95845",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json": "5533ac25dae86519accc206d432d5a3056fb7627d7943e18047993d01f2f0aa4"
+  },
+  "render_command": [
+    [
+      "neato",
+      "-n2",
+      "-Tpdf",
+      "reports/figures/source/cross_stage/xerces_stage1_highest_lowest_clusters.dot",
+      "-o",
+      "reports/figures/pdf/cross_stage/xerces_stage1_highest_lowest_clusters.pdf"
+    ],
+    [
+      "neato",
+      "-n2",
+      "-Tsvg",
+      "reports/figures/source/cross_stage/xerces_stage1_highest_lowest_clusters.dot",
+      "-o",
+      "reports/figures/preview/cross_stage/xerces_stage1_highest_lowest_clusters.svg"
+    ]
+  ],
+  "stage": "stage1"
+}

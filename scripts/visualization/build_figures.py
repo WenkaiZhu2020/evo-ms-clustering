@@ -74,10 +74,16 @@ def _build_registered_figure(figure_id: str) -> int:
         from evo_ms.visualization.figures.stage123_daytrader_clusters import build_figure
     elif figure_id == "stage123_jpetstore_highest_lowest_clusters":
         from evo_ms.visualization.figures.stage123_jpetstore_clusters import build_figure
+    elif figure_id in {
+        "stage1_xerces_highest_lowest_clusters",
+        "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_highest_lowest_clusters",
+    }:
+        from evo_ms.visualization.figures.stage123_xerces_clusters import build_figure
     else:
         raise ValueError(f"no implemented generator for figure: {figure_id}")
 
-    outputs = build_figure(config)
+    outputs = build_figure(config, figure_id=figure_id) if figure_id.startswith("stage") and "xerces_highest_lowest" in figure_id else build_figure(config)
     for name in sorted(outputs):
         path = outputs[name]
         print(f"{name}\t{path.relative_to(config.repository_root)}\t{path.stat().st_size}\t{sha256_file(path)}")

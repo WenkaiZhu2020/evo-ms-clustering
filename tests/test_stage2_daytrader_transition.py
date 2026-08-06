@@ -27,6 +27,7 @@ from evo_ms.visualization.figures.stage3_projection import build_figure as build
 from evo_ms.visualization.figures.stage3_jpetstore_semantic_evidence import build_figure as build_semantic
 from evo_ms.visualization.figures.stage123_daytrader_clusters import build_figure as build_clusters
 from evo_ms.visualization.figures.stage123_jpetstore_clusters import build_figure as build_jpetstore_clusters
+from evo_ms.visualization.figures.stage123_xerces_clusters import build_figure as build_xerces_clusters
 from evo_ms.visualization.layout import GraphvizError
 from evo_ms.visualization.model import GraphvizRenderResult
 
@@ -59,6 +60,9 @@ def test_registration_and_approved_representative() -> None:
         FIGURE_ID,
         "stage3_four_to_three_projection",
         "stage3_jpetstore_semantic_evidence_comparison",
+        "stage1_xerces_highest_lowest_clusters",
+        "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_highest_lowest_clusters",
     }
     specification = config.figures[FIGURE_ID]
     assert specification.stage == "stage2"
@@ -186,6 +190,20 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
         git_dirty=True,
         renderer=_deterministic_renderer,
     )
+    for xerces_figure_id in (
+        "stage1_xerces_highest_lowest_clusters",
+        "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_highest_lowest_clusters",
+    ):
+        build_xerces_clusters(
+            config,
+            figure_id=xerces_figure_id,
+            output_root=tmp_path,
+            generated_at=FIXED_TIME,
+            git_commit="abc123",
+            git_dirty=True,
+            renderer=_deterministic_renderer,
+        )
     figures = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))["figures"]
     assert set(figures) == {
         "stage123_daytrader_highest_lowest_clusters",
@@ -193,6 +211,9 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
         FIGURE_ID,
         "stage3_four_to_three_projection",
         "stage3_jpetstore_semantic_evidence_comparison",
+        "stage1_xerces_highest_lowest_clusters",
+        "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_highest_lowest_clusters",
     }
 
 

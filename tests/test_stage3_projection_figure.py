@@ -27,6 +27,9 @@ def test_figure_registration_loads_correctly() -> None:
         FIGURE_ID,
         "stage2_daytrader_partition_transition",
         "stage3_jpetstore_semantic_evidence_comparison",
+        "stage1_xerces_highest_lowest_clusters",
+        "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_highest_lowest_clusters",
     }
     specification = config.figures[FIGURE_ID]
     assert specification.stage == "stage3"

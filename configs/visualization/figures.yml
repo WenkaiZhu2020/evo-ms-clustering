@@ -17,6 +17,48 @@ output:
   pdf: reports/figures/pdf
 
 figures:
+  stage1_xerces_highest_lowest_clusters:
+    stage: stage1
+    title: Stage 1 Xerces-J cluster contribution
+    destination: appendix
+    inputs: &xerces_cluster_inputs
+      - data/extracted/xerces-j/class_nodes.csv
+      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
+      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
+      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv
+      - results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv
+      - results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz
+      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv
+      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json
+      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv
+    layout_profile: fixed_comparison
+    enabled: true
+    formats: [dot, svg, pdf]
+    generator: evo_ms.visualization.figures.stage123_xerces_clusters
+    metadata: {subject: xerces-j, representative: "seed 42 / raw_reference_leiden", highest_cluster: C11, lowest_cluster: C07}
+
+  stage2_xerces_highest_lowest_clusters:
+    stage: stage2
+    title: Stage 2 Xerces-J cluster contribution
+    destination: appendix
+    inputs: *xerces_cluster_inputs
+    layout_profile: fixed_comparison
+    enabled: true
+    formats: [dot, svg, pdf]
+    generator: evo_ms.visualization.figures.stage123_xerces_clusters
+    metadata: {subject: xerces-j, representative: "seed 21 / seed21_solution022", highest_cluster: C13, lowest_cluster: C27}
+
+  stage3_xerces_highest_lowest_clusters:
+    stage: stage3
+    title: Stage 3 Xerces-J cluster contribution
+    destination: appendix
+    inputs: *xerces_cluster_inputs
+    layout_profile: fixed_comparison
+    enabled: true
+    formats: [dot, svg, pdf]
+    generator: evo_ms.visualization.figures.stage123_xerces_clusters
+    metadata: {subject: xerces-j, representative: "seed 22 / seed22_solution015", highest_cluster: C11, lowest_cluster: C07}
+
   stage123_jpetstore_highest_lowest_clusters:
     stage: stage3
     title: Highest- and lowest-contributing JPetStore clusters across the three stages
