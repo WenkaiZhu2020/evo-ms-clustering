@@ -1,0 +1,22 @@
+schema_version: 1
+
+allowed_stages:
+  - stage1
+  - stage2
+  - stage3
+
+allowed_output_formats:
+  - dot
+  - svg
+  - pdf
+
+output:
+  data: reports/figures/data
+  dot: reports/figures/source
+  svg: reports/figures/preview
+  pdf: reports/figures/pdf
+
+# Formal figures will be registered in later, stage-specific steps.
+# Future entries support: stage, title, destination, inputs,
+# layout_profile, and enabled.
+figures: {}

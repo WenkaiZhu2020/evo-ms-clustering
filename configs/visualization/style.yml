@@ -1,0 +1,102 @@
+schema_version: 1
+
+subjects:
+  jpetstore: JPetStore
+  daytrader: DayTrader
+  xerces-j: Xerces-J
+
+fonts:
+  family: Helvetica
+  node_size: 10
+  edge_size: 8
+  title_size: 12
+
+node:
+  shape: box
+  style: rounded,filled
+  fillcolor: "#F7F7F7"
+  color: "#4D4D4D"
+  penwidth: 1.0
+
+edge:
+  color: "#666666"
+  style: solid
+  penwidth: 1.0
+
+changed_node:
+  color: "#D55E00"
+  style: bold
+  penwidth: 3.0
+
+edge_categories:
+  structural:
+    color: "#4D4D4D"
+    style: solid
+  ssa_only:
+    color: "#D55E00"
+    style: dashed
+  semantic_only:
+    color: "#0072B2"
+    style: dotted
+  structural_semantic_overlap:
+    color: "#CC79A7"
+    style: bold
+
+transition_flow:
+  line_width_min: 0.8
+  line_width_max: 6.0
+
+graph:
+  margin: 0.08
+  pad: 0.12
+  background: white
+
+page_profiles:
+  main_text:
+    width_in: 6.25
+    height_in: 7.8
+  appendix:
+    width_in: 7.0
+    height_in: 9.2
+
+graphviz:
+  default_engines:
+    hierarchical: dot
+    force_directed: neato
+    fixed_coordinates: neato
+    large_graph: sfdp
+  initial_layout_seed: 42
+
+layout_profiles:
+  hierarchical:
+    engine: dot
+    fixed_coordinates: false
+    seed: 42
+    page_profile: main_text
+  force_directed:
+    engine: neato
+    fixed_coordinates: false
+    seed: 42
+    page_profile: main_text
+  fixed_comparison:
+    engine: neato
+    fixed_coordinates: true
+    seed: 42
+    page_profile: main_text
+  large_graph:
+    engine: sfdp
+    fixed_coordinates: false
+    seed: 42
+    page_profile: appendix
+
+# This is a configurable reserve only. No colour is assigned to a formal
+# partition until a later stage-specific preparation step.
+cluster_palette:
+  - "#0072B2"
+  - "#E69F00"
+  - "#009E73"
+  - "#CC79A7"
+  - "#56B4E9"
+  - "#D55E00"
+  - "#F0E442"
+  - "#999999"
