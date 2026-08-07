@@ -1,0 +1,48 @@
+subject: jfreechart
+role: stage2_raw_structure_only_nsga
+input_graph: G_raw
+weight_column: raw_weight
+stage1_baseline_profile: raw_reference_leiden
+population_size: 100
+generations: 100
+seeds:
+- 0
+source_extracted_data: data/extracted/jfreechart/
+extracted_input_sha256:
+  class_nodes.csv: bb4b83bcca058c8af7d80e64f5ac02a0879f39615944cbba0fec229b5ac1d003
+  structural_dependencies.csv: 63784a0b502471c8b1634bb00dd633290f99f058c12229666ffc61fc739ea46d
+graph_edge_sha256: e65649b2b2da322b4f703fb35dc605acb51baef5bad4c0c213365726d20b6803
+hypervolume_reference_point:
+- 1.0418640365845335
+- 2.051346396716011
+- 6.026372074238639
+hypervolume_reference_point_method: nadir_plus_10_percent_observed_span
+hypervolume_scope: subject_raw_objective_space_only
+initialization:
+  enabled: true
+  strategy: structure_aware_seeded
+  basis: raw_reference_leiden_and_raw_graph
+  include_raw_leiden: true
+  random_fill: true
+  perturbations:
+    enabled: true
+    fractions:
+    - 0.005
+    - 0.01
+    - 0.02
+    - 0.05
+    per_fraction: 5
+  graph_groupings:
+    enabled: true
+    target_offsets_from_raw_leiden:
+    - -10
+    - 0
+    - 10
+    include_sqrt_target: true
+  provenance_columns:
+  - is_injected_seed
+  - injected_seed_name
+  - injected_seed_category
+generated_at_utc: '2026-08-07T15:25:49Z'
+git_head: ec7de9560c0543978372c0e7ac094b89f1617ffa
+git_dirty: true

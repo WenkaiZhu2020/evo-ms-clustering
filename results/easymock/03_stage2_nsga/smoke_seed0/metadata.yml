@@ -1,0 +1,48 @@
+subject: easymock
+role: stage2_raw_structure_only_nsga
+input_graph: G_raw
+weight_column: raw_weight
+stage1_baseline_profile: raw_reference_leiden
+population_size: 100
+generations: 100
+seeds:
+- 0
+source_extracted_data: data/extracted/easymock/
+extracted_input_sha256:
+  class_nodes.csv: 539f67a7f365ab5061e60ad31894c6695175e50837a1a0b7d49903f574a684d6
+  structural_dependencies.csv: 9416e2ebb27164c3fa71ed4d0728073b9ea8d14623c13fa5c8a3e2b5dfac70ab
+graph_edge_sha256: 0820d7509689b03b0f97edca1e28c1ad65f6840f5d53890ca3e45a24ec110150
+hypervolume_reference_point:
+- 0.9462154294032024
+- 0.6904010107618521
+- 2.1167608849350295
+hypervolume_reference_point_method: nadir_plus_10_percent_observed_span
+hypervolume_scope: subject_raw_objective_space_only
+initialization:
+  enabled: true
+  strategy: structure_aware_seeded
+  basis: raw_reference_leiden_and_raw_graph
+  include_raw_leiden: true
+  random_fill: true
+  perturbations:
+    enabled: true
+    fractions:
+    - 0.005
+    - 0.01
+    - 0.02
+    - 0.05
+    per_fraction: 5
+  graph_groupings:
+    enabled: true
+    target_offsets_from_raw_leiden:
+    - -10
+    - 0
+    - 10
+    include_sqrt_target: true
+  provenance_columns:
+  - is_injected_seed
+  - injected_seed_name
+  - injected_seed_category
+generated_at_utc: '2026-08-07T15:24:44Z'
+git_head: ec7de9560c0543978372c0e7ac094b89f1617ffa
+git_dirty: true

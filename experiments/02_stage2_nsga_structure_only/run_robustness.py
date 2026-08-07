@@ -51,7 +51,7 @@ def _load_stage2_runner():
 stage2 = _load_stage2_runner()
 
 
-SUBJECTS = ("jpetstore", "daytrader", "xerces-j")
+SUBJECTS = ("jpetstore", "daytrader", "xerces-j", "easymock", "jfreechart")
 OBJECTIVE_ORDER = ["coupling", "negative_cohesion", "imbalance"]
 FORMAL_SEEDS = list(range(30))
 CALIBRATION_SEEDS = list(range(1000, 1010))
