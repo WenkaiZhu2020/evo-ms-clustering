@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "subject": "jfreechart",
+  "storage_subject": "jfreechart",
+  "seed": 1,
+  "run_type": "formal",
+  "implementation_commit": "df04395e2c6a0555eaf6651efd25698fb7eaa280",
+  "execution_head": "df04395e2c6a0555eaf6651efd25698fb7eaa280",
+  "results_commit": null,
+  "reporting_commit": null,
+  "config_path": "configs/experiments/05_stage3_declaration_method_body.yml",
+  "config_sha256": "bf5972693765779e1f2dd210f3818d7ba78d5afa2dbe444b6c78dab996308cfe",
+  "stage2_config_path": "configs/experiments/02_stage2_nsga_structure_only.yml",
+  "g_raw_provenance": {
+    "loader": "experiments/05_stage3_declaration_method_body/run.py:_raw_graph_inputs",
+    "builder": "src/evo_ms/graph/raw_graph_builder.py",
+    "class_nodes_path": "data/extracted/jfreechart/class_nodes.csv",
+    "structural_dependencies_path": "data/extracted/jfreechart/structural_dependencies.csv",
+    "raw_edge_hash": "e65649b2b2da322b4f703fb35dc605acb51baef5bad4c0c213365726d20b6803"
+  },
+  "g_sem_graph_hash": "1183cf911e5ba113731745c87d73b79123fd9c1335945eaefbc314ccfdecb19a",
+  "g_sem_metadata_path": "data/semantic_graphs/declaration_method_body/jfreechart/graph_metadata.json",
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance",
+    "f_semantic"
+  ],
+  "report_objective_order": [
+    "coupling",
+    "cohesion",
+    "imbalance",
+    "f_semantic"
+  ],
+  "coupling_objective": {
+    "name": "coupling",
+    "index": 0
+  },
+  "population_size": 100,
+  "generations": 100,
+  "warm_start_source": "evo_ms.optimization.initialization.build_structure_aware_seed_records",
+  "projected_front_rule": "final 4D front -> exact 3D nondominance -> exact projected objective tuple deduplication; stable solution_id survivor",
+  "projected_hv_implementation": "evo_ms.optimization.fronts.calculate_hypervolume",
+  "projected_hv_bounds_source": "configs/experiments/stage2_robustness_bounds.yml",
+  "projected_hv_reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "representative_selection_implementation": "evo_ms.optimization.selection.select_solution",
+  "start_timestamp_utc": "2026-08-07T20:43:01Z",
+  "end_timestamp_utc": "2026-08-07T20:44:00Z",
+  "runtime_seconds": 57.84948124992661,
+  "completion_status": "completed",
+  "validation": {
+    "front_size": 100,
+    "f_semantic_min": 0.36085282376767647,
+    "f_semantic_mean": 0.6613347152889275,
+    "f_semantic_max": 0.985445755207041,
+    "f_semantic_std": 0.15384573419213196,
+    "projected_front_size": 81,
+    "projected_hv": 0.15732827507622896,
+    "recomputed_projected_hv": 0.15732827507622896,
+    "hv_abs_difference": 0.0,
+    "selected_solution_id": "seed1_solution027",
+    "selected_f_semantic": 0.39029040762902023,
+    "validation_pass": true
+  },
+  "stage2_same_seed_hypervolume": {
+    "value": 0.15557008090773586,
+    "source_path": "results/stage2/subjects/jfreechart/nsga/robustness/seed_00/run_metrics.json",
+    "checked_paths": [
+      "results/stage2/subjects/jfreechart/nsga/robustness/seed_00/run_metrics.json",
+      "results/stage2/subjects/jfreechart/nsga/raw/hypervolume_by_seed.csv"
+    ],
+    "stage2_git_commit": "ec7de9560c0543978372c0e7ac094b89f1617ffa",
+    "bounds_path": "configs/experiments/stage2_robustness_bounds.yml"
+  },
+  "structural_objective_invariance": {
+    "checks": {
+      "fixed_leiden": {
+        "stage2": [
+          0.3409664869292198,
+          0.6318200418940733,
+          1.3092658050808084
+        ],
+        "stage3_first_three": [
+          0.3409664869292198,
+          0.6318200418940733,
+          1.3092658050808084
+        ],
+        "pass": true
+      },
+      "all_one": {
+        "stage2": [
+          0.0,
+          0.1455674507563526,
+          0.0
+        ],
+        "stage3_first_three": [
+          0.0,
+          0.1455674507563526,
+          0.0
+        ],
+        "pass": true
+      },
+      "deterministic_two_cluster": {
+        "stage2": [
+          0.5295542966350419,
+          0.13716596133894984,
+          0.0015748031496062992
+        ],
+        "stage3_first_three": [
+          0.5295542966350419,
+          0.13716596133894984,
+          0.0015748031496062992
+        ],
+        "pass": true
+      }
+    },
+    "pass": true
+  },
+  "no_model_inference": true,
+  "no_graph_fusion": true,
+  "semantic_input_source": "semantic_edges.csv only"
+}

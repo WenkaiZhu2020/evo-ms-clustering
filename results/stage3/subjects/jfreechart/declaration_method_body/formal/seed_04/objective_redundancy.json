@@ -1,0 +1,11 @@
+{
+  "method": "spearman",
+  "semantic_objective": "f_semantic",
+  "structural_objective": "coupling",
+  "structural_objective_index": 0,
+  "pareto_solution_count": 100,
+  "constant_input": false,
+  "rho": 0.936654475415183,
+  "p_value": 1.9172134607609923e-46,
+  "undefined_reason": null
+}

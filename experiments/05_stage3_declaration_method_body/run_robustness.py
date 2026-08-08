@@ -60,12 +60,18 @@ EXPECTED_FILES = {
     "objective_redundancy.json",
     "pareto_front_4d.csv",
     "partition_labels.csv",
-    "posthoc_metrics.csv",
+    # posthoc_metrics.csv, run_metrics.json removed: the current
+    # run_seed()/validate_run_output() implementation in run.py never writes
+    # either file for any subject (verified by full-text search across
+    # experiments/ and src/); posthoc_metrics.csv is consumed only by three
+    # visualization scripts hardcoded to specific existing jpetstore/daytrader/
+    # xerces seed paths from an earlier, richer version of run_seed(), and
+    # run_metrics.json under a Stage 3 formal seed directory is not consumed
+    # anywhere. This set now matches the artifacts run_seed() actually produces.
     "projected_front_3d.csv",
     "projected_hypervolume.json",
     "run.log",
     "run_metadata.json",
-    "run_metrics.json",
     "selected_partition.csv",
     "selected_solution.json",
 }
@@ -84,7 +90,15 @@ def formal_output_dir(subject: str, seed: int) -> Path:
         raise ValueError(f"formal Stage 3B runner accepts seeds 1..29 only, got {seed}")
     path = adapter.output_dir(subject, seed=seed)
     expected = stage3_subject_root(subject, ROOT) / "formal" / f"seed_{seed:02d}"
-    if path.resolve() != expected.resolve() or "validation" in str(path):
+    resolved = path.resolve()
+    root_resolved = ROOT.resolve()
+    # Check by ROOT-relative path segment, not an absolute-path substring: a
+    # substring check on the full path incorrectly trips whenever the repository
+    # checkout itself lives under a directory whose name happens to contain
+    # "validation" (e.g. a dedicated validation worktree), even though the
+    # equality check above already verifies the output location is canonical.
+    relative_parts = resolved.relative_to(root_resolved).parts if resolved.is_relative_to(root_resolved) else ()
+    if resolved != expected.resolve() or "validation" in relative_parts:
         raise ValueError(f"formal output path isolation failure: {path}")
     return path
 

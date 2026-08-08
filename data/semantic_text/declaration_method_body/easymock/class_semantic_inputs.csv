@@ -1,0 +1,1356 @@
+subject,class_id,class_name,kind,superclass_present,semantic_text,method_count,annotation_count,interface_count,truncated_method_count,input_hash,experiment_name,representation_id,stage3a_source_path,stage3a_source_file_sha256,declaration_exact_match,declaration_truncated,body_empty,body_tokens_truncated,raw_body_candidate_count,filtered_body_token_count_before_budget,appended_body_token_count,extracted_concrete_method_count,normalized_method_count,synthetic_method_count,accepted_invoked_method_tokens,accepted_field_tokens,accepted_local_tokens,accepted_exception_tokens,accepted_operation_tokens,accepted_string_tokens,accepted_literals,rejected_token_count,body_hash
+easymock,org.easymock.Capture,Capture,class,false,"[DECLARATION]
+public class Capture implements Serializable {
+    Object getValue();
+    List getValues();
+    boolean hasCaptured();
+    Capture newInstance();
+    Capture newInstance(CaptureType);
+    Capture newInstance(CaptureType, UnaryOperator);
+    Capture newInstance(UnaryOperator);
+    void reset();
+    void setValue(Object);
+    String toString();
+}
+[METHOD_BODY]
+invoke last invoke create values type transform value branch jump create values assertion error nothing captured yet more than one has captured branch jump instance instance last reset clear value transform map org easymock capture type illegal argument exception unknown string nothing yet
+",10,0,1,0,f6871709961ea8ba28f6e223142717af5cae63f846a140ee2b2a3cb9ebe6b6dd,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,157,43,43,13,13,2,14,33,0,20,75,12,4,356,ce7f486987fbf46a8fb57c1e54caa49f7191a81e68a5eaab672fa63c3572a9cc
+easymock,org.easymock.Capture$1,Capture$1,class,false,"[DECLARATION]
+class Capture$1 {
+}
+[METHOD_BODY]
+ordinal invoke measure create jump map org easymock capture type none all first last
+",0,0,0,0,bcca1971350e3bca450e7b70b06cb7c2e4b6cdcfc87ebe5d1e7072b77666081b,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,26,14,14,1,1,0,1,44,0,0,11,0,0,86,d80c149fa95a40188e3e7da87f26c8d2a2fb497dce62ce972b2f711d8544d433
+easymock,org.easymock.CaptureType,CaptureType,enum,false,"[DECLARATION]
+public enum CaptureType {
+    CaptureType valueOf(String);
+    CaptureType[] values();
+}
+[METHOD_BODY]
+values create invoke none first last all invoke value values clone
+",2,0,0,0,08444e568bcc32e3383e3c58a9cb609e5766a9cf419ceb6a2e918f7f5bc57e79,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,27,11,11,4,4,1,5,6,0,0,12,4,4,64,3d42288046a2aa73911e6b54f16e4191975cc06d88d1e80e44cedfe7490da839
+easymock,org.easymock.ConstructorArgs,ConstructorArgs,class,false,"[DECLARATION]
+public class ConstructorArgs {
+    Constructor getConstructor();
+    Object[] getInitArgs();
+    IllegalArgumentException throwException(Class, Object);
+    Object[] validateArgs(Constructor, Object[]);
+}
+[METHOD_BODY]
+validate args invoke constructor constructor init args exception create invoke illegal argument type validate measure branch jump create illegal argument exception number provided arguments match ones primitive param type
+",4,0,0,0,21388ffad68309659a59ce9f14b2bff0f5adf349679feaabea7e6699c2a87312,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,100,29,29,5,5,0,9,2,2,18,55,11,4,234,526df4d8acb175518813e0558d742df01cee8e036d6f0359433c7d5a477a9885
+easymock,org.easymock.EasyMock,EasyMock,class,false,"[DECLARATION]
+public class EasyMock {
+    Object and(Object, Object);
+    boolean and(boolean, boolean);
+    byte and(byte, byte);
+    char and(char, char);
+    double and(double, double);
+    float and(float, float);
+    int and(int, int);
+    long and(long, long);
+    short and(short, short);
+    boolean anyBoolean();
+    byte anyByte();
+    char anyChar();
+    double anyDouble();
+    float anyFloat();
+    int anyInt();
+    long anyLong();
+    Object anyObject();
+    Object anyObject(Class);
+    short anyShort();
+    String anyString();
+    Object[] aryEq(Object[]);
+    boolean[] aryEq(boolean[]);
+    byte[] aryEq(byte[]);
+    char[] aryEq(char[]);
+    double[] aryEq(double[]);
+    float[] aryEq(float[]);
+    int[] aryEq(int[]);
+    long[] aryEq(long[]);
+    short[] aryEq(short[]);
+    Object capture(Capture);
+    boolean captureBoolean(Capture);
+    byte captureByte(Capture);
+    char captureChar(Capture);
+    double captureDouble(Capture);
+    float captureFloat(Capture);
+    int captureInt(Capture);
+    long captureLong(Capture);
+    void checkIsUsedInOneThread(Object, boolean);
+    void checkOrder(Object, boolean);
+    Object cmp(Object, Comparator, LogicalOperator);
+    Comparable cmpEq(Comparable);
+    String contains(String);
+    IMocksControl createControl();
+    IMocksControl createControl(MockType);
+    Object createMock(Class);
+    Object createMock(MockType, Class);
+    Object createMock(String, Class);
+    Object createMock(String, MockType, Class);
+    IMockBuilder createMockBuilder(Class);
+    IMocksControl createNiceControl();
+    Object createNiceMock(Class);
+    Object createNiceMock(String, Class);
+    IMocksControl createStrictControl();
+    Object createStrictMock(Class);
+    Object createStrictMock(String, Class);
+    String endsWith(String);
+    Object eq(Object);
+    boolean eq(boolean);
+    byte eq(byte);
+    char eq(char);
+    double eq(double);
+    double eq(double, double);
+    float eq(float);
+    float eq(float, float);
+    int eq(int);
+    long eq(long);
+    short eq(short);
+    IExpectationSetters expect(Object);
+    IExpectationSetters expectLastCall();
+    String find(String);
+    Comparable geq(Comparable);
+    byte geq(byte);
+    double geq(double);
+    float geq(float);
+    int geq(int);
+    long geq(long);
+    short geq(short);
+    AssertionError getAssertionError(int, int, AssertionError);
+    MocksControl getControl(Object);
+    IExpectationSetters getControlForLastCall();
+    Object getCurrentArgument(int);
+    Object[] getCurrentArguments();
+    String getEasyMockProperty(String);
+    RuntimeException getRuntimeException(int, int, RuntimeException);
+    Comparable gt(Comparable);
+    byte gt(byte);
+    double gt(double);
+    float gt(float);
+    int gt(int);
+    long gt(long);
+    short gt(short);
+    Object isA(Class);
+    Object isNull();
+    Object isNull(Class);
+    Comparable leq(Comparable);
+    byte leq(byte);
+    double leq(double);
+    float leq(float);
+    int leq(int);
+    long leq(long);
+    short leq(short);
+    Comparable lt(Comparable);
+    byte lt(byte);
+    double lt(double);
+    float lt(float);
+    int lt(int);
+    long lt(long);
+    short lt(short);
+    void makeThreadSafe(Object, boolean);
+    String matches(String);
+    Object mock(Class);
+    Object mock(MockType, Class);
+    Object mock(String, Class);
+    Object mock(String, MockType, Class);
+    Capture newCapture();
+    Capture newCapture(CaptureType);
+    Capture newCapture(CaptureType, UnaryOperator);
+    Capture newCapture(UnaryOperator);
+    Object niceMock(Class);
+    Object niceMock(String, Class);
+    Object not(Object);
+    boolean not(boolean);
+    byte not(byte);
+    char not(char);
+    double not(double);
+    float not(float);
+    int not(int);
+    long not(long);
+    short not(short);
+    Object notNull();
+    Object notNull(Class);
+    Object or(Object, Object);
+    boolean or(boolean, boolean);
+    byte or(byte, byte);
+    char or(char, char);
+    double or(double, double);
+    float or(float, float);
+    int or(int, int);
+    long or(long, long);
+    short or(short, short);
+    IMockBuilder partialMockBuilder(Class);
+    void replay(Object[]);
+    void reportMatcher(IArgumentMatcher);
+    void reset(Object[]);
+    void resetToDefault(Object[]);
+    void resetToNice(Object[]);
+    void resetToStrict(Object[]);
+    Object same(Object);
+    String setEasyMockProperty(String, String);
+    String startsWith(String);
+    Object strictMock(Class);
+    Object strictMock(String, Class);
+    void verify(Object[]);
+    void verifyRecording(Object[]);
+    void verifyUnexpectedCalls(Object[]);
+}
+[METHOD_BODY]
+invoke report invoke report s0 s1 any matcher any matcher object object string ary eq create ary eq create capture capture check used one thread check order cmp cmp contains control control mock mock builder partial nice nice strict strict ends s0 expect last call expect last call find geq geq assertion error branch jump branch jump illegal state exception no available current argument arguments current arguments illegal state exception are only available when executing callback methods easy property runtime gt gt leq leq lt lt make thread safe matches instance instance not not s1 partial builder replay measure reset measure reset same easy property starts verify verify recording unexpected calls
+",155,0,0,0,f0f2363b667141687ec1b9a253c74599243e7e9a17b7895a5e853a2cb58994f8,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,1082,111,111,156,156,0,457,14,15,28,452,16,4,2484,f132634ab1559093f39f788bbef09174f4280ed330021cf4e0135df99af58530
+easymock,org.easymock.EasyMockExtension,EasyMockExtension,class,false,"[DECLARATION]
+public class EasyMockExtension implements TestInstancePostProcessor {
+    void postProcessTestInstance(Object, ExtensionContext);
+}
+[METHOD_BODY]
+invoke post process test instance inject mocks invoke
+",1,0,1,0,3ffeb82c0f10ebc98817bd56515093a8b4ed5842edcfa55ded99c6973dd7d8c9,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,6,8,8,2,2,0,6,0,0,0,2,0,0,12,4c2e3d4fc71284aa068f5265e2f6963972bfe01d2d53e3e454a2bc013d457e02
+easymock,org.easymock.EasyMockListener,EasyMockListener,class,false,"[DECLARATION]
+public class EasyMockListener implements IInvokedMethodListener {
+    void afterInvocation(IInvokedMethod, ITestResult);
+    void beforeInvocation(IInvokedMethod, ITestResult);
+}
+[METHOD_BODY]
+invoke after invocation before invocation inject mocks invoke
+",2,0,1,0,33d033f586e5148f3512616952b666ba4c2e04917c0cdeae64bc813c33554b4b,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,10,8,8,3,3,0,6,0,0,0,4,0,0,25,c7cea4b851dcff1900711ef549793fffa16c8780ee00bec7f992b489afae7fa9
+easymock,org.easymock.EasyMockRule,EasyMockRule,class,false,"[DECLARATION]
+public class EasyMockRule implements TestRule {
+    Statement apply(Statement, Description);
+}
+[METHOD_BODY]
+invoke test apply create invoke test
+",1,0,1,0,2ba8a946e8ef130629781eb39a4e4a5d3c66a8c79ac78898870c74643877cb84,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,8,6,6,2,2,0,1,2,0,0,3,0,0,22,efad51224153048951df6c79dd4501b0fbec3e1581a6ad51937b72f893048b64
+easymock,org.easymock.EasyMockRunner,EasyMockRunner,class,true,"[DECLARATION]
+public class EasyMockRunner extends BlockJUnit4ClassRunner {
+    Statement withBefores(FrameworkMethod, Object, Statement);
+}
+[METHOD_BODY]
+invoke initialized befores branch jump invoke create initialized security exception problem occured during constructor initialization
+",1,0,0,0,30770d13dc575bc34b62a2b4aa2c190173708f5288e39fe722681bbe7c45849d,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,18,15,15,2,2,0,2,3,0,4,8,5,1,40,c010e1fef7d1611fffe37f9c9a3fd612e5b6586ffc6271946f897a9a5921df5f
+easymock,org.easymock.EasyMockSupport,EasyMockSupport,class,false,"[DECLARATION]
+public class EasyMockSupport {
+    IMocksControl createControl();
+    IMocksControl createControl(MockType);
+    Object createMock(Class);
+    Object createMock(MockType, Class);
+    Object createMock(String, Class);
+    Object createMock(String, MockType, Class);
+    IMockBuilder createMockBuilder(Class);
+    IMocksControl createNiceControl();
+    Object createNiceMock(Class);
+    Object createNiceMock(String, Class);
+    IMocksControl createStrictControl();
+    Object createStrictMock(Class);
+    Object createStrictMock(String, Class);
+    Class getMockedClass(Object);
+    void injectMocks(Object);
+    boolean isAMock(Object);
+    Object mock(Class);
+    Object mock(MockType, Class);
+    Object mock(String, Class);
+    Object mock(String, MockType, Class);
+    Object niceMock(Class);
+    Object niceMock(String, Class);
+    IMockBuilder partialMockBuilder(Class);
+    void replayAll();
+    void resetAll();
+    void resetAllToDefault();
+    void resetAllToNice();
+    void resetAllToStrict();
+    Object strictMock(Class);
+    Object strictMock(String, Class);
+    void verifyAll();
+    void verifyAllRecordings();
+    void verifyAllUnexpectedCalls();
+}
+[METHOD_BODY]
+invoke create controls create control invoke control add controls mock mock builder partial nice add nice strict strict mocked branch jump inject mocks branch jump net bytebuddy buddy partial builder replay all has next reset all has next reset verify verify recordings unexpected calls
+",33,0,0,0,41fc1a37f9464918006240c46cdf28ab36236a9d5bd5e373ebb8caae5e068189,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,245,44,44,34,34,0,129,12,0,0,120,6,2,675,fe8e9cd53e0c74ec013138fc869f5c13bc53415a36885557053a5b19f62e0d44
+easymock,org.easymock.EasyMockSupport$ObjectMockingHelper,EasyMockSupport$ObjectMockingHelper,class,false,"[DECLARATION]
+class EasyMockSupport$ObjectMockingHelper {
+    boolean isAClassMock(Object);
+}
+[METHOD_BODY]
+invoke mock contains invoke easy
+",1,0,0,0,0e3508376479673532ef5c1f3adc2672c0f85c7125f408be2a4fda277bec4943,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,8,5,5,2,2,0,2,0,0,0,4,2,1,17,12c2168f06773bc44eb6727249b8d3a9b188da47b0c7bd5ee347c6709dfca5e0
+easymock,org.easymock.IAnswer,IAnswer,interface,false,"[DECLARATION]
+public interface IAnswer {
+    Object answer();
+}
+[METHOD_BODY]
+<EMPTY>
+",1,0,0,0,9c1257c0fb5fe7f22a3e81fc0b627d139c2aaf14fe59469c1bd2058bb5abc114,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.IArgumentMatcher,IArgumentMatcher,interface,false,"[DECLARATION]
+public interface IArgumentMatcher {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+<EMPTY>
+",2,0,0,0,cc2cb19463966b37345ca126570e258b8e278221436ea4b4c658bd6e7a156942,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.IExpectationSetters,IExpectationSetters,interface,false,"[DECLARATION]
+public interface IExpectationSetters {
+    IExpectationSetters andAnswer(IAnswer);
+    IExpectationSetters andDelegateTo(Object);
+    IExpectationSetters andReturn(Object);
+    void andStubAnswer(IAnswer);
+    void andStubDelegateTo(Object);
+    void andStubReturn(Object);
+    void andStubThrow(Throwable);
+    IExpectationSetters andThrow(Throwable);
+    IExpectationSetters andVoid();
+    IExpectationSetters anyTimes();
+    void asStub();
+    IExpectationSetters atLeastOnce();
+    IExpectationSetters once();
+    IExpectationSetters times(int);
+    IExpectationSetters times(int, int);
+}
+[METHOD_BODY]
+<EMPTY>
+",15,0,0,0,1ca0808b9239910430c14d8759fb31f0ac323531ac87a5e70094835374af041a,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.IMockBuilder,IMockBuilder,interface,false,"[DECLARATION]
+public interface IMockBuilder {
+    IMockBuilder addMockedMethod(Method);
+    IMockBuilder addMockedMethod(String);
+    IMockBuilder addMockedMethod(String, Class[]);
+    IMockBuilder addMockedMethods(Method[]);
+    IMockBuilder addMockedMethods(String[]);
+    Object createMock();
+    Object createMock(IMocksControl);
+    Object createMock(MockType);
+    Object createMock(String);
+    Object createMock(String, IMocksControl);
+    Object createMock(String, MockType);
+    Object createNiceMock();
+    Object createNiceMock(String);
+    Object createStrictMock();
+    Object createStrictMock(String);
+    Object mock();
+    Object mock(IMocksControl);
+    Object mock(MockType);
+    Object mock(String);
+    Object mock(String, IMocksControl);
+    Object mock(String, MockType);
+    Object niceMock();
+    Object niceMock(String);
+    Object strictMock();
+    Object strictMock(String);
+    IMockBuilder withArgs(Object[]);
+    IMockBuilder withConstructor();
+    IMockBuilder withConstructor(Class[]);
+    IMockBuilder withConstructor(Constructor);
+    IMockBuilder withConstructor(Object[]);
+}
+[METHOD_BODY]
+mock create invoke mock create invoke nice nice strict strict
+",30,0,0,0,ae826d1d0dc2c370272e167a2fdd7b3151877ef520640408f4f571ccbcd0a92b,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,40,10,10,10,10,0,38,0,0,0,10,0,0,125,a59b7c899925e2bf19fdcc57f7d64f8acd1d3239f498bac090f33e5a2b89aff6
+easymock,org.easymock.IMocksControl,IMocksControl,interface,false,"[DECLARATION]
+public interface IMocksControl {
+    void checkIsUsedInOneThread(boolean);
+    void checkOrder(boolean);
+    Object createMock(Class);
+    Object createMock(String, Class);
+    Object createMock(String, Class, ConstructorArgs, Method[]);
+    void makeThreadSafe(boolean);
+    Object mock(Class);
+    Object mock(String, Class);
+    Object mock(String, Class, ConstructorArgs, Method[]);
+    void replay();
+    void reset();
+    void resetToDefault();
+    void resetToNice();
+    void resetToStrict();
+    void verify();
+    void verifyRecording();
+    void verifyUnexpectedCalls();
+}
+[METHOD_BODY]
+mock create invoke mock create invoke
+",17,0,0,0,8a3e6ecfe81b83e0a696a93533500f6a003c21c80997330819d69ed69d73c979,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,12,6,6,3,3,0,9,0,0,0,3,0,0,45,d5c38339375a4eff8b0534777247158b70ba12f985b0f1b495dcd574cdc4f7f1
+easymock,org.easymock.LogicalOperator,LogicalOperator,enum,false,"[DECLARATION]
+public enum LogicalOperator {
+    String getSymbol();
+    boolean matchResult(int);
+    LogicalOperator valueOf(String);
+    LogicalOperator[] values();
+}
+[METHOD_BODY]
+values create invoke less than equal greater invoke symbol symbol value values clone
+",4,0,0,0,7110242cf0d07bf383959bb356f819c27faa7ada274f1930fc8b53e2b67df8bb,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,34,13,13,5,5,2,6,12,0,0,14,8,5,94,c2dab42a8aa5f6ee0bea2d51ef5fe686d7d0b92f2defa92ef634a12066480400
+easymock,org.easymock.LogicalOperator$1,LogicalOperator$1,enum,true,"[DECLARATION]
+enum LogicalOperator$1 extends LogicalOperator {
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke match result branch jump
+",1,0,0,0,5c22d522d03d40742c54a4754bd66c47df3b5cb150111efa007c905d728e37a3,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,14,5,5,2,2,0,2,0,0,0,4,0,0,36,c123cfb550f7a4c7435fccebb5ec9a9f21c4f353bbafb2f2441552364fcf8cce
+easymock,org.easymock.LogicalOperator$2,LogicalOperator$2,enum,true,"[DECLARATION]
+enum LogicalOperator$2 extends LogicalOperator {
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke match result branch jump
+",1,0,0,0,cf11ce1c9cef4a86744e4fa6e0f15c714727c74784b50aeebca17d8a29228065,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,14,5,5,2,2,0,2,0,0,0,4,0,0,36,c123cfb550f7a4c7435fccebb5ec9a9f21c4f353bbafb2f2441552364fcf8cce
+easymock,org.easymock.LogicalOperator$3,LogicalOperator$3,enum,true,"[DECLARATION]
+enum LogicalOperator$3 extends LogicalOperator {
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke match result branch jump
+",1,0,0,0,18e745182056465c3c46da75e20e02c497240019af556ce3c67f7bacf71fc50d,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,14,5,5,2,2,0,2,0,0,0,4,0,0,36,c123cfb550f7a4c7435fccebb5ec9a9f21c4f353bbafb2f2441552364fcf8cce
+easymock,org.easymock.LogicalOperator$4,LogicalOperator$4,enum,true,"[DECLARATION]
+enum LogicalOperator$4 extends LogicalOperator {
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke match result branch jump
+",1,0,0,0,a320866c9923c54050bca0569e35e5a3f2086f5d40b12efff954fc9f323008b3,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,14,5,5,2,2,0,2,0,0,0,4,0,0,36,c123cfb550f7a4c7435fccebb5ec9a9f21c4f353bbafb2f2441552364fcf8cce
+easymock,org.easymock.LogicalOperator$5,LogicalOperator$5,enum,true,"[DECLARATION]
+enum LogicalOperator$5 extends LogicalOperator {
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke match result branch jump
+",1,0,0,0,5e6e31b517dd9828d4dc4941af49889442f386b5149c0e0cb579fe7124a6768c,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,14,5,5,2,2,0,2,0,0,0,4,0,0,36,c123cfb550f7a4c7435fccebb5ec9a9f21c4f353bbafb2f2441552364fcf8cce
+easymock,org.easymock.Mock,Mock,interface,false,"[DECLARATION]
+@Documented
+@Retention
+@Target
+public interface Mock extends Annotation {
+    String fieldName();
+    String name();
+    MockType type();
+    MockType value();
+}
+[METHOD_BODY]
+<EMPTY>
+",4,3,1,0,1a90ed4b7e7e1b9aa41bfd8eb687ea78e8ce00b7431b9adcd0230feff3b67f5f,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.MockType,MockType,enum,false,"[DECLARATION]
+public enum MockType {
+    MockType valueOf(String);
+    MockType[] values();
+}
+[METHOD_BODY]
+values create invoke nice strict invoke value values clone
+",2,0,0,0,91f26588f0a3a16f9200f8e030f68e051284d0b7efa16988f0d6505faa556aa9,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,24,9,9,4,4,1,5,4,0,0,10,2,2,58,319ac1d97f31a25c8e8242bae3a158793a44c348d52f7f3e164564bb4a8c7b50
+easymock,org.easymock.Preview,Preview,interface,false,"[DECLARATION]
+@Documented
+@Retention
+public interface Preview extends Annotation {
+}
+[METHOD_BODY]
+<EMPTY>
+",0,2,1,0,f68a9636b9837c528149815459ad106424828a80487f98873950c5f84493f806,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.TestSubject,TestSubject,interface,false,"[DECLARATION]
+@Documented
+@Retention
+@Target
+public interface TestSubject extends Annotation {
+}
+[METHOD_BODY]
+<EMPTY>
+",0,3,1,0,a681c42d976eb8ba85fd161792ebec64b37d7c00cb79195d7bf42cfab03a80a0,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.internal.AndroidClassProxyFactory,AndroidClassProxyFactory,class,false,"[DECLARATION]
+public class AndroidClassProxyFactory implements IProxyFactory {
+    Object createProxy(Class, InvocationHandler, Method[], ConstructorArgs);
+    InvocationHandler getInvocationHandler(Object);
+}
+[METHOD_BODY]
+invoke create proxy invoke branch jump runtime exception fail instantiate mock failed invocation handler access
+",2,0,1,0,d2a1306649a67ade4fa7209724f3c3813b6e3ad942603edc3342549e2484cd2c,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,54,15,15,3,3,0,5,0,0,8,42,5,2,152,e01008337f72ec437e518ef2e99851764bc3635051e9f5c7ab8a89032faba6ed
+easymock,org.easymock.internal.AndroidClassProxyFactory$MockHandler,AndroidClassProxyFactory$MockHandler,class,false,"[DECLARATION]
+class AndroidClassProxyFactory$MockHandler implements InvocationHandler {
+    Object invoke(Object, Method, Object[]);
+    boolean isMocked(Method);
+}
+[METHOD_BODY]
+invoke branch jump create delegate mocked methods invoke branch jump create delegate throwable fill trace mocked methods
+",2,0,1,0,3b5c2711dc656a245c365f92b0f12b86cf1a97f4b3fa4365039a11aa7cbac83a,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,96,17,17,3,3,1,5,10,0,4,41,2,1,185,f851351a871204465fa54073463760f5f20967b540f1e986f042e2b8e937278c
+easymock,org.easymock.internal.AndroidSupport,AndroidSupport,class,false,"[DECLARATION]
+public class AndroidSupport {
+    boolean isAndroid();
+}
+[METHOD_BODY]
+name invoke jump android dalvik system path loader org droidparts dexmaker code invoke android
+",1,0,0,0,a8ad1cc5989fd93c4e643cb47387a10b15aa6102ecf18b86519070e74d7ff13d,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,13,14,14,3,3,0,2,3,0,0,4,8,2,14,63a77a10fcecf4b11d0e2951e5b3fb5eeeff7bb4883b2f436fa53efee4995248
+easymock,org.easymock.internal.ArgumentToString,ArgumentToString,class,false,"[DECLARATION]
+public class ArgumentToString {
+    void appendArgument(Object, StringBuffer);
+    String argumentToString(Object);
+    String argumentsToString(Object[]);
+}
+[METHOD_BODY]
+invoke append argument branch jump invoke argument string create arguments string branch jump create measure
+",3,0,0,0,df3de18604ddb4b714acf5b3cb2be173853b0c025293f02e9da7a41f71dee8fe,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,119,15,15,4,4,0,9,0,1,0,70,0,0,281,e3580be06e63407effc9938b0075b136aca96e4947e41c2da3d58cd21a53a23c
+easymock,org.easymock.internal.AssertionErrorWrapper,AssertionErrorWrapper,class,true,"[DECLARATION]
+public class AssertionErrorWrapper extends RuntimeException {
+    AssertionError getAssertionError();
+}
+[METHOD_BODY]
+invoke error assertion error
+",1,0,0,0,4e52cc34a8ef57a88dc7535ce0c1ee31be4abd7b4ee61b7405f0702c26abdd61,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,6,4,4,2,2,0,2,2,0,0,1,0,0,15,5d14a4ba8871524df529a76813b56d6b8e2d40cd74a6a35adb3e5439c0c4876a
+easymock,org.easymock.internal.BridgeMethodResolver,BridgeMethodResolver,class,false,"[DECLARATION]
+public class BridgeMethodResolver {
+    Map createTypeVariableMap(Class);
+    Class extractClassForTypeVariable(TypeVariable);
+    void extractTypeVariablesFromGenericInterfaces(Type[], Map);
+    Method findBridgedMethod(Method);
+    Method findGenericDeclaration(Method);
+    Method findMethod(Class, String, Class[]);
+    Method[] getAllDeclaredMethods(Class);
+    Class[] getAllInterfacesForClass(Class);
+    Type getRawType(Type, Map);
+    boolean isBridgeMethodFor(Method, Method, Map);
+    boolean isBridgedCandidateFor(Method, Method);
+    boolean isResolvedTypeMatch(Method, Method, Map);
+    void populateTypeMapFromParameterizedType(ParameterizedType, Map);
+    Method searchCandidates(List, Method);
+    Method searchForMatch(Class, Method);
+}
+[METHOD_BODY]
+invoke branch jump assertions disabled invoke create type variable map branch jump extract type variable measure extract variables generic interfaces measure find bridged method create assertions disabled assertion error illegal state exception must not unable locate bridge find generic declaration method assertion error must not name all declared methods array all interfaces array raw bridge bridged candidate resolved match populate map parameterized search candidates has next search match
+",15,0,0,0,271ae745fc1d9e8f5278afe16f2de8d28f82d70e49a5f34cdd332b7ff2a14562,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,687,68,68,17,17,0,61,14,2,22,329,17,5,1463,432b2fda92f77e1697c2477d48470cfc9411c4e7753bd40103301589a9373ab9
+easymock,org.easymock.internal.ClassInstantiatorFactory,ClassInstantiatorFactory,class,false,"[DECLARATION]
+public class ClassInstantiatorFactory {
+    IClassInstantiator getInstantiator();
+    String getJVM();
+    String getJVMSpecificationVersion();
+    boolean is1_3Specifications();
+    void setDefaultInstantiator();
+    void setInstantiator(IClassInstantiator);
+}
+[METHOD_BODY]
+create invoke instantiator invoke instantiator jvm property java vm vendor jvm specification version property java is1 specifications create
+",6,0,0,0,feb14cb8889253f0d81a49ea990537b816014e60e926facf9e968cfd6023adc1,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,30,18,18,8,8,0,11,4,0,0,9,6,2,44,63d137ed9cdfc2307a1b96d8d6ae78375aa0bec87b8253735b9bd0b122229222
+easymock,org.easymock.internal.ClassMockingData,ClassMockingData,class,false,"[DECLARATION]
+public class ClassMockingData implements Serializable {
+    InvocationHandler handler();
+    boolean isMocked(Method);
+    void readObject(ObjectInputStream);
+    void writeObject(ObjectOutputStream);
+}
+[METHOD_BODY]
+invoke branch jump create handler mocked methods handler mocked contains branch jump invoke methods read object has next create io exception write object
+",4,0,1,0,f69b7cdca9fbc285296b1b53886cdfca0ab65e0d778397d1e54a9113a363f6a9,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,98,23,23,5,5,0,12,20,1,4,57,0,0,226,ba1684b0a833691b87a794dcc1bd811c59c406764e7665c207f550a49f264843
+easymock,org.easymock.internal.ClassProxyFactory,ClassProxyFactory,class,false,"[DECLARATION]
+public class ClassProxyFactory implements IProxyFactory {
+    ClassLoadingStrategy classLoadingStrategy();
+    Object createProxy(Class, InvocationHandler, Method[], ConstructorArgs);
+    Object doCreateProxy(Class, InvocationHandler, ClassInfoProvider, Method[], ConstructorArgs);
+    MethodHandle getCallbackGetter(Object);
+    MethodHandle getCallbackSetter(Object);
+    InvocationHandler getInvocationHandler(Object);
+    ClassMockingData getMockingData(Object);
+    boolean isCallerMockInvocationHandlerInvoke(Throwable);
+    boolean isJdkClassOrWithoutPackage(Class);
+}
+[METHOD_BODY]
+create invoke info providers jdk id current data invoke create type cache loading strategy branch jump proxy branch jump measure info providers jdk runtime exception failed mock provider proxy type cache current data runtime exception fail find constructor param types failed instantiate mock calling jvm callback getter callback setter invocation handler mocking caller invocation handler measure without java javax com sun
+",9,0,1,0,7d85b0f8e677f0f8e5ecf8767efab2912b7a2fb3ac7e8ca9327796f03b776b13,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,284,61,61,11,11,2,25,29,2,36,142,31,14,666,1a94bc125ffe29b8a78d9e8d5ff23530cd5e19cd78cb9cccf536bd634cf15b21
+easymock,org.easymock.internal.ClassProxyFactory$MockMethodInterceptor,ClassProxyFactory$MockMethodInterceptor,class,false,"[DECLARATION]
+public class ClassProxyFactory$MockMethodInterceptor implements Serializable {
+    Object interceptAbstract(Object, ClassMockingData, Object, Method, Object[]);
+    Object interceptSuperCallable(Object, ClassMockingData, Method, Object[], Callable);
+    ClassMockingData mockingData(ClassMockingData);
+}
+[METHOD_BODY]
+invoke intercept invoke intercept callable call branch jump create throwable fill trace mocking data branch jump
+",3,0,1,0,3a6cdf01db475e978d7e0d0f43ff1ac7bf4d41a726b28300244469649156c9ad,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,61,16,16,4,4,0,7,0,0,4,37,2,1,142,9c9ed59a7b55b78c93a33a82705d0e22e54076563f4cb213daea0dfed071d082
+easymock,org.easymock.internal.DefaultClassInstantiator,DefaultClassInstantiator,class,false,"[DECLARATION]
+public class DefaultClassInstantiator implements IClassInstantiator {
+    Long callLongMethod(Class, String);
+    Class classToPrint(Class);
+    Object[] getArgsForTypes(Class[]);
+    Constructor getConstructorToUse(Class);
+    Long getSerializableUID(Class);
+    byte[] getSerializedBytes(Class);
+    boolean isSerializable(Class);
+    Object newInstance(Class);
+    Object readObject(byte[]);
+    RuntimeException runtimeException(Class, Exception);
+}
+[METHOD_BODY]
+create empty invoke call method accessible create invoke jump internal error object stream seems have vanished should been failed print branch jump easy mock args types measure branch constructor use constructors measure empty illegal argument exception no visible serializable uid call method runtime exception serial version should have been able get since there compute suid serialized bytes array serializable assignable instance runtime read object add suppressed failed instantiate
+",10,0,1,0,129d7544217f892ddff42e50d834e002fc00a9720ab77c3097ebda265c8d1b99,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,251,68,68,12,12,0,29,2,1,26,155,42,14,641,09c7aad23a21e2fa312cc399a2eaabbcc8bef754f2dd4b241c658f1c9ca991de
+easymock,org.easymock.internal.EasyMockProperties,EasyMockProperties,class,false,"[DECLARATION]
+public class EasyMockProperties {
+    ClassLoader getClassLoader();
+    EasyMockProperties getInstance();
+    String getProperty(String);
+    String getProperty(String, String);
+    void loadEasyMockProperties(String);
+    String setProperty(String, String);
+}
+[METHOD_BODY]
+load easy mock properties invoke create easymock loader invoke jump branch instance branch jump create entermonitor exitmonitor property properties property load easy mock close runtime exception failed read file illegal argument exception easymock invalid key starts
+",6,0,0,0,2cf4f6219678211999a258001b6611adf9829eaeeff5b2319615bde7f980ea2b,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,125,36,36,7,7,0,18,13,5,10,57,12,7,281,5a8571586ce42de8100522316b00a48e588dc40ebea4d346cc53b8778ba8c62b
+easymock,org.easymock.internal.EasyMockStatement,EasyMockStatement,class,true,"[DECLARATION]
+public class EasyMockStatement extends Statement {
+    void evaluate();
+}
+[METHOD_BODY]
+invoke original statement test evaluate invoke test original statement
+",1,0,0,0,b728bf253bd1f1a84e1df646f99d928ba139afa4839b52efe48de6d8a1143061,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,11,9,9,2,2,0,2,6,0,0,3,0,0,23,e6951573a053388ab889ac019678a84f8e0f5b7db5c138aa3d3639abfd7aa6ae
+easymock,org.easymock.internal.ErrorMessage,ErrorMessage,class,false,"[DECLARATION]
+public class ErrorMessage {
+    void appendTo(StringBuilder, int);
+    int getActualCount();
+    String getMessage();
+    boolean isMatching();
+}
+[METHOD_BODY]
+invoke matching message actual count append invoke branch jump message matching actual count
+",4,0,0,0,2999e73d77a50b15793a22bd7d35947a00c10777824ae25eb2f94a7a83abbd12,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,39,13,13,5,5,0,6,20,0,0,14,0,0,107,0943c52268f886ab218a2b1d68ca4bb7984bcc6499318122750619f931c8e234
+easymock,org.easymock.internal.ExpectedInvocation,ExpectedInvocation,class,false,"[DECLARATION]
+public class ExpectedInvocation implements Serializable {
+    List createMissingMatchers(Invocation, List);
+    boolean equals(Object);
+    Method getMethod();
+    int hashCode();
+    boolean matches(Invocation);
+    boolean matches(Object[]);
+    String toString();
+}
+[METHOD_BODY]
+create missing matchers invoke invocation create missing matchers branch jump invoke measure illegal state exception branch jump invocation method hash code unsupported operation exception not implemented matches measure matches string
+",7,0,1,0,b2d6476bf28c4c2163bd0ee8722549a923f9bf67cffdfce10334ee0557340143,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,207,30,30,8,8,0,18,17,0,12,116,4,2,467,854893e9f61898a07d26633ed20afd27242abb590f69f10b84949b38f083aa25
+easymock,org.easymock.internal.ExpectedInvocationAndResult,ExpectedInvocationAndResult,class,false,"[DECLARATION]
+public class ExpectedInvocationAndResult implements Serializable {
+    ExpectedInvocation getExpectedInvocation();
+    Result getResult();
+}
+[METHOD_BODY]
+invoke expected invocation result expected invocation result
+",2,0,1,0,9a12833a54df6b00c1553fd2370251bc6210014bb22fb24d59af189aadfefa0c,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,10,7,7,3,3,0,3,6,0,0,1,0,0,27,8930d02dec0805e634473efc6f443abf38079cfb3356c87584f67cc136677c64
+easymock,org.easymock.internal.ExpectedInvocationAndResults,ExpectedInvocationAndResults,class,false,"[DECLARATION]
+public class ExpectedInvocationAndResults implements Serializable {
+    ExpectedInvocation getExpectedInvocation();
+    Results getResults();
+    String toString();
+}
+[METHOD_BODY]
+invoke expected invocation results expected invocation results string create invoke
+",3,0,1,0,fb271af87abbc8d2e72248a191c4c5e72c0c74024b0f8245b34ce7332a121299,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,23,10,10,4,4,0,5,9,0,0,9,0,0,62,f3aa14bd7dbb7bf7db969a2f219108dc1519133d683bb4bd67dc73f72360ffa8
+easymock,org.easymock.internal.IClassInstantiator,IClassInstantiator,interface,false,"[DECLARATION]
+public interface IClassInstantiator {
+    Object newInstance(Class);
+}
+[METHOD_BODY]
+<EMPTY>
+",1,0,0,0,1dd88524ed3b037f3375e98e5803a3a1aef5afa4862eb716eed6a5d94d39fe28,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.internal.IMocksBehavior,IMocksBehavior,interface,false,"[DECLARATION]
+public interface IMocksBehavior {
+    Result addActual(Invocation);
+    void addExpected(ExpectedInvocation, Result, Range);
+    void addStub(ExpectedInvocation, Result);
+    void checkOrder(boolean);
+    void checkThreadSafety();
+    boolean isThreadSafe();
+    void makeThreadSafe(boolean);
+    void shouldBeUsedInOneThread(boolean);
+    void verify();
+    void verifyRecording();
+    void verifyUnexpectedCalls();
+}
+[METHOD_BODY]
+<EMPTY>
+",11,0,0,0,aeba760cc7e3c5f1e95badb0562f19cf370d131deeff52e3d53009030886ba82,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.internal.IMocksControlState,IMocksControlState,interface,false,"[DECLARATION]
+public interface IMocksControlState {
+    void andAnswer(IAnswer);
+    void andDelegateTo(Object);
+    void andReturn(Object);
+    void andStubAnswer(IAnswer);
+    void andStubDelegateTo(Object);
+    void andStubReturn(Object);
+    void andStubThrow(Throwable);
+    void andThrow(Throwable);
+    void andVoid();
+    void asStub();
+    void assertRecordState();
+    void checkIsUsedInOneThread(boolean);
+    void checkOrder(boolean);
+    Object invoke(Invocation);
+    void makeThreadSafe(boolean);
+    void replay();
+    void times(Range);
+    void verify();
+    void verifyRecording();
+    void verifyUnexpectedCalls();
+}
+[METHOD_BODY]
+<EMPTY>
+",20,0,0,0,0cbd70f84a28f405fd21cda1eb2872ea21195f803840c806a4e250e4d008d073,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.internal.IProxyFactory,IProxyFactory,interface,false,"[DECLARATION]
+public interface IProxyFactory {
+    Object createProxy(Class, InvocationHandler, Method[], ConstructorArgs);
+    InvocationHandler getInvocationHandler(Object);
+}
+[METHOD_BODY]
+<EMPTY>
+",2,0,0,0,2bae8091e35c03fbbe0df15214212dc31671b4d9b50a7cf957a628e6e01210c5,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.internal.IgnoreAnimalSniffer,IgnoreAnimalSniffer,interface,false,"[DECLARATION]
+@Documented
+@Retention
+@Target
+public interface IgnoreAnimalSniffer extends Annotation {
+}
+[METHOD_BODY]
+<EMPTY>
+",0,3,1,0,f68ed38655b2c1be8f66fb0590f85c7e228161bad2b9876a2fa28d9c4ddcd5a5,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.internal.Injection,Injection,class,false,"[DECLARATION]
+public class Injection {
+    Mock getAnnotation();
+    Object getMock();
+    String getQualifier();
+    boolean isMatched();
+    void setMatched();
+}
+[METHOD_BODY]
+invoke matched mock annotation mock qualifier field name invoke matched
+",5,0,0,0,0ae41fa1774a4aa781797c6c46fc976ea67469c3c20b44249b31c7f25b5ec3ad,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,19,10,10,6,6,0,7,5,0,0,2,0,0,47,c9bb7e286ecc1d1249b77dec7c9bcd46d7f149444f799f8f0a2fea8fc96c9b1c
+easymock,org.easymock.internal.InjectionPlan,InjectionPlan,class,false,"[DECLARATION]
+public class InjectionPlan {
+    void addInjection(Injection);
+    void addTestSubjectField(Field);
+    void blockDuplicateQualifiers(String);
+    List getQualifiedInjections();
+    List getTestSubjectFields();
+    List getUnqualifiedInjections();
+}
+[METHOD_BODY]
+invoke create test subject fields qualified injections unqualified qualifiers add injection invoke branch jump unqualified injections qualified add test subject field fields block duplicate qualifiers branch jump create assertion error least two mocks have field name qualifier
+",6,0,0,0,4b2a7869db1eeb5e77c0501da46a77aa47c398bfcf648305c1be6e885b7175ac,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,58,37,37,7,7,0,18,25,0,4,26,7,1,140,3deb079ae0790744d24568929fe7a024658e81c280fd846f3f20a2f885aa884c
+easymock,org.easymock.internal.InjectionTarget,InjectionTarget,class,false,"[DECLARATION]
+public class InjectionTarget {
+    boolean accepts(Injection);
+    Field getTargetField();
+    void inject(Object, Injection);
+}
+[METHOD_BODY]
+invoke target field accepts assignable invoke target field inject matched jump create runtime exception
+",3,0,0,0,1912442a4d2b9a55b6a95226396be507f3e300de2ec17f34632c22a95a898629,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,30,14,14,4,4,0,6,10,0,4,13,0,0,76,7f72bae214e0ac48f74f903d2eb525b29a694d612c4af994df0ecf7c87a3bb9d
+easymock,org.easymock.internal.Injector,Injector,class,false,"[DECLARATION]
+public class Injector {
+    void createMocksForAnnotations(Class, Object, InjectionPlan);
+    List fieldsOf(Class);
+    Injection findUniqueAssignable(List, InjectionTarget);
+    Field getFieldByName(Class, String);
+    List injectByName(Class, Object, List);
+    void injectByType(Object, List, List);
+    void injectMocks(Object);
+    void injectMocksOnClass(Class, Object, InjectionPlan);
+    InjectionTarget injectionTargetWithField(Field);
+    Object instantiateTestSubject(Field);
+    MockType mockTypeFromAnnotation(Mock);
+    boolean shouldNotAssignTo(Field);
+}
+[METHOD_BODY]
+invoke create mocks annotations invoke measure branch jump runtime exception easy mock field fields create find unique assignable branch jump assertion error least two mocks can assigned field name declared inject name has next inject type has next assertion error failed assign created test subject unsatisfied type injection target instantiate test subject inner you need manually no constructor mock annotation should not assign
+",12,0,0,0,57df56e5545a384faa609a620612620aaabe9237c2941854f321c214c5066b6d,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,428,63,63,13,13,0,43,0,4,36,242,31,9,970,4e669f723096783359aa4ee53fc29ba45d14af16976affbfc4d8e09f46c12b53
+easymock,org.easymock.internal.Invocation,Invocation,class,false,"[DECLARATION]
+public class Invocation implements Serializable {
+    void addCapture(Captures, Object);
+    void clearCaptures();
+    Object[] createObjectArray(Object);
+    boolean equalArguments(Object[]);
+    boolean equals(Object);
+    Object[] expandVarArgs(boolean, Object[]);
+    Object[] getArguments();
+    Method getMethod();
+    Object getMock();
+    String getMockAndMethodName();
+    int hashCode();
+    boolean isDefaultName(String);
+    boolean isPrimitiveParameter(int);
+    void readObject(ObjectInputStream);
+    String toString();
+    boolean toStringIsDefined(Object);
+    void validateCaptures();
+    void writeObject(ObjectOutputStream);
+}
+[METHOD_BODY]
+create no args expand args invoke create current captures mock method arguments add capture invoke current captures clear branch jump object array branch jump equal arguments measure mock method expand arraycopy measure no name string named hash code unsupported operation exception not implemented name starts easy primitive read object io exception string defined modifiers validate has next write
+",18,0,1,0,54b4f000975ff2f6d566f42b084420fe7b3da3dc35fb441a669352166f010adb,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,295,58,58,20,20,0,47,40,1,10,140,8,4,704,374c7320f84ebb5d37d8a2fead1ad6631cd15ab99d576a59e5e20fff715a69c8
+easymock,org.easymock.internal.JavaProxyFactory,JavaProxyFactory,class,false,"[DECLARATION]
+public class JavaProxyFactory implements IProxyFactory {
+    Object createProxy(Class, InvocationHandler, Method[], ConstructorArgs);
+    InvocationHandler getInvocationHandler(Object);
+}
+[METHOD_BODY]
+invoke create proxy instance invoke invocation handler
+",2,0,1,0,96e68c430a4fd444d392dae59554f36377e5237a802849d0e80806acf8aea865,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,12,7,7,3,3,0,8,0,0,0,5,0,0,39,bda134d8df3d6aa2c564499004c7b21879fdfe5d1145e3f8c5fbedc785642128
+easymock,org.easymock.internal.LastControl,LastControl,class,false,"[DECLARATION]
+public class LastControl {
+    void assertState(boolean, String);
+    Invocation getCurrentInvocation();
+    MocksControl lastControl();
+    void popCurrentInvocation();
+    List popLastArgumentMatchers(int);
+    List pullMatchers();
+    void pushCurrentInvocation(Invocation);
+    void reportAnd(int);
+    void reportLastControl(MocksControl);
+    void reportMatcher(IArgumentMatcher);
+    void reportNot();
+    void reportOr(int);
+}
+[METHOD_BODY]
+create invoke thread control current invocation argument matcher invoke state branch jump create thread argument matcher illegal exception current invocation branch jump last control pop remove pop last matchers no found recorded pull matchers push add report add no found report remove not
+",12,0,0,0,e6e97b106abe8e3cf1f0f1d3d13d4f2c63d36317717171cfddac8a2c550e8830,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,217,43,43,14,14,0,34,58,0,6,103,14,6,505,a9c1ec3d03a8c861c9161111928f9ebbc79d3b0dcd180b637e94732ed5437835
+easymock,org.easymock.internal.LinkedClassLoader,LinkedClassLoader,class,true,"[DECLARATION]
+class LinkedClassLoader extends ClassLoader {
+    Class findClass(String);
+}
+[METHOD_BODY]
+list invoke loaders find invoke branch jump create loaders not found exception
+",1,0,0,0,313c984f4823981effa216e969f97ce596911c9a707ef3aeed56deaeb17217be,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,42,12,12,2,2,0,2,2,1,6,14,0,0,76,942765d5ee1f43e5597c80133311d46748280c5db8af97af8d01e6db191094ee
+easymock,org.easymock.internal.MethodSerializationWrapper,MethodSerializationWrapper,class,false,"[DECLARATION]
+public class MethodSerializationWrapper implements Serializable {
+    Method getMethod();
+}
+[METHOD_BODY]
+put create invoke primitive types type invoke measure create branch jump name method type names method declared measure branch jump name names primitive types
+",1,0,1,0,c9134f6b79683518043c5c2cd23f05ee120555aec49ea6d00c2099fb72f0a774,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,115,24,24,3,3,0,5,58,0,0,47,0,0,282,9ed5aea2f74a9007b466522023b4a6e63c94ae500cb4a58b4b429f83a952dbb7
+easymock,org.easymock.internal.MockBuilder,MockBuilder,class,false,"[DECLARATION]
+public class MockBuilder implements IMockBuilder {
+    IMockBuilder addMockedMethod(Method);
+    IMockBuilder addMockedMethod(String);
+    IMockBuilder addMockedMethod(String, Class[]);
+    IMockBuilder addMockedMethods(Method[]);
+    IMockBuilder addMockedMethods(String[]);
+    void checkConstructorNotInitialized();
+    Object createMock();
+    Object createMock(IMocksControl);
+    Object createMock(MockType);
+    Object createMock(String);
+    Object createMock(String, IMocksControl);
+    Object createMock(String, MockType);
+    Object createNiceMock();
+    Object createNiceMock(String);
+    Object createStrictMock();
+    Object createStrictMock(String);
+    IMockBuilder withArgs(Object[]);
+    IMockBuilder withConstructor();
+    IMockBuilder withConstructor(Class[]);
+    IMockBuilder withConstructor(Constructor);
+    IMockBuilder withConstructor(ConstructorArgs);
+    IMockBuilder withConstructor(Object[]);
+}
+[METHOD_BODY]
+bootstrap invoke can mocked invoke mock support add mocked method mock can add method branch jump create methods illegal argument exception not synthetic so methods measure branch jump measure check constructor not initialized create illegal state exception trying define call more than once support constructor args state picked but pass arguments nice nice strict strict args trying define arguments without first setting their type more than once argument no empty found no matching found matching check initialized
+",22,0,1,0,a525c914289a9358dc1d1c1ee50d60c4d13a5004c2fa38dd10993bb6e72608e7,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,325,77,77,25,25,1,86,78,0,54,119,50,8,855,7cb9f450e0bab90b5951a4ad20a5229a470743ce65fc9d9b94e15ca4ea7cdc03
+easymock,org.easymock.internal.MockInvocationHandler,MockInvocationHandler,class,false,"[DECLARATION]
+public class MockInvocationHandler implements InvocationHandler, Serializable {
+    MocksControl getControl();
+    Object invoke(Object, Method, Object[]);
+}
+[METHOD_BODY]
+invoke control control invoke fill trace branch jump create
+",2,0,2,0,3a37bf78a869bc81c9bd3e776c62fa1680488d890b82b3d5055abfe8dabe01b7,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,30,9,9,3,3,0,4,6,0,0,15,0,0,89,038fb6d84e46420af9f63c4db38566439df0d1a4fdbf6aad23e7cfc31e6e619b
+easymock,org.easymock.internal.MocksBehavior,MocksBehavior,class,false,"[DECLARATION]
+public class MocksBehavior implements IMocksBehavior, Serializable {
+    Result addActual(Invocation);
+    void addBehaviorListIfNecessary(ExpectedInvocation);
+    void addExpected(ExpectedInvocation, Result, Range);
+    void addStub(ExpectedInvocation, Result);
+    void checkOrder(boolean);
+    void checkThreadSafety();
+    Result getStubResult(Invocation);
+    boolean isThreadSafe();
+    UnorderedBehavior lastBehaviorList();
+    void makeThreadSafe(boolean);
+    void shouldBeUsedInOneThread(boolean);
+    void verify();
+    void verifyRecording();
+    void verifyUnexpectedCalls();
+}
+[METHOD_BODY]
+parse invoke create branch jump behavior lists stub results unexpected calls position nice thread safe should used one easymock not enable safety check add actual invoke branch jump create position behavior lists nice unexpected calls assertion error method call possible matches are marked add list necessary check order expected stub results order thread safety should used one last assertion error mock supposed called multiple threads result has next safe last list make verify verify recording expectation failure method
+",14,0,2,0,8011e0e432170ec6c3ead8344458f80889623535d66ac1858ad9bf5efe904842,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,433,78,78,15,15,0,42,106,5,20,240,25,7,1086,2d645813e81453fee4790a2d1a32084372e891ae958703253008d1db04ab4c1d
+easymock,org.easymock.internal.MocksControl,MocksControl,class,false,"[DECLARATION]
+public class MocksControl implements IExpectationSetters, IMocksControl, Serializable {
+    IExpectationSetters andAnswer(IAnswer);
+    IExpectationSetters andDelegateTo(Object);
+    IExpectationSetters andReturn(Object);
+    void andStubAnswer(IAnswer);
+    void andStubDelegateTo(Object);
+    void andStubReturn(Object);
+    void andStubThrow(Throwable);
+    IExpectationSetters andThrow(Throwable);
+    IExpectationSetters andVoid();
+    IExpectationSetters anyTimes();
+    void asStub();
+    IExpectationSetters atLeastOnce();
+    void checkInterfaceHasDefaultMethodAndIsMockingOnlyThem(Class, Method[]);
+    void checkIsUsedInOneThread(boolean);
+    void checkOrder(boolean);
+    Object createMock(Class);
+    Object createMock(String, Class);
+    Object createMock(String, Class, ConstructorArgs, Method[]);
+    IProxyFactory getClassProxyFactory();
+    MocksControl getControl(Object);
+    InvocationHandler getInvocationHandler(Object);
+    Class getMockedClass(Object);
+    IProxyFactory getProxyFactory(Object);
+    IMocksControlState getState();
+    MockType getType();
+    void makeThreadSafe(boolean);
+    IExpectationSetters once();
+    void replay();
+    void reset();
+    void resetToDefault();
+    void resetToNice();
+    void resetToStrict();
+    IExpectationSetters times(int);
+    IExpectationSetters times(int, int);
+    void verify();
+    void verifyRecording();
+    void verifyUnexpectedCalls();
+}
+[METHOD_BODY]
+create invoke once least zero more proxy factory reset invoke type answer fill trace state delegate fill trace state stub answer jump stub delegate jump any times zero more least once check has method mocking only them branch create illegal argument exception partial make sense without methods non check used one thread order mock mock branch proxy factory pointer exception no def found error runtime mocking requires have objenesis library classpath illegal argument easymock disable control not invocation handler mocked superclass type make thread safe replay behavior reset report last control nice behavior strict nice strict times verify verify recording unexpected calls
+",37,0,3,0,b9dc451261eb319bd006004191c7f768b8c43da106394b074482049616f9dada,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,500,102,102,39,39,0,122,67,0,40,237,22,8,1300,6d446dd8c7069f13e7b8102fc2831597a6e5e80266ed817312861414b4d7c9cf
+easymock,org.easymock.internal.ObjectMethodsFilter,ObjectMethodsFilter,class,false,"[DECLARATION]
+public class ObjectMethodsFilter implements InvocationHandler, Serializable {
+    Method extractMethod(Class, String, Class[]);
+    MockInvocationHandler getDelegate();
+    String getName();
+    Object invoke(Object, Method, Object[]);
+    String mockToString(Object);
+    void readObject(ObjectInputStream);
+    void writeObject(ObjectOutputStream);
+}
+[METHOD_BODY]
+bootstrap invoke not invoke branch jump create object equals hashcode hash code method tostring string finalize delegate not name runtime exception could extract method branch jump delegate name hash code string finalize mock create easy read object io exception write
+",7,0,2,0,5c84fe3df1e3108dbd5d20097ea67656752d1c5e7a7ed129b27505e168b662e3,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,166,40,40,9,9,1,17,62,0,8,76,10,5,447,05954163526383b15e6068bae763f32fe7b02091a06d433db30b170c790654c1
+easymock,org.easymock.internal.ObjenesisClassInstantiator,ObjenesisClassInstantiator,class,false,"[DECLARATION]
+public class ObjenesisClassInstantiator implements IClassInstantiator {
+    Object newInstance(Class);
+}
+[METHOD_BODY]
+invoke instance invoke
+",1,0,1,0,553d47f825276575090fd12009d2d7d9ff739abd1d6d74cc9b92ca3ef6542999,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,6,3,3,2,2,0,2,0,0,0,2,0,0,13,89f32f8d02f4c1a8051dfeda28e722c30fa6d3011a43c981c5aa3f151d564b10
+easymock,org.easymock.internal.PrimitiveUtils,PrimitiveUtils,class,false,"[DECLARATION]
+public class PrimitiveUtils {
+    Object getEmptyValue(Class);
+    String getPrimitiveTypeNameFromWrapper(Class);
+    Class getWrapperType(Class);
+    boolean isPrimitiveWrapper(Class);
+}
+[METHOD_BODY]
+put create invoke primitive types wrapper type invoke empty value primitive types type name wrapper contains key
+",4,0,0,0,a5a6bce039a2eefede1b52e3d58521c560e201ce2fb01b16591da910aa230bd1,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,97,17,17,6,6,0,13,55,0,0,49,0,0,298,6b6c22d1baa3633a2fdff1b9ec733b2df729829a580f5806dbb1a87500d3b198
+easymock,org.easymock.internal.PrimitiveUtils$1,PrimitiveUtils$1,class,false,"[DECLARATION]
+class PrimitiveUtils$1 {
+}
+[METHOD_BODY]
+<EMPTY>
+",0,0,0,0,3a62bd6840ed9ad49836d42bbfb8a1ccd2847007e60174099e0a9177945def51,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.internal.PrimitiveUtils$PrimitiveEntry,PrimitiveUtils$PrimitiveEntry,class,false,"[DECLARATION]
+class PrimitiveUtils$PrimitiveEntry {
+}
+[METHOD_BODY]
+invoke empty value wrapper type
+",0,0,0,0,9710d7869ffe62c23808e63bb453681905822e822993cfcf734e93763782f3a6,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,4,5,5,1,1,1,0,4,0,0,1,0,0,12,310018086327b21022bcb69df2a78bd85b718a7a03f2514227490f702604ee9a
+easymock,org.easymock.internal.Range,Range,class,false,"[DECLARATION]
+public class Range implements Serializable {
+    boolean contains(int);
+    String expectedCount();
+    int getMaximum();
+    int getMinimum();
+    boolean hasFixedCount();
+    boolean hasOpenCount();
+    String toString();
+}
+[METHOD_BODY]
+invoke invoke branch jump create minimum maximum illegal argument exception must contains branch jump minimum maximum expected count string create has fixed count has open string least between
+",7,0,1,0,3311a73632080a4d747b909df45c7c0bf0bc2e3b19fc387291738b5b68cb09be,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,126,28,28,9,9,0,17,14,1,18,57,9,5,287,050da9e18eaa6d47a48e7ae1fbc34ee1b72821d7e5531036bed726ace36826cb
+easymock,org.easymock.internal.RecordState,RecordState,class,false,"[DECLARATION]
+public class RecordState implements IMocksControlState, Serializable {
+    void andAnswer(IAnswer);
+    void andDelegateTo(Object);
+    void andReturn(Object);
+    void andStubAnswer(IAnswer);
+    void andStubDelegateTo(Object);
+    void andStubReturn(Object);
+    void andStubThrow(Throwable);
+    void andThrow(Throwable);
+    void andVoid();
+    void asStub();
+    void assertRecordState();
+    void checkIsUsedInOneThread(boolean);
+    void checkOrder(boolean);
+    void closeMethod();
+    Object convertNumberClassIfNecessary(Object);
+    Object createNumberObject(Object, Class);
+    Object emptyReturnValueFor(Class);
+    Object invoke(Invocation);
+    boolean isLastResultOrVoidMethod();
+    boolean isValidThrowable(Throwable);
+    boolean lastMethodIsVoidMethod();
+    void makeThreadSafe(boolean);
+    void replay();
+    void requireAssignable(Object);
+    void requireLastResultOrVoidMethod();
+    void requireMethodCall(String);
+    void requireValidAnswer(IAnswer);
+    void requireValidDelegation(Object);
+    void requireValidThrowable(Throwable);
+    void requireVoidMethod();
+    void times(Range);
+    void verify();
+    void verifyRecording();
+    void verifyUnexpectedCalls();
+}
+[METHOD_BODY]
+invoke last invocation used behavior answer create result invoke branch jump last once delegate create delegating result branch jump once value stub answer add behavior invocation used stub delegate add value throwable throwable record state check one thread should check order close method times illegal state exception missing definition preceding usage convert number necessary object number object type s2 empty empty method valid measure runtime exception error type make thread safe replay illegal matcher calls were outside expectations require assignable cannot returning primitive incompatible require called mock not call mock needed before setting valid pointer must not delegation pointer delegated must argument cannot thrown called times expected verify calling allowed record verify recording calling allowed unexpected calls
+",34,0,2,0,b7161697172d37c6f35598a8dadc9999b5684264e4c34526b1aa414007820a3a,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,565,117,117,35,35,0,110,136,3,92,284,88,26,1433,e401ea14b046bf236e06e6d9c813e4c89e349094bbc42b0397df0bdac1c385c5
+easymock,org.easymock.internal.ReflectionUtils,ReflectionUtils,class,false,"[DECLARATION]
+public class ReflectionUtils {
+    Method findDefaultMethod(Class, String, Class[]);
+    Method findMethod(Class, String, Predicate);
+    Method findMethod(Class, String, Predicate, Class[]);
+    Constructor getConstructor(Class, Object[]);
+    Method getDeclaredMethod(Class, String, Class[]);
+    Set getDefaultMethods(Class);
+    boolean isClassAvailable(String);
+    boolean isMatchingConstructor(Constructor, Object[]);
+    Class wrapPrimitive(Class);
+}
+[METHOD_BODY]
+declared method invoke create not primitive wrapper type object equals hashcode tostring finalize hash code string invoke find method measure branch jump create runtime exception ambiguous more than one are named find branch jump measure runtime exception ambiguous more than one are named constructor illegal argument no such ambiguity constructors declared methods collect illegal argument only interfaces can have not available name matching constructor wrap primitive wrapper type
+",9,0,0,0,4ecf6f278e9a237ad87ff909e9e3c069852ed631559b1737acdf4fd1c8dcff65,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,440,68,68,11,11,1,24,47,2,40,179,28,8,912,8a2aa2a0e22026a8d5a000a3dccf5bc6a24d154ab11e461d264fef8b7f7ae8fd
+easymock,org.easymock.internal.ReplayState,ReplayState,class,false,"[DECLARATION]
+public class ReplayState implements IMocksControlState, Serializable {
+    void andAnswer(IAnswer);
+    void andDelegateTo(Object);
+    void andReturn(Object);
+    void andStubAnswer(IAnswer);
+    void andStubDelegateTo(Object);
+    void andStubReturn(Object);
+    void andStubThrow(Throwable);
+    void andThrow(Throwable);
+    void andVoid();
+    void asStub();
+    void assertRecordState();
+    void callback(Runnable);
+    void checkIsUsedInOneThread(boolean);
+    void checkOrder(boolean);
+    Object invoke(Invocation);
+    Object invokeInner(Invocation);
+    void makeThreadSafe(boolean);
+    void replay();
+    void throwWrappedIllegalStateException();
+    void times(Range);
+    void verify();
+    void verifyRecording();
+    void verifyUnexpectedCalls();
+}
+[METHOD_BODY]
+invoke create lock behavior answer wrapped illegal state exception invoke delegate wrapped illegal state exception stub answer stub delegate record callback check used one thread check order inner branch jump behavior lock inner pop current invocation branch jump create make thread safe replay method must not called replay times verify verify recording unexpected calls
+",23,0,2,0,16843b582d767d7bc9a3ad40f0ce57842cc6998b4456c75b753b60fe4cf60e9c,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,135,54,54,24,24,0,115,11,0,6,47,6,1,340,0c63dc5b460f4f224bd86e931bbf8bb0beaa8a308f7b81e2df83757101f016f9
+easymock,org.easymock.internal.Result,Result,class,false,"[DECLARATION]
+public class Result implements IAnswer, Serializable {
+    Object answer();
+    Result createAnswerResult(IAnswer);
+    Result createDelegatingResult(Object);
+    Result createReturnResult(Object);
+    Result createThrowResult(Throwable);
+    boolean shouldFillInStackTrace();
+    String toString();
+}
+[METHOD_BODY]
+invoke value should fill trace answer invoke value create answer result create delegating result should fill trace string
+",7,0,2,0,9728b9bb1534669bd414a6bb52365f4164e989cbfc140a35df3f951e074261a2,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,39,18,18,8,8,0,17,9,0,0,17,0,0,101,392c1c906dbcfda81de2959819b86103fc59fdb5d7caf91e7f38ff9c31f5eb70
+easymock,org.easymock.internal.Result$1DelegatingAnswer,Result$1DelegatingAnswer,class,false,"[DECLARATION]
+class Result$1DelegatingAnswer implements IAnswer, Serializable {
+    Object answer();
+    Object[] convertVarargs(Method, Object[]);
+    String toString();
+}
+[METHOD_BODY]
+invoke val value answer cause invoke branch jump create val value illegal state exception argument call was performed outside mock invocation delegation object not implementing mocked method convert varargs branch jump measure create string delegated
+",3,0,2,0,56e420aaab429f76f54495b556e5ea3dfdfac4ba81163c00b8586c49f1c5cfe7,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,84,35,35,4,4,0,7,10,0,12,52,13,4,230,90bd6008a8040fb661aba7bb0790931afe5ddbfa5badfdd6f2c6ebcaa1849c24
+easymock,org.easymock.internal.Result$1ReturningAnswer,Result$1ReturningAnswer,class,false,"[DECLARATION]
+class Result$1ReturningAnswer implements IAnswer, Serializable {
+    Object answer();
+    String toString();
+}
+[METHOD_BODY]
+invoke val value answer val value string create invoke answer returning
+",2,0,2,0,075b56fb20a697ac84656f964c1a1f89c0be538ba48518b6f96d242ddce209a6,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,15,11,11,3,3,0,3,6,0,0,6,2,1,35,0864ac26a134a6d07a853a77be45c64b8a08a824c9d93627599823f0a639bba7
+easymock,org.easymock.internal.Result$1ThrowingAnswer,Result$1ThrowingAnswer,class,false,"[DECLARATION]
+class Result$1ThrowingAnswer implements IAnswer, Serializable {
+    Object answer();
+    String toString();
+}
+[METHOD_BODY]
+invoke val throwable answer val throwable string create invoke answer throwing
+",2,0,2,0,4ed982834b77bb52c7bc97b62b0771b08c5e52a176e3f8bf52006cea29eeb25d,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,15,11,11,3,3,0,3,6,0,0,6,2,1,35,32a587e6cdbe9df6ae7b29000f773ae130cf1c962d07b5142d73fd7a6a7e3d18
+easymock,org.easymock.internal.Results,Results,class,false,"[DECLARATION]
+public class Results implements Serializable {
+    void add(Result, Range);
+    int getCallCount();
+    Range getMainInterval();
+    boolean hasResults();
+    boolean hasValidCallCount();
+    Result next();
+    String toString();
+}
+[METHOD_BODY]
+invoke create ranges results add invoke branch jump create ranges results illegal state exception last method called mock already has non fixed count set call count main interval branch jump has call valid contains next string expected
+",7,0,1,0,a584874b582d59ca86bae90c82d50769beb217917d345602c7b4a719298efb62,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,163,37,37,8,8,0,19,31,1,6,67,10,1,359,fc0754fd6acdfc4db5238723efc69f331357b42d789216bdf3c6ab7f603c6eec
+easymock,org.easymock.internal.RuntimeExceptionWrapper,RuntimeExceptionWrapper,class,true,"[DECLARATION]
+public class RuntimeExceptionWrapper extends RuntimeException {
+    RuntimeException getRuntimeException();
+}
+[METHOD_BODY]
+invoke runtime exception runtime exception
+",1,0,0,0,8e5e55a912af2a824eda15bbba06be4841a26ebdfdfd3f8b754e40f51187bbf4,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,6,5,5,2,2,0,2,4,0,0,1,0,0,16,17225ddc1657466a633ea71c6f34db743cc48013d20a6b94ebdd376f339d41d1
+easymock,org.easymock.internal.ThrowableWrapper,ThrowableWrapper,class,true,"[DECLARATION]
+public class ThrowableWrapper extends Throwable {
+    Throwable getThrowable();
+}
+[METHOD_BODY]
+invoke throwable throwable
+",1,0,0,0,5bcd66b6bca62a73647cb5837770184c48ff79c65977d9cda51b6860772138bf,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,6,3,3,2,2,0,1,2,0,0,1,0,0,15,2890a5d0bb3f3b997eec96f19827a4838aa359e53cf3ce896711e918639bc60c
+easymock,org.easymock.internal.UnorderedBehavior,UnorderedBehavior,class,false,"[DECLARATION]
+public class UnorderedBehavior implements Serializable {
+    Result addActual(Invocation);
+    void addExpected(ExpectedInvocation, Result, Range);
+    boolean allowsExpectedInvocation(ExpectedInvocation, boolean);
+    List getMessages(Invocation);
+    boolean verify();
+}
+[METHOD_BODY]
+invoke create results check order add actual clear captures invoke branch jump results add expected branch jump create allows expected invocation check order messages verify has next
+",5,0,1,0,790758ec9dd40af888f24016284f04fa357c6b4969add786f453ee9e25496c9e,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,189,27,27,6,6,0,15,20,2,0,108,0,0,423,9f8937258880f7048a5279fa3f67066a37cbef09a53b1142f8efdbed9e4e8886
+easymock,org.easymock.internal.classinfoprovider.ClassInfoProvider,ClassInfoProvider,interface,false,"[DECLARATION]
+public interface ClassInfoProvider {
+    ClassLoader classLoader(Class);
+    String classPackage(Class);
+}
+[METHOD_BODY]
+<EMPTY>
+",2,0,0,0,6c2c3acd96a36cddf8a1d72c6c5ad4fe6b2e821fcf8f74e4fae7cee84af7ab27,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,true,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77305bff7a24e74a0e38d809575b5b8b3de1388a175e5cc66f013233b3646ab2
+easymock,org.easymock.internal.classinfoprovider.DefaultClassInfoProvider,DefaultClassInfoProvider,class,false,"[DECLARATION]
+public class DefaultClassInfoProvider implements ClassInfoProvider {
+    ClassLoader classLoader(Class);
+    String classPackage(Class);
+    String toString();
+}
+[METHOD_BODY]
+invoke loader invoke string create string simple name
+",3,0,1,0,4c32d519524d11921be6dadad340a5c9f59e70e051600528303a33b37d89ad96,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,21,8,8,4,4,0,6,0,0,0,11,0,0,50,b44f6e5e4bc6ef9eb038be5a5a3dffe1a675a3a72f25ccbcc1c3c5186e645f94
+easymock,org.easymock.internal.classinfoprovider.JdkClassInfoProvider,JdkClassInfoProvider,class,false,"[DECLARATION]
+public class JdkClassInfoProvider implements ClassInfoProvider {
+    ClassLoader classLoader(Class);
+    String classPackage(Class);
+    String toString();
+}
+[METHOD_BODY]
+invoke loader invoke org easymock mocks string simple name
+",3,0,1,0,451690c5b364df2a05b28a26f84eba9fa421b2dfb1a8dac2a4337329000257db,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,14,9,9,4,4,0,5,0,0,0,5,3,1,32,fbfd2d5c8d31e2254aaf861dc095da64fefbd686afc825aff04362eb7702bdce
+easymock,org.easymock.internal.matchers.And,And,class,false,"[DECLARATION]
+public class And implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke matchers append invoke branch jump matchers matches has next branch jump
+",2,0,2,0,7a72a174ce80fd77ce5412a5c818c83c5119cd003acafaefeaa9eeee5c22e252,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,40,12,12,3,3,0,5,3,1,0,27,0,0,89,247cb96e15eec400252befecea9b20aa6f7c265d8a82107e8a981373c1b3c9dc
+easymock,org.easymock.internal.matchers.Any,Any,class,false,"[DECLARATION]
+public class Any implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+create invoke any invoke append matches
+",2,0,2,0,9c2be1522f6f5cc92e6dd8bbb6019e14f4e1a2312a1c2e5f15a39c343e30bcda,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,12,6,6,4,4,0,3,1,0,0,4,0,0,22,bc7cc62e94521dd213f15018d147443cebf33726333ae164a6ec68a4544bac24
+easymock,org.easymock.internal.matchers.ArrayEquals,ArrayEquals,class,true,"[DECLARATION]
+public class ArrayEquals extends Equals {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke append argument invoke matches branch jump
+",2,0,0,0,4f810fb2f95727c3ba1b84b62e6eb602c296019ce8022b801f944941cb936e02,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,86,7,7,3,3,0,5,0,0,0,70,0,0,362,d264ce11181570c655823e4a784736d2497d4c08742e22bacca6477489f86753
+easymock,org.easymock.internal.matchers.Captures,Captures,class,false,"[DECLARATION]
+public class Captures implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+    void setPotentialValue(Object);
+    void validateCapture();
+}
+[METHOD_BODY]
+invoke capture append invoke capture matches add potential value validate value potential
+",4,0,2,0,080332b7cfe9dda29d5bb3103e509e1ef55d0d3813777de7c88e0238698feaec,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,24,12,12,5,5,0,10,7,0,0,7,0,0,60,06d4f3407e6645099436372cf44ac7bd606161081842e0a41d8570b43336fef6
+easymock,org.easymock.internal.matchers.Compare,Compare,class,false,"[DECLARATION]
+public class Compare implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke expected comparator operator append invoke comparator expected operator matches match result branch jump
+",2,0,2,0,68217f8ac65bc8a68ce3cb433bc2469cd3e30bbba476d1b6246d104a2e93e774,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,30,14,14,3,3,0,5,10,0,0,12,0,0,83,229a9b1f7fb78fd0b757b0d09436725005850c5486d83ce7489b5b5a8cddeabf
+easymock,org.easymock.internal.matchers.CompareEqual,CompareEqual,class,true,"[DECLARATION]
+public class CompareEqual extends CompareTo {
+    String getName();
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke name cmp eq match result branch jump
+",2,0,0,0,84abbee3ae1c2e0c58fc57f036bfebea0f3f8250f7f476f8ea09dbdbb78e5ee8,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,16,8,8,3,3,0,3,0,0,0,4,2,1,30,94fd790f76ab602015df327037878cff5782fec1990fafbd3b2e77d5d2161f98
+easymock,org.easymock.internal.matchers.CompareTo,CompareTo,abstract class,false,"[DECLARATION]
+public abstract class CompareTo implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    String getName();
+    boolean matchResult(int);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke expected append invoke expected matches match result branch jump
+",4,0,2,0,05d9db7b77765291479610ebe8ea2c2efe263523d82be03a7e9f53955e65b028,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,21,10,10,3,3,0,5,3,0,0,10,0,0,59,cd7a6f7ab99f642ec36309cc9326909c6300bec38657743c090354582d19110e
+easymock,org.easymock.internal.matchers.Contains,Contains,class,false,"[DECLARATION]
+public class Contains implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke substring append invoke substring matches branch jump
+",2,0,2,0,0483a42baf80b449d691ecd466ba604cee5a7e379dfe8b4e962fb46f86995cda,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,28,8,8,3,3,0,4,3,0,0,10,0,0,62,1ae7fbe3591b3ff2b6a992444e0271fe60ff23522dbc9ee62d6ee9495f82df44
+easymock,org.easymock.internal.matchers.EndsWith,EndsWith,class,false,"[DECLARATION]
+public class EndsWith implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke suffix append invoke suffix ends matches branch jump
+",2,0,2,0,f0bca82b531124ba744a043b7aada1ee9c3711a16c62120de8e4861d461bd2de,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,28,9,9,3,3,0,4,3,0,0,10,1,1,61,15e9a529cbb7f086810a794e84d545b6db3092c0607b1e4db9f729e63c2faa0e
+easymock,org.easymock.internal.matchers.Equals,Equals,class,false,"[DECLARATION]
+public class Equals implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean equals(Object);
+    Object getExpected();
+    int hashCode();
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke expected append argument invoke expected branch jump hash code create unsupported operation exception not supported matches branch jump
+",5,0,2,0,a2b68d48cd5f728c6d034c639f9524417bc0db4bcf6dca17670dfeb109bc5dd1,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,72,19,19,6,6,0,8,12,0,6,27,3,1,157,f5ec8937343cdf590a624d237ad604763cb8760013f011c59b3dbfe88a484dcb
+easymock,org.easymock.internal.matchers.EqualsWithDelta,EqualsWithDelta,class,false,"[DECLARATION]
+public class EqualsWithDelta implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke expected delta append invoke expected delta matches branch jump cmpg
+",2,0,2,0,47614a5c52e79ca54ef49d445b40cff8cc386ee055194185923911b1af37d200,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,42,11,11,3,3,0,4,8,2,0,17,0,0,115,8c77ad954104f8bb9271873773a1c6d4cc7ebf0992463f6d5f1ca0d8f4c3b22d
+easymock,org.easymock.internal.matchers.Find,Find,class,false,"[DECLARATION]
+public class Find implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+compile invoke regex append invoke regex matches branch jump
+",2,0,2,0,16c3b3677885cdcdb1c48ea5c51cee2a1431fcb48f9550165800eb9e6ad54fb5,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,33,9,9,3,3,0,5,3,0,0,14,0,0,76,16f1e9a8c4248d1955a04ffa45cae2e18c38b75be4dd14fcfedb75ff0d496a33
+easymock,org.easymock.internal.matchers.GreaterOrEqual,GreaterOrEqual,class,true,"[DECLARATION]
+public class GreaterOrEqual extends CompareTo {
+    String getName();
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke name geq match result branch jump
+",2,0,0,0,c815da23c103383babe6dcaaf28366524a4dbd505c6081e1cb0b48fad04542c1,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,16,7,7,3,3,0,3,0,0,0,4,1,1,30,984cc57b1a361214053994a85a9e781abf713452c7b2e91125341a15eb4e9923
+easymock,org.easymock.internal.matchers.GreaterThan,GreaterThan,class,true,"[DECLARATION]
+public class GreaterThan extends CompareTo {
+    String getName();
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke name gt match result branch jump
+",2,0,0,0,ee72e563aaebc2d29ba836c4ea05a59d93b17ed94397125ae5f8512e710219b9,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,16,7,7,3,3,0,3,0,0,0,4,1,1,30,dd728506608826fc53776e1b75940e55b60a0824a3d4520e4e97f7f17512b13d
+easymock,org.easymock.internal.matchers.InstanceOf,InstanceOf,class,false,"[DECLARATION]
+public class InstanceOf implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke clazz append invoke clazz matches branch jump
+",2,0,2,0,ad9425981c63d23fd7d6518b546c3d09a2617d955eb9017e862f962aaba29845,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,30,8,8,3,3,0,4,3,0,0,12,0,0,64,31f5d76b278edd83c39485627e143ff927a1bf452753b06a043612236dd591d1
+easymock,org.easymock.internal.matchers.LessOrEqual,LessOrEqual,class,true,"[DECLARATION]
+public class LessOrEqual extends CompareTo {
+    String getName();
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke name leq match result branch jump
+",2,0,0,0,38351e9daed857d345c7d3166e32131ee7871bc0cd16d9450f56c7bb1aa17de0,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,16,7,7,3,3,0,3,0,0,0,4,1,1,30,5a7d5f1c552857e1901a8f71f3f2fdc9d64b4060f5dc4349ecbfe2d7f4f5d8e1
+easymock,org.easymock.internal.matchers.LessThan,LessThan,class,true,"[DECLARATION]
+public class LessThan extends CompareTo {
+    String getName();
+    boolean matchResult(int);
+}
+[METHOD_BODY]
+invoke name lt match result branch jump
+",2,0,0,0,a816f4b6e752de9be5abc8d69817e5228df6dd6be821b6808dc3c5fb0ee0835f,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,16,7,7,3,3,0,3,0,0,0,4,1,1,30,aae2981162afcfd7c49b5fdb00614b09b6954957bc156bb21fcbcc84cc0007c8
+easymock,org.easymock.internal.matchers.Matches,Matches,class,false,"[DECLARATION]
+public class Matches implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+compile invoke regex append invoke regex matches branch jump
+",2,0,2,0,0973d1670b91e012c495d6ec80baeb5a864eed619d19263003b8c084de27632b,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,33,9,9,3,3,0,5,3,0,0,14,0,0,76,16f1e9a8c4248d1955a04ffa45cae2e18c38b75be4dd14fcfedb75ff0d496a33
+easymock,org.easymock.internal.matchers.Not,Not,class,false,"[DECLARATION]
+public class Not implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke first append invoke first matches branch jump
+",2,0,2,0,44293c7dae5f88ce0bfb340b60ca23cf5fdedb8725daaab449d34475ea19cc95,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,25,8,8,3,3,0,4,3,0,0,8,0,0,51,eef22655f19a52915811f7da7d7bfc5a369582ca3709bc695884c0853998fb5e
+easymock,org.easymock.internal.matchers.NotNull,NotNull,class,false,"[DECLARATION]
+public class NotNull implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+create invoke not invoke append not matches branch jump
+",2,0,2,0,89365376d1fa8562bdd6be73526b8c237c59d659e3a9dcaaa2ce59fed4beb483,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,22,9,9,4,4,0,3,1,0,0,7,1,1,36,fb72c3827328aa05972a223f9820560fe9e9cf2703ee2a22dc58d7279795f1d1
+easymock,org.easymock.internal.matchers.Null,Null,class,false,"[DECLARATION]
+public class Null implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+create invoke invoke append matches branch jump
+",2,0,2,0,3c253b5a0723cf10b1547856b719d6d2de875bbfe6e946796d24f7b9ef1c470e,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,22,7,7,4,4,0,3,0,0,0,7,0,0,38,bf87a7f2f72af27f8061d3045aba4d991e76946cfa66c8ca721d42d1c889f3de
+easymock,org.easymock.internal.matchers.Or,Or,class,false,"[DECLARATION]
+public class Or implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke matchers append invoke branch jump matchers matches has next branch jump
+",2,0,2,0,c4cc3d65c9ac78b0e4b758729eede87aee7b9b4316433d19fbd7f249db21d1f8,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,40,12,12,3,3,0,5,3,1,0,27,0,0,89,247cb96e15eec400252befecea9b20aa6f7c265d8a82107e8a981373c1b3c9dc
+easymock,org.easymock.internal.matchers.Same,Same,class,false,"[DECLARATION]
+public class Same implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke expected append invoke expected matches branch jump
+",2,0,2,0,377145cf7a4e8a25d5b4b02fc6d286702731119b0d4affc25ade70b48a541ba8,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,24,8,8,3,3,0,4,3,0,0,7,0,0,48,2a90afd2cc946dca0540ef111c3baeca5ed596376a031d3c8ea0eaef8516a25f
+easymock,org.easymock.internal.matchers.StartsWith,StartsWith,class,false,"[DECLARATION]
+public class StartsWith implements IArgumentMatcher, Serializable {
+    void appendTo(StringBuffer);
+    boolean matches(Object);
+}
+[METHOD_BODY]
+invoke prefix append invoke prefix starts matches branch jump
+",2,0,2,0,b43fe4b991d75b401a57ecaf917129bb450bca2bd268f470bc9f2f7746094fa1,stage3_declaration_method_body,declaration_method_body_v1,"validation_provenance/easymock_class_declarations.csv (historical generator commit 48cf46d2a971ff5427daa7d410cb79d4d024e23a, run in isolation)",8b790722f36afc507e896759907802cea18ff00ab19523fcc949a8488745260b,true,false,false,0,28,9,9,3,3,0,4,3,0,0,10,1,1,61,55ded245bf581000480c717aace5bc4756b905d47f866bb32958fb4b8b09ae83

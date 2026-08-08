@@ -1,0 +1,596 @@
+{
+  "selected_solution_id": "seed1_solution024",
+  "selected_projected_row": {
+    "subject": "easymock",
+    "seed": 1,
+    "solution_id": "seed1_solution024",
+    "original_solution_id": "seed1_solution024",
+    "coupling": 0.2787481804949054,
+    "cohesion": 1.8924210049210053,
+    "imbalance": 0.8001700499540941,
+    "original_f_semantic": 0.4107092551580953,
+    "pymoo_f0_coupling": 0.2787481804949054,
+    "pymoo_f1_negative_cohesion": -1.8924210049210053,
+    "pymoo_f2_imbalance": 0.8001700499540941,
+    "feasible": true,
+    "is_injected_seed": false,
+    "label_vector": "[0, 1, 1, 2, 1, 3, 3, 3, 3, 3, 3, 4, 1, 5, 3, 3, 6, 6, 6, 6, 6, 6, 7, 3, 8, 0, 2, 2, 5, 9, 4, 2, 2, 2, 2, 2, 2, 10, 3, 10, 10, 10, 10, 2, 4, 5, 5, 5, 7, 7, 7, 7, 10, 5, 1, 11, 5, 3, 5, 10, 5, 5, 2, 9, 9, 9, 10, 4, 3, 4, 4, 10, 4, 4, 10, 5, 4, 10, 2, 2, 2, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 1]",
+    "selection_rule": "minimum_imbalance_within_5_percent_relative_modularity_band",
+    "selected_weighted_modularity": 0.5631919151469692,
+    "selected_cluster_count": 12,
+    "selected_max_cluster_ratio": 0.2571428571428571,
+    "selected_singleton_ratio": 0.01904761904761905
+  },
+  "selected_four_objective_row": {
+    "subject": "easymock",
+    "seed": 1,
+    "solution_id": "seed1_solution024",
+    "coupling": 0.2787481804949054,
+    "cohesion": 1.8924210049210053,
+    "imbalance": 0.8001700499540941,
+    "f_semantic": 0.4107092551580953,
+    "pymoo_f0_coupling": 0.2787481804949054,
+    "pymoo_f1_negative_cohesion": -1.8924210049210053,
+    "pymoo_f2_imbalance": 0.8001700499540941,
+    "pymoo_f3_f_semantic": 0.4107092551580953,
+    "feasible": true,
+    "is_injected_seed": false,
+    "injected_seed_name": "",
+    "injected_seed_category": "",
+    "label_vector": "[0, 1, 1, 2, 1, 3, 3, 3, 3, 3, 3, 4, 1, 5, 3, 3, 6, 6, 6, 6, 6, 6, 7, 3, 8, 0, 2, 2, 5, 9, 4, 2, 2, 2, 2, 2, 2, 10, 3, 10, 10, 10, 10, 2, 4, 5, 5, 5, 7, 7, 7, 7, 10, 5, 1, 11, 5, 3, 5, 10, 5, 5, 2, 9, 9, 9, 10, 4, 3, 4, 4, 10, 4, 4, 10, 5, 4, 10, 2, 2, 2, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 1]"
+  },
+  "selected_posthoc_metrics": {
+    "subject": "easymock",
+    "seed": 1,
+    "solution_id": "seed1_solution024",
+    "weighted_modularity": 0.5631919151469692,
+    "internal_edge_weight_ratio": 0.7212518195050946,
+    "internal_external_edge_ratio": 2.587467362924282,
+    "cluster_count": 12,
+    "average_cluster_size": 8.75,
+    "max_cluster_size": 27,
+    "min_cluster_size": 1,
+    "max_cluster_ratio": 0.2571428571428571,
+    "singleton_ratio": 0.01904761904761905,
+    "cluster_size_cv": 0.8001700499540941,
+    "cluster_size_distribution": "{\"1\": 2, \"11\": 1, \"12\": 2, \"14\": 1, \"2\": 1, \"27\": 1, \"5\": 2, \"6\": 1, \"9\": 1}"
+  },
+  "selected_partition": [
+    {
+      "class_id": "org.easymock.Capture",
+      "class_name": "org.easymock.Capture",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.easymock.Capture$1",
+      "class_name": "org.easymock.Capture$1",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.CaptureType",
+      "class_name": "org.easymock.CaptureType",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.ConstructorArgs",
+      "class_name": "org.easymock.ConstructorArgs",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.EasyMock",
+      "class_name": "org.easymock.EasyMock",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.EasyMockExtension",
+      "class_name": "org.easymock.EasyMockExtension",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.EasyMockListener",
+      "class_name": "org.easymock.EasyMockListener",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.EasyMockRule",
+      "class_name": "org.easymock.EasyMockRule",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.EasyMockRunner",
+      "class_name": "org.easymock.EasyMockRunner",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.EasyMockSupport",
+      "class_name": "org.easymock.EasyMockSupport",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.EasyMockSupport$ObjectMockingHelper",
+      "class_name": "org.easymock.EasyMockSupport$ObjectMockingHelper",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.IAnswer",
+      "class_name": "org.easymock.IAnswer",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.IArgumentMatcher",
+      "class_name": "org.easymock.IArgumentMatcher",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.IExpectationSetters",
+      "class_name": "org.easymock.IExpectationSetters",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.IMockBuilder",
+      "class_name": "org.easymock.IMockBuilder",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.IMocksControl",
+      "class_name": "org.easymock.IMocksControl",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.LogicalOperator",
+      "class_name": "org.easymock.LogicalOperator",
+      "cluster_id": 6
+    },
+    {
+      "class_id": "org.easymock.LogicalOperator$1",
+      "class_name": "org.easymock.LogicalOperator$1",
+      "cluster_id": 6
+    },
+    {
+      "class_id": "org.easymock.LogicalOperator$2",
+      "class_name": "org.easymock.LogicalOperator$2",
+      "cluster_id": 6
+    },
+    {
+      "class_id": "org.easymock.LogicalOperator$3",
+      "class_name": "org.easymock.LogicalOperator$3",
+      "cluster_id": 6
+    },
+    {
+      "class_id": "org.easymock.LogicalOperator$4",
+      "class_name": "org.easymock.LogicalOperator$4",
+      "cluster_id": 6
+    },
+    {
+      "class_id": "org.easymock.LogicalOperator$5",
+      "class_name": "org.easymock.LogicalOperator$5",
+      "cluster_id": 6
+    },
+    {
+      "class_id": "org.easymock.Mock",
+      "class_name": "org.easymock.Mock",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.easymock.MockType",
+      "class_name": "org.easymock.MockType",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.Preview",
+      "class_name": "org.easymock.Preview",
+      "cluster_id": 8
+    },
+    {
+      "class_id": "org.easymock.TestSubject",
+      "class_name": "org.easymock.TestSubject",
+      "cluster_id": 0
+    },
+    {
+      "class_id": "org.easymock.internal.AndroidClassProxyFactory",
+      "class_name": "org.easymock.internal.AndroidClassProxyFactory",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.AndroidClassProxyFactory$MockHandler",
+      "class_name": "org.easymock.internal.AndroidClassProxyFactory$MockHandler",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.AndroidSupport",
+      "class_name": "org.easymock.internal.AndroidSupport",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.ArgumentToString",
+      "class_name": "org.easymock.internal.ArgumentToString",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.easymock.internal.AssertionErrorWrapper",
+      "class_name": "org.easymock.internal.AssertionErrorWrapper",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.internal.BridgeMethodResolver",
+      "class_name": "org.easymock.internal.BridgeMethodResolver",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.ClassInstantiatorFactory",
+      "class_name": "org.easymock.internal.ClassInstantiatorFactory",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.ClassMockingData",
+      "class_name": "org.easymock.internal.ClassMockingData",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.ClassProxyFactory",
+      "class_name": "org.easymock.internal.ClassProxyFactory",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.ClassProxyFactory$MockMethodInterceptor",
+      "class_name": "org.easymock.internal.ClassProxyFactory$MockMethodInterceptor",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.DefaultClassInstantiator",
+      "class_name": "org.easymock.internal.DefaultClassInstantiator",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.EasyMockProperties",
+      "class_name": "org.easymock.internal.EasyMockProperties",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.EasyMockStatement",
+      "class_name": "org.easymock.internal.EasyMockStatement",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.internal.ErrorMessage",
+      "class_name": "org.easymock.internal.ErrorMessage",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.ExpectedInvocation",
+      "class_name": "org.easymock.internal.ExpectedInvocation",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.ExpectedInvocationAndResult",
+      "class_name": "org.easymock.internal.ExpectedInvocationAndResult",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.ExpectedInvocationAndResults",
+      "class_name": "org.easymock.internal.ExpectedInvocationAndResults",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.IClassInstantiator",
+      "class_name": "org.easymock.internal.IClassInstantiator",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.IMocksBehavior",
+      "class_name": "org.easymock.internal.IMocksBehavior",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.internal.IMocksControlState",
+      "class_name": "org.easymock.internal.IMocksControlState",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.IProxyFactory",
+      "class_name": "org.easymock.internal.IProxyFactory",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.IgnoreAnimalSniffer",
+      "class_name": "org.easymock.internal.IgnoreAnimalSniffer",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.Injection",
+      "class_name": "org.easymock.internal.Injection",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.easymock.internal.InjectionPlan",
+      "class_name": "org.easymock.internal.InjectionPlan",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.easymock.internal.InjectionTarget",
+      "class_name": "org.easymock.internal.InjectionTarget",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.easymock.internal.Injector",
+      "class_name": "org.easymock.internal.Injector",
+      "cluster_id": 7
+    },
+    {
+      "class_id": "org.easymock.internal.Invocation",
+      "class_name": "org.easymock.internal.Invocation",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.JavaProxyFactory",
+      "class_name": "org.easymock.internal.JavaProxyFactory",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.LastControl",
+      "class_name": "org.easymock.internal.LastControl",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.LinkedClassLoader",
+      "class_name": "org.easymock.internal.LinkedClassLoader",
+      "cluster_id": 11
+    },
+    {
+      "class_id": "org.easymock.internal.MethodSerializationWrapper",
+      "class_name": "org.easymock.internal.MethodSerializationWrapper",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.MockBuilder",
+      "class_name": "org.easymock.internal.MockBuilder",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.internal.MockInvocationHandler",
+      "class_name": "org.easymock.internal.MockInvocationHandler",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.MocksBehavior",
+      "class_name": "org.easymock.internal.MocksBehavior",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.MocksControl",
+      "class_name": "org.easymock.internal.MocksControl",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.ObjectMethodsFilter",
+      "class_name": "org.easymock.internal.ObjectMethodsFilter",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.ObjenesisClassInstantiator",
+      "class_name": "org.easymock.internal.ObjenesisClassInstantiator",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.PrimitiveUtils",
+      "class_name": "org.easymock.internal.PrimitiveUtils",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.easymock.internal.PrimitiveUtils$1",
+      "class_name": "org.easymock.internal.PrimitiveUtils$1",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.easymock.internal.PrimitiveUtils$PrimitiveEntry",
+      "class_name": "org.easymock.internal.PrimitiveUtils$PrimitiveEntry",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.easymock.internal.Range",
+      "class_name": "org.easymock.internal.Range",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.RecordState",
+      "class_name": "org.easymock.internal.RecordState",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.internal.ReflectionUtils",
+      "class_name": "org.easymock.internal.ReflectionUtils",
+      "cluster_id": 3
+    },
+    {
+      "class_id": "org.easymock.internal.ReplayState",
+      "class_name": "org.easymock.internal.ReplayState",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.internal.Result",
+      "class_name": "org.easymock.internal.Result",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.internal.Result$1DelegatingAnswer",
+      "class_name": "org.easymock.internal.Result$1DelegatingAnswer",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.Result$1ReturningAnswer",
+      "class_name": "org.easymock.internal.Result$1ReturningAnswer",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.internal.Result$1ThrowingAnswer",
+      "class_name": "org.easymock.internal.Result$1ThrowingAnswer",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.internal.Results",
+      "class_name": "org.easymock.internal.Results",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.RuntimeExceptionWrapper",
+      "class_name": "org.easymock.internal.RuntimeExceptionWrapper",
+      "cluster_id": 5
+    },
+    {
+      "class_id": "org.easymock.internal.ThrowableWrapper",
+      "class_name": "org.easymock.internal.ThrowableWrapper",
+      "cluster_id": 4
+    },
+    {
+      "class_id": "org.easymock.internal.UnorderedBehavior",
+      "class_name": "org.easymock.internal.UnorderedBehavior",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.classinfoprovider.ClassInfoProvider",
+      "class_name": "org.easymock.internal.classinfoprovider.ClassInfoProvider",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.classinfoprovider.DefaultClassInfoProvider",
+      "class_name": "org.easymock.internal.classinfoprovider.DefaultClassInfoProvider",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.classinfoprovider.JdkClassInfoProvider",
+      "class_name": "org.easymock.internal.classinfoprovider.JdkClassInfoProvider",
+      "cluster_id": 2
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.And",
+      "class_name": "org.easymock.internal.matchers.And",
+      "cluster_id": 10
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Any",
+      "class_name": "org.easymock.internal.matchers.Any",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.ArrayEquals",
+      "class_name": "org.easymock.internal.matchers.ArrayEquals",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Captures",
+      "class_name": "org.easymock.internal.matchers.Captures",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Compare",
+      "class_name": "org.easymock.internal.matchers.Compare",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.CompareEqual",
+      "class_name": "org.easymock.internal.matchers.CompareEqual",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.CompareTo",
+      "class_name": "org.easymock.internal.matchers.CompareTo",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Contains",
+      "class_name": "org.easymock.internal.matchers.Contains",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.EndsWith",
+      "class_name": "org.easymock.internal.matchers.EndsWith",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Equals",
+      "class_name": "org.easymock.internal.matchers.Equals",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.EqualsWithDelta",
+      "class_name": "org.easymock.internal.matchers.EqualsWithDelta",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Find",
+      "class_name": "org.easymock.internal.matchers.Find",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.GreaterOrEqual",
+      "class_name": "org.easymock.internal.matchers.GreaterOrEqual",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.GreaterThan",
+      "class_name": "org.easymock.internal.matchers.GreaterThan",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.InstanceOf",
+      "class_name": "org.easymock.internal.matchers.InstanceOf",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.LessOrEqual",
+      "class_name": "org.easymock.internal.matchers.LessOrEqual",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.LessThan",
+      "class_name": "org.easymock.internal.matchers.LessThan",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Matches",
+      "class_name": "org.easymock.internal.matchers.Matches",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Not",
+      "class_name": "org.easymock.internal.matchers.Not",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.NotNull",
+      "class_name": "org.easymock.internal.matchers.NotNull",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Null",
+      "class_name": "org.easymock.internal.matchers.Null",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Or",
+      "class_name": "org.easymock.internal.matchers.Or",
+      "cluster_id": 1
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.Same",
+      "class_name": "org.easymock.internal.matchers.Same",
+      "cluster_id": 9
+    },
+    {
+      "class_id": "org.easymock.internal.matchers.StartsWith",
+      "class_name": "org.easymock.internal.matchers.StartsWith",
+      "cluster_id": 1
+    }
+  ],
+  "selection_input_schema": [
+    "solution_id",
+    "feasible",
+    "coupling",
+    "cohesion",
+    "imbalance",
+    "is_injected_seed",
+    "label_vector"
+  ],
+  "selection_implementation": "evo_ms.optimization.selection.select_solution",
+  "semantic_objective_used_for_selection": false
+}

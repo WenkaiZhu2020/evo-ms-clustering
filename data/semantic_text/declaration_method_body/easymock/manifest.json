@@ -1,0 +1,16 @@
+{
+  "aggregate_input_sha256": "026bb91388cf89b09d621ee5622a9c18bf8036d2e39d0c0547c4882c3c0a37b3",
+  "class_count": 105,
+  "class_mapping_sha256": "9d8aa462f38035f6c736e09c723d33efd8a58d08ea4bb2359efe271e3dfa3d46",
+  "experiment_name": "stage3_declaration_method_body",
+  "generated_at_utc": "2026-08-07T16:53:30Z",
+  "representation_id": "declaration_method_body_v1",
+  "source": {
+    "classes_dir": "/Users/zhuwenkai/Desktop/validation-subjects/easymock/core/target/classes",
+    "command": "mvn -q -f /Users/zhuwenkai/Desktop/validation-worktrees/stage3-validation/tools/soot_extractor/pom.xml exec:java -Dexec.mainClass=org.evomicro.sootextractor.SootExtractorCli '-Dexec.args=--subject easymock --classes-dir /Users/zhuwenkai/Desktop/validation-subjects/easymock/core/target/classes --classpath /Users/zhuwenkai/Desktop/validation-subjects/easymock/core/target/classes:/Users/zhuwenkai/.m2/repository/net/bytebuddy/byte-buddy/1.17.5/byte-buddy-1.17.5.jar:/Users/zhuwenkai/.m2/repository/org/ow2/asm/asm/9.8/asm-9.8.jar:/Users/zhuwenkai/.m2/repository/org/objenesis/objenesis/3.4/objenesis-3.4.jar:/Users/zhuwenkai/.m2/repository/org/droidparts/dexmaker/dexmaker/1.5/dexmaker-1.5.jar:/Users/zhuwenkai/.m2/repository/org/junit/jupiter/junit-jupiter/5.11.4/junit-jupiter-5.11.4.jar:/Users/zhuwenkai/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.11.4/junit-jupiter-api-5.11.4.jar:/Users/zhuwenkai/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/zhuwenkai/.m2/repository/org/junit/platform/junit-platform-commons/1.11.4/junit-platform-commons-1.11.4.jar:/Users/zhuwenkai/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.11.4/junit-jupiter-params-5.11.4.jar:/Users/zhuwenkai/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.11.4/junit-jupiter-engine-5.11.4.jar:/Users/zhuwenkai/.m2/repository/org/junit/vintage/junit-vintage-engine/5.11.4/junit-vintage-engine-5.11.4.jar:/Users/zhuwenkai/.m2/repository/org/junit/platform/junit-platform-engine/1.11.4/junit-platform-engine-1.11.4.jar:/Users/zhuwenkai/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/zhuwenkai/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/zhuwenkai/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/zhuwenkai/.m2/repository/org/testng/testng/7.10.2/testng-7.10.2.jar:/Users/zhuwenkai/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/Users/zhuwenkai/.m2/repository/com/beust/jcommander/1.82/jcommander-1.82.jar:/Users/zhuwenkai/.m2/repository/org/webjars/jquery/3.7.1/jquery-3.7.1.jar --app-packages org.easymock --out-dir /private/tmp/stage3_verify/easymock/.extraction/easymock/soot --semantic-out /private/tmp/stage3_verify/easymock/.extraction/easymock/class_declarations.csv --method-body-out /private/tmp/stage3_verify/easymock/.extraction/easymock/method_bodies.csv'",
+    "project_root": "/Users/zhuwenkai/Desktop/validation-subjects/easymock",
+    "source_subject": "easymock"
+  },
+  "subject": "easymock",
+  "verified_against_frozen": true
+}

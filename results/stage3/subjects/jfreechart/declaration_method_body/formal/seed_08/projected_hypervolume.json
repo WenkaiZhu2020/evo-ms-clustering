@@ -1,0 +1,14 @@
+{
+  "implementation": "evo_ms.optimization.fronts.calculate_hypervolume",
+  "bounds_source": "configs/experiments/stage2_robustness_bounds.yml",
+  "reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "stored_value": 0.12286531599182222,
+  "recomputed_value": 0.12286531599182222,
+  "absolute_difference": 0.0,
+  "tolerance": 1e-12,
+  "pass": true
+}

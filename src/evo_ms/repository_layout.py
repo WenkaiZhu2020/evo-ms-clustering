@@ -13,11 +13,13 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 RESULTS_ROOT = REPOSITORY_ROOT / "results"
 DOCS_ROOT = REPOSITORY_ROOT / "docs"
 
-SUBJECTS = ("jpetstore", "daytrader", "xerces-j")
+SUBJECTS = ("jpetstore", "daytrader", "xerces-j", "easymock", "jfreechart")
 SEMANTIC_SUBJECT = {
     "jpetstore": "jpetstore",
     "daytrader": "daytrader",
     "xerces-j": "xerces",
+    "easymock": "easymock",
+    "jfreechart": "jfreechart",
 }
 SEMANTIC_TO_CANONICAL_SUBJECT = {value: key for key, value in SEMANTIC_SUBJECT.items()}
 

@@ -65,10 +65,16 @@ REPORT_ROOT = STAGE3_ROOT
 PROVENANCE_ROOT = STAGE3_PROVENANCE_ROOT
 MANIFEST_PATH = PROVENANCE_ROOT / "semantic_graph_generation_manifest.json"
 COMPATIBILITY_CONTRACT_PATH = PROVENANCE_ROOT / "final_graph_compatibility_contract.json"
-SEMANTIC_SUBJECTS = ("jpetstore", "daytrader", "xerces")
+SEMANTIC_SUBJECTS = ("jpetstore", "daytrader", "xerces", "easymock", "jfreechart")
 SUBJECTS = SEMANTIC_SUBJECTS
-EXPECTED_COUNTS = {"jpetstore": 24, "daytrader": 53, "xerces": 814}
-STORAGE_SUBJECT = {"jpetstore": "jpetstore", "daytrader": "daytrader", "xerces": "xerces-j"}
+EXPECTED_COUNTS = {"jpetstore": 24, "daytrader": 53, "xerces": 814, "easymock": 105, "jfreechart": 635}
+STORAGE_SUBJECT = {
+    "jpetstore": "jpetstore",
+    "daytrader": "daytrader",
+    "xerces": "xerces-j",
+    "easymock": "easymock",
+    "jfreechart": "jfreechart",
+}
 EXPERIMENT_ID = "stage3_declaration_method_body"
 REPRESENTATION_ID = "declaration_method_body_v1"
 STAGE3_RESULT_PART = "declaration_method_body"

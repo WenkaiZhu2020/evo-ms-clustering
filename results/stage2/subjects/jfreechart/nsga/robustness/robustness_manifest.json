@@ -1,0 +1,164 @@
+{
+  "algorithm_config_sha256": "37f4f1a096b0e485da87fc9644a7ad874f5654fa46df3bd77bb718e6425330fa",
+  "bounds_config": "configs/experiments/stage2_robustness_bounds.yml",
+  "bounds_config_sha256": "8ce5f5841d5fc4cea868f6742a6e6f94b766a24d62e0fde60141d3042c50765f",
+  "bounds_derivation": {
+    "coupling": "external_weight/total_weight with non-negative weights gives [0,1]",
+    "imbalance": "max std(cluster_sizes)/mean(cluster_sizes) over feasible integer cluster sizes",
+    "negative_cohesion": "cohesion in [0,max_raw_edge_weight], so negative cohesion in [-max_raw_edge_weight,0]"
+  },
+  "bounds_source": "theoretical",
+  "calibration_seeds": [],
+  "calibration_status": "not_required",
+  "class_count": 635,
+  "config_path": "configs/experiments/02_stage2_nsga_structure_only.yml",
+  "config_snapshot": {
+    "baseline_leiden_profiles": [
+      "raw_reference_leiden"
+    ],
+    "constraints": {
+      "max_cluster_ratio": 0.4,
+      "min_cluster_count": 2
+    },
+    "description": "Raw-graph structure-only NSGA-II (pymoo) with three structural objectives, compared against the frozen Stage 1 raw Leiden baseline.",
+    "experiment_name": "02_stage2_nsga_structure_only",
+    "initialization": {
+      "basis": "raw_reference_leiden_and_raw_graph",
+      "enabled": true,
+      "graph_groupings": {
+        "enabled": true,
+        "include_sqrt_target": true,
+        "target_offsets_from_raw_leiden": [
+          -10,
+          0,
+          10
+        ]
+      },
+      "include_raw_leiden": true,
+      "perturbations": {
+        "enabled": true,
+        "fractions": [
+          0.005,
+          0.01,
+          0.02,
+          0.05
+        ],
+        "per_fraction": 5
+      },
+      "random_fill": true,
+      "strategy": "structure_aware_seeded"
+    },
+    "input_graph": {
+      "evidence": [
+        "type_dependency",
+        "method_call"
+      ],
+      "name": "G_raw",
+      "weight_column": "raw_weight"
+    },
+    "nsga": {
+      "algorithm": "NSGA2",
+      "generations": 100,
+      "population_size": 100
+    },
+    "objectives": [
+      {
+        "direction": "minimize",
+        "name": "coupling"
+      },
+      {
+        "direction": "maximize",
+        "name": "cohesion"
+      },
+      {
+        "direction": "minimize",
+        "name": "imbalance"
+      }
+    ],
+    "output_root": "results",
+    "post_hoc_metrics": [
+      "modularity",
+      "hypervolume",
+      "mojofm",
+      "pairwise_f1"
+    ],
+    "random_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "subject": null
+  },
+  "end_timestamp_utc": "2026-08-07T15:46:46Z",
+  "formal_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "front_source": "recomputed_nondominated_front",
+  "git_commit": "ec7de9560c0543978372c0e7ac094b89f1617ffa",
+  "imbalance_bound_method": "exact_extreme_allocation_over_cluster_count",
+  "imbalance_upper_bound": 7.77694958720254,
+  "input_graph": "G_raw",
+  "input_graph_hashes": {
+    "class_nodes.csv": "bb4b83bcca058c8af7d80e64f5ac02a0879f39615944cbba0fec229b5ac1d003",
+    "raw_edges": "e65649b2b2da322b4f703fb35dc605acb51baef5bad4c0c213365726d20b6803",
+    "structural_dependencies.csv": "63784a0b502471c8b1634bb00dd633290f99f058c12229666ffc61fc739ea46d"
+  },
+  "max_raw_edge_weight": 183.0,
+  "normalization_bounds": {
+    "lower_bounds": [
+      0.0,
+      -183.0,
+      0.0
+    ],
+    "upper_bounds": [
+      1.0,
+      0.0,
+      7.77694958720254
+    ]
+  },
+  "numpy_version": "2.4.4",
+  "objective_order": [
+    "coupling",
+    "negative_cohesion",
+    "imbalance"
+  ],
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "pymoo_version": "0.6.2",
+  "python_version": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "reference_point": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "role": "stage2_raw_structure_only_nsga_robustness",
+  "run_type": "formal",
+  "source_fingerprint": {
+    "experiments/02_stage2_nsga_structure_only/run.py": "0c4499705b262a76eb9eaadc63817e22abfa348d7c8b1b8e7889ec41ecba4ecd",
+    "experiments/02_stage2_nsga_structure_only/run_robustness.py": "4418b3faec4d4a999684270af242ef7541c9fffa4e83499b2b765d5a3ea2111a",
+    "src/evo_ms/extraction/dependency_extractor.py": "90ac9dc6f653697dae975bc1b1df9318caac862ef9aecc0b5e58d191ca268a1a",
+    "src/evo_ms/optimization/encoding.py": "298f68772d293cb92fba1586c51c8331509afbb145392fddf5710c71441a6aa5",
+    "src/evo_ms/optimization/objectives.py": "b69801c9b8c234761ef59ca93d70e9668cd3a8fe39886391deff43b4c705ca96",
+    "src/evo_ms/optimization/problem.py": "356972e17e8b88c4104296ef9e3bb8d095ae45fa12fd424e50ab30c67f79f643"
+  },
+  "stage1_leiden_partition_hash": "34a1bfb962b6094a46a252d310e32c13911e18f58155f8cba38b72a50d1b6e56",
+  "start_timestamp_utc": "2026-08-07T15:37:07Z",
+  "subject": "jfreechart",
+  "working_tree_diff_sha256": "a1f225447ec32b31813d9f4a01d4cda9fd4408e5119e667f0915f37ca36db6d7",
+  "working_tree_dirty": true
+}

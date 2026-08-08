@@ -1,6 +1,8 @@
 {
   "aggregate_input_sha256": {
     "daytrader": "da53d434b820e3c25bc69df63ced807cd0113d412fa36acc9694d1a97631d655",
+    "easymock": "026bb91388cf89b09d621ee5622a9c18bf8036d2e39d0c0547c4882c3c0a37b3",
+    "jfreechart": "5ba59fbb864012cdde375a0c7945b91c2ce9b2ec66d41a2e63ab08a7f02dcf3c",
     "jpetstore": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
     "xerces": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3"
   },

@@ -56,12 +56,14 @@ from evo_ms.semantic.method_body import normalize_class_bodies  # noqa: E402
 from evo_ms.repository_layout import STAGE3_PROVENANCE_ROOT  # noqa: E402
 
 
-SUBJECTS = ("jpetstore", "daytrader", "xerces")
-EXPECTED_COUNTS = {"jpetstore": 24, "daytrader": 53, "xerces": 814}
+SUBJECTS = ("jpetstore", "daytrader", "xerces", "easymock", "jfreechart")
+EXPECTED_COUNTS = {"jpetstore": 24, "daytrader": 53, "xerces": 814, "easymock": 105, "jfreechart": 635}
 EXPECTED_INPUT_HASHES = {
     "jpetstore": "2d9007f75a14f4a4ed6152563241b898837b6c12b66a98a2464b4cc3f969a921",
     "daytrader": "da53d434b820e3c25bc69df63ced807cd0113d412fa36acc9694d1a97631d655",
     "xerces": "65488944220cc3a503994d6f2289e0f7bdc06c619351a2e8243bca243538c8a3",
+    "easymock": "026bb91388cf89b09d621ee5622a9c18bf8036d2e39d0c0547c4882c3c0a37b3",
+    "jfreechart": "5ba59fbb864012cdde375a0c7945b91c2ce9b2ec66d41a2e63ab08a7f02dcf3c",
 }
 INPUT_ROOT = ROOT / "data/semantic_text/declaration_method_body"
 OUTPUT_ROOT = ROOT / "data/embeddings/declaration_method_body"
@@ -72,7 +74,13 @@ MAX_NORM_TOLERANCE = (0.999, 1.001)
 EXPERIMENT_ID = "stage3_declaration_method_body"
 REPRESENTATION_ID = "declaration_method_body_v1"
 GRAPH_ROOT = ROOT / "data/semantic_graphs/declaration_method_body"
-EXTRACTOR_SUBJECT = {"jpetstore": "jpetstore", "daytrader": "daytrader", "xerces": "xerces-j"}
+EXTRACTOR_SUBJECT = {
+    "jpetstore": "jpetstore",
+    "daytrader": "daytrader",
+    "xerces": "xerces-j",
+    "easymock": "easymock",
+    "jfreechart": "jfreechart",
+}
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -254,7 +262,7 @@ def token_length_rows(subject: str, rows: list[dict[str, str]], tokenizer: Any) 
     return result
 
 
-def assert_empty_output(root: Path, *, canonical: bool) -> None:
+def assert_empty_output(root: Path, *, canonical: bool, subject: str | None = None) -> None:
     resolved = root.resolve()
     expected = OUTPUT_ROOT.resolve()
     if canonical and resolved != expected:
@@ -264,8 +272,13 @@ def assert_empty_output(root: Path, *, canonical: bool) -> None:
             raise ValueError("reproducibility output must be outside the repository")
         if resolved == Path("/"):
             raise ValueError("refusing to use filesystem root as temporary output")
-    if root.exists() and any(root.iterdir()):
-        raise FileExistsError(f"refusing to reuse non-empty Stage 3B embedding output: {root}")
+    # A single-subject run (--subject given) only ever writes into root/<subject>/, so the
+    # overwrite guard checks that subdirectory instead of the whole (necessarily shared,
+    # multi-subject) canonical root. A full batch run (no --subject) keeps the original
+    # whole-root guard.
+    guarded_path = (root / subject) if (canonical and subject is not None) else root
+    if guarded_path.exists() and any(guarded_path.iterdir()):
+        raise FileExistsError(f"refusing to reuse non-empty Stage 3B embedding output: {guarded_path}")
     root.mkdir(parents=True, exist_ok=True)
 
 
@@ -277,10 +290,11 @@ def generate_once(
     tokenizer: Any,
     output_root: Path,
     run_label: str,
+    subjects: tuple[str, ...] = SUBJECTS,
 ) -> dict[str, Any]:
     records: dict[str, Any] = {}
     commit = source_commit()
-    for subject in SUBJECTS:
+    for subject in subjects:
         rows = rows_by_subject[subject]
         lengths = token_length_rows(subject, rows, tokenizer)
         unexpected = [row for row in lengths if row["tokenizer_truncated"] == "true"]
@@ -764,7 +778,7 @@ def main() -> int:
     output_root = output_root if output_root.is_absolute() else ROOT / output_root
     repro_root = args.repro_output_root if args.repro_output_root.is_absolute() else ROOT / args.repro_output_root
     report_root = args.report_root if args.report_root.is_absolute() else ROOT / args.report_root
-    assert_empty_output(output_root, canonical=True)
+    assert_empty_output(output_root, canonical=True, subject=args.subject)
     assert_empty_output(repro_root, canonical=False)
     rows_by_subject = verify_frozen_inputs()
     runtime, identity, tokenizer = load_frozen_runtime()
@@ -773,8 +787,12 @@ def main() -> int:
     model.eval()
     if int(model.max_seq_length) != MAX_SEQUENCE_LENGTH:
         raise RuntimeError(f"loaded SentenceTransformer max_seq_length={model.max_seq_length}")
-    canonical = generate_once(model, rows_by_subject, runtime, identity, tokenizer, output_root, "canonical")
-    reproducibility = generate_once(model, rows_by_subject, runtime, identity, tokenizer, repro_root, "reproducibility")
+    canonical = generate_once(
+        model, rows_by_subject, runtime, identity, tokenizer, output_root, "canonical", subjects=subjects
+    )
+    reproducibility = generate_once(
+        model, rows_by_subject, runtime, identity, tokenizer, repro_root, "reproducibility", subjects=subjects
+    )
     clear_model(model)
     manifest = {
         "schema_version": 1,

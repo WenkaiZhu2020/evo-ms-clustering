@@ -46,6 +46,82 @@
         "source_commit": "6f595208e1bde1702b7a99f00410b35a225777c8"
       }
     },
+    "easymock": {
+      "compatibility_contract": {
+        "candidate_policy": "all_non_self_nodes",
+        "class_scope_digest": "9d8aa462f38035f6c736e09c723d33efd8a58d08ea4bb2359efe271e3dfa3d46",
+        "contract_version": 1,
+        "directed_selection_count_per_node": 3,
+        "duplicate_edge_policy": "forbidden",
+        "edge_serialization_precision": ".17g with numerical zero canonicalised as 0",
+        "edge_weight_rule": "true_cosine",
+        "edge_weight_threshold": null,
+        "embedding_aggregate_sha256": "97bb00790d50f863d34fc0417e4675c19bcb04ae89c292a0a8118f7dee3b93d0",
+        "experiment_name": "stage3_declaration_method_body",
+        "l2_normalize": true,
+        "model_name": "nomic-ai/nomic-embed-code",
+        "model_revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+        "pooling": "last_token",
+        "pooling_source": "pinned_model_repository",
+        "reciprocal_edge_policy": "retain_one_edge; selected_by=both when reciprocal",
+        "representation_id": "declaration_method_body_v1",
+        "self_loop_policy": "forbidden",
+        "semantic_input_aggregate_sha256": "026bb91388cf89b09d621ee5622a9c18bf8036d2e39d0c0547c4882c3c0a37b3",
+        "similarity": "true_cosine",
+        "similarity_implementation": "evo_ms.semantic.graph.true_cosine_similarity",
+        "storage_dtype": "float32",
+        "symmetrisation": "OR",
+        "tie_break": "cosine_descending_then_class_id_lexicographic_ascending",
+        "tokenizer_max_sequence_length": 32768,
+        "tokenizer_name": "nomic-ai/nomic-embed-code",
+        "tokenizer_revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+        "tokenizer_truncation": false,
+        "top_k": 3
+      },
+      "compatibility_contract_sha256": "530565be370ad4da4c66ad50077a73253a86b7d520cdaed346c43e8d89ad77cd",
+      "historical_provenance": {
+        "note": "First-time establishment for additional validation subject; no prior historical contract exists (unlike jpetstore/daytrader/xerces, which trace to an earlier Stage 3a declaration-only phase). This contract was established directly from the current Stage 3B pipeline output.",
+        "source_commit": "df04395e2c6a0555eaf6651efd25698fb7eaa280"
+      }
+    },
+    "jfreechart": {
+      "compatibility_contract": {
+        "candidate_policy": "all_non_self_nodes",
+        "class_scope_digest": "85cf05a6c9e6ab34d009e2612872b27c7283a0958be38e7a3b5ced7907399242",
+        "contract_version": 1,
+        "directed_selection_count_per_node": 3,
+        "duplicate_edge_policy": "forbidden",
+        "edge_serialization_precision": ".17g with numerical zero canonicalised as 0",
+        "edge_weight_rule": "true_cosine",
+        "edge_weight_threshold": null,
+        "embedding_aggregate_sha256": "6d308d2292ea1934844844ed1a123e4c333e12dc475990de1252dafa7f1ed5bb",
+        "experiment_name": "stage3_declaration_method_body",
+        "l2_normalize": true,
+        "model_name": "nomic-ai/nomic-embed-code",
+        "model_revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+        "pooling": "last_token",
+        "pooling_source": "pinned_model_repository",
+        "reciprocal_edge_policy": "retain_one_edge; selected_by=both when reciprocal",
+        "representation_id": "declaration_method_body_v1",
+        "self_loop_policy": "forbidden",
+        "semantic_input_aggregate_sha256": "5ba59fbb864012cdde375a0c7945b91c2ce9b2ec66d41a2e63ab08a7f02dcf3c",
+        "similarity": "true_cosine",
+        "similarity_implementation": "evo_ms.semantic.graph.true_cosine_similarity",
+        "storage_dtype": "float32",
+        "symmetrisation": "OR",
+        "tie_break": "cosine_descending_then_class_id_lexicographic_ascending",
+        "tokenizer_max_sequence_length": 32768,
+        "tokenizer_name": "nomic-ai/nomic-embed-code",
+        "tokenizer_revision": "9a0457648f060c4279d4a3982d2d27a4df6fac59",
+        "tokenizer_truncation": false,
+        "top_k": 3
+      },
+      "compatibility_contract_sha256": "c59894d4e2b905e0c078053317fa896145ca0554dd938d1df65034d12c42224a",
+      "historical_provenance": {
+        "note": "First-time establishment for additional validation subject; no prior historical contract exists (unlike jpetstore/daytrader/xerces, which trace to an earlier Stage 3a declaration-only phase). This contract was established directly from the current Stage 3B pipeline output.",
+        "source_commit": "df04395e2c6a0555eaf6651efd25698fb7eaa280"
+      }
+    },
     "jpetstore": {
       "compatibility_contract": {
         "candidate_policy": "all_non_self_nodes",

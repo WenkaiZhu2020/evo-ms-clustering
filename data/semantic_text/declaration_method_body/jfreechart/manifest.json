@@ -1,0 +1,16 @@
+{
+  "aggregate_input_sha256": "5ba59fbb864012cdde375a0c7945b91c2ce9b2ec66d41a2e63ab08a7f02dcf3c",
+  "class_count": 635,
+  "class_mapping_sha256": "85cf05a6c9e6ab34d009e2612872b27c7283a0958be38e7a3b5ced7907399242",
+  "experiment_name": "stage3_declaration_method_body",
+  "generated_at_utc": "2026-08-07T16:53:37Z",
+  "representation_id": "declaration_method_body_v1",
+  "source": {
+    "classes_dir": "/Users/zhuwenkai/Desktop/validation-subjects/jfreechart/target/classes",
+    "command": "mvn -q -f /Users/zhuwenkai/Desktop/validation-worktrees/stage3-validation/tools/soot_extractor/pom.xml exec:java -Dexec.mainClass=org.evomicro.sootextractor.SootExtractorCli '-Dexec.args=--subject jfreechart --classes-dir /Users/zhuwenkai/Desktop/validation-subjects/jfreechart/target/classes --classpath /Users/zhuwenkai/Desktop/validation-subjects/jfreechart/target/classes:/Users/zhuwenkai/.m2/repository/org/jfree/jcommon/1.0.23/jcommon-1.0.23.jar:/Users/zhuwenkai/.m2/repository/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar:/Users/zhuwenkai/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/zhuwenkai/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar --app-packages org.jfree --out-dir /private/tmp/stage3_verify/jfreechart/.extraction/jfreechart/soot --semantic-out /private/tmp/stage3_verify/jfreechart/.extraction/jfreechart/class_declarations.csv --method-body-out /private/tmp/stage3_verify/jfreechart/.extraction/jfreechart/method_bodies.csv'",
+    "project_root": "/Users/zhuwenkai/Desktop/validation-subjects/jfreechart",
+    "source_subject": "jfreechart"
+  },
+  "subject": "jfreechart",
+  "verified_against_frozen": true
+}
