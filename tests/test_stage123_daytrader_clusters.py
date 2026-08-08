@@ -30,6 +30,7 @@ from evo_ms.visualization.model import GraphvizRenderResult
 ROOT = Path(__file__).resolve().parents[1]
 ALL_FIGURES = {
     "cross_stage_partition_overview",
+    "stage1_ssa_seed_robustness",
     FIGURE_ID,
     "stage123_jpetstore_highest_lowest_clusters",
     "stage2_daytrader_partition_transition",

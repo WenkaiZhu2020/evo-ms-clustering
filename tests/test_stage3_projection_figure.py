@@ -23,6 +23,7 @@ def test_figure_registration_loads_correctly() -> None:
     config = load_visualization_config()
     assert set(config.figures) == {
         "cross_stage_partition_overview",
+        "stage1_ssa_seed_robustness",
         "stage123_daytrader_highest_lowest_clusters",
         "stage123_jpetstore_highest_lowest_clusters",
         FIGURE_ID,

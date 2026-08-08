@@ -47,6 +47,41 @@ figures:
       ordering: descending cluster size with canonical member-signature tie-break
       identity_note: segment position does not represent cluster identity across stages
 
+  stage1_ssa_seed_robustness:
+    stage: stage1
+    title: SSA-induced partition change relative to Leiden seed variation
+    destination: main_text
+    inputs:
+      - results/stage1/subjects/jpetstore/seed_robustness/seed_noise_ari.csv
+      - results/stage1/subjects/jpetstore/seed_robustness/ssa_effect_ari.csv
+      - results/stage1/subjects/jpetstore/seed_robustness/robustness_summary.csv
+      - results/stage1/subjects/jpetstore/seed_robustness/robustness_metadata.yml
+      - results/stage1/subjects/daytrader/seed_robustness/seed_noise_ari.csv
+      - results/stage1/subjects/daytrader/seed_robustness/ssa_effect_ari.csv
+      - results/stage1/subjects/daytrader/seed_robustness/robustness_summary.csv
+      - results/stage1/subjects/daytrader/seed_robustness/robustness_metadata.yml
+      - results/stage1/subjects/xerces-j/seed_robustness/seed_noise_ari.csv
+      - results/stage1/subjects/xerces-j/seed_robustness/ssa_effect_ari.csv
+      - results/stage1/subjects/xerces-j/seed_robustness/robustness_summary.csv
+      - results/stage1/subjects/xerces-j/seed_robustness/robustness_metadata.yml
+      - data/extracted/jpetstore/class_nodes.csv
+      - data/extracted/jpetstore/structural_dependencies.csv
+      - data/extracted/jpetstore/ssa_flow_edges.csv
+      - data/extracted/daytrader/class_nodes.csv
+      - data/extracted/daytrader/structural_dependencies.csv
+      - data/extracted/daytrader/ssa_flow_edges.csv
+      - data/extracted/xerces-j/class_nodes.csv
+      - data/extracted/xerces-j/structural_dependencies.csv
+      - data/extracted/xerces-j/ssa_flow_edges.csv
+    layout_profile: fixed_comparison
+    enabled: true
+    formats: [svg, pdf]
+    generator: evo_ms.visualization.figures.stage1_ssa_seed_robustness
+    metadata:
+      subjects: jpetstore, daytrader, xerces-j
+      distance: 1 - adjusted Rand index
+      interpretation: descriptive comparison with observed seed variation
+
   stage13_xerces_shared_highest_lowest_clusters:
     stage: stage3
     title: "Xerces-J cluster contribution: shared Stage 1 and Stage 3 profile"

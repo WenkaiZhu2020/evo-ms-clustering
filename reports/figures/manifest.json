@@ -213,6 +213,59 @@
       "stage": "stage3",
       "title": "Xerces-J cluster contribution: shared Stage 1 and Stage 3 profile"
     },
+    "stage1_ssa_seed_robustness": {
+      "destination": "main_text",
+      "formats": [
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-08T20:01:51Z",
+      "generator": "evo_ms.visualization.figures.stage1_ssa_seed_robustness",
+      "inputs": [
+        "data/extracted/daytrader/class_nodes.csv",
+        "data/extracted/daytrader/ssa_flow_edges.csv",
+        "data/extracted/daytrader/structural_dependencies.csv",
+        "data/extracted/jpetstore/class_nodes.csv",
+        "data/extracted/jpetstore/ssa_flow_edges.csv",
+        "data/extracted/jpetstore/structural_dependencies.csv",
+        "data/extracted/xerces-j/class_nodes.csv",
+        "data/extracted/xerces-j/ssa_flow_edges.csv",
+        "data/extracted/xerces-j/structural_dependencies.csv",
+        "results/stage1/subjects/daytrader/seed_robustness/robustness_metadata.yml",
+        "results/stage1/subjects/daytrader/seed_robustness/robustness_summary.csv",
+        "results/stage1/subjects/daytrader/seed_robustness/seed_noise_ari.csv",
+        "results/stage1/subjects/daytrader/seed_robustness/ssa_effect_ari.csv",
+        "results/stage1/subjects/jpetstore/seed_robustness/robustness_metadata.yml",
+        "results/stage1/subjects/jpetstore/seed_robustness/robustness_summary.csv",
+        "results/stage1/subjects/jpetstore/seed_robustness/seed_noise_ari.csv",
+        "results/stage1/subjects/jpetstore/seed_robustness/ssa_effect_ari.csv",
+        "results/stage1/subjects/xerces-j/seed_robustness/robustness_metadata.yml",
+        "results/stage1/subjects/xerces-j/seed_robustness/robustness_summary.csv",
+        "results/stage1/subjects/xerces-j/seed_robustness/seed_noise_ari.csv",
+        "results/stage1/subjects/xerces-j/seed_robustness/ssa_effect_ari.csv"
+      ],
+      "metadata": {
+        "distance": "1 - adjusted Rand index",
+        "interpretation": "descriptive comparison with observed seed variation",
+        "subjects": "jpetstore, daytrader, xerces-j"
+      },
+      "outputs": {
+        "data": "reports/figures/data/stage1/stage1_ssa_seed_robustness.csv",
+        "pdf": "reports/figures/pdf/stage1/stage1_ssa_seed_robustness.pdf",
+        "provenance": "reports/figures/data/stage1/stage1_ssa_seed_robustness.provenance.json",
+        "summary": "reports/figures/data/stage1/stage1_ssa_seed_robustness_summary.csv",
+        "svg": "reports/figures/preview/stage1/stage1_ssa_seed_robustness.svg"
+      },
+      "sha256": {
+        "data": "51d7974cd46a3a2339e3897f90597eba8dbc249b4b56997f74d92d0b281f390f",
+        "pdf": "18433989983b150cca14023598859a7d0aa3f46902e814028b0392d349939b95",
+        "provenance": "bd091e75583f9a272865644741a0dfa6e97f15159140a6a5b14e46c257972e2c",
+        "summary": "0295d5f9662ea520ce5b4cf5196ac720a43e957ae55b02d26c4c848cfe4659a4",
+        "svg": "5a69be256440c2f6deff0abeea3d60c3b7f5756e3949d3f5ae37d0d0cc08af17"
+      },
+      "stage": "stage1",
+      "title": "SSA-induced partition change relative to Leiden seed variation"
+    },
     "stage2_daytrader_partition_transition": {
       "destination": "main_text",
       "formats": [

@@ -29,6 +29,7 @@ from evo_ms.visualization.figures.stage123_daytrader_clusters import build_figur
 from evo_ms.visualization.figures.stage123_jpetstore_clusters import build_figure as build_jpetstore_clusters
 from evo_ms.visualization.figures.stage123_xerces_clusters import build_figure as build_xerces_clusters
 from evo_ms.visualization.figures.cross_stage_partition_overview import build_figure as build_overview
+from evo_ms.visualization.figures.stage1_ssa_seed_robustness import build_figure as build_robustness
 from evo_ms.visualization.layout import GraphvizError
 from evo_ms.visualization.model import GraphvizRenderResult
 
@@ -57,6 +58,7 @@ def test_registration_and_approved_representative() -> None:
     config = load_visualization_config()
     assert set(config.figures) == {
         "cross_stage_partition_overview",
+        "stage1_ssa_seed_robustness",
         "stage123_daytrader_highest_lowest_clusters",
         "stage123_jpetstore_highest_lowest_clusters",
         FIGURE_ID,
@@ -210,9 +212,17 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
         git_commit="abc123",
         git_dirty=True,
     )
+    build_robustness(
+        config,
+        output_root=tmp_path,
+        generated_at=FIXED_TIME,
+        git_commit="abc123",
+        git_dirty=True,
+    )
     figures = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))["figures"]
     assert set(figures) == {
         "cross_stage_partition_overview",
+        "stage1_ssa_seed_robustness",
         "stage123_daytrader_highest_lowest_clusters",
         "stage123_jpetstore_highest_lowest_clusters",
         FIGURE_ID,

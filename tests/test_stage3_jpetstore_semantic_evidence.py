@@ -37,6 +37,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXED_TIME = "2026-08-06T20:00:00Z"
 FORMAL_IDS = {
     "cross_stage_partition_overview",
+    "stage1_ssa_seed_robustness",
     "stage123_daytrader_highest_lowest_clusters",
     "stage123_jpetstore_highest_lowest_clusters",
     "stage2_daytrader_partition_transition",
