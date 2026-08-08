@@ -1,0 +1,22 @@
+subject: jfreechart
+language: java
+project_root: /Users/zhuwenkai/Desktop/validation-subjects/jfreechart
+build_tool: maven
+compile_command: mvn -Dproject.source.level=8 -Dproject.target.level=8 -DskipTests clean package
+classes_dir: target/classes
+classpath_entries:
+  - target/classes
+  - /Users/zhuwenkai/.m2/repository/org/jfree/jcommon/1.0.23/jcommon-1.0.23.jar
+  - /Users/zhuwenkai/.m2/repository/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar
+  - /Users/zhuwenkai/.m2/repository/junit/junit/4.11/junit-4.11.jar
+  - /Users/zhuwenkai/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar
+app_packages:
+  - org.jfree
+source_path: /Users/zhuwenkai/Desktop/validation-subjects/jfreechart/source
+extracted_output_path: data/extracted/jfreechart
+result_output_path: results/jfreechart
+exclude_packages: []
+# Stage 1A-DUAL smoke-test config (validation/stage1-additional-subjects worktree).
+# Locked candidate identity: JFreeChart v1.0.19 @ b3f5f21ba0fe32a8f7eccb6760a79df30628be3e
+# Application boundary = target/classes (Maven main-only output; pom.xml already excludes
+# org/jfree/chart/demo/** from the main build; tests compile to a separate target/test-classes).

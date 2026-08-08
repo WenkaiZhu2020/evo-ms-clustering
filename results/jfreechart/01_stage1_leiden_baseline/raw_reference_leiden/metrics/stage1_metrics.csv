@@ -1,0 +1,2 @@
+subject,algorithm,graph_type,cluster_count,modularity,average_cluster_size,max_cluster_size,min_cluster_size,max_cluster_ratio,singleton_ratio,internal_external_edge_ratio,internal_edge_weight_ratio
+jfreechart,leiden,raw,24,0.5207671795868134,26.458333333333332,94,1,0.14803149606299212,0.02204724409448819,1.93283955560004,0.6590335130707802

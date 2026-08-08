@@ -1,0 +1,24 @@
+subject: jfreechart
+profile_name: ssa_selected_leiden
+role: frozen_leiden_baseline_for_later_comparison
+selection_role: minimum_effective_nonzero_ssa_comparison
+selection_source: constrained_minimum_effective_ssa_calibration
+graph_type: ssa
+base_evidence_weights:
+  type_dependency: 1.0
+  method_call: 2.0
+  return_value_flow: 3.0
+  argument_passing_flow: 3.0
+ssa_lambda: 0.25
+resolution: 1.0
+seed: 42
+source_extracted_data: data/extracted/jfreechart/
+edge_table: graph/stage1_edges.csv
+edge_table_sha256: f85101260757f244b43fdd0d910015fe039ea5c27e53c05ba350b0cf9ad25600
+extracted_input_sha256:
+  class_nodes.csv: bb4b83bcca058c8af7d80e64f5ac02a0879f39615944cbba0fec229b5ac1d003
+  structural_dependencies.csv: 63784a0b502471c8b1634bb00dd633290f99f058c12229666ffc61fc739ea46d
+  ssa_flow_edges.csv: 611febeb721a710f4c4e13d02cf3e2a99a4ec528d40d92415ae9ece33183310c
+generated_at_utc: '2026-08-07T15:18:30Z'
+git_head: 0f2591e84db4861af5461e0eeb7e67bc038c2468
+git_dirty: true

@@ -1,0 +1,2 @@
+subject,algorithm,graph_type,cluster_count,modularity,average_cluster_size,max_cluster_size,min_cluster_size,max_cluster_ratio,singleton_ratio,internal_external_edge_ratio,internal_edge_weight_ratio
+easymock,leiden,raw,13,0.5963609368411896,8.076923076923077,28,1,0.26666666666666666,0.0380952380952381,3.1636363636363636,0.759825327510917

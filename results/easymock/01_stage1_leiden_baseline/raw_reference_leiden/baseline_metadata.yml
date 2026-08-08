@@ -1,0 +1,24 @@
+subject: easymock
+profile_name: raw_reference_leiden
+role: frozen_leiden_baseline_for_later_comparison
+selection_role: internal_primary_raw_structural_reference
+selection_source: constrained_minimum_effective_ssa_calibration
+graph_type: raw
+base_evidence_weights:
+  type_dependency: 1.0
+  method_call: 2.0
+  return_value_flow: 3.0
+  argument_passing_flow: 3.0
+ssa_lambda: 0.0
+resolution: 1.0
+seed: 42
+source_extracted_data: data/extracted/easymock/
+edge_table: graph/stage1_edges.csv
+edge_table_sha256: 0820d7509689b03b0f97edca1e28c1ad65f6840f5d53890ca3e45a24ec110150
+extracted_input_sha256:
+  class_nodes.csv: 539f67a7f365ab5061e60ad31894c6695175e50837a1a0b7d49903f574a684d6
+  structural_dependencies.csv: 9416e2ebb27164c3fa71ed4d0728073b9ea8d14623c13fa5c8a3e2b5dfac70ab
+  ssa_flow_edges.csv: 54b61498320a4a5cf347ea33114f0a0813a2f2cdcbe1347cb0dd5c3c6e348b06
+generated_at_utc: '2026-08-07T15:18:29Z'
+git_head: 0f2591e84db4861af5461e0eeb7e67bc038c2468
+git_dirty: true
