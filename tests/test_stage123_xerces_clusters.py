@@ -36,6 +36,7 @@ OBSOLETE_IDS = {
     "stage3_xerces_highest_lowest_clusters",
 }
 NON_XERCES_IDS = {
+    "cross_stage_partition_overview",
     "stage123_daytrader_highest_lowest_clusters",
     "stage123_jpetstore_highest_lowest_clusters",
     "stage2_daytrader_partition_transition",
@@ -70,11 +71,11 @@ def _selected(data, stage: int, role: str):
     )
 
 
-def test_exactly_seven_figures_and_two_matplotlib_xerces_registrations() -> None:
+def test_exactly_eight_figures_and_two_matplotlib_xerces_registrations() -> None:
     config = load_visualization_config()
     assert set(config.figures) == NON_XERCES_IDS | set(FIGURE_IDS.values())
     assert not OBSOLETE_IDS & set(config.figures)
-    assert len(config.figures) == 7
+    assert len(config.figures) == 8
     for figure_id in FIGURE_IDS.values():
         specification = config.figures[figure_id]
         assert specification.destination == "appendix"

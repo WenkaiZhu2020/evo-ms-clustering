@@ -35,6 +35,7 @@ def test_default_configs_load_from_repository_root() -> None:
     assert config.repository_root == ROOT
     assert config.schema_version == 1
     assert set(config.figures) == {
+        "cross_stage_partition_overview",
         "stage123_daytrader_highest_lowest_clusters",
         "stage123_jpetstore_highest_lowest_clusters",
         "stage2_daytrader_partition_transition",

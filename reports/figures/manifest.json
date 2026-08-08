@@ -1,5 +1,53 @@
 {
   "figures": {
+    "cross_stage_partition_overview": {
+      "destination": "main_text",
+      "formats": [
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-08T19:57:54Z",
+      "generator": "evo_ms.visualization.figures.cross_stage_partition_overview",
+      "inputs": [
+        "data/extracted/daytrader/class_nodes.csv",
+        "data/extracted/jpetstore/class_nodes.csv",
+        "data/extracted/xerces-j/class_nodes.csv",
+        "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+        "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
+        "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
+        "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv",
+        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json",
+        "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv",
+        "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+      ],
+      "metadata": {
+        "identity_note": "segment position does not represent cluster identity across stages",
+        "ordering": "descending cluster size with canonical member-signature tie-break",
+        "subjects": "jpetstore, daytrader, xerces-j"
+      },
+      "outputs": {
+        "data": "reports/figures/data/cross_stage/cross_stage_partition_overview.csv",
+        "pdf": "reports/figures/pdf/cross_stage/cross_stage_partition_overview.pdf",
+        "provenance": "reports/figures/data/cross_stage/cross_stage_partition_overview.provenance.json",
+        "similarity": "reports/figures/data/cross_stage/cross_stage_partition_similarity.csv",
+        "svg": "reports/figures/preview/cross_stage/cross_stage_partition_overview.svg"
+      },
+      "sha256": {
+        "data": "c19a7bbc967c7deb187b873d9fa14241f7a741402d97e0c344fe8fbe299e5a4b",
+        "pdf": "7f4537bea2c5447138c9b131026893c9121edb640f07adc5673a7c4efca35fb5",
+        "provenance": "197e593de6022c895d95979657ec17aa38af041dd3131b355ae930adac5ac16a",
+        "similarity": "0ccb1c318c59f86d1384ec1af1751e272103680c4ead2017e0c2d4d680e62d85",
+        "svg": "0e9e0e3808779ff1842ffe78d650f03937dc41c5de23e4b69d43cbc65f69dff1"
+      },
+      "stage": "stage3",
+      "title": "Cross-stage partition profiles for the three primary subjects"
+    },
     "stage123_daytrader_highest_lowest_clusters": {
       "destination": "main_text",
       "formats": [

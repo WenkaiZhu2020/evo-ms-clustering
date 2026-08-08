@@ -79,6 +79,8 @@ def _build_registered_figure(figure_id: str) -> int:
         "stage2_xerces_highest_lowest_clusters",
     }:
         from evo_ms.visualization.figures.stage123_xerces_clusters import build_figure
+    elif figure_id == "cross_stage_partition_overview":
+        from evo_ms.visualization.figures.cross_stage_partition_overview import build_figure
     else:
         raise ValueError(f"no implemented generator for figure: {figure_id}")
 
