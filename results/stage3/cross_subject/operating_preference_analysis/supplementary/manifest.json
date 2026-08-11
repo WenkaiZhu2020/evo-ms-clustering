@@ -1,0 +1,851 @@
+{
+  "analysis": "supplementary_stage2_stage3_operating_preference_validation",
+  "analysis_script": "experiments/05_stage3_declaration_method_body/build_supplementary_operating_preference_analysis.py",
+  "analysis_script_sha256": "c28817f77b4c99c880c2859b0a9d60b131e69013c5531f4f96549f2017db693e",
+  "analysis_version": "supplementary-operating-preference-analysis-v1",
+  "class_counts": {
+    "easymock": 105,
+    "jfreechart": 635
+  },
+  "output_files": [
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/supplementary/01_supplementary_selected_profiles_per_run.csv",
+      "sha256": "2f6f0be01c58c3566dde6da82c6420638a935a98e0a92c380762d8daf65a0241",
+      "size_bytes": 79917
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/supplementary/02_supplementary_profile_summary.csv",
+      "sha256": "936c8ac2e1a2101be451c9d8e6876bcf399f305c3ad8dda3dbc2c802fec96ac0",
+      "size_bytes": 7130
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/supplementary/03_supplementary_preference_deltas.csv",
+      "sha256": "25a33ab466bf0e18c93ec0b0074c8aa875d10b1cf47d78d1626383068ce87e31",
+      "size_bytes": 8522
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/supplementary/04_supplementary_band_summary.csv",
+      "sha256": "4c6f8b483ed35eaf98a1fdb29f21de73570d344920ecb7fe4361c2be4ef84d36",
+      "size_bytes": 286
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/supplementary/05_five_subject_band_summary.csv",
+      "sha256": "d376e33966dea66f2597eb6e17fe719b35422c0e11d56bfc2a737e80d3084340",
+      "size_bytes": 276
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/supplementary/06_supplementary_mechanism_summary.csv",
+      "sha256": "00c3722ff3188672ae3db3f80991dd13dcd83ee145c45b50e78563c4314e070b",
+      "size_bytes": 945
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/supplementary/07_stage2_front_fsemantic_validation.csv",
+      "sha256": "9b7ea42533992911ab08b745c7bfb999691ed96400b8025252ecbb26a388c19c",
+      "size_bytes": 2025
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/supplementary/08_validation_report.md",
+      "sha256": "fb745c759455148f546023be68f0ce73f42cbbf0cbbffea5b55c466f9b022faa",
+      "size_bytes": 5413
+    }
+  ],
+  "primary_selector_script": "experiments/05_stage3_declaration_method_body/build_operating_preference_analysis.py",
+  "primary_selector_script_sha256": "c89c1a2caf1e0777becaf0a1d4359f78d9cea71a988cbd6af03cae51a9415158",
+  "profile_row_count": 200,
+  "profiles": [
+    "MODULARITY_ANCHOR",
+    "BALANCE",
+    "COUPLING",
+    "COHESION",
+    "SEMANTIC"
+  ],
+  "safety": {
+    "cross_stage_pairing": false,
+    "embedding_regenerated": false,
+    "inferential_tests": false,
+    "optimizer_rerun": false,
+    "pareto_front_regenerated": false,
+    "projected_front_regenerated": false,
+    "runtime_selection_modified": false,
+    "semantic_graph_regenerated": false,
+    "writes_confined_to": "results/stage3/cross_subject/operating_preference_analysis/supplementary"
+  },
+  "source_artifacts": [
+    {
+      "path": "data/extracted/easymock/class_nodes.csv",
+      "sha256": "539f67a7f365ab5061e60ad31894c6695175e50837a1a0b7d49903f574a684d6",
+      "size_bytes": 22706
+    },
+    {
+      "path": "data/extracted/easymock/structural_dependencies.csv",
+      "sha256": "9416e2ebb27164c3fa71ed4d0728073b9ea8d14623c13fa5c8a3e2b5dfac70ab",
+      "size_bytes": 210016
+    },
+    {
+      "path": "data/extracted/jfreechart/class_nodes.csv",
+      "sha256": "bb4b83bcca058c8af7d80e64f5ac02a0879f39615944cbba0fec229b5ac1d003",
+      "size_bytes": 140472
+    },
+    {
+      "path": "data/extracted/jfreechart/structural_dependencies.csv",
+      "sha256": "63784a0b502471c8b1634bb00dd633290f99f058c12229666ffc61fc739ea46d",
+      "size_bytes": 5596845
+    },
+    {
+      "path": "data/semantic_graphs/declaration_method_body/easymock/semantic_edges.csv",
+      "sha256": "6ce1798212e7986a93b17048c06c7a9843eda2a7ee5b9114ac7cb17fdfe2789c",
+      "size_bytes": 21220
+    },
+    {
+      "path": "data/semantic_graphs/declaration_method_body/jfreechart/semantic_edges.csv",
+      "sha256": "71f313aed6ee2a324f6d2a6ddb383e868bdc6073160cecb3a0dc790ffc50b737",
+      "size_bytes": 140322
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_00/pareto_front.csv",
+      "sha256": "7095271b4b0bbad61682f58577b379d451cec0fa911859366f9338485c352e0b",
+      "size_bytes": 55516
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_00/pareto_labels.csv.xz",
+      "sha256": "7dba13664093746b143ab35565a440a8a52223d22e52ba24157f61da66948acb",
+      "size_bytes": 17396
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_00/run_metrics.json",
+      "sha256": "f14b1d49b9116d0a8ea0c906f7cf52395af8a7087d6ed4f99bd71c709d63fdcc",
+      "size_bytes": 1959
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_01/pareto_front.csv",
+      "sha256": "d14b138e2f89e8dff9847d3a2acfec364fbb95a7f5b285ad40576f75d3b8f945",
+      "size_bytes": 55546
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_01/pareto_labels.csv.xz",
+      "sha256": "d4a22bd7026bbf7bcd9577701943bd54132dae7c77978eb5a6683a898ec72fff",
+      "size_bytes": 17760
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_01/run_metrics.json",
+      "sha256": "16380125105f572867ad03a08b5b5fa09ecfe2eb870d076d97b3305006cdbeba",
+      "size_bytes": 1961
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_02/pareto_front.csv",
+      "sha256": "4ec31812a42d647a3e52e9c73af88885f1f54e3d49d505bb799bfea889d963f8",
+      "size_bytes": 55728
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_02/pareto_labels.csv.xz",
+      "sha256": "992c71b4882b6e4dba2877f5c84e625fd0125f2e199d4ae3ce9117014adeebd7",
+      "size_bytes": 19188
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_02/run_metrics.json",
+      "sha256": "86a7f840a5504c2d0323b97d581558951ba8a18fb060ea9378f0f08bfb1a5ba8",
+      "size_bytes": 1960
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_03/pareto_front.csv",
+      "sha256": "34404a09ecdcca3d5c87ec7dd4315e7d405b030487996971ca0c7a413090fd53",
+      "size_bytes": 55544
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_03/pareto_labels.csv.xz",
+      "sha256": "dc411f1eb50d4ebdfc763d9d7f2abc116346945c53acd60f68b206fb704ac6ae",
+      "size_bytes": 17636
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_03/run_metrics.json",
+      "sha256": "6370562bf032c93f4cd7845107a702383f03b5ad9fc93e3b36d6fe9f70778ed8",
+      "size_bytes": 1943
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_04/pareto_front.csv",
+      "sha256": "c24c7553038ddec6f4efce4f4b1fcf2abec94de6a598933f4d06b2ec3ff8a4be",
+      "size_bytes": 54993
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_04/pareto_labels.csv.xz",
+      "sha256": "a422704a23594b864cef1d4d64f873951c00fafaff330b487d229f02d401a09e",
+      "size_bytes": 17832
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_04/run_metrics.json",
+      "sha256": "aed4fabef357fabed05ab48dd4285fe5ea7238cd89b54ec8ab5ef0ff3067c777",
+      "size_bytes": 1977
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_05/pareto_front.csv",
+      "sha256": "2302ed6d1e43de55e02ac2f381ccc8085f15c7027048cb9a4243e84a0df7b148",
+      "size_bytes": 55160
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_05/pareto_labels.csv.xz",
+      "sha256": "d7d5080e49baabbf0c3b2fdf9f17597aedfbb55e779bd1a55755c763ae2ef19d",
+      "size_bytes": 17204
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_05/run_metrics.json",
+      "sha256": "b8b090046964607d2f74c9a3116f03a6ef0db5c83a3ab1537e881ad07d15d779",
+      "size_bytes": 1962
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_06/pareto_front.csv",
+      "sha256": "c06471a924ee35e444d349a96cea52d7793278222e994faddcc4fdcd50b70917",
+      "size_bytes": 55281
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_06/pareto_labels.csv.xz",
+      "sha256": "063e9a3a9f20e00cf5c0a9edab90bb5fe08f582fb1977b27cd694a4aede1c6e1",
+      "size_bytes": 16676
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_06/run_metrics.json",
+      "sha256": "c37efb3448e8a021e8ad1e7613d0834a6316ad384a8580ada04e877ab3058032",
+      "size_bytes": 1959
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_07/pareto_front.csv",
+      "sha256": "59ad69f0cfb7bacc6f604852e4701805a69a594b804a8405cf0c61b021d7b1f7",
+      "size_bytes": 55465
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_07/pareto_labels.csv.xz",
+      "sha256": "4f085224c20246a141c3ac08cefe96bf159aff179e4a5ff479b003ca1a88828c",
+      "size_bytes": 17468
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_07/run_metrics.json",
+      "sha256": "3a86b947dc9ae0b2ee7659b49255ca6374968ee791e4d50582e947c869e060a8",
+      "size_bytes": 1976
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_08/pareto_front.csv",
+      "sha256": "042001b9a1530a242bd28ca4183607af6a73754186b3182f2fe82d66b919f8e4",
+      "size_bytes": 55198
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_08/pareto_labels.csv.xz",
+      "sha256": "23c15ff79a388bd517b048e460966342a8045d77eef0cafc87e3fe45c2df0f97",
+      "size_bytes": 18304
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_08/run_metrics.json",
+      "sha256": "fcbd71d197cd27753ffea473a562b0fcfa7b72dfc4cbfda00fe9a6e08d201fd2",
+      "size_bytes": 1961
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_09/pareto_front.csv",
+      "sha256": "4b93b5fa47c443076dba5afdc1aded50c6bce307db5e2176750882735a67eed6",
+      "size_bytes": 55095
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_09/pareto_labels.csv.xz",
+      "sha256": "28cbd84e3f61b9e4d29e06b2cedb747623f2e1610854d060f87df83962aea8a8",
+      "size_bytes": 17320
+    },
+    {
+      "path": "results/easymock/03_stage2_nsga/robustness/seed_09/run_metrics.json",
+      "sha256": "37c2b05f10ba1efc7fdb45a1072710e53e271d09c805636a03021c6bbba0f8f6",
+      "size_bytes": 1976
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_00/pareto_front.csv",
+      "sha256": "d767928efccaf2ecae5e4186cd9644a8c3419f9ce46cf5be6ba48f4162a7ac11",
+      "size_bytes": 229792
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_00/pareto_labels.csv.xz",
+      "sha256": "1b188331e31f79b32745e0e8c5bb04ad9ea2a23315478b3ee9b38aef1b88bcb2",
+      "size_bytes": 104812
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_00/run_metrics.json",
+      "sha256": "6a883a8078b84fb68ddb6c9639b568a54ef9d08720d6998460546788fd94597b",
+      "size_bytes": 1979
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_01/pareto_front.csv",
+      "sha256": "093adb165f63b208434d8be97487406251321472986bf019a32ec209980988f1",
+      "size_bytes": 227921
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_01/pareto_labels.csv.xz",
+      "sha256": "b54d051f05747b5f19579430822f87613ab0e33f05bc9b227672a496881fb1c1",
+      "size_bytes": 111640
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_01/run_metrics.json",
+      "sha256": "f8cf87dac9a25c1a59d2923e1c7e34b3d53977a3077e33d76f08ad7afc1bf7c3",
+      "size_bytes": 1981
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_02/pareto_front.csv",
+      "sha256": "cae5289615a3f5457e5b35204c98ab58e659a37282c06f59660d1113a6a50e01",
+      "size_bytes": 225227
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_02/pareto_labels.csv.xz",
+      "sha256": "c5fae2c3aa5325ab12cd759ca202ce9b448075b7ecd41e234c3b47e89f7ae81c",
+      "size_bytes": 105816
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_02/run_metrics.json",
+      "sha256": "bd5121e024661ab46184dc259c55b47f62640f14f72a504913047acb731263d1",
+      "size_bytes": 1966
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_03/pareto_front.csv",
+      "sha256": "d7fe14cb2ac1a27d0f91333ffc82fc198892751f344988ea374cd3d0a6c6ad26",
+      "size_bytes": 225300
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_03/pareto_labels.csv.xz",
+      "sha256": "24fcbdbb11cab64fdb063dd6b4fdb1971c1ad1acd037f3e2e982355b536e00c4",
+      "size_bytes": 107940
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_03/run_metrics.json",
+      "sha256": "5f6e7dfd40e76238a12d493126a2ee6259523cc8dd50ba316d15a8b8c4ebd187",
+      "size_bytes": 1978
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_04/pareto_front.csv",
+      "sha256": "a04cd7c6fa285f18b3dd14a3d33a0e2277e41ce19a9df52d206ef8ccb16c1dd4",
+      "size_bytes": 230448
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_04/pareto_labels.csv.xz",
+      "sha256": "f5d28bcbaa8c439fc21b773178e136d1c4e784ca0b1b7c58b696f119ea1aad83",
+      "size_bytes": 110320
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_04/run_metrics.json",
+      "sha256": "5dc5a7cd866e525ae6ad74d0d3a2244b4b72a8e8996348df78c279147bfee857",
+      "size_bytes": 1979
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_05/pareto_front.csv",
+      "sha256": "2880bb682efa79b706379e9cf49ec0b99ced7d40331b18b650b039a81d8c6fb5",
+      "size_bytes": 226305
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_05/pareto_labels.csv.xz",
+      "sha256": "ac063fbfb4081597c6af11b6ddf2afdfddb2ae7735ca4c61ad869846ef8dde5e",
+      "size_bytes": 110448
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_05/run_metrics.json",
+      "sha256": "a6b8b301bac78bd152ec0e7f7404e2b8cc2c969232ff40008f304a6a5a921029",
+      "size_bytes": 1975
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_06/pareto_front.csv",
+      "sha256": "a3ba0a07aa03ffbd47dba44f8bfa1f3dfd3f338167d8e420ea42cd39455fb3fc",
+      "size_bytes": 228044
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_06/pareto_labels.csv.xz",
+      "sha256": "63566c5f2eff1a097dc72b55ebb3b2ac3f4104f1d43340d657f8908d7b72281b",
+      "size_bytes": 105420
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_06/run_metrics.json",
+      "sha256": "313b13c95d8ca0d33a4e5ecda90102fd1875489b2094200b9d35f0d60dd827b6",
+      "size_bytes": 1969
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_07/pareto_front.csv",
+      "sha256": "8bba516388613dd7679f16e586c0fdf0f444a3dc5c4fffc8c842c5ef5574b2d5",
+      "size_bytes": 230576
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_07/pareto_labels.csv.xz",
+      "sha256": "c8254b6021b4397f207712fc3c0654a4c54fa87456c8829579df4ffb50b72959",
+      "size_bytes": 113012
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_07/run_metrics.json",
+      "sha256": "0d80e9c0c7b595c30c8aa8dbece566f89346b00b3fd5f6b76e13e1202e8b52c2",
+      "size_bytes": 1966
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_08/pareto_front.csv",
+      "sha256": "3dc5078c68df93138010fb5b6c38ae4803babcb2b27a1681e047f3327df836cd",
+      "size_bytes": 228941
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_08/pareto_labels.csv.xz",
+      "sha256": "fdaf87d70a5eaf8e11d1e088fbe9969217f1d8f571547e36f61582d01141d5a7",
+      "size_bytes": 112540
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_08/run_metrics.json",
+      "sha256": "082fddae864318ead9e1bc4f881c0e142856e41a1fed507acf076ba42eba8dac",
+      "size_bytes": 1982
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_09/pareto_front.csv",
+      "sha256": "ba073aaa76202d1cad216191f7be2c0fc72bc9a9fee89f4d3dd71553f196f94f",
+      "size_bytes": 231169
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_09/pareto_labels.csv.xz",
+      "sha256": "cf6ae483bfdad5264aeb79541e4d54eebc4a98b56e9203739fd40db3abaad6cc",
+      "size_bytes": 122924
+    },
+    {
+      "path": "results/jfreechart/03_stage2_nsga/robustness/seed_09/run_metrics.json",
+      "sha256": "01f3127fb1a27de19ace16de5decaac64cfb813e12839ef9b018d3e49b2683d7",
+      "size_bytes": 1964
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_01/pareto_front_4d.csv",
+      "sha256": "ee6fdae38b9abde8c8a64eb0c4fd2599d6b26310c79ff39ef90c5f0b523e461e",
+      "size_bytes": 55190
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_01/partition_labels.csv",
+      "sha256": "66290ce45284b1bf6f1b1625f1529d8458c95fb6ecc59ad18be8fefbb0febc71",
+      "size_bytes": 1120676
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_01/projected_front_3d.csv",
+      "sha256": "5cacbec2789bf44d30772ce5e6d1f874f6ac43a523e03009026f61ad462a79bd",
+      "size_bytes": 41370
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_01/selected_solution.json",
+      "sha256": "36a54254486d489e619356e5397899a99925b5ad2dee115a115b184a4449c09a",
+      "size_bytes": 19358
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_02/pareto_front_4d.csv",
+      "sha256": "f0712321930bcbf03022e902fbfd21578eb481a52b66413cc767f4441b60566c",
+      "size_bytes": 55054
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_02/partition_labels.csv",
+      "sha256": "bf37bc4ef5badb065b66160ef787257842ec53a5547c4057b9b0b296190ce9c7",
+      "size_bytes": 1120570
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_02/projected_front_3d.csv",
+      "sha256": "5ee3ed37e4973f725709959bc266d2567c574737729d022e1c3471aea7f182f9",
+      "size_bytes": 41852
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_02/selected_solution.json",
+      "sha256": "7a7f17dadcd228cc61ed5e701bbaf03a67bc4a17f4f3379a6600eab57f5fe8b2",
+      "size_bytes": 19385
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_03/pareto_front_4d.csv",
+      "sha256": "b9cd25000613e1a6f79276ce008a29ee7c3866a1045711334c2d65656e859a71",
+      "size_bytes": 55479
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_03/partition_labels.csv",
+      "sha256": "d4207dafb953674ac66d3ff18a1cdb28c6e1ec01bf125dfacfb4fa1f963a649d",
+      "size_bytes": 1120942
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_03/projected_front_3d.csv",
+      "sha256": "8a3e183111d39e82806f28856ea06b9d3f1027235396bc2c380bcd5799983501",
+      "size_bytes": 41148
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_03/selected_solution.json",
+      "sha256": "f55f084ad4f3a3c49dcaf95f4f58df0bab0b9a8ff9197da38461092cc91b8fc2",
+      "size_bytes": 19374
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_04/pareto_front_4d.csv",
+      "sha256": "739d6b14e294b64ca6f174b9406dc834d2d2c60aaedd56f3cfced7433f3ac690",
+      "size_bytes": 54989
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_04/partition_labels.csv",
+      "sha256": "1f9ad6bcaeaa695d838b0038238666bc139f4352a0d791664ae4d1551b54fc3c",
+      "size_bytes": 1120506
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_04/projected_front_3d.csv",
+      "sha256": "22ea3fc1322ffc98aecd3f6868ab853bb00db048c3b4948f0bc0dd4bd9374e45",
+      "size_bytes": 39645
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_04/selected_solution.json",
+      "sha256": "ceaac0a55ea3b5f4583782e62ad12457cb2257989a0897b99fceefeafc933207",
+      "size_bytes": 19337
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_05/pareto_front_4d.csv",
+      "sha256": "b40a5266484fdbc13970e2b15fb155e2f7025b2753407120380245e30d2fb276",
+      "size_bytes": 55316
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_05/partition_labels.csv",
+      "sha256": "d310dc5166d68693981e09fc1e13e1585ff6e439ff74ef90a19dfa47b3fd029d",
+      "size_bytes": 1120911
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_05/projected_front_3d.csv",
+      "sha256": "0d269674b4fc75bd8ade12de1cd72d4eb18ef713b5865e3f8f3bc348a7c296b4",
+      "size_bytes": 42099
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_05/selected_solution.json",
+      "sha256": "37073f07f63a76888c208003ac2b4e299d9dba0d82fee1fa79dbf92a507c2464",
+      "size_bytes": 19373
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_06/pareto_front_4d.csv",
+      "sha256": "572d195756a487ffd74fb2e64dfc0a83320fc6e1ad34a19a06c5d9d33f926ff7",
+      "size_bytes": 55147
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_06/partition_labels.csv",
+      "sha256": "5baaa14fe2194b31fab35240b158e13f9d518752f94ea03306af90f29fca3d82",
+      "size_bytes": 1120672
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_06/projected_front_3d.csv",
+      "sha256": "65ff229dd61a1e431e71ba33ba5276ce6e4362a19187eddaac2588c2e3197ada",
+      "size_bytes": 36565
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_06/selected_solution.json",
+      "sha256": "06926e04de5ac1f62eb3941414fa2c5e7a2620a443b2ee5c56341535c4e54321",
+      "size_bytes": 19352
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_07/pareto_front_4d.csv",
+      "sha256": "087550fe758b29506951d0cb60fe08431a1227e977679ef71324a2b57539973f",
+      "size_bytes": 55081
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_07/partition_labels.csv",
+      "sha256": "7a3a6d40bbea4529022bb643d309a43dc0f7b0d175d44baf137ba44f962edad3",
+      "size_bytes": 1120618
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_07/projected_front_3d.csv",
+      "sha256": "1494c780fbbaa16377b5076d0a035bfe440da7655d269ed444d916179ad3107b",
+      "size_bytes": 38074
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_07/selected_solution.json",
+      "sha256": "81df5c0a0789686d772185c214d6085f239fbb169ae6857a72575a759a3b2505",
+      "size_bytes": 19378
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_08/pareto_front_4d.csv",
+      "sha256": "adc50baf08a6963f2ac744e7e46ef36e9aa7f25248295dbbd1419b5bf14dec92",
+      "size_bytes": 55158
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_08/partition_labels.csv",
+      "sha256": "2e3b92aa5672c19a55300f60fcea805ccb4b42de8c2c9c459aea63d9806d5219",
+      "size_bytes": 1120675
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_08/projected_front_3d.csv",
+      "sha256": "4ff0dac43f6c1d0491da91b813deb13fbe4f627b4deb79c2df2a9a2d0804d997",
+      "size_bytes": 36027
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_08/selected_solution.json",
+      "sha256": "83f7b48d4c7c59d431aee23a7eed52979bacfa05b835c01e91ca791c8e66eaed",
+      "size_bytes": 19318
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_09/pareto_front_4d.csv",
+      "sha256": "1aadadcd5d86a5bd3cda10390ccd07006e75553e3409c097581d8f8ab0764ce4",
+      "size_bytes": 55216
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_09/partition_labels.csv",
+      "sha256": "c6023dc7cfefb7f8202ea8f431a498d9922ec41d5428eb7310433164d3519f86",
+      "size_bytes": 1120718
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_09/projected_front_3d.csv",
+      "sha256": "ce741af3ef821ccbacbe43d9976f89252e2bf2f4863321de19cf234a413d23dd",
+      "size_bytes": 41342
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_09/selected_solution.json",
+      "sha256": "bff666aee98d6849fee3ffef921ad1250aed7e18bc145a78bf6f571188a601c6",
+      "size_bytes": 19302
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_10/pareto_front_4d.csv",
+      "sha256": "3223e3649a5ea98a9e24202bafb23bfe204c76d3b2fa43d518f6d0c9e935756a",
+      "size_bytes": 55232
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_10/partition_labels.csv",
+      "sha256": "6a923dcd5ec9631704bcc0ca0d7bdcb307ffff42a524d6b9f47ee098d5e6cade",
+      "size_bytes": 1141530
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_10/projected_front_3d.csv",
+      "sha256": "02efc661790b6a19b9057f28c4977dc80a816e76fc0dd06c65b899964720263a",
+      "size_bytes": 44799
+    },
+    {
+      "path": "results/stage3/subjects/easymock/declaration_method_body/formal/seed_10/selected_solution.json",
+      "sha256": "5d3a7bab75c8f1aefa7baa9db13b4d6ac5ff0d95d19842d289c44ec53e69e6f0",
+      "size_bytes": 19390
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_01/pareto_front_4d.csv",
+      "sha256": "361738ab18d34eb7e231b9d7ba9822c4ce3f4e9f6afbe3cfe27d9230fe32dc82",
+      "size_bytes": 228102
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_01/partition_labels.csv",
+      "sha256": "cc5d232ac0b2cd75965a5e9b317d03fac2e3be917b09d7635fdc308e9d0736dd",
+      "size_bytes": 7255815
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_01/projected_front_3d.csv",
+      "sha256": "5b3864e7322e7194ee230e6390498faa05d48096c5267b14a0bf46dd3f1b5d4f",
+      "size_bytes": 185716
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_01/selected_solution.json",
+      "sha256": "fe5e3ca84950d0782a60eff13789205991312bd13932c65fae78870666eebe13",
+      "size_bytes": 108415
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_02/pareto_front_4d.csv",
+      "sha256": "cbbf1e6fba8af7b2febcb6d3b93334353d0b916ade035c3e5cda9ba890ff0ca2",
+      "size_bytes": 230546
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_02/partition_labels.csv",
+      "sha256": "59c843c1f2e31a985b1de5958e9fac6e3cf7a715b74ce18b5abb38b014d8dc65",
+      "size_bytes": 7258136
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_02/projected_front_3d.csv",
+      "sha256": "ae606d4fde178c8dc67e8339570017803deee85b3ab25e7a98e2e5456a604cb5",
+      "size_bytes": 196095
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_02/selected_solution.json",
+      "sha256": "44a06e442e04a84cc51c9402967c5196177a3b4b1acb89f02396ce57b5dcebae",
+      "size_bytes": 108391
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_03/pareto_front_4d.csv",
+      "sha256": "457ef20b8b0f17cecf01704a0e866e73d24cc377ee950ac8ac7b57799fa04264",
+      "size_bytes": 227713
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_03/partition_labels.csv",
+      "sha256": "3d0c9656ae5af7078d06f6a7d336b72c6fc03137b1ec43ddc7c13435b013bee7",
+      "size_bytes": 7255434
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_03/projected_front_3d.csv",
+      "sha256": "146f36ce8b6e143e6eb39cf8d593f03e0af47f2e39ad165a34aec5e30ae695f7",
+      "size_bytes": 183944
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_03/selected_solution.json",
+      "sha256": "c9a18e3f90224efae0a21e17ca2e9da0166b8f6fad9e4b1875d3f3eb25a43295",
+      "size_bytes": 108288
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_04/pareto_front_4d.csv",
+      "sha256": "523f70ba2eec21c37ae96aa4d615574ca5c698df7972394d37b6c76cc1342843",
+      "size_bytes": 228043
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_04/partition_labels.csv",
+      "sha256": "98ba20bdce18c95b2489d3afba5a0234f6064f891fbaf40ab6bf4d81002fb8a5",
+      "size_bytes": 7255740
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_04/projected_front_3d.csv",
+      "sha256": "d77ad126288674bb8d4d05b14ceb098f6258d393853895b92bb2a6e088d0cf29",
+      "size_bytes": 195557
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_04/selected_solution.json",
+      "sha256": "b946fcbca9181ee043d2fe1ae2c459ddf375f00c2ffa3d86f1361912bc4ba231",
+      "size_bytes": 108400
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_05/pareto_front_4d.csv",
+      "sha256": "ce7a92798d0623e49b8fdc0e58c7bbc7070baca8f45024b88ec5bb62dc8d15a8",
+      "size_bytes": 225472
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_05/partition_labels.csv",
+      "sha256": "92ca9168a4e96935341eb0b92926b069d4a740acfa5637329761772b3d8d13da",
+      "size_bytes": 7253182
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_05/projected_front_3d.csv",
+      "sha256": "fb38484d6ad62f91b958ffc92194da5f74055a171a722a66378b4ea3a64ee337",
+      "size_bytes": 191400
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_05/selected_solution.json",
+      "sha256": "8744fad06c80c0c4775eb00148f65257477c9b53ead07ea328da0375ac11ea85",
+      "size_bytes": 108383
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_06/pareto_front_4d.csv",
+      "sha256": "f87afbb76422b172f04544cd5c1f70162783b47f230be2a400c7aafbf3b92b5b",
+      "size_bytes": 229089
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_06/partition_labels.csv",
+      "sha256": "ccbf3de9078242f74abed210dd61ab03696b3af4d06b6af4b99eb45a5d2df541",
+      "size_bytes": 7256734
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_06/projected_front_3d.csv",
+      "sha256": "0015497829f362feb4abca7d398e9b8e98d24c213009af58f807e2568c79a69a",
+      "size_bytes": 182827
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_06/selected_solution.json",
+      "sha256": "1ac0bf0a63010fb07240333c263b9e95c8f113db4adf7a2846ed0b41c39d23b9",
+      "size_bytes": 108385
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_07/pareto_front_4d.csv",
+      "sha256": "8565f5dc6c8886104a78519c8bbec758500bb17afc9658363b3f44870a5db699",
+      "size_bytes": 225448
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_07/partition_labels.csv",
+      "sha256": "38bdf158cd987a944671d985b56b55fc562d3d6650c61911afd716afed5db4f7",
+      "size_bytes": 7253079
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_07/projected_front_3d.csv",
+      "sha256": "95cf1382fc5f60c5e5ac54be893dd6f1b81c5e5bcc76c84ad80920210a393e6c",
+      "size_bytes": 190588
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_07/selected_solution.json",
+      "sha256": "b5d4b044de3fb176d4d1f257d754e77ad5156d60382cf1e697317ba78f18c0ec",
+      "size_bytes": 108219
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_08/pareto_front_4d.csv",
+      "sha256": "9083f00e2a443168f94190c6c70f3a27aa681b6bc592856962a3248851983817",
+      "size_bytes": 226696
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_08/partition_labels.csv",
+      "sha256": "100b3acb807333c4f54c49e90da3492163306390db857fc07035f1de145b2320",
+      "size_bytes": 7254314
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_08/projected_front_3d.csv",
+      "sha256": "9c311652f33d1284a77726fee0bba74e4cf5795d3c23e08ef9b90a3c48d3019a",
+      "size_bytes": 180064
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_08/selected_solution.json",
+      "sha256": "04a72db43cff937ab678b69f4bfa70efca52630696558412d4789fdddd55926b",
+      "size_bytes": 108391
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_09/pareto_front_4d.csv",
+      "sha256": "1766b782b4ef42569867acf561625cd36f5595a240bcd23e8d6fa4c8f544f305",
+      "size_bytes": 229210
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_09/partition_labels.csv",
+      "sha256": "bf95f48632f1ee383e0f19cc0cfa21313a1638764781c8752881ddd76aba3f25",
+      "size_bytes": 7256959
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_09/projected_front_3d.csv",
+      "sha256": "fc0d88d0a899f6806d4499e505d77f6fed1d8e5f8a9bb11e65a558e9c61d1b1e",
+      "size_bytes": 201096
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_09/selected_solution.json",
+      "sha256": "b57b2505969d58f2dbefb59519658f3574dba2a5d58188db2c638fcc5fcd5ee1",
+      "size_bytes": 108427
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_10/pareto_front_4d.csv",
+      "sha256": "4747e309977b132b5fed85e88a2fefad2cc9ed4a130a30abd0053961baba8837",
+      "size_bytes": 228956
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_10/partition_labels.csv",
+      "sha256": "9864911828bc682c9c8ee434d98faef614f5c146d000c4162227e10a22081533",
+      "size_bytes": 7383420
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_10/projected_front_3d.csv",
+      "sha256": "4df700f1de4e6db587c1b856209cec7a56376178b42b43d6a7ca7ba3d0ad62ec",
+      "size_bytes": 205509
+    },
+    {
+      "path": "results/stage3/subjects/jfreechart/declaration_method_body/formal/seed_10/selected_solution.json",
+      "sha256": "afa29eddf26c9cc72cd5adac26fbc044d8dc730ceede9d03851b3556621355c1",
+      "size_bytes": 108416
+    }
+  ],
+  "source_branch": "codex/stage3-supplementary-preference",
+  "source_head": "6222ebf463c0e0460f5b08996ef46f01abc5c8cb",
+  "stage_seeds": {
+    "stage2": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "stage3": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "status": "SUPPLEMENTARY_DESCRIPTIVE_ONLY",
+  "subjects": [
+    "easymock",
+    "jfreechart"
+  ],
+  "validation_gates": {
+    "all_selected_feasible": true,
+    "all_selected_in_source_front": true,
+    "easy_mock_rows_100": true,
+    "jfreechart_rows_100": true,
+    "no_inferential_outputs": true,
+    "p1_p4_inside_5pct_band": true,
+    "profile_rows_200": true,
+    "selectors_deterministic": true,
+    "stage2_stage3_seed_sets_not_paired": true,
+    "stage2_structural_crosschecks_20": true,
+    "stage3_posthoc_crosschecks_20": true
+  }
+}

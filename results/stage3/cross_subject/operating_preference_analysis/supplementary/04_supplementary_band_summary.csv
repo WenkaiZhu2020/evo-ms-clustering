@@ -1,0 +1,5 @@
+subject,stage,n_runs,median_band_size,q1_band_size,q3_band_size,iqr_band_size,min_band_size,max_band_size,band_size_one_count
+easymock,stage2,10,4.5,3.25,5,1.75,2,7,0
+easymock,stage3,10,3,2.25,4,1.75,1,5,1
+jfreechart,stage2,10,2,1.25,3.75,2.5,1,7,3
+jfreechart,stage3,10,4.5,4,5,1,3,5,0
