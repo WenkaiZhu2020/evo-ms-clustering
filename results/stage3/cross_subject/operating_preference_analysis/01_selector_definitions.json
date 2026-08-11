@@ -1,0 +1,84 @@
+{
+  "analysis_version": "operating-preference-analysis-v1",
+  "authoritative_primary_profile": "BALANCE",
+  "common_band": {
+    "Q_best_scope": "maximum weighted modularity among feasible candidates in the stage-specific pool",
+    "formula": "(Q_best - Q) / abs(Q_best) <= 0.05 + 1e-12",
+    "positive_Q_equivalent": "Q >= 0.95 * Q_best (within 1e-12 tolerance)",
+    "stage2_pool": "saved feasible Stage 2 three-objective Pareto front",
+    "stage3_pool": "saved feasible Stage 3 projected structural front"
+  },
+  "inferential_boundary": {
+    "BALANCE": "existing six-row confirmatory family retained",
+    "COUPLING_COHESION_SEMANTIC": "descriptive only; no new hypothesis-test family",
+    "MODULARITY_ANCHOR": "historical/reference only"
+  },
+  "paired_reporting_tie_policy": {
+    "reporting": "canonical-equivalent partitions are ties; additionally abs(delta) < 1e-12 is snapped to zero",
+    "selector_ranking": "exact saved floating-point values; no selector equality change"
+  },
+  "profiles": {
+    "BALANCE": {
+      "candidate_scope": "common 5% relative modularity-loss band",
+      "ordering": [
+        "minimum imbalance",
+        "maximum weighted_modularity",
+        "minimum coupling",
+        "maximum cohesion",
+        "lexicographic solution_id"
+      ],
+      "profile_id": "P1",
+      "role": "primary reporting profile"
+    },
+    "COHESION": {
+      "candidate_scope": "common 5% relative modularity-loss band",
+      "ordering": [
+        "maximum cohesion",
+        "maximum weighted_modularity",
+        "minimum imbalance",
+        "minimum coupling",
+        "lexicographic solution_id"
+      ],
+      "profile_id": "P3",
+      "role": "descriptive preference sensitivity"
+    },
+    "COUPLING": {
+      "candidate_scope": "common 5% relative modularity-loss band",
+      "ordering": [
+        "minimum coupling",
+        "maximum weighted_modularity",
+        "minimum imbalance",
+        "maximum cohesion",
+        "lexicographic solution_id"
+      ],
+      "profile_id": "P2",
+      "role": "descriptive preference sensitivity"
+    },
+    "MODULARITY_ANCHOR": {
+      "candidate_scope": "all feasible candidates in the stage-specific pool",
+      "ordering": [
+        "maximum weighted_modularity",
+        "minimum imbalance",
+        "minimum coupling",
+        "maximum cohesion",
+        "minimum f_semantic",
+        "lexicographic solution_id"
+      ],
+      "profile_id": "P0",
+      "role": "historical/reference modularity anchor"
+    },
+    "SEMANTIC": {
+      "candidate_scope": "common 5% relative modularity-loss band",
+      "ordering": [
+        "minimum f_semantic",
+        "maximum weighted_modularity",
+        "minimum imbalance",
+        "minimum coupling",
+        "maximum cohesion",
+        "lexicographic solution_id"
+      ],
+      "profile_id": "P4",
+      "role": "descriptive preference sensitivity"
+    }
+  }
+}
