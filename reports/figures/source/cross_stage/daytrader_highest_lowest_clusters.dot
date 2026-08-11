@@ -201,7 +201,7 @@ graph "Highest- and lowest-contributing DayTrader clusters across the three stag
   "p3l_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=6.5, label="n = 1   q_c = 0.00000\nW_in = 0   W_boundary = 0", pos="375.0,229.0!", shape="plain", style=""];
   "p3l_f001" [color="#0072B2", fillcolor="#DCEAF7", label="WebSocketJMS\nMessage", penwidth=1.1, pos="375.0,150.0!", tooltip="com.ibm.websphere.samples.daytrader.util.WebSocketJMSMessage"];
   "p3l_isolated" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=6.2, label="Isolated singleton\nNo internal or boundary relations", pos="375.0,118.0!", shape="plain", style=""];
-  "comparison_note" [color="transparent", fillcolor="transparent", fontsize=6.5, label="The highest-contributing cluster is unchanged across the three stages.", pos="250,57!", shape="plain", style=""];
+  "comparison_note" [color="transparent", fillcolor="transparent", fontsize=6.5, label="Stage 2 and Stage 3 representatives use the authoritative BALANCE profile.", pos="250,57!", shape="plain", style=""];
   "legend_focal" [color="#0072B2", fillcolor="#DCEAF7", label="Focal-cluster class", pos="60,29!"];
   "legend_external" [color="#888888", fillcolor="#F2F2F2", label="External-cluster summary", pos="185,29!", shape="box", style="rounded,dashed,filled"];
   "legend_i1" [label="", pos="290,34!", shape="point", width=0.04];

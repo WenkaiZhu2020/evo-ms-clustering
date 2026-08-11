@@ -29,7 +29,14 @@ def find_graphviz(engine: str) -> Path:
 def graphviz_version(engine: str) -> str:
     executable = find_graphviz(engine)
     command = [str(executable), "-V"]
-    completed = subprocess.run(command, capture_output=True, text=True, check=False)
+    environment = {**os.environ, "SOURCE_DATE_EPOCH": "0"}
+    completed = subprocess.run(
+        command,
+        capture_output=True,
+        text=True,
+        check=False,
+        env=environment,
+    )
     output = (completed.stderr or completed.stdout).strip()
     if completed.returncode != 0:
         raise GraphvizError(f"Graphviz version query failed for {engine}: {' '.join(command)}: {output}")
@@ -55,7 +62,14 @@ def render_graphviz(request: GraphvizRenderRequest) -> GraphvizRenderResult:
     if request.fixed_coordinates:
         command.append("-n2")
     command.extend([f"-T{request.output_format}", str(dot_path), "-o", str(temporary_path)])
-    completed = subprocess.run(command, capture_output=True, text=True, check=False)
+    environment = {**os.environ, "SOURCE_DATE_EPOCH": "0"}
+    completed = subprocess.run(
+        command,
+        capture_output=True,
+        text=True,
+        check=False,
+        env=environment,
+    )
     if completed.returncode != 0:
         temporary_path.unlink(missing_ok=True)
         detail = (completed.stderr or completed.stdout).strip()

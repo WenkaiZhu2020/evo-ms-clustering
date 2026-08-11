@@ -1,2 +1,6 @@
 stage,cluster_id,class_count,member_classes,q_c,internal_weight,boundary_weight,external_cluster_id,external_class_count,aggregated_boundary_weight
-stage1+stage3,C07,1,"[""org.apache.xerces.dom3.as.DOMASException""]",0,0,0,,0,0
+stage3_balance,C06,3,"[""org.apache.xerces.dom.ElementNSImpl"",""org.apache.xerces.impl.xs.opti.TextImpl"",""org.apache.xerces.parsers.DOMParserImpl$NullLSParserFilter""]",-2.5471333896e-06,0,111,C01,9,87
+stage3_balance,C06,3,"[""org.apache.xerces.dom.ElementNSImpl"",""org.apache.xerces.impl.xs.opti.TextImpl"",""org.apache.xerces.parsers.DOMParserImpl$NullLSParserFilter""]",-2.5471333896e-06,0,111,C13,4,12
+stage3_balance,C06,3,"[""org.apache.xerces.dom.ElementNSImpl"",""org.apache.xerces.impl.xs.opti.TextImpl"",""org.apache.xerces.parsers.DOMParserImpl$NullLSParserFilter""]",-2.5471333896e-06,0,111,C07,1,5
+stage3_balance,C06,3,"[""org.apache.xerces.dom.ElementNSImpl"",""org.apache.xerces.impl.xs.opti.TextImpl"",""org.apache.xerces.parsers.DOMParserImpl$NullLSParserFilter""]",-2.5471333896e-06,0,111,C19,2,5
+stage3_balance,C06,3,"[""org.apache.xerces.dom.ElementNSImpl"",""org.apache.xerces.impl.xs.opti.TextImpl"",""org.apache.xerces.parsers.DOMParserImpl$NullLSParserFilter""]",-2.5471333896e-06,0,111,C02,1,2

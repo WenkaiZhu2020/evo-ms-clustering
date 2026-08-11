@@ -35,20 +35,25 @@ from evo_ms.visualization.figures.stage123_daytrader_clusters import (
     selected_csv,
 )
 from evo_ms.visualization.model import VisualizationConfig
+from evo_ms.visualization.operating_preference import (
+    balance_partition_medoid,
+    fixed_balance_selection,
+    representative_provenance,
+)
 from evo_ms.visualization.provenance import sha256_file, write_json_atomic
 
 FIGURE_IDS = {
-    "stage13": "stage13_xerces_shared_highest_lowest_clusters",
+    "stage13": "stage13_xerces_balance_highest_lowest_clusters",
     "stage2": "stage2_xerces_highest_lowest_clusters",
 }
 BASENAMES = {
-    "stage13": "xerces_stage13_shared_highest_lowest_clusters",
+    "stage13": "xerces_stage13_balance_highest_lowest_clusters",
     "stage2": "xerces_stage2_highest_lowest_clusters",
 }
 EXPECTED = {
     1: (42, "stage1_seed42", "C11", 118, 624, "C07", 1, 12),
     2: (21, "seed21_solution022", "C13", 115, 570, "C27", 2, 16),
-    3: (22, "seed22_solution015", "C11", 118, 624, "C07", 1, 12),
+    3: (5, "seed5_solution019", "C13", 118, 624, "C06", 3, 15),
 }
 DIRECTORY = "cross_stage"
 FIGURE_SIZE = (11.1, 7.3)
@@ -99,14 +104,6 @@ def _partitions(root: Path):
         "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/"
         "clustering/stage1_clusters.csv"
     )
-    stage2_path = (
-        "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/"
-        "seed_21/pareto_labels.csv.xz"
-    )
-    stage3_path = (
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/"
-        "seed_22/selected_partition.csv"
-    )
     stage1 = pd.read_csv(root / stage1_path)
     stage1_modularity = float(
         pd.read_csv(
@@ -115,60 +112,29 @@ def _partitions(root: Path):
             "raw_reference_leiden/metrics/stage1_metrics.csv"
         ).iloc[0].modularity
     )
-    canonical = pd.read_csv(
-        root
-        / "results/stage2/cross_subject/operating_profile/"
-        "canonical_operating_solution_per_seed.csv"
-    )
-    record = canonical.loc[(canonical.subject == "xerces-j") & (canonical.seed == 21)]
-    if len(record) != 1 or str(record.iloc[0].solution_id) != "seed21_solution022":
-        raise ValueError("Xerces-J Stage 2 representative changed")
-    labels = pd.read_csv(root / stage2_path)
-    stage2 = labels.loc[
-        labels.solution_id == "seed21_solution022",
-        ["class_id", "class_name", "cluster_id"],
-    ].copy()
-    selected_solution = json.loads(
-        (
-            root
-            / "results/stage3/subjects/xerces-j/declaration_method_body/formal/"
-            "seed_22/selected_solution.json"
-        ).read_text(encoding="utf-8")
-    )
-    if (
-        int(selected_solution["seed"]) != 22
-        or selected_solution["selected_four_objective_row"]["solution_id"]
-        != "seed22_solution015"
-    ):
-        raise ValueError("Xerces-J Stage 3 representative changed")
-    stage3 = pd.read_csv(root / stage3_path)
-    posthoc = pd.read_csv(
-        root
-        / "results/stage3/subjects/xerces-j/declaration_method_body/formal/"
-        "seed_22/posthoc_metrics.csv"
-    )
-    stage3_modularity = posthoc.loc[
-        posthoc.solution_id == "seed22_solution015", "weighted_modularity"
-    ]
-    if len(stage3_modularity) != 1:
-        raise ValueError("Xerces-J Stage 3 modularity is not unique")
+    stage2 = fixed_balance_selection(root, "xerces", "stage2", 21)
+    stage3 = balance_partition_medoid(root, "xerces", "stage3")
+    if stage2.solution_id != "seed21_solution022":
+        raise ValueError("authoritative Xerces-J Stage 2 BALANCE representative changed")
+    if (stage3.seed, stage3.solution_id) != (5, "seed5_solution019"):
+        raise ValueError("authoritative Xerces-J Stage 3 BALANCE medoid changed")
     return (
         (1, 42, "stage1_seed42", stage1_path, stage1, stage1_modularity),
         (
             2,
-            21,
-            "seed21_solution022",
-            stage2_path,
-            stage2,
-            float(record.iloc[0].weighted_modularity),
+            stage2.seed,
+            stage2.solution_id,
+            stage2.partition_source,
+            stage2.partition,
+            stage2.weighted_modularity,
         ),
         (
             3,
-            22,
-            "seed22_solution015",
-            stage3_path,
-            stage3,
-            float(stage3_modularity.iloc[0]),
+            stage3.seed,
+            stage3.solution_id,
+            stage3.partition_source,
+            stage3.partition,
+            stage3.weighted_modularity,
         ),
     )
 
@@ -361,14 +327,6 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
             destinations,
         ):
             raise ValueError(f"accepted Xerces-J Stage {stage} selection changed")
-    stage1_high = _selected(data, 1, "highest")
-    stage3_high = _selected(data, 3, "highest")
-    stage1_low = _selected(data, 1, "lowest")
-    stage3_low = _selected(data, 3, "lowest")
-    if stage1_high.members != stage3_high.members:
-        raise ValueError("Xerces-J Stage 1 and Stage 3 highest memberships diverged")
-    if stage1_low.members != stage3_low.members:
-        raise ValueError("Xerces-J Stage 1 and Stage 3 lowest memberships diverged")
     return data
 
 
@@ -385,8 +343,8 @@ def prepare_composite_data(
 ) -> CompositeData:
     if page not in FIGURE_IDS:
         raise ValueError(f"unknown Xerces-J page: {page}")
-    stage = 1 if page == "stage13" else 2
-    stage_label = "stage1+stage3" if page == "stage13" else "stage2"
+    stage = 3 if page == "stage13" else 2
+    stage_label = "stage3_balance" if page == "stage13" else "stage2"
     high = _selected(data, stage, "highest")
     low = _selected(data, stage, "lowest")
     nodes = pd.read_csv(
@@ -918,7 +876,7 @@ def _draw_header(axis, composite: CompositeData) -> None:
         axis.text(
             0.98,
             0.72,
-            "Shared Stage 1 and Stage 3 profile",
+            "Stage 3 BALANCE medoid (seed 5)",
             transform=axis.transAxes,
             fontsize=9.5,
             fontweight="bold",
@@ -929,7 +887,7 @@ def _draw_header(axis, composite: CompositeData) -> None:
         axis.text(
             0.98,
             0.18,
-            "Stage 1 and Stage 3 select the same highest- and lowest-contributing clusters.",
+            "Stage 1 context: highest membership retained; lowest changes from C07 (1 class) to C06 (3 classes).",
             transform=axis.transAxes,
             fontsize=7.5,
             ha="right",
@@ -1086,6 +1044,8 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
     axis.set_xticks([])
     axis.set_yticks([])
     members = [class_id.rsplit(".", 1)[-1] for class_id in low.members]
+    if composite.page == "stage13":
+        members = [member.replace("$", "\n$", 1) for member in members]
     axis.text(
         0.04,
         0.86,
@@ -1097,17 +1057,17 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
         va="top",
     )
     axis.text(
-        0.42,
-        0.5,
+        0.40 if composite.page == "stage13" else 0.42,
+        0.72 if composite.page == "stage13" else 0.5,
         "\n".join(members),
         transform=axis.transAxes,
-        fontsize=7.5,
+        fontsize=6.5 if composite.page == "stage13" else 7.5,
         color="#315A7D",
         va="top",
     )
     axis.text(
         0.04,
-        0.5,
+        0.43 if composite.page == "stage13" else 0.5,
         (
             f"{len(low.members)} {'class' if len(low.members) == 1 else 'classes'}   "
             f"q_c = {low.contribution:.6f}\n"
@@ -1135,9 +1095,18 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
         low.boundary_aggregates,
         key=lambda item: (-item.boundary_weight, item.external_cluster_id),
     )
-    inset = axis.inset_axes([0.70, 0.12, 0.27, 0.62])
+    inset = axis.inset_axes(
+        [0.75, 0.12, 0.20, 0.62]
+        if composite.page == "stage13"
+        else [0.70, 0.12, 0.27, 0.62]
+    )
     values = [item.boundary_weight for item in summary]
-    labels = [f"External {item.external_cluster_id}" for item in summary]
+    labels = [
+        item.external_cluster_id
+        if composite.page == "stage13"
+        else f"External {item.external_cluster_id}"
+        for item in summary
+    ]
     positions = np.arange(len(summary))
     inset.barh(positions, values, color="#9AA8AC", height=0.55)
     inset.set_yticks(positions, labels, fontsize=6)
@@ -1436,6 +1405,10 @@ def build_figure(
             generated_at,
             git_commit,
             git_dirty,
+        )
+        provenance["operating_profile_representatives"] = representative_provenance(
+            fixed_balance_selection(config.repository_root, "xerces", "stage2", 21),
+            balance_partition_medoid(config.repository_root, "xerces", "stage3"),
         )
         write_json_atomic(staged["provenance"], provenance)
         document = (

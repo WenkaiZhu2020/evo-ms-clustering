@@ -167,7 +167,7 @@ graph "Highest- and lowest-contributing JPetStore clusters across the three stag
   "p3l_f001" -- "p3l_xC02" [color="#AAAAAA", penwidth=2.48352616066, style="dashed", tooltip="2 aggregated boundary edge(s); weight 16; org.mybatis.jpetstore.domain.CartItem; org.mybatis.jpetstore.domain.Item"];
   "p3l_f006" -- "p3l_xC02" [color="#AAAAAA", penwidth=1.29824939084, style="dashed", tooltip="1 aggregated boundary edge(s); weight 2; org.mybatis.jpetstore.domain.Item"];
   "p3l_f006" -- "p3l_xC03" [color="#AAAAAA", penwidth=1.94649878168, style="dashed", tooltip="1 aggregated boundary edge(s); weight 8; org.mybatis.jpetstore.mapper.ItemMapper"];
-  "comparison_note" [color="transparent", fillcolor="transparent", fontsize=6.5, label="Stage 1 and Stage 3 select the same highest and lowest clusters.", pos="250,57!", shape="plain", style=""];
+  "comparison_note" [color="transparent", fillcolor="transparent", fontsize=6.5, label="Stage 2 and Stage 3 representatives use the authoritative BALANCE profile.", pos="250,57!", shape="plain", style=""];
   "legend_focal" [color="#0072B2", fillcolor="#DCEAF7", label="Focal-cluster class", pos="60,29!"];
   "legend_external" [color="#888888", fillcolor="#F2F2F2", label="External-cluster summary", pos="185,29!", shape="box", style="rounded,dashed,filled"];
   "legend_i1" [label="", pos="290,34!", shape="point", width=0.04];

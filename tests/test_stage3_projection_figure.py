@@ -22,15 +22,15 @@ FIXED_TIME = "2026-08-06T12:00:00Z"
 def test_figure_registration_loads_correctly() -> None:
     config = load_visualization_config()
     assert set(config.figures) == {
-        "cross_stage_partition_overview",
         "stage1_ssa_seed_robustness",
         "stage123_daytrader_highest_lowest_clusters",
         "stage123_jpetstore_highest_lowest_clusters",
         FIGURE_ID,
         "stage2_daytrader_partition_transition",
         "stage3_jpetstore_semantic_evidence_comparison",
-        "stage13_xerces_shared_highest_lowest_clusters",
+        "stage13_xerces_balance_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_operating_preference_sensitivity",
     }
     specification = config.figures[FIGURE_ID]
     assert specification.stage == "stage3"

@@ -17,36 +17,6 @@ output:
   pdf: reports/figures/pdf
 
 figures:
-  cross_stage_partition_overview:
-    stage: stage3
-    title: Cross-stage partition profiles for the three primary subjects
-    destination: main_text
-    inputs:
-      - data/extracted/jpetstore/class_nodes.csv
-      - data/extracted/daytrader/class_nodes.csv
-      - data/extracted/xerces-j/class_nodes.csv
-      - results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
-      - results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
-      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
-      - results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv
-      - results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz
-      - results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz
-      - results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz
-      - results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv
-      - results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json
-      - results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv
-      - results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json
-      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv
-      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json
-    layout_profile: fixed_comparison
-    enabled: true
-    formats: [svg, pdf]
-    generator: evo_ms.visualization.figures.cross_stage_partition_overview
-    metadata:
-      subjects: jpetstore, daytrader, xerces-j
-      ordering: descending cluster size with canonical member-signature tie-break
-      identity_note: segment position does not represent cluster identity across stages
-
   stage1_ssa_seed_robustness:
     stage: stage1
     title: SSA-induced partition change relative to Leiden seed variation
@@ -82,36 +52,40 @@ figures:
       distance: 1 - adjusted Rand index
       interpretation: descriptive comparison with observed seed variation
 
-  stage13_xerces_shared_highest_lowest_clusters:
+  stage13_xerces_balance_highest_lowest_clusters:
     stage: stage3
-    title: "Xerces-J cluster contribution: shared Stage 1 and Stage 3 profile"
+    title: "Xerces-J cluster contribution: Stage 3 BALANCE profile with Stage 1 context"
     destination: appendix
-    inputs: &xerces_cluster_inputs
+    inputs:
       - data/extracted/xerces-j/class_nodes.csv
       - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
       - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
       - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv
-      - results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv
-      - results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz
-      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv
-      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json
-      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv
+      - results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
+      - results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_05/partition_labels.csv
     layout_profile: fixed_comparison
     enabled: true
     formats: [svg, pdf]
     generator: evo_ms.visualization.figures.stage123_xerces_clusters
     metadata:
       subject: xerces-j
-      representatives: "Stage 1 seed 42 / raw_reference_leiden; Stage 3 seed 22 / seed22_solution015"
-      highest_cluster: C11
-      lowest_cluster: C07
+      stage1_representative: seed 42 / raw_reference_leiden
+      stage3_representative: seed 5 / seed5_solution019 / BALANCE P1 medoid
+      representative_rule: maximum mean ARI across 30 BALANCE partitions; seed then solution tie-break
       aggregation: focal classes grouped by package
+      authoritative_source: results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
 
   stage2_xerces_highest_lowest_clusters:
     stage: stage2
     title: "Xerces-J cluster contribution: Stage 2 profile"
     destination: appendix
-    inputs: *xerces_cluster_inputs
+    inputs:
+      - data/extracted/xerces-j/class_nodes.csv
+      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
+      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
+      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv
+      - results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
+      - results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz
     layout_profile: fixed_comparison
     enabled: true
     formats: [svg, pdf]
@@ -132,11 +106,9 @@ figures:
       - results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
       - results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
       - results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv
-      - results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv
+      - results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
       - results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz
-      - results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv
-      - results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json
-      - results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/posthoc_metrics.csv
+      - results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv
     layout_profile: fixed_comparison
     enabled: true
     formats:
@@ -152,8 +124,10 @@ figures:
       stage1_representative: seed 42
       stage2_partition: results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz
       stage2_representative: seed 1 / seed1_solution007
-      stage3_partition: results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv
-      stage3_representative: seed 0 / seed0_solution000
+      stage3_partition: results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv
+      stage3_representative: seed 4 / seed4_solution000 / BALANCE P1 medoid
+      representative_rule: maximum mean ARI across 30 BALANCE partitions; seed then solution tie-break
+      authoritative_source: results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
 
   stage123_daytrader_highest_lowest_clusters:
     stage: stage3
@@ -164,11 +138,9 @@ figures:
       - results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
       - results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
       - results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv
-      - results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv
+      - results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
       - results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz
-      - results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv
-      - results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json
-      - results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/posthoc_metrics.csv
+      - results/stage3/subjects/daytrader/declaration_method_body/formal/seed_25/partition_labels.csv
     layout_profile: fixed_comparison
     enabled: true
     formats:
@@ -184,8 +156,29 @@ figures:
       stage1_representative: seed 42
       stage2_partition: results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz
       stage2_representative: seed 25 / seed25_solution047
-      stage3_partition: results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv
-      stage3_representative: seed 16 / seed16_solution036
+      stage3_partition: results/stage3/subjects/daytrader/declaration_method_body/formal/seed_25/partition_labels.csv
+      stage3_representative: seed 25 / seed25_solution026 / BALANCE P1 medoid
+      representative_rule: maximum mean ARI across 30 BALANCE partitions; seed then solution tie-break
+      authoritative_source: results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
+
+  stage3_xerces_operating_preference_sensitivity:
+    stage: stage3
+    title: Xerces-J operating preferences within the 5% modularity candidate region
+    destination: main_text
+    inputs:
+      - results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv
+      - results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
+    layout_profile: fixed_comparison
+    enabled: true
+    formats: [svg, pdf]
+    generator: evo_ms.visualization.figures.stage3_xerces_operating_preference
+    metadata:
+      subject: xerces-j
+      stage: stage3
+      candidate_region: within 5% of each seed-specific maximum weighted modularity
+      dimensions: imbalance (x) and cohesion (y)
+      profiles: P0 MODULARITY_ANCHOR, P1 BALANCE, P2 COUPLING, P3 COHESION, P4 SEMANTIC
+      authoritative_source: results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv
 
   stage2_daytrader_partition_transition:
     stage: stage2

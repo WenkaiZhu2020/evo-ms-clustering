@@ -28,7 +28,7 @@ from evo_ms.visualization.figures.stage3_jpetstore_semantic_evidence import buil
 from evo_ms.visualization.figures.stage123_daytrader_clusters import build_figure as build_clusters
 from evo_ms.visualization.figures.stage123_jpetstore_clusters import build_figure as build_jpetstore_clusters
 from evo_ms.visualization.figures.stage123_xerces_clusters import build_figure as build_xerces_clusters
-from evo_ms.visualization.figures.cross_stage_partition_overview import build_figure as build_overview
+from evo_ms.visualization.figures.stage3_xerces_operating_preference import build_figure as build_preference
 from evo_ms.visualization.figures.stage1_ssa_seed_robustness import build_figure as build_robustness
 from evo_ms.visualization.layout import GraphvizError
 from evo_ms.visualization.model import GraphvizRenderResult
@@ -57,15 +57,15 @@ def _deterministic_renderer(request) -> GraphvizRenderResult:
 def test_registration_and_approved_representative() -> None:
     config = load_visualization_config()
     assert set(config.figures) == {
-        "cross_stage_partition_overview",
         "stage1_ssa_seed_robustness",
         "stage123_daytrader_highest_lowest_clusters",
         "stage123_jpetstore_highest_lowest_clusters",
         FIGURE_ID,
         "stage3_four_to_three_projection",
         "stage3_jpetstore_semantic_evidence_comparison",
-        "stage13_xerces_shared_highest_lowest_clusters",
+        "stage13_xerces_balance_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_operating_preference_sensitivity",
     }
     specification = config.figures[FIGURE_ID]
     assert specification.stage == "stage2"
@@ -194,7 +194,7 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
         renderer=_deterministic_renderer,
     )
     for xerces_figure_id in (
-        "stage13_xerces_shared_highest_lowest_clusters",
+        "stage13_xerces_balance_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
     ):
         build_xerces_clusters(
@@ -205,7 +205,7 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
             git_commit="abc123",
             git_dirty=True,
         )
-    build_overview(
+    build_preference(
         config,
         output_root=tmp_path,
         generated_at=FIXED_TIME,
@@ -221,15 +221,15 @@ def test_manifest_can_contain_exactly_all_formal_figures(tmp_path: Path) -> None
     )
     figures = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))["figures"]
     assert set(figures) == {
-        "cross_stage_partition_overview",
         "stage1_ssa_seed_robustness",
         "stage123_daytrader_highest_lowest_clusters",
         "stage123_jpetstore_highest_lowest_clusters",
         FIGURE_ID,
         "stage3_four_to_three_projection",
         "stage3_jpetstore_semantic_evidence_comparison",
-        "stage13_xerces_shared_highest_lowest_clusters",
+        "stage13_xerces_balance_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_operating_preference_sensitivity",
     }
 
 

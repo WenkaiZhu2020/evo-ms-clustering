@@ -75,12 +75,12 @@ def _build_registered_figure(figure_id: str) -> int:
     elif figure_id == "stage123_jpetstore_highest_lowest_clusters":
         from evo_ms.visualization.figures.stage123_jpetstore_clusters import build_figure
     elif figure_id in {
-        "stage13_xerces_shared_highest_lowest_clusters",
+        "stage13_xerces_balance_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
     }:
         from evo_ms.visualization.figures.stage123_xerces_clusters import build_figure
-    elif figure_id == "cross_stage_partition_overview":
-        from evo_ms.visualization.figures.cross_stage_partition_overview import build_figure
+    elif figure_id == "stage3_xerces_operating_preference_sensitivity":
+        from evo_ms.visualization.figures.stage3_xerces_operating_preference import build_figure
     elif figure_id == "stage1_ssa_seed_robustness":
         from evo_ms.visualization.figures.stage1_ssa_seed_robustness import build_figure
     else:

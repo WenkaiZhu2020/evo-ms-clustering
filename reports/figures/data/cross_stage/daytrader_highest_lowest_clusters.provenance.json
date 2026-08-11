@@ -4,12 +4,12 @@
     "configs/visualization/style.yml"
   ],
   "config_sha256": {
-    "configs/visualization/figures.yml": "d4ae2b37a914a94f928f314ce80a8e6b8435c8560182f50f5c450cd2fdfc8a03",
+    "configs/visualization/figures.yml": "9b3892eadeaf10fc923899026b308825e803b317fc10b544fefc695d98a283ea",
     "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
   },
-  "dot_sha256": "0c2a7609f08511c6e6affce8f78c00284abaedef6571d045b26c7a9132cf10f6",
+  "dot_sha256": "2daa68f94d8a817cabbca93f561bef38da8ed2fc1028736744e9c45e663a53dc",
   "figure_id": "stage123_daytrader_highest_lowest_clusters",
-  "generated_at": "2026-08-06T19:42:07Z",
+  "generated_at": "2026-08-11T21:29:40Z",
   "generated_outputs": [
     "reports/figures/data/cross_stage/daytrader_boundary_aggregation.csv",
     "reports/figures/data/cross_stage/daytrader_cluster_profiles.csv",
@@ -20,7 +20,7 @@
     "reports/figures/source/cross_stage/daytrader_highest_lowest_clusters.dot"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_daytrader_clusters.py",
-  "git_commit": "38babf14ad7fc784c0ffbe1d8ecf01cb90ebe85e",
+  "git_commit": "9109a67679ffe484583f569c0c63786914d64851",
   "git_dirty": true,
   "graphviz_engine": "neato",
   "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",
@@ -29,23 +29,47 @@
     "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
     "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
     "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
-    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
     "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
-    "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/posthoc_metrics.csv",
-    "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv",
-    "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json"
+    "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+    "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_25/partition_labels.csv"
   ],
   "input_sha256": {
     "data/extracted/daytrader/class_nodes.csv": "52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd",
     "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv": "90a727ad67cdb6f3c02b278d77b405b0acd65bb52019939dd3afd822c9132cd6",
     "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv": "7a93a133db3dc573532ec90a68674d8b8b939c8adc106c64fbd5449db697faef",
     "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv": "2709d905a7b2c753b9a05a4d1f2d369c5dd54104e5139d4365e0a2cbffdcb055",
-    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv": "9a0e9a1f40edf260bb06c719e6967aef9c18a81b28fac9f0895e5520341c91d3",
     "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz": "ab32aef9c4c2b653028ea498be25fb7f35313ab62e07e2c634fa33293a2a7daf",
-    "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/posthoc_metrics.csv": "6403b8905d94e037f2dbbc430e6cf5add863022d95972e8617da0502791888e3",
-    "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv": "e369152a33878870b8972b449153dcc2df00c89ae99a12e0fb5141f2c38a019f",
-    "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json": "26f2422ae826498211888c2aaeafc0183ca79e9870f61aba789adfa840ec65da"
+    "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv": "af4e1213f13acca3893a483758cfc9ecae5b55e0c4b82d6935e5e17306ab4a3e",
+    "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_25/partition_labels.csv": "42a505d829d10fc7facba7f4e21883798b70ad5a2af7108dbf50f6c1d8b6b10a"
   },
+  "operating_profile_representatives": [
+    {
+      "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+      "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
+      "mean_ari_to_other_balance_partitions": null,
+      "partition_source": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
+      "profile": "BALANCE",
+      "profile_id": "P1",
+      "representative_rule": "existing approved Stage 2 representative seed; solution resolved from authoritative BALANCE/P1",
+      "seed": 25,
+      "solution_id": "seed25_solution047",
+      "stage": "stage2",
+      "subject": "daytrader"
+    },
+    {
+      "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+      "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
+      "mean_ari_to_other_balance_partitions": 0.665278257113286,
+      "partition_source": "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_25/partition_labels.csv",
+      "profile": "BALANCE",
+      "profile_id": "P1",
+      "representative_rule": "maximum mean ARI to the other 29 BALANCE/P1 partitions; ties by seed then solution_id",
+      "seed": 25,
+      "solution_id": "seed25_solution026",
+      "stage": "stage3",
+      "subject": "daytrader"
+    }
+  ],
   "render_command": [
     [
       "neato",

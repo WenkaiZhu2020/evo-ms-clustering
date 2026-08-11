@@ -29,15 +29,15 @@ from evo_ms.visualization.model import GraphvizRenderResult
 
 ROOT = Path(__file__).resolve().parents[1]
 ALL_FIGURES = {
-    "cross_stage_partition_overview",
     "stage1_ssa_seed_robustness",
     FIGURE_ID,
     "stage123_jpetstore_highest_lowest_clusters",
     "stage2_daytrader_partition_transition",
     "stage3_four_to_three_projection",
     "stage3_jpetstore_semantic_evidence_comparison",
-    "stage13_xerces_shared_highest_lowest_clusters",
+    "stage13_xerces_balance_highest_lowest_clusters",
     "stage2_xerces_highest_lowest_clusters",
+    "stage3_xerces_operating_preference_sensitivity",
 }
 
 
@@ -67,7 +67,7 @@ def test_exactly_four_figures_and_registered_scientific_metadata() -> None:
     assert spec.metadata["subject"] == "daytrader"
     assert spec.metadata["ranking_metric"] == "local weighted-modularity contribution"
     assert spec.metadata["stage2_representative"] == "seed 25 / seed25_solution047"
-    assert spec.metadata["stage3_representative"] == "seed 16 / seed16_solution036"
+    assert spec.metadata["stage3_representative"] == "seed 25 / seed25_solution026 / BALANCE P1 medoid"
 
 
 def test_authoritative_partitions_scope_representatives_and_modularity(prepared) -> None:
@@ -167,7 +167,7 @@ def test_boundary_width_is_deterministic_monotonic_and_singletons_are_annotated(
     dot = figure_dot(config, data)
     assert dot.count("Isolated singleton") == 2
     assert '"p1l_isolated"' in dot and '"p3l_isolated"' in dot and '"p2l_isolated"' not in dot
-    assert "The highest-contributing cluster is unchanged across the three stages." in dot
+    assert "Stage 2 and Stage 3 representatives use the authoritative BALANCE profile." in dot
 
 
 def test_real_fixed_neato_svg_pdf_relative_provenance_and_manifest(tmp_path: Path) -> None:

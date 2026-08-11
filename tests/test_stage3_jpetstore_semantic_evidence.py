@@ -36,15 +36,15 @@ from evo_ms.visualization.model import GraphvizRenderResult
 ROOT = Path(__file__).resolve().parents[1]
 FIXED_TIME = "2026-08-06T20:00:00Z"
 FORMAL_IDS = {
-    "cross_stage_partition_overview",
     "stage1_ssa_seed_robustness",
     "stage123_daytrader_highest_lowest_clusters",
     "stage123_jpetstore_highest_lowest_clusters",
     "stage2_daytrader_partition_transition",
     "stage3_four_to_three_projection",
     FIGURE_ID,
-    "stage13_xerces_shared_highest_lowest_clusters",
+    "stage13_xerces_balance_highest_lowest_clusters",
     "stage2_xerces_highest_lowest_clusters",
+    "stage3_xerces_operating_preference_sensitivity",
 }
 
 

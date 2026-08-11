@@ -25,7 +25,12 @@ from evo_ms.visualization.figures.stage123_daytrader_clusters import (
 )
 from evo_ms.visualization.layout import render_graphviz
 from evo_ms.visualization.model import GraphvizRenderRequest, GraphvizRenderResult, VisualizationConfig
-from evo_ms.visualization.provenance import build_provenance, sha256_file, write_json_atomic, write_provenance
+from evo_ms.visualization.operating_preference import (
+    balance_partition_medoid,
+    fixed_balance_selection,
+    representative_provenance,
+)
+from evo_ms.visualization.provenance import build_provenance, sha256_file, write_json_atomic
 
 FIGURE_ID = "stage123_jpetstore_highest_lowest_clusters"
 BASENAME = "jpetstore_highest_lowest_clusters"
@@ -33,34 +38,23 @@ DIRECTORY = "cross_stage"
 EXPECTED_CLASSES = 24
 STAGE2_SEED = 1
 STAGE2_SOLUTION = "seed1_solution007"
-STAGE3_SEED = 0
-STAGE3_SOLUTION = "seed0_solution000"
+STAGE3_SEED = 4
+STAGE3_SOLUTION = "seed4_solution000"
 
 
 def _partitions(root: Path):
     stage1_path = "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv"
-    stage2_path = "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz"
-    stage3_path = "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv"
     stage1 = pd.read_csv(root / stage1_path)
     q1 = float(pd.read_csv(root / "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv").iloc[0].modularity)
-    canonical = pd.read_csv(root / "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv")
-    record = canonical.loc[(canonical.subject == "jpetstore") & (canonical.seed == STAGE2_SEED)]
-    if len(record) != 1 or str(record.iloc[0].solution_id) != STAGE2_SOLUTION:
-        raise ValueError("canonical JPetStore Stage 2 selection is not seed 1 / seed1_solution007")
-    labels = pd.read_csv(root / stage2_path)
-    stage2 = labels.loc[labels.solution_id == STAGE2_SOLUTION, ["class_id", "class_name", "cluster_id"]].copy()
-    payload = json.loads((root / "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json").read_text())
-    row = payload["selected_four_objective_row"]
-    if int(payload["seed"]) != STAGE3_SEED or str(row["solution_id"]) != STAGE3_SOLUTION:
-        raise ValueError("JPetStore Stage 3 representative is not seed 0 / seed0_solution000")
-    stage3 = pd.read_csv(root / stage3_path)
-    posthoc = pd.read_csv(root / "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/posthoc_metrics.csv")
-    q3 = posthoc.loc[posthoc.solution_id == STAGE3_SOLUTION, "weighted_modularity"]
-    if len(q3) != 1:
-        raise ValueError("JPetStore Stage 3 representative has no unique post-hoc modularity")
+    stage2 = fixed_balance_selection(root, "jpetstore", "stage2", STAGE2_SEED)
+    stage3 = balance_partition_medoid(root, "jpetstore", "stage3")
+    if stage2.solution_id != STAGE2_SOLUTION:
+        raise ValueError("authoritative JPetStore Stage 2 BALANCE representative changed")
+    if (stage3.seed, stage3.solution_id) != (STAGE3_SEED, STAGE3_SOLUTION):
+        raise ValueError("authoritative JPetStore Stage 3 BALANCE medoid changed")
     return ((1, 42, "stage1_seed42", stage1_path, stage1, q1),
-            (2, STAGE2_SEED, STAGE2_SOLUTION, stage2_path, stage2, float(record.iloc[0].weighted_modularity)),
-            (3, STAGE3_SEED, STAGE3_SOLUTION, stage3_path, stage3, float(q3.iloc[0])))
+            (2, stage2.seed, stage2.solution_id, stage2.partition_source, stage2.partition, stage2.weighted_modularity),
+            (3, stage3.seed, stage3.solution_id, stage3.partition_source, stage3.partition, stage3.weighted_modularity))
 
 
 def prepare_figure_data(config: VisualizationConfig) -> FigureData:
@@ -131,13 +125,19 @@ def build_figure(config: VisualizationConfig, *, output_root: str|Path|None=None
     with tempfile.TemporaryDirectory(prefix=f".{FIGURE_ID}.",dir=staging_parent) as temporary:
         stage=Path(temporary); staged={name:stage/f"figure.{name}" for name in targets}; staged["provenance"]=stage/"figure.provenance.json"
         staged["profiles"].write_text(profiles_csv(data),encoding="utf-8",newline="\n"); staged["selected"].write_text(selected_csv(data),encoding="utf-8",newline="\n"); staged["aggregation"].write_text(boundary_aggregation_csv(data),encoding="utf-8",newline="\n")
-        write_dot(staged["dot"],figure_dot(config,data,figure_id=FIGURE_ID,comparison_note="Stage 1 and Stage 3 select the same highest and lowest clusters."))
+        write_dot(staged["dot"],figure_dot(config,data,figure_id=FIGURE_ID,comparison_note="Stage 2 and Stage 3 representatives use the authoritative BALANCE profile."))
         renders=[renderer(GraphvizRenderRequest(staged["dot"],staged[fmt],fmt,"neato",fixed_coordinates=True)) for fmt in ("svg","pdf")]
         for name in ("profiles","selected","aggregation","dot","svg","pdf"):
             if not staged[name].is_file() or not staged[name].stat().st_size: raise ValueError(f"missing staged {name}")
         commands=tuple(("neato","-n2",f"-T{fmt}",str(targets["dot"]),"-o",str(targets[fmt])) for fmt in ("svg","pdf"))
         record=build_provenance(figure_id=FIGURE_ID,stage=spec.stage,generator="src/"+spec.generator.replace(".","/")+".py",repository_root=config.repository_root,input_files=(config.repository_root/path for path in spec.inputs),config_files=(config.figures_config_path,config.style_config_path),dot_path=staged["dot"],graphviz_engine="neato",graphviz_version=renders[0].version,render_commands=commands,generated_outputs=targets.values(),artifact_root=artifact_root,generated_at=generated_at,git_commit=git_commit,git_dirty=git_dirty)
-        write_provenance(staged["provenance"],record)
+        write_json_atomic(staged["provenance"], {
+            **record.as_dict(),
+            "operating_profile_representatives": representative_provenance(
+                fixed_balance_selection(config.repository_root, "jpetstore", "stage2", STAGE2_SEED),
+                balance_partition_medoid(config.repository_root, "jpetstore", "stage3"),
+            ),
+        })
         document=json.loads(manifest.read_text()) if manifest.exists() else {"schema_version":1,"figures":{}}
         if document.get("schema_version")!=1 or not isinstance(document.get("figures"),dict): raise ValueError("invalid figure manifest")
         document["figures"][FIGURE_ID]={"destination":spec.destination,"formats":list(spec.formats),"generated_at":record.generated_at,"generator":spec.generator,"inputs":list(spec.inputs),"metadata":dict(spec.metadata or {}),"outputs":{name:_relative(path,config.repository_root,artifact_root) for name,path in sorted(targets.items())},"sha256":{name:sha256_file(path) for name,path in sorted(staged.items())},"stage":spec.stage,"title":spec.title}

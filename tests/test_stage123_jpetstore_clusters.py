@@ -46,7 +46,7 @@ def test_appendix_registration_and_exactly_nine_figures() -> None:
     spec=config.figures[FIGURE_ID]
     assert spec.destination=="appendix" and spec.formats==("dot","svg","pdf")
     assert spec.metadata["stage2_representative"]=="seed 1 / seed1_solution007"
-    assert spec.metadata["stage3_representative"]=="seed 0 / seed0_solution000"
+    assert spec.metadata["stage3_representative"]=="seed 4 / seed4_solution000 / BALANCE P1 medoid"
 
 
 def test_complete_scope_representatives_modularity_and_selections(prepared) -> None:

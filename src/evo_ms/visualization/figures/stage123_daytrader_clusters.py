@@ -18,7 +18,12 @@ import pandas as pd
 from evo_ms.visualization.dot import dot_quote, stable_attributes, write_dot
 from evo_ms.visualization.layout import render_graphviz
 from evo_ms.visualization.model import GraphvizRenderRequest, GraphvizRenderResult, VisualizationConfig
-from evo_ms.visualization.provenance import build_provenance, sha256_file, write_json_atomic, write_provenance
+from evo_ms.visualization.operating_preference import (
+    balance_partition_medoid,
+    fixed_balance_selection,
+    representative_provenance,
+)
+from evo_ms.visualization.provenance import build_provenance, sha256_file, write_json_atomic
 
 FIGURE_ID = "stage123_daytrader_highest_lowest_clusters"
 BASENAME = "daytrader_highest_lowest_clusters"
@@ -26,8 +31,8 @@ DIRECTORY = "cross_stage"
 EXPECTED_CLASSES = 53
 STAGE2_SEED = 25
 STAGE2_SOLUTION = "seed25_solution047"
-STAGE3_SEED = 16
-STAGE3_SOLUTION = "seed16_solution036"
+STAGE3_SEED = 25
+STAGE3_SOLUTION = "seed25_solution026"
 
 
 @dataclass(frozen=True)
@@ -96,29 +101,17 @@ def _canonical_partition(frame: pd.DataFrame) -> pd.DataFrame:
 
 def _partitions(root: Path) -> tuple[tuple[int, int, str, str, pd.DataFrame, float], ...]:
     stage1_path = "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv"
-    stage2_path = "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz"
-    stage3_path = "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv"
     stage1 = pd.read_csv(root / stage1_path)
     q1 = float(pd.read_csv(root / "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv").iloc[0].modularity)
-    canonical = pd.read_csv(root / "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv")
-    record = canonical.loc[(canonical.subject == "daytrader") & (canonical.seed == STAGE2_SEED)]
-    if len(record) != 1 or str(record.iloc[0].solution_id) != STAGE2_SOLUTION:
-        raise ValueError("canonical Stage 2 selection is not seed 25 / seed25_solution047")
-    labels = pd.read_csv(root / stage2_path)
-    stage2 = labels.loc[labels.solution_id == STAGE2_SOLUTION, ["class_id", "class_name", "cluster_id"]].copy()
-    q2 = float(record.iloc[0].weighted_modularity)
-    payload = json.loads((root / "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json").read_text())
-    row = payload["selected_four_objective_row"]
-    if int(payload["seed"]) != STAGE3_SEED or str(row["solution_id"]) != STAGE3_SOLUTION:
-        raise ValueError("Stage 3 representative is not seed 16 / seed16_solution036")
-    stage3 = pd.read_csv(root / stage3_path)
-    posthoc = pd.read_csv(root / "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/posthoc_metrics.csv")
-    selected_q = posthoc.loc[posthoc.solution_id == STAGE3_SOLUTION, "weighted_modularity"]
-    if len(selected_q) != 1:
-        raise ValueError("Stage 3 representative has no unique post-hoc modularity")
+    stage2 = fixed_balance_selection(root, "daytrader", "stage2", STAGE2_SEED)
+    stage3 = balance_partition_medoid(root, "daytrader", "stage3")
+    if stage2.solution_id != STAGE2_SOLUTION:
+        raise ValueError("authoritative DayTrader Stage 2 BALANCE representative changed")
+    if (stage3.seed, stage3.solution_id) != (STAGE3_SEED, STAGE3_SOLUTION):
+        raise ValueError("authoritative DayTrader Stage 3 BALANCE medoid changed")
     return ((1, 42, "stage1_seed42", stage1_path, stage1, q1),
-            (2, STAGE2_SEED, STAGE2_SOLUTION, stage2_path, stage2, q2),
-            (3, STAGE3_SEED, STAGE3_SOLUTION, stage3_path, stage3, float(selected_q.iloc[0])))
+            (2, stage2.seed, stage2.solution_id, stage2.partition_source, stage2.partition, stage2.weighted_modularity),
+            (3, stage3.seed, stage3.solution_id, stage3.partition_source, stage3.partition, stage3.weighted_modularity))
 
 
 def prepare_figure_data(config: VisualizationConfig) -> FigureData:
@@ -310,7 +303,7 @@ def figure_dot(
     data: FigureData,
     *,
     figure_id: str = FIGURE_ID,
-    comparison_note: str | None = "The highest-contributing cluster is unchanged across the three stages.",
+    comparison_note: str | None = "Stage 2 and Stage 3 representatives use the authoritative BALANCE profile.",
 ) -> str:
     spec=config.figures[figure_id]; style=config.style["cluster_contribution_comparison"]; font=config.style["fonts"]["family"]
     x_centres={"highest":125.0,"lowest":375.0}; y_centres={1:600.0,2:385.0,3:170.0}
@@ -404,7 +397,13 @@ def build_figure(config: VisualizationConfig, *, output_root: str|Path|None=None
             input_files=(config.repository_root/path for path in spec.inputs),config_files=(config.figures_config_path,config.style_config_path),dot_path=staged["dot"],
             graphviz_engine="neato",graphviz_version=renders[0].version,render_commands=commands,generated_outputs=targets.values(),artifact_root=artifact_root,
             generated_at=generated_at,git_commit=git_commit,git_dirty=git_dirty)
-        write_provenance(staged["provenance"],record)
+        write_json_atomic(staged["provenance"], {
+            **record.as_dict(),
+            "operating_profile_representatives": representative_provenance(
+                fixed_balance_selection(config.repository_root, "daytrader", "stage2", STAGE2_SEED),
+                balance_partition_medoid(config.repository_root, "daytrader", "stage3"),
+            ),
+        })
         document=json.loads(manifest.read_text()) if manifest.exists() else {"schema_version":1,"figures":{}}
         if document.get("schema_version")!=1 or not isinstance(document.get("figures"),dict): raise ValueError("invalid figure manifest")
         document["figures"][FIGURE_ID]={"destination":spec.destination,"formats":list(spec.formats),"generated_at":record.generated_at,"generator":spec.generator,

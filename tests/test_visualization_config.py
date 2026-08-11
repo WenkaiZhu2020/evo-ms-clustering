@@ -35,16 +35,17 @@ def test_default_configs_load_from_repository_root() -> None:
     assert config.repository_root == ROOT
     assert config.schema_version == 1
     assert set(config.figures) == {
-        "cross_stage_partition_overview",
         "stage1_ssa_seed_robustness",
         "stage123_daytrader_highest_lowest_clusters",
         "stage123_jpetstore_highest_lowest_clusters",
         "stage2_daytrader_partition_transition",
         "stage3_four_to_three_projection",
         "stage3_jpetstore_semantic_evidence_comparison",
-        "stage13_xerces_shared_highest_lowest_clusters",
+        "stage13_xerces_balance_highest_lowest_clusters",
         "stage2_xerces_highest_lowest_clusters",
+        "stage3_xerces_operating_preference_sensitivity",
     }
+    assert "cross_stage_partition_overview" not in config.figures
     assert config.output.dot == ROOT / "reports/figures/source"
 
 

@@ -1,53 +1,5 @@
 {
   "figures": {
-    "cross_stage_partition_overview": {
-      "destination": "main_text",
-      "formats": [
-        "svg",
-        "pdf"
-      ],
-      "generated_at": "2026-08-08T19:57:54Z",
-      "generator": "evo_ms.visualization.figures.cross_stage_partition_overview",
-      "inputs": [
-        "data/extracted/daytrader/class_nodes.csv",
-        "data/extracted/jpetstore/class_nodes.csv",
-        "data/extracted/xerces-j/class_nodes.csv",
-        "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
-        "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
-        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
-        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
-        "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
-        "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
-        "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
-        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv",
-        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json",
-        "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv",
-        "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json",
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
-      ],
-      "metadata": {
-        "identity_note": "segment position does not represent cluster identity across stages",
-        "ordering": "descending cluster size with canonical member-signature tie-break",
-        "subjects": "jpetstore, daytrader, xerces-j"
-      },
-      "outputs": {
-        "data": "reports/figures/data/cross_stage/cross_stage_partition_overview.csv",
-        "pdf": "reports/figures/pdf/cross_stage/cross_stage_partition_overview.pdf",
-        "provenance": "reports/figures/data/cross_stage/cross_stage_partition_overview.provenance.json",
-        "similarity": "reports/figures/data/cross_stage/cross_stage_partition_similarity.csv",
-        "svg": "reports/figures/preview/cross_stage/cross_stage_partition_overview.svg"
-      },
-      "sha256": {
-        "data": "c19a7bbc967c7deb187b873d9fa14241f7a741402d97e0c344fe8fbe299e5a4b",
-        "pdf": "7f4537bea2c5447138c9b131026893c9121edb640f07adc5673a7c4efca35fb5",
-        "provenance": "197e593de6022c895d95979657ec17aa38af041dd3131b355ae930adac5ac16a",
-        "similarity": "0ccb1c318c59f86d1384ec1af1751e272103680c4ead2017e0c2d4d680e62d85",
-        "svg": "0e9e0e3808779ff1842ffe78d650f03937dc41c5de23e4b69d43cbc65f69dff1"
-      },
-      "stage": "stage3",
-      "title": "Cross-stage partition profiles for the three primary subjects"
-    },
     "stage123_daytrader_highest_lowest_clusters": {
       "destination": "main_text",
       "formats": [
@@ -55,28 +7,28 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-06T19:42:07Z",
+      "generated_at": "2026-08-11T21:29:40Z",
       "generator": "evo_ms.visualization.figures.stage123_daytrader_clusters",
       "inputs": [
         "data/extracted/daytrader/class_nodes.csv",
         "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
         "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
         "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
-        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
         "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
-        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/posthoc_metrics.csv",
-        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv",
-        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_solution.json"
+        "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+        "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_25/partition_labels.csv"
       ],
       "metadata": {
+        "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
         "ranking_metric": "local weighted-modularity contribution",
         "raw_structural_graph": "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+        "representative_rule": "maximum mean ARI across 30 BALANCE partitions; seed then solution tie-break",
         "stage1_partition": "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
         "stage1_representative": "seed 42",
         "stage2_partition": "results/stage2/subjects/daytrader/nsga/robustness_final_30seeds/seed_25/pareto_labels.csv.xz",
         "stage2_representative": "seed 25 / seed25_solution047",
-        "stage3_partition": "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_16/selected_partition.csv",
-        "stage3_representative": "seed 16 / seed16_solution036",
+        "stage3_partition": "results/stage3/subjects/daytrader/declaration_method_body/formal/seed_25/partition_labels.csv",
+        "stage3_representative": "seed 25 / seed25_solution026 / BALANCE P1 medoid",
         "subject": "daytrader"
       },
       "outputs": {
@@ -90,12 +42,12 @@
       },
       "sha256": {
         "aggregation": "f4a825d0495ef66c3e43d6ede1ebe63afe2733d5fe9707f1aecc49bacb3be827",
-        "dot": "0c2a7609f08511c6e6affce8f78c00284abaedef6571d045b26c7a9132cf10f6",
-        "pdf": "f2906c14b29525d9b91029deefbbac53826c41c5808ab90990e5ab48e4e75d3a",
-        "profiles": "3e1b6529736c3aa67a62a4c742c617fe7b55695d4bdb2c33eabc2ca9ea565527",
-        "provenance": "eaabb8f95e85db400b6ca3fa5c48584ca8ca71ec9e078c50f10fde9b5b5541da",
-        "selected": "44d816734ec2965bf38a0c491210fddd437479c9535ee396975348c46ae9354e",
-        "svg": "9742a106db40eb354f372e0d19c9242bd7f96e322e3d36c94c7b0cfbff9a79b8"
+        "dot": "2daa68f94d8a817cabbca93f561bef38da8ed2fc1028736744e9c45e663a53dc",
+        "pdf": "8c4d03257119f1e456d853d666d9a31fbd3633dd9701f15b6ede7b3e219da8fc",
+        "profiles": "dc04e0ad9b02eb962ca107f5df6724fc2b42282c62913459b12c5d7a19afe35e",
+        "provenance": "7283f26e108950b2edad50ec0ce37e47b3c498163aed089d68773b0af5d84d45",
+        "selected": "9d65c171808777d595c823d642a7193b2040adcbc7b1a933ab9fb4c9242d67cd",
+        "svg": "584b165c24c220e35be0e59fd25ff5e2467a8dfd3179c3dce0fd748265a959af"
       },
       "stage": "stage3",
       "title": "Highest- and lowest-contributing DayTrader clusters across the three stages"
@@ -107,28 +59,28 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-06T19:46:02Z",
+      "generated_at": "2026-08-11T21:29:38Z",
       "generator": "evo_ms.visualization.figures.stage123_jpetstore_clusters",
       "inputs": [
         "data/extracted/jpetstore/class_nodes.csv",
         "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
         "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
         "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
-        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
         "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
-        "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/posthoc_metrics.csv",
-        "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv",
-        "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json"
+        "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+        "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv"
       ],
       "metadata": {
+        "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
         "ranking_metric": "local weighted-modularity contribution",
         "raw_structural_graph": "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+        "representative_rule": "maximum mean ARI across 30 BALANCE partitions; seed then solution tie-break",
         "stage1_partition": "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
         "stage1_representative": "seed 42",
         "stage2_partition": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
         "stage2_representative": "seed 1 / seed1_solution007",
-        "stage3_partition": "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv",
-        "stage3_representative": "seed 0 / seed0_solution000",
+        "stage3_partition": "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv",
+        "stage3_representative": "seed 4 / seed4_solution000 / BALANCE P1 medoid",
         "subject": "jpetstore"
       },
       "outputs": {
@@ -142,40 +94,38 @@
       },
       "sha256": {
         "aggregation": "ab2eaf45a83571fc7ea56d772ee0481cd74e53dc34f7dfe653658118b8b5af72",
-        "dot": "cfb1f0c353b5442a73c95c24bcafdfd9e005b1a9681317bcb13ed4ec07ea383e",
-        "pdf": "00707e725cfe374b0b6ce01e6e76fbc9c075b3c3aa60638b5f1fbee7567d8117",
-        "profiles": "1d80a8be5e52394ac0a1719203e75f4aeade517d9fd76a0880e885c693436bab",
-        "provenance": "3b7a599caacbb5a27856fc5e5a5b91dbd6941c44ff9f4819f2d57537bf5743bc",
-        "selected": "0e397dd3a30e38ca70a43ea17e2c799c4a1aa25bc49fce7d5612253e58b70072",
-        "svg": "64120312ffc9c46d4d6d58c444f750469fc5b1a12f2209ef0e41eee2b615577f"
+        "dot": "13dac4f24ad0dc5fd5a6ddf7aec54de6106acd7abb7388b9326fc15ae2f439b9",
+        "pdf": "dd486bc290bf79fab70713fd5702870062dee4d0ac2415103f17c714b39420b9",
+        "profiles": "1cb549c3af314d409d136b4a990e239d4b692640a9c4cb1f90473c49c931440e",
+        "provenance": "180be7709843e4ee00490e0153102e289c96786a2b4a4c00bf28fbfc7d35438f",
+        "selected": "ca836d056a36efe664192901cc6d04e833bff162c4a5d8c02f36e6054c8c1c29",
+        "svg": "547088e1e5a1c09c9311c0f8fcfa7dfb3a65cbda4bca6c4b65c600bed3e6308b"
       },
       "stage": "stage3",
       "title": "Highest- and lowest-contributing JPetStore clusters across the three stages"
     },
-    "stage13_xerces_shared_highest_lowest_clusters": {
+    "stage13_xerces_balance_highest_lowest_clusters": {
       "destination": "appendix",
       "formats": [
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-06T21:33:22Z",
+      "generated_at": "2026-08-11T21:33:18Z",
       "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
       "inputs": [
         "data/extracted/xerces-j/class_nodes.csv",
         "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
         "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
         "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
-        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
-        "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv",
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+        "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_05/partition_labels.csv"
       ],
       "metadata": {
         "aggregation": "focal classes grouped by package",
-        "highest_cluster": "C11",
-        "lowest_cluster": "C07",
-        "representatives": "Stage 1 seed 42 / raw_reference_leiden; Stage 3 seed 22 / seed22_solution015",
+        "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+        "representative_rule": "maximum mean ARI across 30 BALANCE partitions; seed then solution tie-break",
+        "stage1_representative": "seed 42 / raw_reference_leiden",
+        "stage3_representative": "seed 5 / seed5_solution019 / BALANCE P1 medoid",
         "subject": "xerces-j"
       },
       "outputs": {
@@ -186,32 +136,32 @@
         "membership": "reports/figures/data/cross_stage/xerces_stage13_class_membership.csv",
         "package_profiles": "reports/figures/data/cross_stage/xerces_stage13_package_profiles.csv",
         "package_relations": "reports/figures/data/cross_stage/xerces_stage13_package_relations.csv",
-        "pdf": "reports/figures/pdf/cross_stage/xerces_stage13_shared_highest_lowest_clusters.pdf",
+        "pdf": "reports/figures/pdf/cross_stage/xerces_stage13_balance_highest_lowest_clusters.pdf",
         "profiles": "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
-        "provenance": "reports/figures/data/cross_stage/xerces_stage13_shared_highest_lowest_clusters.provenance.json",
+        "provenance": "reports/figures/data/cross_stage/xerces_stage13_balance_highest_lowest_clusters.provenance.json",
         "selected": "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
-        "svg": "reports/figures/preview/cross_stage/xerces_stage13_shared_highest_lowest_clusters.svg",
+        "svg": "reports/figures/preview/cross_stage/xerces_stage13_balance_highest_lowest_clusters.svg",
         "top_boundary_destinations": "reports/figures/data/cross_stage/xerces_stage13_top_boundary_destinations.csv",
         "top_internal_relations": "reports/figures/data/cross_stage/xerces_stage13_top_internal_relations.csv"
       },
       "sha256": {
-        "boundary_edges": "d30520206623bf6716c722405dfca55f391158268723856c23120e150f0d2335",
-        "boundary_profile": "0f0784321162c3cff62c1ada02f243cc78e21743636e3483ec8ff5647c59fab8",
-        "internal_edges": "90311cfb8c55c4d3863cf3d0ec50d46e413b61c5706cb71508fc728af72b7b28",
-        "lowest_profile": "7e4bc0af22d41ddb5abb9b7f0334043a47daf928a7b4ae4f6429062fc3373176",
-        "membership": "00fcb6501b8d052260a95c935a1efc6b20209f3379a23a102a571a181bd020c9",
-        "package_profiles": "85efd9ce8065cb997575e9c9f66823fccaf3711b5f0a294e66a54da40db210a2",
-        "package_relations": "e85fe92c40ebb5f8a90f924dde593dccde26f04faaf6bd9daa756e7815261104",
-        "pdf": "fd940ceaa57f8141fe923bcfdb76d03de4b9a269ca22fabf6c2814766060c035",
-        "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
-        "provenance": "b80edf793ca861eae4b01c782dcea6f2c1d8ef761bbe69cf98d538fa47c51fdf",
-        "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
-        "svg": "38d11eb29e6aafd9d2652537771c2df8193133a0d1ac1d82b58ad1236dfe89d8",
-        "top_boundary_destinations": "01604fc71f7eef6f5c610918821cbfda314e54f8d3136c1b0cc745dcd07caca1",
-        "top_internal_relations": "c5cb7f3bea5211a80a0d2a301a442508db76cd3f58fc027f407b50382f1a0206"
+        "boundary_edges": "e0057734f9aed04f6e79b2624c1b203398da055cafb3bbb1598e4206bacde6d0",
+        "boundary_profile": "b2190477c01cb0806a5fec5fd535057f1b3db64ad0f13b2ede4b17b36ef0a7d5",
+        "internal_edges": "3a1ff9f75c68c039fa30157fdefcbeec77bcc5df701b313eb8f725b972e2a6a6",
+        "lowest_profile": "6a117558140856085a1961558a45ee840dcb3d1d993ec9da6cbcb1b21bb41bc3",
+        "membership": "2d4435b18c0621cd5dd0a299bde77537e04d3fc314311fdece0babd2dbce7f58",
+        "package_profiles": "cf51f654a2d7d24101f38508ff42168018d43a67a594f38b2ebb8cff1c39a2ed",
+        "package_relations": "a2470a30195c426dd5d9e451b40637bce8faa55a87e0e30f6828b624e8546031",
+        "pdf": "6cb340654a9aa6cfaa25ef95d872cfac8e0565f4c79c6144d8d9c152e1028272",
+        "profiles": "164265f6f92d0b60b8ec0b8807a25ab9aa5abb24d342a5522dabba6fa38513c7",
+        "provenance": "691cdf3028079d5b65bde131f6b7fecb01721d5920e09a9f74a73bf42f06f9f4",
+        "selected": "12eec7e8354a9100021525e3124784211a4c4c8868cf6db119b09ba3785e371e",
+        "svg": "bdc8506d9c69856ea02eaff325939358b17ed9dfe8e93986aad0237ec1046f8e",
+        "top_boundary_destinations": "e4d33b12e622ffa7d49e2ad926ad6a2e296805e70d5bcefd59bde864ad13fcd5",
+        "top_internal_relations": "284e10835e8dec914a4fac296c80aea6e2a5b0be2fc650f876ab65fc1c818686"
       },
       "stage": "stage3",
-      "title": "Xerces-J cluster contribution: shared Stage 1 and Stage 3 profile"
+      "title": "Xerces-J cluster contribution: Stage 3 BALANCE profile with Stage 1 context"
     },
     "stage1_ssa_seed_robustness": {
       "destination": "main_text",
@@ -425,6 +375,41 @@
       },
       "stage": "stage3",
       "title": "Structural and semantic evidence in JPetStore"
+    },
+    "stage3_xerces_operating_preference_sensitivity": {
+      "destination": "main_text",
+      "formats": [
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-11T21:29:52Z",
+      "generator": "evo_ms.visualization.figures.stage3_xerces_operating_preference",
+      "inputs": [
+        "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+        "results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv"
+      ],
+      "metadata": {
+        "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv",
+        "candidate_region": "within 5% of each seed-specific maximum weighted modularity",
+        "dimensions": "imbalance (x) and cohesion (y)",
+        "profiles": "P0 MODULARITY_ANCHOR, P1 BALANCE, P2 COUPLING, P3 COHESION, P4 SEMANTIC",
+        "stage": "stage3",
+        "subject": "xerces-j"
+      },
+      "outputs": {
+        "data": "reports/figures/data/stage3/xerces_operating_preference_sensitivity.csv",
+        "pdf": "reports/figures/pdf/stage3/xerces_operating_preference_sensitivity.pdf",
+        "provenance": "reports/figures/data/stage3/xerces_operating_preference_sensitivity.provenance.json",
+        "svg": "reports/figures/preview/stage3/xerces_operating_preference_sensitivity.svg"
+      },
+      "sha256": {
+        "data": "ceaa33766cec2b8973855d360442f28e3b8ba83e211302f689ba4e58c83cc906",
+        "pdf": "87ca5514bce3ecc858c3e54c0e81a7a9086ffdaf52946b9917b3366c2c037be9",
+        "provenance": "ae8b584a45fb14eea9989447d63be450dc121b8ffa9562bcee119f91bb5663c3",
+        "svg": "3542a745ae9b12ef02ccaa6819647d9d4c91191403ccd3b6acd0aea5144b0e3a"
+      },
+      "stage": "stage3",
+      "title": "Xerces-J operating preferences within the 5% modularity candidate region"
     }
   },
   "schema_version": 1

@@ -4,12 +4,12 @@
     "configs/visualization/style.yml"
   ],
   "config_sha256": {
-    "configs/visualization/figures.yml": "7748448e4c48f9807a31fe77424f27187b123ae6c6409f894ce7dc534c1db5b2",
+    "configs/visualization/figures.yml": "9b3892eadeaf10fc923899026b308825e803b317fc10b544fefc695d98a283ea",
     "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
   },
-  "dot_sha256": "cfb1f0c353b5442a73c95c24bcafdfd9e005b1a9681317bcb13ed4ec07ea383e",
+  "dot_sha256": "13dac4f24ad0dc5fd5a6ddf7aec54de6106acd7abb7388b9326fc15ae2f439b9",
   "figure_id": "stage123_jpetstore_highest_lowest_clusters",
-  "generated_at": "2026-08-06T19:46:02Z",
+  "generated_at": "2026-08-11T21:29:38Z",
   "generated_outputs": [
     "reports/figures/data/cross_stage/jpetstore_boundary_aggregation.csv",
     "reports/figures/data/cross_stage/jpetstore_cluster_profiles.csv",
@@ -20,7 +20,7 @@
     "reports/figures/source/cross_stage/jpetstore_highest_lowest_clusters.dot"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_jpetstore_clusters.py",
-  "git_commit": "bc08117d06d9a0b8fc1fdf9b07518bbc4b86287a",
+  "git_commit": "9109a67679ffe484583f569c0c63786914d64851",
   "git_dirty": true,
   "graphviz_engine": "neato",
   "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",
@@ -29,23 +29,47 @@
     "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
     "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
     "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
-    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
     "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
-    "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/posthoc_metrics.csv",
-    "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv",
-    "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json"
+    "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+    "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv"
   ],
   "input_sha256": {
     "data/extracted/jpetstore/class_nodes.csv": "69b59fef4e0cf7feb7402d14beac895b1790db0906b2b6dc11c54743f431e7e0",
     "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv": "7d48be144ba109eb9029441bc57fd5ab70917333ec9b61fc3063015f73f7b5d5",
     "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv": "10327cabac7cc7bd0225b25e8cfd29163a9cc0ba67e11180e04bc88d59c36d80",
     "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv": "12acf50e8b25a06edecdecda4bda30c55fdb237f0227762a50aa34641607c81d",
-    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv": "9a0e9a1f40edf260bb06c719e6967aef9c18a81b28fac9f0895e5520341c91d3",
     "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz": "3ac02924a7056da42fe624d928b72e52158f87da146455241eb31cdd6f621983",
-    "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/posthoc_metrics.csv": "338ed345abc90e0aef03b28180dfc79eb5b1030dfaf57429fd124d567d42b223",
-    "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_partition.csv": "2bf3a472dab2499058efe1b26c385a6c2ab3f69ccc6078060da4620ea6868043",
-    "results/stage3/subjects/jpetstore/declaration_method_body/validation/seed_00/selected_solution.json": "61b895b9a1800f601de0264f156d8ca323a6d7b19c6b6b54f41b272414efe420"
+    "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv": "af4e1213f13acca3893a483758cfc9ecae5b55e0c4b82d6935e5e17306ab4a3e",
+    "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv": "e3c4eb7fd37a85ee9b4327ab1fa1043bfda7ab2290103ac56b204889ad1fd760"
   },
+  "operating_profile_representatives": [
+    {
+      "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+      "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
+      "mean_ari_to_other_balance_partitions": null,
+      "partition_source": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
+      "profile": "BALANCE",
+      "profile_id": "P1",
+      "representative_rule": "existing approved Stage 2 representative seed; solution resolved from authoritative BALANCE/P1",
+      "seed": 1,
+      "solution_id": "seed1_solution007",
+      "stage": "stage2",
+      "subject": "jpetstore"
+    },
+    {
+      "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+      "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
+      "mean_ari_to_other_balance_partitions": 0.8707868565791642,
+      "partition_source": "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv",
+      "profile": "BALANCE",
+      "profile_id": "P1",
+      "representative_rule": "maximum mean ARI to the other 29 BALANCE/P1 partitions; ties by seed then solution_id",
+      "seed": 4,
+      "solution_id": "seed4_solution000",
+      "stage": "stage3",
+      "subject": "jpetstore"
+    }
+  ],
   "render_command": [
     [
       "neato",

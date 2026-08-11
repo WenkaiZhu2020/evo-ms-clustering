@@ -36,13 +36,13 @@ OBSOLETE_IDS = {
     "stage3_xerces_highest_lowest_clusters",
 }
 NON_XERCES_IDS = {
-    "cross_stage_partition_overview",
     "stage1_ssa_seed_robustness",
     "stage123_daytrader_highest_lowest_clusters",
     "stage123_jpetstore_highest_lowest_clusters",
     "stage2_daytrader_partition_transition",
     "stage3_four_to_three_projection",
     "stage3_jpetstore_semantic_evidence_comparison",
+    "stage3_xerces_operating_preference_sensitivity",
 }
 
 
@@ -117,12 +117,10 @@ def test_scope_modularity_representatives_and_accepted_clusters(prepared) -> Non
     assert _selected(data, 1, "highest").members == _selected(
         data, 3, "highest"
     ).members
-    assert _selected(data, 1, "lowest").members == _selected(
-        data, 3, "lowest"
-    ).members
+    assert _selected(data, 1, "lowest").members != _selected(data, 3, "lowest").members
 
 
-@pytest.mark.parametrize("page,stage", [("stage13", 1), ("stage2", 2)])
+@pytest.mark.parametrize("page,stage", [("stage13", 3), ("stage2", 2)])
 def test_composition_matrix_boundary_and_lowest_reconcile(
     prepared, page: str, stage: int
 ) -> None:
@@ -192,8 +190,8 @@ def test_composition_matrix_boundary_and_lowest_reconcile(
     assert sum(float(row["aggregated_boundary_weight"]) for row in displayed) == pytest.approx(
         first.high.boundary_weight
     )
-    assert first.low.cluster_id == ("C07" if page == "stage13" else "C27")
-    assert len(first.low.members) == (1 if page == "stage13" else 2)
+    assert first.low.cluster_id == ("C06" if page == "stage13" else "C27")
+    assert len(first.low.members) == (3 if page == "stage13" else 2)
 
 
 @pytest.mark.parametrize("page", ["stage13", "stage2"])
@@ -225,8 +223,8 @@ def test_csv_contracts_are_deterministic_complete_and_relative(prepared, page: s
     assert len(memberships) == len(first.high.members)
     assert len(packages) == 10
     assert len(relations) == 37
-    assert len(boundaries) == (12 if page == "stage13" else 16)
-    assert len(lowest) == (1 if page == "stage13" else 2)
+    assert len(boundaries) == (15 if page == "stage13" else 16)
+    assert len(lowest) == (5 if page == "stage13" else 2)
     assert len(top_internal) == 5
     assert len(top_boundary) == 6
 
@@ -357,7 +355,7 @@ def test_render_failure_is_atomic(tmp_path: Path) -> None:
     assert manifest.read_bytes() == before
     assert not (
         tmp_path
-        / "preview/cross_stage/xerces_stage13_shared_highest_lowest_clusters.svg"
+        / "preview/cross_stage/xerces_stage13_balance_highest_lowest_clusters.svg"
     ).exists()
     assert not (tmp_path / "source/cross_stage").exists()
 
