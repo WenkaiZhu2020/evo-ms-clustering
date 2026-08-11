@@ -1,0 +1,6 @@
+subject,seed,profile,metric,raw_delta_stage3_minus_stage2,snapped_delta,same_canonical_partition,snap_reason
+jpetstore,16,BALANCE,cohesion,8.8817841970012523e-16,0,False,absolute_delta_below_1e-12
+jpetstore,21,BALANCE,cohesion,-8.8817841970012523e-16,0,False,absolute_delta_below_1e-12
+jpetstore,3,BALANCE,f_semantic,0,0,True,canonical_partition_equivalent_exact_zero
+jpetstore,15,BALANCE,f_semantic,0,0,True,canonical_partition_equivalent_exact_zero
+jpetstore,29,BALANCE,f_semantic,0,0,True,canonical_partition_equivalent_exact_zero
