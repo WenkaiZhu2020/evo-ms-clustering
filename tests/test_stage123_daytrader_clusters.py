@@ -19,6 +19,7 @@ from evo_ms.visualization.figures.stage123_daytrader_clusters import (
     build_figure,
     boundary_aggregation_csv,
     boundary_penwidth,
+    compact_panels,
     figure_dot,
     prepare_figure_data,
     profiles_csv,
@@ -114,27 +115,31 @@ def test_highest_lowest_ties_and_complete_csvs_are_deterministic(prepared) -> No
     assert selected[(2, "lowest")].contribution == pytest.approx(-8.090039964052776e-05)
 
 
-def test_every_focal_member_internal_edge_and_aggregate_is_rendered(prepared) -> None:
+def test_repeated_focal_structures_are_merged_and_every_unique_member_is_rendered(prepared) -> None:
     config, data = prepared
     dot = figure_dot(config, data)
     assert dot == figure_dot(config, data)
-    assert len(re.findall(r'^  "p[123][hl]_panel" ', dot, re.MULTILINE)) == 6
-    for role, profile in data.selected:
-        prefix = f"p{profile.stage}{role[0]}"
-        ids = {class_id: f"{prefix}_f{i:03d}" for i, class_id in enumerate(profile.members, 1)}
-        for member in profile.members:
-            line = next(line for line in dot.splitlines() if line.startswith(f'  "{ids[member]}" '))
-            assert 'fillcolor="#DCEAF7"' in line
-        for aggregate in profile.boundary_aggregates:
-            summary = f"{prefix}_x{aggregate.external_cluster_id}"
-            line = next(line for line in dot.splitlines() if line.startswith(f'  "{summary}" '))
-            assert 'fillcolor="#F2F2F2"' in line and 'style="rounded,dashed,filled"' in line
-        for left, right, _ in profile.internal_edges:
-            line = next(line for line in dot.splitlines() if f'"{ids[left]}" -- "{ids[right]}"' in line)
-            assert 'style="solid"' in line
-        assert sum(len(a.connections) for a in profile.boundary_aggregates) == sum(
-            1 for line in dot.splitlines() if line.startswith(f'  "{prefix}_f') and ' -- ' in line and 'style="dashed"' in line
-        )
+    panels = compact_panels(data)
+    assert [(panel.role, panel.stages) for panel in panels] == [
+        ("highest", (1, 2, 3)), ("lowest", (1, 3)), ("lowest", (2,)),
+    ]
+    assert len(re.findall(r'^  "[hl]g[12]_panel" ', dot, re.MULTILINE)) == 3
+    for role in ("highest", "lowest"):
+        for index, panel in enumerate((panel for panel in panels if panel.role == role), 1):
+            profile = panel.profile
+            prefix = f"{role[0]}g{index}"
+            ids = {class_id: f"{prefix}_f{i:03d}" for i, class_id in enumerate(profile.members, 1)}
+            for member in profile.members:
+                line = next(line for line in dot.splitlines() if line.startswith(f'  "{ids[member]}" '))
+                assert 'fillcolor="#DCEAF7"' in line
+            for left, right, _ in profile.internal_edges:
+                line = next(line for line in dot.splitlines() if f'"{ids[left]}" -- "{ids[right]}"' in line)
+                assert 'style="solid"' in line
+            if profile.boundary_edges:
+                line = next(line for line in dot.splitlines() if line.startswith(f'  "{prefix}_boundary" '))
+                assert 'fillcolor="#F2F2F2"' in line and 'style="rounded,dashed,filled"' in line
+                assert f"{len(profile.external)} external classes" in line
+                assert f"{len(profile.boundary_edges)} edges" in line
     assert "best" not in dot.lower() and "worst" not in dot.lower()
 
 
@@ -165,9 +170,10 @@ def test_boundary_width_is_deterministic_monotonic_and_singletons_are_annotated(
     assert widths == sorted(widths) and len(set(widths)) == 4
     assert widths == [boundary_penwidth(value, 100.0, 0.65, 2.8) for value in (1.0, 4.0, 25.0, 100.0)]
     dot = figure_dot(config, data)
-    assert dot.count("Isolated singleton") == 2
-    assert '"p1l_isolated"' in dot and '"p3l_isolated"' in dot and '"p2l_isolated"' not in dot
+    assert dot.count("Isolated singleton") == 1
+    assert '"lg1_isolated"' in dot and '"lg2_isolated"' not in dot
     assert "Stage 2 and Stage 3 representatives use the authoritative BALANCE profile." in dot
+    assert "Repeated focal structures are drawn once." in dot
 
 
 def test_real_fixed_neato_svg_pdf_relative_provenance_and_manifest(tmp_path: Path) -> None:

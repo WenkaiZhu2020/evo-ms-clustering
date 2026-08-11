@@ -10,7 +10,13 @@ import re
 import pytest
 
 from evo_ms.visualization.config import load_visualization_config
-from evo_ms.visualization.figures.stage123_daytrader_clusters import boundary_aggregation_csv, figure_dot, profiles_csv, selected_csv
+from evo_ms.visualization.figures.stage123_daytrader_clusters import (
+    boundary_aggregation_csv,
+    compact_panels,
+    figure_dot,
+    profiles_csv,
+    selected_csv,
+)
 from evo_ms.visualization.figures.stage123_jpetstore_clusters import (
     FIGURE_ID,
     STAGE2_SEED,
@@ -75,16 +81,22 @@ def test_csvs_and_aggregation_are_complete_and_deterministic(prepared) -> None:
         assert {item for a in profile.boundary_aggregates for item in a.external_classes}==set(profile.external)
 
 
-def test_dot_preserves_internal_edges_aggregates_and_three_by_two_structure(prepared) -> None:
+def test_dot_merges_stage1_stage3_and_preserves_unique_focal_structures(prepared) -> None:
     config,data=prepared
     dot=figure_dot(config,data,figure_id=FIGURE_ID,comparison_note="Stage 1 and Stage 3 select the same highest and lowest clusters.")
     assert dot==figure_dot(config,data,figure_id=FIGURE_ID,comparison_note="Stage 1 and Stage 3 select the same highest and lowest clusters.")
-    assert len(re.findall(r'^  "p[123][hl]_panel" ',dot,re.MULTILINE))==6
-    for role,profile in data.selected:
-        prefix=f"p{profile.stage}{role[0]}"; ids={member:f"{prefix}_f{i:03d}" for i,member in enumerate(profile.members,1)}
-        for member in profile.members: assert f'"{ids[member]}" [' in dot
-        for left,right,_weight in profile.internal_edges: assert f'"{ids[left]}" -- "{ids[right]}"' in dot
-        for aggregate in profile.boundary_aggregates: assert f'"{prefix}_x{aggregate.external_cluster_id}" [' in dot
+    panels=compact_panels(data)
+    assert [(panel.role,panel.stages) for panel in panels]==[
+        ("highest",(1,3)),("highest",(2,)),("lowest",(1,3)),("lowest",(2,))]
+    assert len(re.findall(r'^  "[hl]g[12]_panel" ',dot,re.MULTILINE))==4
+    for role in ("highest","lowest"):
+        for index,panel in enumerate((panel for panel in panels if panel.role==role),1):
+            profile=panel.profile; prefix=f"{role[0]}g{index}"
+            ids={member:f"{prefix}_f{i:03d}" for i,member in enumerate(profile.members,1)}
+            for member in profile.members: assert f'"{ids[member]}" [' in dot
+            for left,right,_weight in profile.internal_edges: assert f'"{ids[left]}" -- "{ids[right]}"' in dot
+            assert f'"{prefix}_boundary" [' in dot
+    assert "Repeated focal structures are drawn once." in dot
 
 
 def test_real_svg_pdf_relative_provenance_and_atomic_manifest(tmp_path: Path) -> None:

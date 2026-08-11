@@ -1,4 +1,4 @@
-"""Xerces-J operating-preference sensitivity within the 5% candidate bands."""
+"""Xerces-J Stage 3 operating-profile comparison."""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
+from matplotlib.ticker import PercentFormatter
 import pandas as pd
 
 from evo_ms.visualization.figures.stage123_daytrader_clusters import _relative
@@ -27,188 +28,187 @@ FIGURE_ID = "stage3_xerces_operating_preference_sensitivity"
 BASENAME = "xerces_operating_preference_sensitivity"
 DIRECTORY = "stage3"
 PROFILES = (
-    ("P0", "MODULARITY_ANCHOR", "selected_modularity_anchor", "x", "#202020"),
-    ("P1", "BALANCE", "selected_balance", "o", "#0072B2"),
-    ("P2", "COUPLING", "selected_coupling", "+", "#555555"),
-    ("P3", "COHESION", "selected_cohesion", "s", "#D55E00"),
-    ("P4", "SEMANTIC", "selected_semantic", "D", "#009E73"),
+    ("P0", "MODULARITY_ANCHOR", "MAX-Q"),
+    ("P1", "BALANCE", "BALANCE"),
+    ("P2", "COUPLING", "COUPLING"),
+    ("P3", "COHESION", "COHESION"),
+    ("P4", "SEMANTIC", "SEMANTIC"),
+)
+METRICS = (
+    ("imbalance", "Imbalance", "lower is preferred"),
+    ("cohesion", "Cohesion", "higher is preferred"),
+    ("f_semantic", r"$f_{semantic}$", "lower is preferred"),
+    ("relative_modularity_loss", "Relative modularity loss", r"from $Q_{best}$; lower is preferred"),
 )
 
 
 def prepare_figure_data(config: VisualizationConfig) -> tuple[pd.DataFrame, pd.DataFrame]:
     root = config.repository_root
-    candidates = pd.read_csv(
+    summary = pd.read_csv(
         root
         / "results/stage3/cross_subject/operating_preference_analysis/"
-        "15_figure_candidates_5pct.csv"
+        "05_profile_summary.csv"
     )
-    candidates = candidates.loc[
-        (candidates["subject"] == "xerces") & (candidates["stage"] == "stage3")
-    ].sort_values(["seed", "solution_id"]).reset_index(drop=True)
-    if len(candidates) != 147 or candidates["seed"].nunique() != 30:
-        raise ValueError("Xerces-J Stage 3 figure pool must contain 147 candidates across 30 seeds")
-    if candidates["relative_modularity_loss"].min() < 0 or candidates["relative_modularity_loss"].max() > 0.05 + 1e-12:
-        raise ValueError("figure candidate lies outside the seed-specific 5% modularity region")
+    summary = summary.loc[
+        (summary["subject"] == "xerces") & (summary["stage"] == "stage3")
+    ].copy()
+    order = {profile_id: index for index, (profile_id, _profile, _label) in enumerate(PROFILES)}
+    summary["profile_order"] = summary["profile_id"].map(order)
+    summary = summary.sort_values("profile_order").reset_index(drop=True)
+    expected = [(profile_id, profile) for profile_id, profile, _label in PROFILES]
+    if list(zip(summary["profile_id"], summary["profile"], strict=True)) != expected:
+        raise ValueError("Xerces-J Stage 3 summary must contain authoritative P0-P4 profiles")
+    if not (summary["n_seeds"] == 30).all():
+        raise ValueError("every Xerces-J Stage 3 profile summary must represent 30 seeds")
 
-    selected_rows = []
-    for profile_id, profile, flag, _marker, _colour in PROFILES:
-        selected = candidates.loc[candidates[flag].astype(bool)].copy()
-        if len(selected) != 30 or selected["seed"].astype(int).tolist() != list(range(30)):
-            raise ValueError(f"{profile_id}/{profile} must select exactly one candidate per seed")
-        selected["profile_id"] = profile_id
-        selected["profile"] = profile
-        selected_rows.append(selected)
-    selected = pd.concat(selected_rows, ignore_index=True)
-
-    authoritative = pd.read_csv(
+    per_seed = pd.read_csv(
         root
         / "results/stage3/cross_subject/operating_preference_analysis/"
         "04_selected_profiles_per_seed.csv"
     )
-    authoritative = authoritative.loc[
-        (authoritative["subject"] == "xerces")
-        & (authoritative["stage"] == "stage3")
-    ]
-    merged = selected.merge(
-        authoritative[
-            ["seed", "profile_id", "profile", "selected_solution_id"]
-        ],
-        on=["seed", "profile_id", "profile"],
-        how="left",
-        validate="one_to_one",
+    per_seed = per_seed.loc[
+        (per_seed["subject"] == "xerces") & (per_seed["stage"] == "stage3")
+    ].sort_values(["profile_id", "seed"]).reset_index(drop=True)
+    counts = per_seed.groupby("profile_id").size().to_dict()
+    if counts != {profile_id: 30 for profile_id, _profile, _label in PROFILES}:
+        raise ValueError("Xerces-J Stage 3 P0-P4 selections must contain 30 rows per profile")
+    for profile_id, profile, _label in PROFILES:
+        rows = per_seed.loc[per_seed["profile_id"] == profile_id]
+        if rows["seed"].astype(int).tolist() != list(range(30)) or not (rows["profile"] == profile).all():
+            raise ValueError(f"{profile_id}/{profile} does not contain exactly seeds 0-29")
+
+    for metric, _label, _direction in METRICS:
+        summary_median = summary.set_index("profile_id")[f"median_{metric}"]
+        retained_median = per_seed.groupby("profile_id")[metric].median()
+        if not summary_median.index.equals(retained_median.index) or not (
+            (summary_median - retained_median).abs() <= 1e-12
+        ).all():
+            raise ValueError(f"retained per-seed {metric} values disagree with 05_profile_summary.csv")
+
+    relative = per_seed.groupby("profile_id")["relative_modularity_loss"].quantile([0.25, 0.75]).unstack()
+    summary["q1_relative_modularity_loss"] = summary["profile_id"].map(relative[0.25])
+    summary["q3_relative_modularity_loss"] = summary["profile_id"].map(relative[0.75])
+    summary["iqr_relative_modularity_loss"] = (
+        summary["q3_relative_modularity_loss"] - summary["q1_relative_modularity_loss"]
     )
-    if merged["selected_solution_id"].isna().any() or not (
-        merged["solution_id"] == merged["selected_solution_id"]
-    ).all():
-        raise ValueError("figure P0-P4 selections disagree with the authoritative profile table")
-    return candidates, selected.sort_values(["profile_id", "seed"]).reset_index(drop=True)
+    return summary, per_seed
 
 
-def figure_data_csv(candidates: pd.DataFrame, selected: pd.DataFrame) -> str:
-    selected_lookup = {
-        (int(row.seed), str(row.solution_id)): [] for row in candidates.itertuples()
-    }
-    for row in selected.itertuples():
-        selected_lookup[(int(row.seed), str(row.solution_id))].append(str(row.profile_id))
-    output = candidates[
-        [
-            "subject",
-            "seed",
-            "stage",
-            "solution_id",
-            "weighted_modularity",
-            "relative_modularity_loss",
-            "coupling",
-            "cohesion",
-            "imbalance",
-            "f_semantic",
-            "cluster_count",
-            "canonical_partition_sha256",
-        ]
-    ].copy()
-    output["selected_profiles"] = [
-        ";".join(selected_lookup[(int(row.seed), str(row.solution_id))])
-        for row in candidates.itertuples()
-    ]
-    return output.to_csv(index=False, lineterminator="\n")
+def figure_data_csv(summary: pd.DataFrame) -> str:
+    labels = {profile_id: label for profile_id, _profile, label in PROFILES}
+    rows = []
+    for metric, _metric_label, direction in METRICS:
+        for row in summary.itertuples():
+            rows.append(
+                {
+                    "subject": row.subject,
+                    "stage": row.stage,
+                    "profile_id": row.profile_id,
+                    "profile": row.profile,
+                    "display_label": labels[row.profile_id],
+                    "metric": metric,
+                    "preferred_direction": direction,
+                    "n_seeds": row.n_seeds,
+                    "median": getattr(row, f"median_{metric}"),
+                    "q1": getattr(row, f"q1_{metric}"),
+                    "q3": getattr(row, f"q3_{metric}"),
+                    "iqr": getattr(row, f"iqr_{metric}"),
+                }
+            )
+    return pd.DataFrame(rows).to_csv(index=False, lineterminator="\n")
 
 
-def create_figure(candidates: pd.DataFrame, selected: pd.DataFrame) -> Figure:
+def create_figure(summary: pd.DataFrame) -> Figure:
     with plt.rc_context(
         {
             "font.family": "DejaVu Sans",
-            "font.size": 8,
+            "font.size": 8.2,
             "pdf.fonttype": 42,
-            "svg.hashsalt": "evo-ms-xerces-operating-preference-v1",
+            "svg.hashsalt": "evo-ms-xerces-operating-preference-v2",
         }
     ):
-        figure, axis = plt.subplots(figsize=(7.2, 4.5), facecolor="white")
-        axis.scatter(
-            candidates["imbalance"],
-            candidates["cohesion"],
-            s=18,
-            marker="o",
-            facecolors="#D7D7D7",
-            edgecolors="#8A8A8A",
-            linewidths=0.35,
-            alpha=0.65,
-            label="5% candidates (147; 30 seed-specific pools)",
-            zorder=1,
-        )
-        for profile_id, profile, _flag, marker, colour in PROFILES:
-            rows = selected.loc[selected["profile_id"] == profile_id]
-            if marker in {"x", "+"}:
-                axis.scatter(
-                    rows["imbalance"], rows["cohesion"], s=42, marker=marker,
-                    color=colour, linewidths=1.1, label=f"{profile_id} {profile}", zorder=3,
-                )
-            else:
-                axis.scatter(
-                    rows["imbalance"], rows["cohesion"], s=34, marker=marker,
-                    facecolors="none", edgecolors=colour, linewidths=1.0,
-                    label=f"{profile_id} {profile}", zorder=3,
-                )
-            median_style = {
-                "s": 80, "marker": marker, "color": colour,
-                "linewidths": 1.5 if marker in {"x", "+"} else 0.7, "zorder": 4,
-            }
-            if marker not in {"x", "+"}:
-                median_style["edgecolors"] = "white"
-            axis.scatter(
-                [rows["imbalance"].median()], [rows["cohesion"].median()],
-                **median_style,
+        figure, axes = plt.subplots(2, 2, figsize=(7.1, 5.15), facecolor="white")
+        labels = [label for _profile_id, _profile, label in PROFILES]
+        x = list(range(len(labels)))
+        for panel_label, axis, (metric, title, direction) in zip(
+            ("a", "b", "c", "d"), axes.flat, METRICS, strict=True
+        ):
+            medians = summary[f"median_{metric}"].astype(float).to_numpy()
+            q1 = summary[f"q1_{metric}"].astype(float).to_numpy()
+            q3 = summary[f"q3_{metric}"].astype(float).to_numpy()
+            axis.errorbar(
+                x,
+                medians,
+                yerr=[medians - q1, q3 - medians],
+                fmt="D",
+                markersize=5.2,
+                markerfacecolor="#1F4E79",
+                markeredgecolor="white",
+                markeredgewidth=0.55,
+                color="#5B6B78",
+                ecolor="#8796A3",
+                elinewidth=2.1,
+                capsize=4,
+                capthick=1.0,
+                zorder=3,
             )
-        axis.set_title(
-            "Xerces-J: operating preferences select different 5% candidates",
-            loc="left",
-            fontsize=11,
+            axis.set_title(f"({panel_label}) {title}", loc="left", fontsize=10, fontweight="bold", pad=7)
+            axis.text(
+                1.0,
+                0.985 if metric == "relative_modularity_loss" else 1.025,
+                direction,
+                transform=axis.transAxes,
+                ha="right",
+                va="top" if metric == "relative_modularity_loss" else "bottom",
+                fontsize=7.3,
+                color="#555555",
+            )
+            axis.set_xticks(x, labels)
+            axis.tick_params(axis="x", labelsize=7.1, pad=3)
+            axis.tick_params(axis="y", labelsize=7.5)
+            axis.grid(axis="y", color="#E2E5E8", linewidth=0.6)
+            axis.set_axisbelow(True)
+            axis.spines[["top", "right"]].set_visible(False)
+            axis.margins(x=0.09, y=0.20)
+            if metric == "relative_modularity_loss":
+                axis.yaxis.set_major_formatter(PercentFormatter(xmax=1.0, decimals=1))
+                value_labels = [f"{value * 100:.2f}%" for value in medians]
+            else:
+                value_labels = [f"{value:.3f}" for value in medians]
+            span = max(float(q3.max() - q1.min()), 1e-9)
+            for xpos, median, value_label in zip(x, medians, value_labels, strict=True):
+                axis.annotate(
+                    value_label,
+                    (xpos, median),
+                    xytext=(0, 7),
+                    textcoords="offset points",
+                    ha="center",
+                    va="bottom",
+                    fontsize=6.7,
+                    color="#1D2A35",
+                    clip_on=False,
+                )
+            lower = min(float(q1.min()), float(medians.min()))
+            upper = max(float(q3.max()), float(medians.max()))
+            axis.set_ylim(lower - 0.11 * span, upper + 0.30 * span)
+        figure.suptitle(
+            "Xerces-J Stage 3: operating-profile sensitivity",
+            x=0.08,
+            y=0.99,
+            ha="left",
+            fontsize=12,
             fontweight="bold",
-            pad=10,
         )
-        axis.text(
-            0.0,
-            1.01,
-            "Small markers: exact per-seed selections; large markers: profile medians",
-            transform=axis.transAxes,
-            fontsize=7.4,
+        figure.text(
+            0.08,
+            0.952,
+            "Points show medians across 30 seeds; vertical intervals show the interquartile range.",
+            ha="left",
+            va="top",
+            fontsize=7.7,
             color="#4A4A4A",
-            va="bottom",
         )
-        axis.set_xlabel("Imbalance (lower is preferred)")
-        axis.set_ylabel("Cohesion (higher is preferred)")
-        axis.grid(True, color="#E4E4E4", linewidth=0.55)
-        axis.set_axisbelow(True)
-        axis.spines[["top", "right"]].set_visible(False)
-        axis.legend(
-            loc="lower left",
-            bbox_to_anchor=(0.0, 1.10),
-            ncol=3,
-            frameon=False,
-            fontsize=7,
-            handletextpad=0.45,
-            columnspacing=1.0,
-        )
-        axis.annotate(
-            "P1: lower imbalance,\noften low cohesion",
-            xy=(selected.loc[selected.profile_id == "P1", "imbalance"].median(),
-                selected.loc[selected.profile_id == "P1", "cohesion"].median()),
-            xytext=(0.03, 0.08),
-            textcoords="axes fraction",
-            fontsize=7,
-            color="#222222",
-            arrowprops={"arrowstyle": "-", "color": "#777777", "linewidth": 0.7},
-        )
-        axis.annotate(
-            "P0/P2/P4 remain near the\nhigh-modularity/high-cohesion region",
-            xy=(selected.loc[selected.profile_id == "P0", "imbalance"].median(),
-                selected.loc[selected.profile_id == "P0", "cohesion"].median()),
-            xytext=(0.55, 0.72),
-            textcoords="axes fraction",
-            fontsize=7,
-            color="#222222",
-            arrowprops={"arrowstyle": "-", "color": "#777777", "linewidth": 0.7},
-        )
-        figure.subplots_adjust(left=0.11, right=0.98, bottom=0.14, top=0.75)
+        figure.subplots_adjust(left=0.08, right=0.985, bottom=0.085, top=0.87, hspace=0.48, wspace=0.24)
         return figure
 
 
@@ -225,7 +225,7 @@ def _save_figure(figure: Figure, path: Path, output_format: str) -> None:
         {
             "font.family": "DejaVu Sans",
             "pdf.fonttype": 42,
-            "svg.hashsalt": "evo-ms-xerces-operating-preference-v1",
+            "svg.hashsalt": "evo-ms-xerces-operating-preference-v2",
         }
     ):
         figure.savefig(
@@ -282,7 +282,7 @@ def build_figure(
     specification = config.figures.get(FIGURE_ID)
     if specification is None or not specification.enabled or specification.formats != ("svg", "pdf"):
         raise ValueError(f"figure is not correctly registered: {FIGURE_ID}")
-    candidates, selected = prepare_figure_data(config)
+    summary, per_seed = prepare_figure_data(config)
     targets, default_manifest, artifact_root = _targets(
         config, None if output_root is None else Path(output_root)
     )
@@ -294,9 +294,9 @@ def build_figure(
         temporary_root = Path(temporary)
         staged = {name: temporary_root / f"figure.{name}" for name in targets}
         staged["data"].write_text(
-            figure_data_csv(candidates, selected), encoding="utf-8", newline="\n"
+            figure_data_csv(summary), encoding="utf-8", newline="\n"
         )
-        figure = create_figure(candidates, selected)
+        figure = create_figure(summary)
         try:
             for output_format in ("svg", "pdf"):
                 renderer(figure, staged[output_format], output_format)
@@ -323,13 +323,15 @@ def build_figure(
             "authoritative_source_commit": authoritative_source_commit(config.repository_root),
             "subject": "xerces",
             "stage_filter": "stage3",
-            "candidate_count": len(candidates),
-            "seed_count": candidates["seed"].nunique(),
+            "profile_count": len(summary),
+            "seed_count": per_seed["seed"].nunique(),
             "selected_count_per_profile": {
-                profile_id: int((selected["profile_id"] == profile_id).sum())
-                for profile_id, *_rest in PROFILES
+                profile_id: int((per_seed["profile_id"] == profile_id).sum())
+                for profile_id, _profile, _label in PROFILES
             },
-            "dimensions": {"x": "imbalance", "y": "cohesion"},
+            "panel_metrics": [metric for metric, _label, _direction in METRICS],
+            "summary_source": "results/stage3/cross_subject/operating_preference_analysis/05_profile_summary.csv",
+            "relative_modularity_loss_iqr_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
             "input_files": list(specification.inputs),
             "input_sha256": {
                 path: sha256_file(config.repository_root / path)

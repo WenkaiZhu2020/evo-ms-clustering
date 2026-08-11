@@ -7,7 +7,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-11T21:29:40Z",
+      "generated_at": "2026-08-11T22:08:24Z",
       "generator": "evo_ms.visualization.figures.stage123_daytrader_clusters",
       "inputs": [
         "data/extracted/daytrader/class_nodes.csv",
@@ -42,12 +42,12 @@
       },
       "sha256": {
         "aggregation": "f4a825d0495ef66c3e43d6ede1ebe63afe2733d5fe9707f1aecc49bacb3be827",
-        "dot": "2daa68f94d8a817cabbca93f561bef38da8ed2fc1028736744e9c45e663a53dc",
-        "pdf": "8c4d03257119f1e456d853d666d9a31fbd3633dd9701f15b6ede7b3e219da8fc",
+        "dot": "3daf94d476a4d549459c41b38b16a59bb2ba8def3cc869e26c79ddc763edf56d",
+        "pdf": "73ca9db823e7ab13a298c0343785707edf48b5a43cbe3e965fc7790d00758462",
         "profiles": "dc04e0ad9b02eb962ca107f5df6724fc2b42282c62913459b12c5d7a19afe35e",
-        "provenance": "7283f26e108950b2edad50ec0ce37e47b3c498163aed089d68773b0af5d84d45",
+        "provenance": "c0a0d18e16654142f5f1cc2ea9dff23b57345d53045033a36d60658eb2afe5f4",
         "selected": "9d65c171808777d595c823d642a7193b2040adcbc7b1a933ab9fb4c9242d67cd",
-        "svg": "584b165c24c220e35be0e59fd25ff5e2467a8dfd3179c3dce0fd748265a959af"
+        "svg": "3747c45c664178ca8acb9c5b176c473c11fd5c4a65f313aa17ee2220cd789695"
       },
       "stage": "stage3",
       "title": "Highest- and lowest-contributing DayTrader clusters across the three stages"
@@ -59,7 +59,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-11T21:29:38Z",
+      "generated_at": "2026-08-11T22:08:26Z",
       "generator": "evo_ms.visualization.figures.stage123_jpetstore_clusters",
       "inputs": [
         "data/extracted/jpetstore/class_nodes.csv",
@@ -94,12 +94,12 @@
       },
       "sha256": {
         "aggregation": "ab2eaf45a83571fc7ea56d772ee0481cd74e53dc34f7dfe653658118b8b5af72",
-        "dot": "13dac4f24ad0dc5fd5a6ddf7aec54de6106acd7abb7388b9326fc15ae2f439b9",
-        "pdf": "dd486bc290bf79fab70713fd5702870062dee4d0ac2415103f17c714b39420b9",
+        "dot": "d52ba03c7e1336cbf65d444826e4e160aab4379c89f606929d6e4a5a2d1a0b0a",
+        "pdf": "6d7a283e83bdb5f1b28a07566d07854e1e54402375d84dedd28e4bf26e7fbceb",
         "profiles": "1cb549c3af314d409d136b4a990e239d4b692640a9c4cb1f90473c49c931440e",
-        "provenance": "180be7709843e4ee00490e0153102e289c96786a2b4a4c00bf28fbfc7d35438f",
+        "provenance": "8eb8ee50343d7b6340dbb6d334a3e3659493a350fd4ed1a8a8811c0e10883435",
         "selected": "ca836d056a36efe664192901cc6d04e833bff162c4a5d8c02f36e6054c8c1c29",
-        "svg": "547088e1e5a1c09c9311c0f8fcfa7dfb3a65cbda4bca6c4b65c600bed3e6308b"
+        "svg": "6a52de6b1c308035003dd72aa9136efabba8c374386afa5f5d7f609355b50794"
       },
       "stage": "stage3",
       "title": "Highest- and lowest-contributing JPetStore clusters across the three stages"
@@ -382,17 +382,19 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-11T21:29:52Z",
+      "generated_at": "2026-08-11T22:08:27Z",
       "generator": "evo_ms.visualization.figures.stage3_xerces_operating_preference",
       "inputs": [
         "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
-        "results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv"
+        "results/stage3/cross_subject/operating_preference_analysis/05_profile_summary.csv"
       ],
       "metadata": {
-        "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv",
+        "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/05_profile_summary.csv",
         "candidate_region": "within 5% of each seed-specific maximum weighted modularity",
-        "dimensions": "imbalance (x) and cohesion (y)",
+        "layout": "2x2 profile comparison using median and interquartile range across 30 seeds",
+        "metrics": "imbalance, cohesion, f_semantic, relative modularity loss from Q_best",
         "profiles": "P0 MODULARITY_ANCHOR, P1 BALANCE, P2 COUPLING, P3 COHESION, P4 SEMANTIC",
+        "relative_modularity_loss_iqr_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
         "stage": "stage3",
         "subject": "xerces-j"
       },
@@ -403,13 +405,13 @@
         "svg": "reports/figures/preview/stage3/xerces_operating_preference_sensitivity.svg"
       },
       "sha256": {
-        "data": "ceaa33766cec2b8973855d360442f28e3b8ba83e211302f689ba4e58c83cc906",
-        "pdf": "87ca5514bce3ecc858c3e54c0e81a7a9086ffdaf52946b9917b3366c2c037be9",
-        "provenance": "ae8b584a45fb14eea9989447d63be450dc121b8ffa9562bcee119f91bb5663c3",
-        "svg": "3542a745ae9b12ef02ccaa6819647d9d4c91191403ccd3b6acd0aea5144b0e3a"
+        "data": "c7d1567e7e7f78a5172fce681238a16d62b69f60dc3cd92332b701cd29be1477",
+        "pdf": "85b68cb2668374f944dfee67b42d1df872b66ce89a09d5178f1c3844f871b4d1",
+        "provenance": "b8fdba6f13c2dcd913d990f34d2125219ed014329184654c452fe90a5a0251fe",
+        "svg": "6d5617b132381cb7428b9797f50a682b73a009637a5103e79f8c1071b908a7f9"
       },
       "stage": "stage3",
-      "title": "Xerces-J operating preferences within the 5% modularity candidate region"
+      "title": "Xerces-J Stage 3 operating-profile sensitivity"
     }
   },
   "schema_version": 1

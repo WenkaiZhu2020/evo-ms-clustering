@@ -15,27 +15,32 @@ from evo_ms.visualization.figures.stage3_xerces_operating_preference import (
 )
 
 
-def test_authoritative_candidate_pool_and_p0_p4_selections() -> None:
+def test_authoritative_summary_and_p0_p4_selections() -> None:
     config = load_visualization_config()
-    candidates, selected = prepare_figure_data(config)
-    assert len(candidates) == 147 and candidates.seed.nunique() == 30
-    assert selected.groupby("profile_id").size().to_dict() == {
+    summary, per_seed = prepare_figure_data(config)
+    assert summary.profile_id.tolist() == ["P0", "P1", "P2", "P3", "P4"]
+    assert per_seed.seed.nunique() == 30
+    assert per_seed.groupby("profile_id").size().to_dict() == {
         "P0": 30, "P1": 30, "P2": 30, "P3": 30, "P4": 30,
     }
-    assert candidates.relative_modularity_loss.max() <= 0.05 + 1e-12
-    assert figure_data_csv(candidates, selected) == figure_data_csv(candidates, selected)
+    assert per_seed.relative_modularity_loss.max() <= 0.05 + 1e-12
+    assert len(figure_data_csv(summary).splitlines()) == 21
+    assert figure_data_csv(summary) == figure_data_csv(summary)
 
 
-def test_plot_uses_imbalance_and_cohesion_and_is_compact() -> None:
-    candidates, selected = prepare_figure_data(load_visualization_config())
-    figure = create_figure(candidates, selected)
+def test_plot_uses_four_actual_metric_panels_and_common_profile_labels() -> None:
+    summary, _per_seed = prepare_figure_data(load_visualization_config())
+    figure = create_figure(summary)
     try:
-        assert len(figure.axes) == 1
-        axis = figure.axes[0]
-        assert axis.get_xlabel() == "Imbalance (lower is preferred)"
-        assert axis.get_ylabel() == "Cohesion (higher is preferred)"
-        legend = [text.get_text() for text in axis.get_legend().get_texts()]
-        assert all(any(item.startswith(profile) for item in legend) for profile in ("P0", "P1", "P2", "P3", "P4"))
+        assert len(figure.axes) == 4
+        assert [axis.get_title(loc="left") for axis in figure.axes] == [
+            "(a) Imbalance",
+            "(b) Cohesion",
+            r"(c) $f_{semantic}$",
+            "(d) Relative modularity loss",
+        ]
+        expected = ["MAX-Q", "BALANCE", "COUPLING", "COHESION", "SEMANTIC"]
+        assert all([tick.get_text() for tick in axis.get_xticklabels()] == expected for axis in figure.axes)
     finally:
         plt.close(figure)
 
@@ -53,7 +58,10 @@ def test_outputs_and_provenance_are_deterministic(tmp_path: Path) -> None:
     for kind in ("data", "svg", "pdf"):
         assert first[kind].read_bytes() == second[kind].read_bytes()
     provenance = json.loads(first["provenance"].read_text())
-    assert provenance["candidate_count"] == 147
+    assert provenance["profile_count"] == 5
+    assert provenance["panel_metrics"] == [
+        "imbalance", "cohesion", "f_semantic", "relative_modularity_loss",
+    ]
     assert provenance["selected_count_per_profile"] == {
         "P0": 30, "P1": 30, "P2": 30, "P3": 30, "P4": 30,
     }

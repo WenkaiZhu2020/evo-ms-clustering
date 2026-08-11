@@ -163,11 +163,11 @@ figures:
 
   stage3_xerces_operating_preference_sensitivity:
     stage: stage3
-    title: Xerces-J operating preferences within the 5% modularity candidate region
+    title: Xerces-J Stage 3 operating-profile sensitivity
     destination: main_text
     inputs:
-      - results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv
       - results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
+      - results/stage3/cross_subject/operating_preference_analysis/05_profile_summary.csv
     layout_profile: fixed_comparison
     enabled: true
     formats: [svg, pdf]
@@ -176,9 +176,11 @@ figures:
       subject: xerces-j
       stage: stage3
       candidate_region: within 5% of each seed-specific maximum weighted modularity
-      dimensions: imbalance (x) and cohesion (y)
+      layout: 2x2 profile comparison using median and interquartile range across 30 seeds
+      metrics: imbalance, cohesion, f_semantic, relative modularity loss from Q_best
       profiles: P0 MODULARITY_ANCHOR, P1 BALANCE, P2 COUPLING, P3 COHESION, P4 SEMANTIC
-      authoritative_source: results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv
+      authoritative_source: results/stage3/cross_subject/operating_preference_analysis/05_profile_summary.csv
+      relative_modularity_loss_iqr_source: results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
 
   stage2_daytrader_partition_transition:
     stage: stage2

@@ -65,6 +65,22 @@ class FigureData:
 
 
 @dataclass(frozen=True)
+class CompactPanel:
+    """One focal structure, potentially shared by several stages."""
+
+    role: str
+    profiles: tuple[ClusterProfile, ...]
+
+    @property
+    def profile(self) -> ClusterProfile:
+        return self.profiles[0]
+
+    @property
+    def stages(self) -> tuple[int, ...]:
+        return tuple(profile.stage for profile in self.profiles)
+
+
+@dataclass(frozen=True)
 class BoundaryConnection:
     focal_class: str
     external_classes: tuple[str, ...]
@@ -298,6 +314,76 @@ def _wrapped_simple_name(class_id: str) -> str:
     return "\n".join(lines)
 
 
+def _focal_structure_signature(profile: ClusterProfile) -> tuple[object, ...]:
+    """Identify exactly repeatable focal content in the fixed raw graph.
+
+    External clusters are deliberately not part of the signature: the compact
+    figure reports the complete boundary edge set as one context summary rather
+    than drawing stage-specific external-cluster subdivisions.
+    """
+
+    return (
+        profile.members,
+        profile.internal_edges,
+        profile.boundary_edges,
+        profile.internal_weight,
+        profile.boundary_weight,
+        profile.contribution,
+    )
+
+
+def compact_panels(data: FigureData) -> tuple[CompactPanel, ...]:
+    panels: list[CompactPanel] = []
+    for role in ("highest", "lowest"):
+        groups: dict[tuple[object, ...], list[ClusterProfile]] = {}
+        for selected_role, profile in data.selected:
+            if selected_role == role:
+                groups.setdefault(_focal_structure_signature(profile), []).append(profile)
+        panels.extend(
+            CompactPanel(role, tuple(profiles))
+            for profiles in sorted(groups.values(), key=lambda values: values[0].stage)
+        )
+    return tuple(panels)
+
+
+def _stage_label(stages: tuple[int, ...]) -> str:
+    if stages == (1, 2, 3):
+        return "Stages 1-3"
+    if len(stages) == 2:
+        return f"Stages {stages[0]} and {stages[1]}"
+    return f"Stage {stages[0]}"
+
+
+def _panel_geometry(panel_count: int) -> tuple[tuple[float, float], ...]:
+    if panel_count == 1:
+        return ((225.0, 335.0),)
+    if panel_count == 2:
+        return ((302.0, 176.0), (111.0, 174.0))
+    raise ValueError("compact comparison supports one or two structures per role")
+
+
+def _compact_node_layout(
+    profile: ClusterProfile,
+    *,
+    centre_x: float,
+    centre_y: float,
+    panel_height: float,
+) -> dict[str, tuple[float, float]]:
+    members = profile.members
+    columns = 2 if len(members) > 5 else 1
+    rows = math.ceil(len(members) / columns)
+    x_values = (-84.0, -30.0) if columns == 2 else (-49.0,)
+    body_top = centre_y + panel_height / 2 - 72.0
+    body_bottom = centre_y - panel_height / 2 + 28.0
+    spacing = 0.0 if rows == 1 else min(25.0, (body_top - body_bottom) / (rows - 1))
+    used_height = spacing * (rows - 1)
+    start_y = centre_y + used_height / 2 - 8.0
+    return {
+        member: (centre_x + x_values[index % columns], start_y - spacing * (index // columns))
+        for index, member in enumerate(members)
+    }
+
+
 def figure_dot(
     config: VisualizationConfig,
     data: FigureData,
@@ -305,58 +391,182 @@ def figure_dot(
     figure_id: str = FIGURE_ID,
     comparison_note: str | None = "Stage 2 and Stage 3 representatives use the authoritative BALANCE profile.",
 ) -> str:
-    spec=config.figures[figure_id]; style=config.style["cluster_contribution_comparison"]; font=config.style["fonts"]["family"]
-    x_centres={"highest":125.0,"lowest":375.0}; y_centres={1:600.0,2:385.0,3:170.0}
-    lines=[f"graph {dot_quote(spec.title)} {{", "  graph "+stable_attributes({"bb":"0,0,500,730","bgcolor":"white","margin":0,"outputorder":"edgesfirst","overlap":True,"pad":0.02,"size":"6.944,10.139!","splines":"true","start":42})+";",
-           "  node "+stable_attributes({"fontname":font,"fontsize":style["node_font_size"],"height":0.18,"margin":"0.025,0.012","shape":"box","style":"rounded,filled","width":0.1})+";",
-           "  edge "+stable_attributes({"fontname":font,"fontsize":5})+";"]
-    for panel_index,(role,profile) in enumerate(data.selected,1):
-        cx=x_centres[role]; cy=y_centres[profile.stage]; prefix=f"p{profile.stage}{role[0]}"; local=_layout(profile)
-        lines.append(f"  {dot_quote(prefix+'_panel')} "+stable_attributes({"color":"#B8B8B8","fixedsize":True,"height":style["panel_height_pt"]/72,"label":"","penwidth":0.8,"pos":f"{cx},{cy}!","shape":"box","style":"solid","width":style["panel_width_pt"]/72})+";")
-        title=f"Stage {profile.stage}\n{role.capitalize()}-contributing cluster {profile.cluster_id}"
-        metric=(f"n = {len(profile.members)}   q_c = {profile.contribution:.5f}\n"
-                f"W_in = {profile.internal_weight:.0f}   W_boundary = {profile.boundary_weight:.0f}")
-        plain={"color":"transparent","fillcolor":"transparent","fontname":font,"shape":"plain","style":""}
-        lines.append(f"  {dot_quote(prefix+'_title')} "+stable_attributes({**plain,"fontsize":style["title_font_size"],"label":title,"pos":f"{cx},{cy+82}!"})+";")
-        lines.append(f"  {dot_quote(prefix+'_metric')} "+stable_attributes({**plain,"fontsize":style["metric_font_size"],"label":metric,"pos":f"{cx},{cy+59}!"})+";")
-        ids={class_id:f"{prefix}_f{i:03d}" for i,class_id in enumerate(profile.members,1)}
-        summary_ids={aggregate.external_cluster_id:f"{prefix}_x{aggregate.external_cluster_id}" for aggregate in profile.boundary_aggregates}
-        for class_id in profile.members:
-            x,y=local[class_id]
-            lines.append(f"  {dot_quote(ids[class_id])} "+stable_attributes({"color":style["focal_border"],"fillcolor":style["focal_fill"],"label":_wrapped_simple_name(class_id),"penwidth":1.1,"pos":f"{cx+x},{cy+y-12}!","tooltip":class_id})+";")
-        for aggregate in profile.boundary_aggregates:
-            x,y=local[aggregate.external_cluster_id]
-            tooltip=(f"{aggregate.external_cluster_id}: {len(aggregate.external_classes)} external classes; "
-                     f"{aggregate.boundary_edge_count} boundary edges; weight {aggregate.boundary_weight:g}; "
-                     + "; ".join(aggregate.external_classes))
-            label=f"External {aggregate.external_cluster_id}\n{len(aggregate.external_classes)} class{'es' if len(aggregate.external_classes) != 1 else ''}"
-            lines.append(f"  {dot_quote(summary_ids[aggregate.external_cluster_id])} "+stable_attributes({"color":style["external_border"],"fillcolor":style["external_fill"],"label":label,"penwidth":0.8,"pos":f"{cx+x},{cy+y-12}!","shape":"box","style":"rounded,dashed,filled","tooltip":tooltip})+";")
-        for left,right,_ in profile.internal_edges:
-            lines.append(f"  {dot_quote(ids[left])} -- {dot_quote(ids[right])} "+stable_attributes({"color":style["internal_edge"],"penwidth":0.8,"style":"solid"})+";")
-        connection_weights=[connection.boundary_weight for aggregate in profile.boundary_aggregates for connection in aggregate.connections]
-        maximum_weight=max(connection_weights,default=0.0)
-        for aggregate in profile.boundary_aggregates:
-            for connection in aggregate.connections:
-                width=boundary_penwidth(connection.boundary_weight,maximum_weight,float(style["boundary_width_min"]),float(style["boundary_width_max"]))
-                tooltip=(f"{connection.boundary_edge_count} aggregated boundary edge(s); weight {connection.boundary_weight:g}; "
-                         + "; ".join(connection.external_classes))
-                lines.append(f"  {dot_quote(ids[connection.focal_class])} -- {dot_quote(summary_ids[aggregate.external_cluster_id])} "+stable_attributes({"color":style["boundary_edge"],"penwidth":width,"style":"dashed","tooltip":tooltip})+";")
-        if not profile.internal_edges and not profile.boundary_edges:
-            lines.append(f"  {dot_quote(prefix+'_isolated')} "+stable_attributes({**plain,"fontsize":6.2,"label":"Isolated singleton\nNo internal or boundary relations","pos":f"{cx},{cy-52}!"})+";")
+    spec = config.figures[figure_id]
+    style = config.style["cluster_contribution_comparison"]
+    font = config.style["fonts"]["family"]
+    x_centres = {"highest": 125.0, "lowest": 375.0}
+    panels = compact_panels(data)
+    by_role = {
+        role: tuple(panel for panel in panels if panel.role == role)
+        for role in ("highest", "lowest")
+    }
+    lines = [
+        f"graph {dot_quote(spec.title)} {{",
+        "  graph "
+        + stable_attributes(
+            {
+                "bb": "0,0,500,460",
+                "bgcolor": "white",
+                "margin": 0,
+                "outputorder": "edgesfirst",
+                "overlap": True,
+                "pad": 0.02,
+                "size": "6.944,6.389!",
+                "splines": "true",
+                "start": 42,
+            }
+        )
+        + ";",
+        "  node "
+        + stable_attributes(
+            {
+                "fontname": font,
+                "fontsize": style["node_font_size"],
+                "height": 0.20,
+                "margin": "0.035,0.018",
+                "shape": "box",
+                "style": "rounded,filled",
+                "width": 0.1,
+            }
+        )
+        + ";",
+        "  edge " + stable_attributes({"fontname": font, "fontsize": 6}) + ";",
+    ]
+    plain = {
+        "color": "transparent",
+        "fillcolor": "transparent",
+        "fontname": font,
+        "shape": "plain",
+        "style": "",
+    }
+    for role, label in (("highest", "Highest-contributing cluster"), ("lowest", "Lowest-contributing cluster")):
+        cx = x_centres[role]
+        lines.append(
+            f"  {dot_quote(role + '_column_title')} "
+            + stable_attributes({**plain, "fontsize": 11, "fontname": f"{font} Bold", "label": label, "pos": f"{cx},444!"})
+            + ";"
+        )
+        for group_index, (panel, (cy, panel_height)) in enumerate(
+            zip(by_role[role], _panel_geometry(len(by_role[role])), strict=True), 1
+        ):
+            profile = panel.profile
+            prefix = f"{role[0]}g{group_index}"
+            lines.append(
+                f"  {dot_quote(prefix + '_panel')} "
+                + stable_attributes(
+                    {
+                        "color": "#B8B8B8",
+                        "fixedsize": True,
+                        "height": panel_height / 72,
+                        "label": "",
+                        "penwidth": 0.8,
+                        "pos": f"{cx},{cy}!",
+                        "shape": "box",
+                        "style": "solid",
+                        "width": 236 / 72,
+                    }
+                )
+                + ";"
+            )
+            stages = _stage_label(panel.stages)
+            shared = " - identical focal structure" if len(panel.stages) > 1 else ""
+            title = f"{stages}{shared}\nCluster {profile.cluster_id}"
+            metric = (
+                f"n = {len(profile.members)}   q_c = {profile.contribution:.5f}   "
+                f"W_in = {profile.internal_weight:.0f}   W_boundary = {profile.boundary_weight:.0f}"
+            )
+            top = cy + panel_height / 2
+            lines.append(
+                f"  {dot_quote(prefix + '_title')} "
+                + stable_attributes({**plain, "fontsize": style["title_font_size"], "label": title, "pos": f"{cx},{top - 18}!"})
+                + ";"
+            )
+            lines.append(
+                f"  {dot_quote(prefix + '_metric')} "
+                + stable_attributes({**plain, "fontsize": style["metric_font_size"], "label": metric, "pos": f"{cx},{top - 45}!"})
+                + ";"
+            )
+            positions = _compact_node_layout(
+                profile, centre_x=cx, centre_y=cy, panel_height=panel_height
+            )
+            ids = {
+                class_id: f"{prefix}_f{index:03d}"
+                for index, class_id in enumerate(profile.members, 1)
+            }
+            for class_id in profile.members:
+                x, y = positions[class_id]
+                lines.append(
+                    f"  {dot_quote(ids[class_id])} "
+                    + stable_attributes(
+                        {
+                            "color": style["focal_border"],
+                            "fillcolor": style["focal_fill"],
+                            "label": _wrapped_simple_name(class_id),
+                            "penwidth": 1.1,
+                            "pos": f"{x},{y}!",
+                            "tooltip": class_id,
+                        }
+                    )
+                    + ";"
+                )
+            for left, right, _weight in profile.internal_edges:
+                lines.append(
+                    f"  {dot_quote(ids[left])} -- {dot_quote(ids[right])} "
+                    + stable_attributes(
+                        {"color": style["internal_edge"], "penwidth": 0.7, "style": "solid"}
+                    )
+                    + ";"
+                )
+            if profile.boundary_edges:
+                summary = (
+                    f"Boundary context\n{len(profile.external)} external classes\n"
+                    f"{len(profile.boundary_edges)} edges"
+                )
+                tooltip = "; ".join(profile.external)
+                lines.append(
+                    f"  {dot_quote(prefix + '_boundary')} "
+                    + stable_attributes(
+                        {
+                            "color": style["external_border"],
+                            "fillcolor": style["external_fill"],
+                            "fontsize": 6.6,
+                            "label": summary,
+                            "penwidth": 0.8,
+                            "pos": f"{cx + 72},{cy - 7}!",
+                            "shape": "box",
+                            "style": "rounded,dashed,filled",
+                            "tooltip": tooltip,
+                        }
+                    )
+                    + ";"
+                )
+            elif not profile.internal_edges:
+                lines.append(
+                    f"  {dot_quote(prefix + '_isolated')} "
+                    + stable_attributes(
+                        {
+                            **plain,
+                            "fontsize": 7,
+                            "label": "Isolated singleton\nNo internal or boundary relations",
+                            "pos": f"{cx + 60},{cy - 7}!",
+                        }
+                    )
+                    + ";"
+                )
     if comparison_note:
-        lines.append('  "comparison_note" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":comparison_note,"pos":"250,57!","shape":"plain","style":"","fontsize":6.5})+";")
-    lines.extend([
-        '  "legend_focal" '+stable_attributes({"color":style["focal_border"],"fillcolor":style["focal_fill"],"label":"Focal-cluster class","pos":"60,29!"})+";",
-        '  "legend_external" '+stable_attributes({"color":style["external_border"],"fillcolor":style["external_fill"],"label":"External-cluster summary","pos":"185,29!","shape":"box","style":"rounded,dashed,filled"})+";",
-        '  "legend_i1" '+stable_attributes({"label":"","pos":"290,34!","shape":"point","width":0.04})+";",
-        '  "legend_i2" '+stable_attributes({"label":"","pos":"320,34!","shape":"point","width":0.04})+";",
-        '  "legend_b1" '+stable_attributes({"label":"","pos":"395,34!","shape":"point","width":0.04})+";",
-        '  "legend_b2" '+stable_attributes({"label":"","pos":"425,34!","shape":"point","width":0.04})+";",
-        '  "legend_internal" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":"Solid: internal","pos":"305,20!","shape":"plain","style":"","fontsize":6})+";",
-        '  "legend_boundary" '+stable_attributes({"color":"transparent","fillcolor":"transparent","label":"Dashed: aggregated boundary\nwidth = boundary weight","pos":"410,17!","shape":"plain","style":"","fontsize":6})+";",
-        '  "legend_i1" -- "legend_i2" '+stable_attributes({"color":style["internal_edge"],"style":"solid"})+";",
-        '  "legend_b1" -- "legend_b2" '+stable_attributes({"color":style["boundary_edge"],"style":"dashed"})+";",
-        "}"])
+        lines.append(
+            '  "comparison_note" '
+            + stable_attributes(
+                {
+                    **plain,
+                    "label": comparison_note + " Repeated focal structures are drawn once.",
+                    "pos": "250,414!",
+                    "fontsize": 6.6,
+                }
+            )
+            + ";"
+        )
+    lines.append("}")
     return "\n".join(lines)+"\n"
 
 
