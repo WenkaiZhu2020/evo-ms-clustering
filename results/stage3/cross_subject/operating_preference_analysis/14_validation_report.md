@@ -15,9 +15,9 @@ No optimiser, embedding, semantic graph, Pareto front, projected front, or histo
 
 ## Selector reference gates
 
-| stage2_balance_reference_rows | stage2_balance_exact_solution_id_matches | stage3_balance_reference_rows | stage3_balance_exact_solution_id_matches | stage3_maxq_historical_rows | stage3_maxq_exact_solution_id_matches | passed |
-|---|---|---|---|---|---|---|
-| 90 | 90 | 90 | 90 | 90 | 90 | True |
+| stage2_balance_reference_rows | stage2_balance_exact_solution_id_matches | stage3_balance_reference_rows | stage3_balance_exact_solution_id_matches | stage3_balance_exact_partition_matches | stage3_balance_validation_source | stage3_maxq_historical_rows | stage3_maxq_exact_solution_id_matches | passed |
+|---|---|---|---|---|---|---|---|---|
+| 90 | 90 | 90 | 90 | 90 | direct recomputation from frozen projected_front_3d.csv and posthoc_metrics.csv candidate pools | 90 | 90 | True |
 
 ## Main profile summary
 

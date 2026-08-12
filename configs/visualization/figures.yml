@@ -77,13 +77,11 @@ figures:
 
   stage2_xerces_highest_lowest_clusters:
     stage: stage2
-    title: "Xerces-J cluster contribution: Stage 2 profile"
+    title: "Xerces-J cluster contribution: Stage 2 BALANCE profile"
     destination: appendix
     inputs:
       - data/extracted/xerces-j/class_nodes.csv
-      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv
       - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv
-      - results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv
       - results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
       - results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz
     layout_profile: fixed_comparison
@@ -92,10 +90,11 @@ figures:
     generator: evo_ms.visualization.figures.stage123_xerces_clusters
     metadata:
       subject: xerces-j
-      representative: "seed 21 / seed21_solution022"
+      representative: "seed 21 / seed21_solution022 / BALANCE P1"
       highest_cluster: C13
       lowest_cluster: C27
       aggregation: focal classes grouped by package
+      authoritative_source: results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv
 
   stage123_jpetstore_highest_lowest_clusters:
     stage: stage3

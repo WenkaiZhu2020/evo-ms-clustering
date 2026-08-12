@@ -14,6 +14,7 @@ from evo_ms.visualization.config import load_visualization_config
 from evo_ms.visualization.figures.stage123_xerces_clusters import (
     EXPECTED,
     FIGURE_IDS,
+    _targets,
     boundary_profile_csv,
     boundary_display_rows,
     build_figure,
@@ -86,6 +87,30 @@ def test_exactly_nine_figures_and_two_matplotlib_xerces_registrations() -> None:
             specification.generator
             == "evo_ms.visualization.figures.stage123_xerces_clusters"
         )
+
+
+def test_active_xerces_figures_have_disjoint_stage_specific_summary_paths() -> None:
+    config = load_visualization_config()
+    stage2, _manifest, _root = _targets(config, "stage2", None)
+    stage13, _manifest, _root = _targets(config, "stage13", None)
+    assert stage2["profiles"].name == "xerces_stage2_cluster_profiles.csv"
+    assert stage2["selected"].name == "xerces_stage2_highest_lowest_clusters.csv"
+    assert stage13["profiles"].name == "xerces_stage13_balance_cluster_profiles.csv"
+    assert (
+        stage13["selected"].name
+        == "xerces_stage13_balance_highest_lowest_clusters.csv"
+    )
+    assert set(stage2.values()).isdisjoint(stage13.values())
+
+
+def test_page_scopes_read_only_their_actual_stage_inputs() -> None:
+    config = load_visualization_config()
+    stage2 = prepare_figure_data(config, (2,))
+    stage13 = prepare_figure_data(config, (1, 3))
+    assert {profile.stage for profile in stage2.profiles} == {2}
+    assert {profile.stage for profile in stage13.profiles} == {1, 3}
+    assert {profile.stage for _role, profile in stage2.selected} == {2}
+    assert {profile.stage for _role, profile in stage13.selected} == {1, 3}
 
 
 def test_scope_modularity_representatives_and_accepted_clusters(prepared) -> None:

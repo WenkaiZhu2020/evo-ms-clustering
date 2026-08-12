@@ -4,18 +4,18 @@
     "configs/visualization/style.yml"
   ],
   "config_sha256": {
-    "configs/visualization/figures.yml": "61abdcf67a0fbee732db46ebe3df023fbb6534952234ba951f9009ef1f3adaa5",
-    "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
+    "configs/visualization/figures.yml": "2846b46764f55bc98914e2bef019d3d6310444b067651f8195c338a5ebbdc8d3",
+    "configs/visualization/style.yml": "8d6299487742073debcb21ac619cfe643fe4f5a09f9c14bc69f766da67a0b5e7"
   },
   "figure_id": "stage2_xerces_highest_lowest_clusters",
-  "generated_at": "2026-08-06T21:33:23Z",
+  "generated_at": "2026-08-12T14:53:43Z",
   "generated_outputs": [
-    "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
-    "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
     "reports/figures/data/cross_stage/xerces_stage2_boundary_profile.csv",
     "reports/figures/data/cross_stage/xerces_stage2_class_boundary_edges.csv",
     "reports/figures/data/cross_stage/xerces_stage2_class_internal_edges.csv",
     "reports/figures/data/cross_stage/xerces_stage2_class_membership.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_cluster_profiles.csv",
+    "reports/figures/data/cross_stage/xerces_stage2_highest_lowest_clusters.csv",
     "reports/figures/data/cross_stage/xerces_stage2_highest_lowest_clusters.provenance.json",
     "reports/figures/data/cross_stage/xerces_stage2_lowest_cluster_profile.csv",
     "reports/figures/data/cross_stage/xerces_stage2_package_profiles.csv",
@@ -26,30 +26,35 @@
     "reports/figures/preview/cross_stage/xerces_stage2_highest_lowest_clusters.svg"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
-  "git_commit": "f810def226284714468489bc2a763118e7ccc2ba",
+  "git_commit": "bd3d5797190fbb35dc24add945231f5a35a0d011",
   "git_dirty": true,
   "input_files": [
     "data/extracted/xerces-j/class_nodes.csv",
-    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
     "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
-    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
-    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
     "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
-    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv",
-    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
-    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+    "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv"
   ],
   "input_sha256": {
     "data/extracted/xerces-j/class_nodes.csv": "05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2",
-    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv": "d2478f556ca973c25a950bf5341f8a3585e41271cdb4533553da3f181f1d730b",
     "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv": "3795b4ab2c33a48f521f6242b791bf29f5a1c67364a3938d504594bae9c6a12e",
-    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv": "014e5ace715ed2a26ef45b4f021c96eb8b83b57c5b9d54bbc921679988fa9cf2",
-    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv": "9a0e9a1f40edf260bb06c719e6967aef9c18a81b28fac9f0895e5520341c91d3",
     "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz": "47528c23b7a83c665c9d84d429308db9b5addc9d2a61b1eeda42bf1dc2985fde",
-    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv": "dd3fd6e08ba6e17d62bd522b52dc1747111be06ce54d59b028255556662a109d",
-    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv": "30f600cb2587ee183d84de3d82b3f6aeb72baab7080b5eac3bdd058658c95845",
-    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json": "5533ac25dae86519accc206d432d5a3056fb7627d7943e18047993d01f2f0aa4"
+    "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv": "af4e1213f13acca3893a483758cfc9ecae5b55e0c4b82d6935e5e17306ab4a3e"
   },
+  "operating_profile_representatives": [
+    {
+      "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+      "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
+      "mean_ari_to_other_balance_partitions": null,
+      "partition_source": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+      "profile": "BALANCE",
+      "profile_id": "P1",
+      "representative_rule": "existing approved Stage 2 representative seed; solution resolved from authoritative BALANCE/P1",
+      "seed": 21,
+      "solution_id": "seed21_solution022",
+      "stage": "stage2",
+      "subject": "xerces"
+    }
+  ],
   "render_command": [
     [
       "matplotlib",
@@ -76,8 +81,8 @@
     "package_profiles": "50b2eb56bfdc635da14fe6f7a5ab77820dc8d9e1cb39132ee9fafd8099ed5157",
     "package_relations": "ecf70d615e5c2f1e6edfb8ab28322a833c38b09a9f2a47fda981e54afe4cc0e5",
     "pdf": "71413f34d194f711de0d3c2d377bb7e520222f409779fa68e9675a230db24dac",
-    "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
-    "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
+    "profiles": "9854d2ffbd3b8e1eacbe90dfefff322de70c0c1f207f3899e27f13f10d217e8b",
+    "selected": "75a6f26981456f85b560e98936273d06487805d75efb33f6fb84d0797a7fffae",
     "svg": "e826dc4d61c2f0a3690dd00d50bd299e7736a44dc569073cf99d662dd1b916f9",
     "top_boundary_destinations": "adaf602ca7b7b1b2316ef138972dfba614177ccdcdf51d764ec5368a0789ff53",
     "top_internal_relations": "7e8fb3493c093263188b29ed8818eff533a2b3c07950d7815f3e2acf207c5cfc"

@@ -115,12 +115,12 @@ def main() -> int:
     reporting.add_argument(
         "--write-reporting",
         action="store_true",
-        help="regenerate reporting/statistical outputs from accepted artifacts only",
+        help="regenerate historical runtime MAX-Q reporting from accepted artifacts only",
     )
     reporting.add_argument(
         "--check-reporting",
         action="store_true",
-        help="fail unless canonical reporting outputs are byte-identical to regeneration",
+        help="fail unless historical runtime reporting is byte-identical to regeneration",
     )
     args = parser.parse_args()
     if args.write_reporting or args.check_reporting:

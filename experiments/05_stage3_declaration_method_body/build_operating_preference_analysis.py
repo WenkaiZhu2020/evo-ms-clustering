@@ -74,10 +74,6 @@ STAGE2_SELECTED_FSEM_RELATIVE = Path(
     "results/stage3/cross_subject/formal_statistics/"
     "formal_selected_fsemantic_per_seed.csv"
 )
-STAGE3_BALANCE_REFERENCE_RELATIVE = Path(
-    "results/stage3/cross_subject/selector_5pct_canonical/"
-    "canonical_selected_per_seed.csv"
-)
 FORMAL_TESTS_RELATIVE = Path(
     "results/stage3/cross_subject/formal_statistics/formal_statistical_tests.csv"
 )
@@ -187,6 +183,11 @@ SELECTOR_DEFINITIONS: dict[str, dict[str, Any]] = {
 
 def _git(*args: str) -> str:
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
+
+
+def _source_commit(path: Path) -> str:
+    """Return the commit that last changed a retained source artefact."""
+    return _git("log", "-1", "--format=%H", "--", _relative(path))
 
 
 def _read_csv(path: Path, **kwargs: Any) -> pd.DataFrame:
@@ -671,38 +672,79 @@ def _materialise_profiles(
 
 def _validate_reference_selections(
     selected: pd.DataFrame,
+    stage3_candidates: pd.DataFrame,
     source_paths: set[Path],
 ) -> dict[str, Any]:
     stage2_path = ROOT / STAGE2_CANONICAL_RELATIVE
-    stage3_path = ROOT / STAGE3_BALANCE_REFERENCE_RELATIVE
     source_paths.add(stage2_path)
-    if not stage3_path.is_file():
-        raise FileNotFoundError(
-            "independently verified Stage 3 5% selector reference is missing: "
-            + str(stage3_path)
-        )
-    source_paths.add(stage3_path)
     stage2_ref = _read_csv(stage2_path)
-    stage3_ref = _read_csv(stage3_path)
     stage2_ref["subject"] = stage2_ref["subject"].replace({"xerces-j": "xerces"})
-    stage3_ref["subject"] = stage3_ref["subject"].replace({"xerces-j": "xerces"})
     balance = selected.loc[selected["profile"] == "BALANCE"]
     s2 = balance.loc[balance["stage"] == "stage2"].merge(
         stage2_ref[["subject", "seed", "solution_id", "label_vector"]],
         on=["subject", "seed"],
         suffixes=("", "_reference"),
     )
+
+    # Recompute the Stage 3 BALANCE choice directly from every frozen projected
+    # candidate pool.  This validation deliberately does not call _ordering or
+    # _materialise_profiles, so it independently checks the current selector:
+    # 5% from front-best Q, then imbalance/Q/coupling/cohesion/solution ID.
+    stage3_expected_rows: list[dict[str, Any]] = []
+    for (subject, seed), group in stage3_candidates.groupby(
+        ["subject", "seed"], sort=False
+    ):
+        feasible = group.loc[group["feasible"].map(_as_bool)].copy()
+        q_best = float(feasible["weighted_modularity"].max())
+        feasible["relative_modularity_loss"] = (
+            q_best - feasible["weighted_modularity"].astype(float)
+        ) / abs(q_best)
+        band = feasible.loc[
+            feasible["relative_modularity_loss"] <= 0.05 + TOL
+        ].copy()
+        expected = band.sort_values(
+            [
+                "imbalance",
+                "weighted_modularity",
+                "coupling",
+                "cohesion",
+                "solution_id",
+            ],
+            ascending=[True, False, True, False, True],
+            kind="stable",
+        ).iloc[0]
+        stage3_expected_rows.append(
+            {
+                "subject": subject,
+                "seed": int(seed),
+                "expected_solution_id": str(expected["solution_id"]),
+                "expected_partition_sha256": str(
+                    expected["canonical_partition_sha256"]
+                ),
+            }
+        )
+    stage3_expected = pd.DataFrame(stage3_expected_rows)
     s3 = balance.loc[balance["stage"] == "stage3"].merge(
-        stage3_ref[["subject", "seed", "solution_id", "label_vector"]],
+        stage3_expected,
         on=["subject", "seed"],
-        suffixes=("", "_reference"),
+        validate="one_to_one",
     )
     if len(s2) != 90 or len(s3) != 90:
         raise ValueError("BALANCE reference validation did not cover all 90 runs")
     if not (s2["selected_solution_id"].astype(str) == s2["solution_id"].astype(str)).all():
         raise ValueError("Stage 2 BALANCE does not reproduce canonical operating profile")
-    if not (s3["selected_solution_id"].astype(str) == s3["solution_id"].astype(str)).all():
-        raise ValueError("Stage 3 BALANCE does not reproduce verified 5% selections")
+    stage3_id_matches = (
+        s3["selected_solution_id"].astype(str)
+        == s3["expected_solution_id"].astype(str)
+    )
+    stage3_partition_matches = (
+        s3["canonical_partition_sha256"].astype(str)
+        == s3["expected_partition_sha256"].astype(str)
+    )
+    if not (stage3_id_matches & stage3_partition_matches).all():
+        raise ValueError(
+            "Stage 3 BALANCE does not reproduce the direct frozen-front 5% rule"
+        )
 
     p0 = selected.loc[
         (selected["stage"] == "stage3")
@@ -735,7 +777,14 @@ def _validate_reference_selections(
         ),
         "stage3_balance_reference_rows": len(s3),
         "stage3_balance_exact_solution_id_matches": int(
-            (s3["selected_solution_id"].astype(str) == s3["solution_id"].astype(str)).sum()
+            stage3_id_matches.sum()
+        ),
+        "stage3_balance_exact_partition_matches": int(
+            stage3_partition_matches.sum()
+        ),
+        "stage3_balance_validation_source": (
+            "direct recomputation from frozen projected_front_3d.csv and "
+            "posthoc_metrics.csv candidate pools"
         ),
         "stage3_maxq_historical_rows": len(p0_check),
         "stage3_maxq_exact_solution_id_matches": int(
@@ -1150,7 +1199,7 @@ def _existing_hv_ssa_references(source_paths: set[Path]) -> pd.DataFrame:
                     "ssa_random_mean_overlap": np.nan,
                     "ssa_delta_random": np.nan,
                     "source": _relative(path),
-                    "source_commit": _git("rev-parse", "HEAD"),
+                    "source_commit": _source_commit(path),
                     "source_sha256": _sha256(path),
                     "copy_status": "retained_per_seed_value_copied_not_recomputed",
                 }
@@ -1388,7 +1437,9 @@ def build_outputs() -> tuple[dict[Path, bytes], dict[str, Any]]:
     stage3 = _stage3_candidates(source_paths)
     candidates = pd.concat([stage2, stage3], ignore_index=True)
     selected, band_candidates = _materialise_profiles(candidates)
-    reference_validation = _validate_reference_selections(selected, source_paths)
+    reference_validation = _validate_reference_selections(
+        selected, stage3, source_paths
+    )
     summary = _profile_summary(selected)
     preference_similarity = _preference_similarity(selected)
     preference_deltas = _preference_deltas(selected)
@@ -1671,15 +1722,33 @@ def _write(outputs: Mapping[Path, bytes]) -> None:
     for relative, content in outputs.items():
         path = ROOT / relative
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(content)
+        if not path.is_file() or path.read_bytes() != content:
+            path.write_bytes(content)
+
+
+def _normalise_dynamic_manifest_fields(content: bytes) -> dict[str, Any]:
+    manifest = json.loads(content.decode("utf-8"))
+    manifest.pop("source_branch", None)
+    manifest.pop("source_head", None)
+    return manifest
 
 
 def _check(outputs: Mapping[Path, bytes]) -> None:
-    changed = [
-        path.as_posix()
-        for path, content in outputs.items()
-        if not (ROOT / path).is_file() or (ROOT / path).read_bytes() != content
-    ]
+    changed: list[str] = []
+    for path, content in outputs.items():
+        retained = ROOT / path
+        if not retained.is_file():
+            changed.append(path.as_posix())
+            continue
+        retained_content = retained.read_bytes()
+        if path.name == "manifest.json":
+            matches = _normalise_dynamic_manifest_fields(
+                retained_content
+            ) == _normalise_dynamic_manifest_fields(content)
+        else:
+            matches = retained_content == content
+        if not matches:
+            changed.append(path.as_posix())
     if changed:
         raise ValueError("authoritative reporting bundle is stale: " + ", ".join(changed))
 

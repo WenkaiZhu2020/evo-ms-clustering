@@ -62,11 +62,13 @@ findings and thesis figures are under
 `docs/stage3/findings/`. Historical provenance may
 still contain the original `reports/stage3` path by design.
 
-`--check-reporting` deterministically rebuilds the final six-row statistical
-family and Chapter 4.3 generated blocks in memory, then fails if committed
-reporting outputs differ. `--write-reporting` is the explicit reporting-only
-update mode. It reads accepted artifacts and never invokes semantic preparation
-or either optimizer.
+`--check-reporting` deterministically rebuilds the historical runtime MAX-Q
+six-row table and Chapter 4.3 generated blocks in memory, then fails if those
+provenance outputs differ. `--write-reporting` is its explicit historical
+reporting update mode. Current selector-dependent dissertation authority is
+`results/stage3/cross_subject/operating_preference_analysis/`, with `BALANCE`
+as the primary profile. Neither path invokes semantic preparation or either
+optimizer.
 
 ## Scientific non-change rule
 

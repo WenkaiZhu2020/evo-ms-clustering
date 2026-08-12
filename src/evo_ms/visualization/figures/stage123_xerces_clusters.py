@@ -99,47 +99,58 @@ class CompositeData:
     class_to_package: tuple[tuple[str, str], ...]
 
 
-def _partitions(root: Path):
-    stage1_path = (
-        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/"
-        "clustering/stage1_clusters.csv"
-    )
-    stage1 = pd.read_csv(root / stage1_path)
-    stage1_modularity = float(
-        pd.read_csv(
-            root
-            / "results/stage1/subjects/xerces-j/leiden_baseline/"
-            "raw_reference_leiden/metrics/stage1_metrics.csv"
-        ).iloc[0].modularity
-    )
-    stage2 = fixed_balance_selection(root, "xerces", "stage2", 21)
-    stage3 = balance_partition_medoid(root, "xerces", "stage3")
-    if stage2.solution_id != "seed21_solution022":
-        raise ValueError("authoritative Xerces-J Stage 2 BALANCE representative changed")
-    if (stage3.seed, stage3.solution_id) != (5, "seed5_solution019"):
-        raise ValueError("authoritative Xerces-J Stage 3 BALANCE medoid changed")
-    return (
-        (1, 42, "stage1_seed42", stage1_path, stage1, stage1_modularity),
-        (
+def _partitions(root: Path, stages: tuple[int, ...]):
+    partitions = []
+    if 1 in stages:
+        stage1_path = (
+            "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/"
+            "clustering/stage1_clusters.csv"
+        )
+        stage1 = pd.read_csv(root / stage1_path)
+        stage1_modularity = float(
+            pd.read_csv(
+                root
+                / "results/stage1/subjects/xerces-j/leiden_baseline/"
+                "raw_reference_leiden/metrics/stage1_metrics.csv"
+            ).iloc[0].modularity
+        )
+        partitions.append(
+            (1, 42, "stage1_seed42", stage1_path, stage1, stage1_modularity)
+        )
+    if 2 in stages:
+        stage2 = fixed_balance_selection(root, "xerces", "stage2", 21)
+        if stage2.solution_id != "seed21_solution022":
+            raise ValueError(
+                "authoritative Xerces-J Stage 2 BALANCE representative changed"
+            )
+        partitions.append((
             2,
             stage2.seed,
             stage2.solution_id,
             stage2.partition_source,
             stage2.partition,
             stage2.weighted_modularity,
-        ),
-        (
+        ))
+    if 3 in stages:
+        stage3 = balance_partition_medoid(root, "xerces", "stage3")
+        if (stage3.seed, stage3.solution_id) != (5, "seed5_solution019"):
+            raise ValueError("authoritative Xerces-J Stage 3 BALANCE medoid changed")
+        partitions.append((
             3,
             stage3.seed,
             stage3.solution_id,
             stage3.partition_source,
             stage3.partition,
             stage3.weighted_modularity,
-        ),
-    )
+        ))
+    return tuple(partitions)
 
 
-def prepare_figure_data(config: VisualizationConfig) -> FigureData:
+def prepare_figure_data(
+    config: VisualizationConfig, stages: tuple[int, ...] = (1, 2, 3)
+) -> FigureData:
+    if not stages or not set(stages).issubset({1, 2, 3}):
+        raise ValueError(f"invalid Xerces-J stage scope: {stages}")
     root = config.repository_root
     nodes = pd.read_csv(root / "data/extracted/xerces-j/class_nodes.csv")
     expected_classes = set(nodes.class_id.astype(str))
@@ -161,7 +172,9 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
 
     profiles: list[ClusterProfile] = []
     formal_modularity = []
-    for stage, seed, solution, source_path, raw, formal_value in _partitions(root):
+    for stage, seed, solution, source_path, raw, formal_value in _partitions(
+        root, stages
+    ):
         class_ids = raw.class_id.astype(str)
         if (
             len(class_ids) != 814
@@ -276,7 +289,7 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
         formal_modularity.append((stage, formal_value))
 
     selected = []
-    for stage in (1, 2, 3):
+    for stage in stages:
         candidates = [profile for profile in profiles if profile.stage == stage]
         selected.extend(
             (
@@ -297,7 +310,8 @@ def prepare_figure_data(config: VisualizationConfig) -> FigureData:
             )
         )
     data = FigureData(tuple(profiles), tuple(selected), tuple(formal_modularity))
-    for stage, expected in EXPECTED.items():
+    for stage in stages:
+        expected = EXPECTED[stage]
         seed, solution, high_id, high_n, high_edges, low_id, low_n, destinations = expected
         chosen = {
             role: profile
@@ -1198,11 +1212,14 @@ def _save_figure(figure: Figure, path: Path, output_format: str) -> None:
 def _targets(config: VisualizationConfig, page: str, output_root: Path | None):
     basename = BASENAMES[page]
     prefix = "xerces_stage13" if page == "stage13" else "xerces_stage2"
+    summary_prefix = (
+        "xerces_stage13_balance" if page == "stage13" else "xerces_stage2"
+    )
     if output_root is None:
         data_root = config.output.data / DIRECTORY
         targets = {
-            "profiles": data_root / "xerces_cluster_profiles.csv",
-            "selected": data_root / "xerces_highest_lowest_clusters.csv",
+            "profiles": data_root / f"{summary_prefix}_cluster_profiles.csv",
+            "selected": data_root / f"{summary_prefix}_highest_lowest_clusters.csv",
             "membership": data_root / f"{prefix}_class_membership.csv",
             "package_profiles": data_root / f"{prefix}_package_profiles.csv",
             "package_relations": data_root / f"{prefix}_package_relations.csv",
@@ -1220,8 +1237,8 @@ def _targets(config: VisualizationConfig, page: str, output_root: Path | None):
     root = output_root.resolve()
     data_root = root / "data" / DIRECTORY
     targets = {
-        "profiles": data_root / "xerces_cluster_profiles.csv",
-        "selected": data_root / "xerces_highest_lowest_clusters.csv",
+        "profiles": data_root / f"{summary_prefix}_cluster_profiles.csv",
+        "selected": data_root / f"{summary_prefix}_highest_lowest_clusters.csv",
         "membership": data_root / f"{prefix}_class_membership.csv",
         "package_profiles": data_root / f"{prefix}_package_profiles.csv",
         "package_relations": data_root / f"{prefix}_package_relations.csv",
@@ -1337,7 +1354,7 @@ def build_figure(
         raise ValueError(f"Xerces-J figure is not registered: {figure_id}")
     if specification.formats != ("svg", "pdf"):
         raise ValueError("Xerces-J summary figures must use SVG and PDF only")
-    data = prepare_figure_data(config)
+    data = prepare_figure_data(config, (1, 3) if page == "stage13" else (2,))
     composite = prepare_composite_data(config, data, page)
     targets, default_manifest, artifact_root = _targets(
         config, page, None if output_root is None else Path(output_root)
@@ -1406,9 +1423,13 @@ def build_figure(
             git_commit,
             git_dirty,
         )
+        representative = (
+            fixed_balance_selection(config.repository_root, "xerces", "stage2", 21)
+            if page == "stage2"
+            else balance_partition_medoid(config.repository_root, "xerces", "stage3")
+        )
         provenance["operating_profile_representatives"] = representative_provenance(
-            fixed_balance_selection(config.repository_root, "xerces", "stage2", 21),
-            balance_partition_medoid(config.repository_root, "xerces", "stage3"),
+            representative
         )
         write_json_atomic(staged["provenance"], provenance)
         document = (

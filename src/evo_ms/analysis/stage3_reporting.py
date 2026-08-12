@@ -1,9 +1,11 @@
-"""Canonical reporting-only analysis for final Stage 3.
+"""Historical runtime MAX-Q reporting analysis for final Stage 3.
 
 This module reads frozen Stage 2 and final Declaration + Method Body artifacts.
 It never runs an optimizer or regenerates semantic evidence.  The path checks
 are intentionally strict so a historical Stage 2 representative or Stage 3A
-artifact cannot silently enter the final Section 4.3 statistics.
+artifact cannot silently enter the retained historical Section 4.3 statistics.
+Current BALANCE dissertation reporting is owned by
+``results/stage3/cross_subject/operating_preference_analysis``.
 """
 
 from __future__ import annotations
@@ -644,8 +646,10 @@ def render_report_blocks(
     )
     contract = "\n".join(
         [
-            "- Active Stage 2 profile: `" + ACTIVE_STAGE2_PROFILE.as_posix() + "`.",
-            "- Stage 3 profile: final matching-seed `selected_solution.json` from the projected-front operating selector.",
+            "- Historical Stage 2 profile: `" + ACTIVE_STAGE2_PROFILE.as_posix() + "`.",
+            "- Historical Stage 3 runtime profile: matching-seed maximum-modularity `selected_solution.json`; provenance/reference only.",
+            "- Current Stage 2 and Stage 3 primary profile: `BALANCE` from `results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv`.",
+            "- Current common band: proportional modularity loss no greater than 5% from the stage-specific current front-best `Q_best`; loss relative to Leiden is separate.",
             "- Projected-HV source: `" + PROJECTED_HV_SOURCE.as_posix() + "`; its accepted HV columns are unchanged.",
             "- Selected `f_semantic`: recomputed for both selected partitions on `data/semantic_graphs/declaration_method_body/<subject>/semantic_edges.csv`.",
             "- Confirmatory family: three subjects × projected_hypervolume/selected_f_semantic; paired two-sided Wilcoxon; Holm over exactly six rows; alpha 0.05.",
@@ -664,7 +668,7 @@ def render_report_blocks(
 
 
 def reporting_outputs(root: Path) -> Mapping[Path, bytes]:
-    """Build every canonical reporting output in memory before any write."""
+    """Build the historical runtime reporting outputs in memory."""
     selected = build_selected_fsemantic_pairs(root)
     tests = build_formal_tests(root, selected)
     summary = build_formal_summary(tests)
@@ -696,7 +700,7 @@ def reporting_outputs(root: Path) -> Mapping[Path, bytes]:
 
 
 def write_reporting_outputs(root: Path, *, check: bool = False) -> list[Path]:
-    """Write or byte-check deterministic reporting outputs only."""
+    """Write or byte-check deterministic historical runtime reports only."""
     outputs = reporting_outputs(root)
     changed: list[Path] = []
     for relative, content in outputs.items():

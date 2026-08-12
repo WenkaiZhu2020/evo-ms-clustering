@@ -110,7 +110,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-11T21:33:18Z",
+      "generated_at": "2026-08-12T14:53:49Z",
       "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
       "inputs": [
         "data/extracted/xerces-j/class_nodes.csv",
@@ -137,9 +137,9 @@
         "package_profiles": "reports/figures/data/cross_stage/xerces_stage13_package_profiles.csv",
         "package_relations": "reports/figures/data/cross_stage/xerces_stage13_package_relations.csv",
         "pdf": "reports/figures/pdf/cross_stage/xerces_stage13_balance_highest_lowest_clusters.pdf",
-        "profiles": "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
+        "profiles": "reports/figures/data/cross_stage/xerces_stage13_balance_cluster_profiles.csv",
         "provenance": "reports/figures/data/cross_stage/xerces_stage13_balance_highest_lowest_clusters.provenance.json",
-        "selected": "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
+        "selected": "reports/figures/data/cross_stage/xerces_stage13_balance_highest_lowest_clusters.csv",
         "svg": "reports/figures/preview/cross_stage/xerces_stage13_balance_highest_lowest_clusters.svg",
         "top_boundary_destinations": "reports/figures/data/cross_stage/xerces_stage13_top_boundary_destinations.csv",
         "top_internal_relations": "reports/figures/data/cross_stage/xerces_stage13_top_internal_relations.csv"
@@ -153,9 +153,9 @@
         "package_profiles": "cf51f654a2d7d24101f38508ff42168018d43a67a594f38b2ebb8cff1c39a2ed",
         "package_relations": "a2470a30195c426dd5d9e451b40637bce8faa55a87e0e30f6828b624e8546031",
         "pdf": "6cb340654a9aa6cfaa25ef95d872cfac8e0565f4c79c6144d8d9c152e1028272",
-        "profiles": "164265f6f92d0b60b8ec0b8807a25ab9aa5abb24d342a5522dabba6fa38513c7",
-        "provenance": "691cdf3028079d5b65bde131f6b7fecb01721d5920e09a9f74a73bf42f06f9f4",
-        "selected": "12eec7e8354a9100021525e3124784211a4c4c8868cf6db119b09ba3785e371e",
+        "profiles": "eedfc9dc47941c341adaf321c5ba82b497c5adb3bae0c964cb532b3decb67f1f",
+        "provenance": "7d0a6044d0cf7531c17c82fd1e571da22196980f67d7e561d234ced6ff2cfbb4",
+        "selected": "81492829df4a33045a36514735eb430e9ab0910874afc80d58c6e6ae14e9eb65",
         "svg": "bdc8506d9c69856ea02eaff325939358b17ed9dfe8e93986aad0237ec1046f8e",
         "top_boundary_destinations": "e4d33b12e622ffa7d49e2ad926ad6a2e296805e70d5bcefd59bde864ad13fcd5",
         "top_internal_relations": "284e10835e8dec914a4fac296c80aea6e2a5b0be2fc650f876ab65fc1c818686"
@@ -257,24 +257,20 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-06T21:33:23Z",
+      "generated_at": "2026-08-12T14:53:43Z",
       "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
       "inputs": [
         "data/extracted/xerces-j/class_nodes.csv",
-        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
         "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
-        "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
-        "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
         "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv",
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
-        "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+        "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv"
       ],
       "metadata": {
         "aggregation": "focal classes grouped by package",
+        "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
         "highest_cluster": "C13",
         "lowest_cluster": "C27",
-        "representative": "seed 21 / seed21_solution022",
+        "representative": "seed 21 / seed21_solution022 / BALANCE P1",
         "subject": "xerces-j"
       },
       "outputs": {
@@ -286,9 +282,9 @@
         "package_profiles": "reports/figures/data/cross_stage/xerces_stage2_package_profiles.csv",
         "package_relations": "reports/figures/data/cross_stage/xerces_stage2_package_relations.csv",
         "pdf": "reports/figures/pdf/cross_stage/xerces_stage2_highest_lowest_clusters.pdf",
-        "profiles": "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
+        "profiles": "reports/figures/data/cross_stage/xerces_stage2_cluster_profiles.csv",
         "provenance": "reports/figures/data/cross_stage/xerces_stage2_highest_lowest_clusters.provenance.json",
-        "selected": "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
+        "selected": "reports/figures/data/cross_stage/xerces_stage2_highest_lowest_clusters.csv",
         "svg": "reports/figures/preview/cross_stage/xerces_stage2_highest_lowest_clusters.svg",
         "top_boundary_destinations": "reports/figures/data/cross_stage/xerces_stage2_top_boundary_destinations.csv",
         "top_internal_relations": "reports/figures/data/cross_stage/xerces_stage2_top_internal_relations.csv"
@@ -302,15 +298,15 @@
         "package_profiles": "50b2eb56bfdc635da14fe6f7a5ab77820dc8d9e1cb39132ee9fafd8099ed5157",
         "package_relations": "ecf70d615e5c2f1e6edfb8ab28322a833c38b09a9f2a47fda981e54afe4cc0e5",
         "pdf": "71413f34d194f711de0d3c2d377bb7e520222f409779fa68e9675a230db24dac",
-        "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
-        "provenance": "157b81eb6d0ee651f976ba2518e8561306753437d80924ed8d6591e0c5597e49",
-        "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
+        "profiles": "9854d2ffbd3b8e1eacbe90dfefff322de70c0c1f207f3899e27f13f10d217e8b",
+        "provenance": "caed42ddf21a64f2f9ffaf6788c2a6e9fad84458cf7f4b6b2ec001f1d8112d76",
+        "selected": "75a6f26981456f85b560e98936273d06487805d75efb33f6fb84d0797a7fffae",
         "svg": "e826dc4d61c2f0a3690dd00d50bd299e7736a44dc569073cf99d662dd1b916f9",
         "top_boundary_destinations": "adaf602ca7b7b1b2316ef138972dfba614177ccdcdf51d764ec5368a0789ff53",
         "top_internal_relations": "7e8fb3493c093263188b29ed8818eff533a2b3c07950d7815f3e2acf207c5cfc"
       },
       "stage": "stage2",
-      "title": "Xerces-J cluster contribution: Stage 2 profile"
+      "title": "Xerces-J cluster contribution: Stage 2 BALANCE profile"
     },
     "stage3_four_to_three_projection": {
       "destination": "main_text",

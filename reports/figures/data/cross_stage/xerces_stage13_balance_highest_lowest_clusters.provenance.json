@@ -4,14 +4,14 @@
     "configs/visualization/style.yml"
   ],
   "config_sha256": {
-    "configs/visualization/figures.yml": "9b3892eadeaf10fc923899026b308825e803b317fc10b544fefc695d98a283ea",
-    "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
+    "configs/visualization/figures.yml": "2846b46764f55bc98914e2bef019d3d6310444b067651f8195c338a5ebbdc8d3",
+    "configs/visualization/style.yml": "8d6299487742073debcb21ac619cfe643fe4f5a09f9c14bc69f766da67a0b5e7"
   },
   "figure_id": "stage13_xerces_balance_highest_lowest_clusters",
-  "generated_at": "2026-08-11T21:33:18Z",
+  "generated_at": "2026-08-12T14:53:49Z",
   "generated_outputs": [
-    "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
-    "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_balance_cluster_profiles.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_balance_highest_lowest_clusters.csv",
     "reports/figures/data/cross_stage/xerces_stage13_balance_highest_lowest_clusters.provenance.json",
     "reports/figures/data/cross_stage/xerces_stage13_boundary_profile.csv",
     "reports/figures/data/cross_stage/xerces_stage13_class_boundary_edges.csv",
@@ -26,7 +26,7 @@
     "reports/figures/preview/cross_stage/xerces_stage13_balance_highest_lowest_clusters.svg"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
-  "git_commit": "9109a67679ffe484583f569c0c63786914d64851",
+  "git_commit": "bd3d5797190fbb35dc24add945231f5a35a0d011",
   "git_dirty": true,
   "input_files": [
     "data/extracted/xerces-j/class_nodes.csv",
@@ -45,19 +45,6 @@
     "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_05/partition_labels.csv": "fe94992b30235ca73bcd2ea37f0672420f8a3b552a3d8ec544f6905883f646c9"
   },
   "operating_profile_representatives": [
-    {
-      "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
-      "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
-      "mean_ari_to_other_balance_partitions": null,
-      "partition_source": "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
-      "profile": "BALANCE",
-      "profile_id": "P1",
-      "representative_rule": "existing approved Stage 2 representative seed; solution resolved from authoritative BALANCE/P1",
-      "seed": 21,
-      "solution_id": "seed21_solution022",
-      "stage": "stage2",
-      "subject": "xerces"
-    },
     {
       "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
       "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
@@ -98,8 +85,8 @@
     "package_profiles": "cf51f654a2d7d24101f38508ff42168018d43a67a594f38b2ebb8cff1c39a2ed",
     "package_relations": "a2470a30195c426dd5d9e451b40637bce8faa55a87e0e30f6828b624e8546031",
     "pdf": "6cb340654a9aa6cfaa25ef95d872cfac8e0565f4c79c6144d8d9c152e1028272",
-    "profiles": "164265f6f92d0b60b8ec0b8807a25ab9aa5abb24d342a5522dabba6fa38513c7",
-    "selected": "12eec7e8354a9100021525e3124784211a4c4c8868cf6db119b09ba3785e371e",
+    "profiles": "eedfc9dc47941c341adaf321c5ba82b497c5adb3bae0c964cb532b3decb67f1f",
+    "selected": "81492829df4a33045a36514735eb430e9ab0910874afc80d58c6e6ae14e9eb65",
     "svg": "bdc8506d9c69856ea02eaff325939358b17ed9dfe8e93986aad0237ec1046f8e",
     "top_boundary_destinations": "e4d33b12e622ffa7d49e2ad926ad6a2e296805e70d5bcefd59bde864ad13fcd5",
     "top_internal_relations": "284e10835e8dec914a4fac296c80aea6e2a5b0be2fc650f876ab65fc1c818686"

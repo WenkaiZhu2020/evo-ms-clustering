@@ -1,4 +1,14 @@
-# Chapter 4.3 data pack — final Stage 3 Declaration + Method Body
+# Historical Chapter 4.3 runtime data pack — Stage 3 Declaration + Method Body
+
+> **Authority notice.** This file preserves the earlier runtime MAX-Q
+> selector-dependent report for provenance. Current dissertation reporting is
+> authoritative under
+> `results/stage3/cross_subject/operating_preference_analysis/`, with `BALANCE`
+> as the primary operating preference. The common 5% band is relative to each
+> current front-best `Q_best`; modularity loss relative to Leiden is a separate
+> descriptive comparison. Runtime `selected_solution.json` and
+> `selected_partition.csv` are historical maximum-modularity provenance, not
+> current BALANCE selections.
 
 **Scope.** Branch `stage3-Declaration+Method-Body`, audited HEAD `c0cedb74b5b2fa61867888e24c8c68b3fc013405`; final experiment `stage3_declaration_method_body`, representation `declaration_method_body_v1`. This is a descriptive, data-first report. It reads accepted Stage 2 and Stage 3 seeds 0–29, performs only deterministic calculations on frozen files, and does not regenerate semantic text, embeddings, graphs, optimizer runs, or accepted scientific artifacts.
 
@@ -34,7 +44,7 @@ The Stage 3 structural input is the same `data/extracted/<subject>/class_nodes.c
 | Objectives | minimize coupling; maximize cohesion (implemented as negative cohesion); minimize imbalance; minimize `f_semantic` |
 | Constraints | minimum 2 clusters; maximum cluster ratio 0.40 |
 | Repair | canonical relabel; split oversized clusters at `floor(0.40 × class_count)`; enforce at least two clusters; apply after initialization, crossover and mutation; duplicate individuals eliminated |
-| Operating selector | project 4D front to structural 3D, apply exact 3D nondominance, deduplicate exact 3D objective tuples, then choose minimum imbalance within 5% relative band of the maximum weighted modularity; tie-break by higher modularity, lower coupling, solution ID, canonical labels |
+| Historical runtime operating selector | project 4D front to structural 3D, apply exact 3D nondominance and deduplication, then retain the runtime maximum-modularity representative; provenance only |
 
 
 **Stage 2 identity versus Stage 3 addition.** The class universe, raw graph `G_raw`, three structural objective implementations, constraints, repair, initialization, NSGA-II population/generation budget, projected-HV bounds/reference point, and operating selector are inherited unchanged. The single scientific addition is the separate semantic graph `G_sem` and its fourth minimization objective `f_semantic = 1 - W_sem,intra / W_sem,total`; `G_raw` and `G_sem` are never fused.
@@ -444,9 +454,9 @@ The configuration labels 4D HV as Stage-3-internal only, but the accepted artifa
 | xerces | selected_f_semantic | 30 | -0.029560631084392053 | 30 | 0 | 0 | 1.862645149230957e-09 | 1.1175870895385742e-08 | -1.0 | True |
 <!-- END GENERATED: formal_statistics -->
 
-## 9. Selected Stage 2 versus Stage 3 profiles
+## 9. Historical selected Stage 2 versus runtime Stage 3 profiles
 
-> **Value provenance.** `results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv; Stage 3 selected_solution.json/posthoc_metrics.csv; frozen raw and semantic graphs` — **direct read plus frozen-graph recomputation**. Stage 2 is the active canonical 5% modularity-band solution. Stage 3 is the formal projected-front selector output. Stage 2 fsem is `1−W_sem,intra/W_sem,total`; its internal ratio is `W_raw,intra/W_raw,total`. Each per-seed vector is `modularity/coupling/cohesion/imbalance/fsem/clusters/max-ratio/singleton-ratio/internal-edge-ratio`.
+> **Historical value provenance.** `results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv; Stage 3 selected_solution.json/posthoc_metrics.csv; frozen raw and semantic graphs` — **direct read plus frozen-graph recomputation**. Stage 3 runtime files record the historical maximum-modularity selection. These tables are retained for provenance and are not current BALANCE dissertation values. Current Stage 2 and Stage 3 BALANCE selections are in `results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv`. Stage 2 fsem is `1−W_sem,intra/W_sem,total`; its internal ratio is `W_raw,intra/W_raw,total`. Each per-seed vector is `modularity/coupling/cohesion/imbalance/fsem/clusters/max-ratio/singleton-ratio/internal-edge-ratio`.
 
 **Per-seed selected profiles.**
 
@@ -669,9 +679,9 @@ The configuration labels 4D HV as Stage-3-internal only, but the accepted artifa
 | Xerces-J | singleton_ratio | 0.0055282555282554994 | 0.0135135135135135 | 0.0079852579852579507 | 1.4444444444444549 | 0/1/29 (better/tie/worse) |
 | Xerces-J | internal_edge_weight_ratio | 0.76155283968368082 | 0.79088425593098455 | 0.028152408339324253 | 0.038515273949325503 | 29/0/1 (better/tie/worse) |
 
-## 10. Partition similarity and selector behaviour
+## 10. Historical partition similarity and selector behaviour
 
-> **Value provenance.** `active Stage 2 canonical labels; Stage 3 selected_solution.json, pareto_front_4d.csv and posthoc_metrics.csv; frozen raw Leiden clusters` — **recomputed**. Partitions are canonical-label normalized. ARI/NMI use scikit-learn 1.9.0. Rank is `1 + count(strictly better)`; favorable percentile is `100 × count(no better than selected)/front_size`, so higher is better. Tolerance is 1e−12.
+> **Historical value provenance.** `active Stage 2 canonical labels; Stage 3 selected_solution.json, pareto_front_4d.csv and posthoc_metrics.csv; frozen raw Leiden clusters` — **recomputed**. Stage 3 `selected_solution.json` is the historical runtime MAX-Q reference, so the selector-dependent values below are not current BALANCE reporting. Current BALANCE partition comparisons are in `results/stage3/cross_subject/operating_preference_analysis/`. Partitions are canonical-label normalized. ARI/NMI use scikit-learn 1.9.0. Rank is `1 + count(strictly better)`; favorable percentile is `100 × count(no better than selected)/front_size`, so higher is better. Tolerance is 1e−12.
 
 **Subject behaviour summary.**
 
@@ -995,6 +1005,8 @@ All values in Tables A–F are copied or aggregated from Sections 4–13; their 
 **Stage 3 formal results.**
 
 - `results/stage3/subjects/<stage3-subject>/declaration_method_body/{validation/seed_00,formal/seed_01..29}/{pareto_front_4d.csv,projected_front_3d.csv,posthoc_metrics.csv,selected_solution.json,objective_redundancy.json,run_metadata.json}`
+- Runtime `selected_solution.json` and `selected_partition.csv` are historical maximum-modularity provenance/reference only.
+- Current BALANCE reporting selections: `results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv`.
 - `src/evo_ms/optimization/{selection.py,problem.py,stage3_problem.py}`
 
 **Projected-HV analysis.**
@@ -1004,7 +1016,8 @@ All values in Tables A–F are copied or aggregated from Sections 4–13; their 
 
 **Statistics.**
 
-- `results/stage3/cross_subject/formal_statistics/{formal_summary.csv,formal_statistical_tests.csv,formal_selected_fsemantic_per_seed.csv,formal_partition_similarity_per_seed.csv,formal_partition_similarity_summary.csv}`
+- Current BALANCE family: `results/stage3/cross_subject/operating_preference_analysis/09_balance_primary_statistics.csv`.
+- Historical runtime MAX-Q reporting: `results/stage3/cross_subject/formal_statistics/{formal_summary.csv,formal_statistical_tests.csv,formal_selected_fsemantic_per_seed.csv,formal_partition_similarity_per_seed.csv,formal_partition_similarity_summary.csv}`.
 - `results/stage3/provenance/legacy_statistics/` (historical, never current input)
 
 **Reference metrics.**
@@ -1047,20 +1060,22 @@ All values in Tables A–F are copied or aggregated from Sections 4–13; their 
 ### Conflicts and canonical resolutions
 
 1. The earlier four-metric Bonferroni config block has been replaced by the reporting-only six-row Wilcoxon/Holm contract. Historical generation hashes remain provenance and are not presented as hashes of the corrected config bytes.
-2. `stage2_vs_stage3/paired_per_seed.csv` remains authoritative only for its accepted projected-HV columns. Its older selected-semantic columns are historical. Current selected-`f_semantic` statistics come from `formal_selected_fsemantic_per_seed.csv`, using the active 5% modularity-band Stage 2 profile.
+2. `stage2_vs_stage3/paired_per_seed.csv` remains authoritative only for its accepted projected-HV columns. Its older selected-semantic columns and `formal_selected_fsemantic_per_seed.csv` are historical runtime reporting. Current BALANCE selected-`f_semantic` statistics come from `results/stage3/cross_subject/operating_preference_analysis/09_balance_primary_statistics.csv`.
 3. Some accepted run metadata records `base_config_path=configs/experiments/04_stage3_semantic.yml` and historical generation hashes. This is provenance only. Runtime identity is resolved by `configs/experiments/05_stage3_declaration_method_body.yml`, `provenance/final_stage3_provenance.json`, and `provenance/final_graph_compatibility_contract.json`; no legacy declaration-only artifact is used here.
 4. Current config bytes have changed during repository finalization, so their current file SHA-256 is not the original generation hash recorded in old run metadata. Scientific artifact identity must be taken from the final provenance/compatibility ledgers and per-artifact hashes, not by demanding equality to the current config-file byte hash.
-5. Historical manifests name `reports/stage3` as their original report root, while current canonical human-readable results live under `docs/stage3/findings`. Use `provenance/current_report_locator.json` for migrated report locations and `results/stage3` for machine-readable authority.
+5. Historical manifests name `reports/stage3` as their original report root. Current selector-dependent machine-readable authority is `results/stage3/cross_subject/operating_preference_analysis/`; this data pack remains a provenance/reference document.
 
 ### Legacy files that must not be used
 
 - Old `stage3-semantic` / declaration-only experiment results, the `stage3-declaration-final` tag as a current result source, generic Stage 3 fallbacks, Stage 3A semantic text/embedding/graph directories, and historical failed/experimental Stage 2 result directories. The only Stage 3 scientific source in this report is `05_stage3_declaration_method_body` plus `data/*/declaration_method_body`.
 
-## 17. Canonical reporting contract
+## 17. Historical reporting contract and current replacement
 
 <!-- BEGIN GENERATED: canonical_reporting_contract -->
-- Active Stage 2 profile: `results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv`.
-- Stage 3 profile: final matching-seed `selected_solution.json` from the projected-front operating selector.
+- Historical Stage 2 profile: `results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv`.
+- Historical Stage 3 runtime profile: matching-seed maximum-modularity `selected_solution.json`; provenance/reference only.
+- Current Stage 2 and Stage 3 primary profile: `BALANCE` from `results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv`.
+- Current common band: proportional modularity loss no greater than 5% from the stage-specific current front-best `Q_best`; loss relative to Leiden is separate.
 - Projected-HV source: `results/stage3/cross_subject/stage2_comparison/paired_per_seed.csv`; its accepted HV columns are unchanged.
 - Selected `f_semantic`: recomputed for both selected partitions on `data/semantic_graphs/declaration_method_body/<subject>/semantic_edges.csv`.
 - Confirmatory family: three subjects × projected_hypervolume/selected_f_semantic; paired two-sided Wilcoxon; Holm over exactly six rows; alpha 0.05.

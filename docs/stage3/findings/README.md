@@ -18,19 +18,20 @@ The formal Stage 3 results for each subject remain under:
 results/stage3/subjects/<subject>/declaration_method_body/
 ```
 
-The preference-response material is post-hoc exploratory analysis. It must
-not be interpreted as a replacement for the preregistered formal comparison.
+Current selector-dependent dissertation reporting is authoritative under
+`results/stage3/cross_subject/operating_preference_analysis/`. `BALANCE` is
+the primary operating preference: candidates are admitted within 5%
+proportional modularity loss from the current front-best `Q_best`, then
+minimum imbalance is selected. `MODULARITY_ANCHOR` (MAX-Q) is a reference;
+`COUPLING`, `COHESION`, and `SEMANTIC` are descriptive sensitivity profiles.
+Modularity loss relative to Leiden is a separate descriptive comparison.
 
-The canonical Dissertation Section 4.3 data pack is
-[`chapter4_3_data_pack.md`](chapter4_3_data_pack.md). Its reporting-only
-outputs are regenerated and byte-checked with:
-
-```text
-python experiments/05_stage3_declaration_method_body/analyze.py --write-reporting
-python experiments/05_stage3_declaration_method_body/analyze.py --check-reporting
-```
-
-Neither command runs an experiment or regenerates semantic evidence.
+[`chapter4_3_data_pack.md`](chapter4_3_data_pack.md) and the older
+`formal_statistics/` tables are retained as historical runtime MAX-Q
+reporting/provenance. Runtime `selected_solution.json` and
+`selected_partition.csv` files likewise preserve the historical
+maximum-modularity selections; they are not the current BALANCE-selected
+dissertation authority.
 
 The former `reports/stage3/` directory was a mixed legacy root and has been
 retired. Historical provenance files may still contain that path because they
