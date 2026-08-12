@@ -1,0 +1,86 @@
+{
+  "config_files": [
+    "configs/visualization/figures.yml",
+    "configs/visualization/style.yml"
+  ],
+  "config_sha256": {
+    "configs/visualization/figures.yml": "61abdcf67a0fbee732db46ebe3df023fbb6534952234ba951f9009ef1f3adaa5",
+    "configs/visualization/style.yml": "f4538679fcd40fac825b3a52fad5e116058c71cedbb6cda84ed2d97a85589dc8"
+  },
+  "figure_id": "stage13_xerces_shared_highest_lowest_clusters",
+  "generated_at": "2026-08-06T21:33:22Z",
+  "generated_outputs": [
+    "reports/figures/data/cross_stage/xerces_cluster_profiles.csv",
+    "reports/figures/data/cross_stage/xerces_highest_lowest_clusters.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_boundary_profile.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_class_boundary_edges.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_class_internal_edges.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_class_membership.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_lowest_cluster_profile.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_package_profiles.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_package_relations.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_shared_highest_lowest_clusters.provenance.json",
+    "reports/figures/data/cross_stage/xerces_stage13_top_boundary_destinations.csv",
+    "reports/figures/data/cross_stage/xerces_stage13_top_internal_relations.csv",
+    "reports/figures/pdf/cross_stage/xerces_stage13_shared_highest_lowest_clusters.pdf",
+    "reports/figures/preview/cross_stage/xerces_stage13_shared_highest_lowest_clusters.svg"
+  ],
+  "generator": "src/evo_ms/visualization/figures/stage123_xerces_clusters.py",
+  "git_commit": "f810def226284714468489bc2a763118e7ccc2ba",
+  "git_dirty": true,
+  "input_files": [
+    "data/extracted/xerces-j/class_nodes.csv",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
+    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv",
+    "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json"
+  ],
+  "input_sha256": {
+    "data/extracted/xerces-j/class_nodes.csv": "05f132edcc6b9b1ceaa36e63abcd0707d9b4d000b5e168111a036fea315927f2",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv": "d2478f556ca973c25a950bf5341f8a3585e41271cdb4533553da3f181f1d730b",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv": "3795b4ab2c33a48f521f6242b791bf29f5a1c67364a3938d504594bae9c6a12e",
+    "results/stage1/subjects/xerces-j/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv": "014e5ace715ed2a26ef45b4f021c96eb8b83b57c5b9d54bbc921679988fa9cf2",
+    "results/stage2/cross_subject/operating_profile/canonical_operating_solution_per_seed.csv": "9a0e9a1f40edf260bb06c719e6967aef9c18a81b28fac9f0895e5520341c91d3",
+    "results/stage2/subjects/xerces-j/nsga/robustness_final_30seeds/seed_21/pareto_labels.csv.xz": "47528c23b7a83c665c9d84d429308db9b5addc9d2a61b1eeda42bf1dc2985fde",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/posthoc_metrics.csv": "dd3fd6e08ba6e17d62bd522b52dc1747111be06ce54d59b028255556662a109d",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_partition.csv": "30f600cb2587ee183d84de3d82b3f6aeb72baab7080b5eac3bdd058658c95845",
+    "results/stage3/subjects/xerces-j/declaration_method_body/formal/seed_22/selected_solution.json": "5533ac25dae86519accc206d432d5a3056fb7627d7943e18047993d01f2f0aa4"
+  },
+  "render_command": [
+    [
+      "matplotlib",
+      "savefig",
+      "--format",
+      "svg"
+    ],
+    [
+      "matplotlib",
+      "savefig",
+      "--format",
+      "pdf"
+    ]
+  ],
+  "renderer": "matplotlib",
+  "renderer_version": "3.10.8",
+  "schema_version": 1,
+  "sha256": {
+    "boundary_edges": "d30520206623bf6716c722405dfca55f391158268723856c23120e150f0d2335",
+    "boundary_profile": "0f0784321162c3cff62c1ada02f243cc78e21743636e3483ec8ff5647c59fab8",
+    "internal_edges": "90311cfb8c55c4d3863cf3d0ec50d46e413b61c5706cb71508fc728af72b7b28",
+    "lowest_profile": "7e4bc0af22d41ddb5abb9b7f0334043a47daf928a7b4ae4f6429062fc3373176",
+    "membership": "00fcb6501b8d052260a95c935a1efc6b20209f3379a23a102a571a181bd020c9",
+    "package_profiles": "85efd9ce8065cb997575e9c9f66823fccaf3711b5f0a294e66a54da40db210a2",
+    "package_relations": "e85fe92c40ebb5f8a90f924dde593dccde26f04faaf6bd9daa756e7815261104",
+    "pdf": "fd940ceaa57f8141fe923bcfdb76d03de4b9a269ca22fabf6c2814766060c035",
+    "profiles": "3a7782d50c72e5c275ea3edd9a6b614664009d12fa6b700c01d856de3da63a20",
+    "selected": "f3bcc03f993534bf7c436f99db77ef90c3e0eb3c8eacfb2064cc7c90cc1887c6",
+    "svg": "38d11eb29e6aafd9d2652537771c2df8193133a0d1ac1d82b58ad1236dfe89d8",
+    "top_boundary_destinations": "01604fc71f7eef6f5c610918821cbfda314e54f8d3136c1b0cc745dcd07caca1",
+    "top_internal_relations": "c5cb7f3bea5211a80a0d2a301a442508db76cd3f58fc027f407b50382f1a0206"
+  },
+  "stage": "stage3"
+}

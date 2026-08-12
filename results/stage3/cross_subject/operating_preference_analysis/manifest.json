@@ -1,0 +1,197 @@
+{
+  "analysis": "final_stage2_stage3_operating_preference_analysis",
+  "analysis_script": "experiments/05_stage3_declaration_method_body/build_operating_preference_analysis.py",
+  "analysis_script_sha256": "2e5a3ff7d95ccf8d2affbc6d8bec13ab94eb41d78fd0c1ab13328b307cc95fd9",
+  "analysis_version": "operating-preference-analysis-v1",
+  "authoritative_primary_profile": "BALANCE",
+  "historical_reference_profile": "MODULARITY_ANCHOR",
+  "output_files": [
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/01_selector_definitions.json",
+      "sha256": "2ca753eabf7741c3d8dcc971cffe02107cd105defab484bbc70ec5721c9c187e",
+      "size_bytes": 2883
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/02_source_provenance.csv",
+      "sha256": "a1c3d06c2da20220ef635525914d712b04d212a42d9862478af427a53ad6bf15",
+      "size_bytes": 117238
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/03_stage2_front_fsemantic.csv",
+      "sha256": "c9374a3e8af0bd56b6c58dbb2a51b23ac9248e480e68e35b5bd9a3d0088e03d4",
+      "size_bytes": 5213389
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+      "sha256": "af4e1213f13acca3893a483758cfc9ecae5b55e0c4b82d6935e5e17306ab4a3e",
+      "size_bytes": 455794
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/05_profile_summary.csv",
+      "sha256": "4a9fcd8cae39318aa60d4892f3a3f8e629162104b4a58309a54f59d62edfe37e",
+      "size_bytes": 10883
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/06_preference_partition_similarity.csv",
+      "sha256": "73f18b2caa616816bce282de465f139e5c74e36e303f928303f9a63c3eea1817",
+      "size_bytes": 2998
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/07_preference_metric_deltas.csv",
+      "sha256": "8f473096fae97719a9f0963aab3d030ae5c09d7fb057c8ce9350d5b54b5c89ea",
+      "size_bytes": 6806
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/08_stage2_stage3_same_preference.csv",
+      "sha256": "0f19bcd51254e056127a04d7eded3362f3a2d67745aa1360d99b8b71ef53b13b",
+      "size_bytes": 12134
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/09_balance_floating_tie_audit.csv",
+      "sha256": "11d4c94a193ff6f558ae23da57a8a4596b910a151d69860abcd6fa1c558b975f",
+      "size_bytes": 534
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/09_balance_primary_statistics.csv",
+      "sha256": "340de49e34f95c04b4b193c9dab46348fcec4c1cc9a841048dd4fbc1d9a09d9e",
+      "size_bytes": 4322
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/10_maxq_reference_comparison.csv",
+      "sha256": "2b71636ecac0a4d5ce27b3d09d2bea76897ffbac6cdd4c37e67f46e879dd2d92",
+      "size_bytes": 1586
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/11_xerces_profile_diagnostic.csv",
+      "sha256": "686222e76ea41a6fd631a3ee0ca934fddb409b1eab7728319f9bc4b539b0b4bd",
+      "size_bytes": 5413
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/12_existing_hv_ssa_references.csv",
+      "sha256": "a025bd0beae39bd7d9c342caacce9037415cf955afe0d380d8679eaea00636ad",
+      "size_bytes": 31391
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/13_stale_reporting_inventory.csv",
+      "sha256": "bd94cd687c6294f6e80bfdf38244aa81ac342b64e0a30e5fa4ab8728ad9119a9",
+      "size_bytes": 3298
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/14_validation_report.md",
+      "sha256": "b8256984fbde1cb6f85f48588ff76ce4114ab7c373fa330f811a79968e2dcbc4",
+      "size_bytes": 59292
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/15_figure_candidates_5pct.csv",
+      "sha256": "52195624ebe004004fa2732ca17651956a20f75a815be6cd24e6a805afa390a7",
+      "size_bytes": 326472
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/16_figure_balance_cross_stage.csv",
+      "sha256": "f1ff7bf2688f9e267358b99e6a36893a444ac80cdb38289650882cdc28358b83",
+      "size_bytes": 90071
+    },
+    {
+      "path": "results/stage3/cross_subject/operating_preference_analysis/17_figure_profile_trajectories.csv",
+      "sha256": "43d0423037013c73c47043ead509dd830c61a0af11b6a8ef0c8cf994254d0f65",
+      "size_bytes": 186064
+    }
+  ],
+  "profile_row_count": 900,
+  "profiles": [
+    "MODULARITY_ANCHOR",
+    "BALANCE",
+    "COUPLING",
+    "COHESION",
+    "SEMANTIC"
+  ],
+  "reference_selection_validation": {
+    "passed": true,
+    "stage2_balance_exact_solution_id_matches": 90,
+    "stage2_balance_reference_rows": 90,
+    "stage3_balance_exact_partition_matches": 90,
+    "stage3_balance_exact_solution_id_matches": 90,
+    "stage3_balance_reference_rows": 90,
+    "stage3_balance_validation_source": "direct recomputation from frozen projected_front_3d.csv and posthoc_metrics.csv candidate pools",
+    "stage3_maxq_exact_solution_id_matches": 90,
+    "stage3_maxq_historical_rows": 90
+  },
+  "safety": {
+    "dissertation_latex_modified": false,
+    "embedding_regenerated": false,
+    "historical_run_output_modified": false,
+    "optimizer_rerun": false,
+    "pareto_front_regenerated": false,
+    "projected_front_regenerated": false,
+    "semantic_graph_regenerated": false,
+    "writes_confined_to": "results/stage3/cross_subject/operating_preference_analysis"
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "source_artifact_count": 553,
+  "source_branch": "stage3-Declaration+Method-Body",
+  "source_head": "bd3d5797190fbb35dc24add945231f5a35a0d011",
+  "source_provenance": "results/stage3/cross_subject/operating_preference_analysis/02_source_provenance.csv",
+  "stage2_front_fsemantic": {
+    "candidate_count": 8815,
+    "passed": true,
+    "selected_solution_crosscheck_atol": 1e-12,
+    "selected_solution_crosscheck_count": 90,
+    "selected_solution_crosscheck_max_abs_error": 2.220446049250313e-16,
+    "status": "NEWLY_COMPUTED"
+  },
+  "status": "NEW_AUTHORITATIVE_DERIVED_REPORTING",
+  "subjects": [
+    "jpetstore",
+    "daytrader",
+    "xerces"
+  ],
+  "validation_gates": {
+    "gate_01_profile_rows_900": true,
+    "gate_02_common_band_shared_by_p1_p4": true,
+    "gate_03_every_selection_in_source_pool": true,
+    "gate_04_p1_p4_inside_5pct_band": true,
+    "gate_05_every_selection_feasible": true,
+    "gate_06_stage2_balance_reproduced_90_of_90": true,
+    "gate_07_stage3_balance_reproduced_90_of_90": true,
+    "gate_08_stage3_maxq_runtime_reproduced_90_of_90": true,
+    "gate_09_stage2_fsemantic_crosscheck": true,
+    "gate_10_selectors_deterministic_in_memory": true,
+    "gate_11_byte_identical_regeneration_supported": true,
+    "gate_12_no_pareto_front_written": true,
+    "gate_13_no_projected_front_written": true,
+    "gate_14_no_graph_or_embedding_written": true,
+    "gate_15_no_historical_selected_solution_written": true,
+    "gate_16_jpetstore_3_15_29_fsemantic_ties": true
+  }
+}

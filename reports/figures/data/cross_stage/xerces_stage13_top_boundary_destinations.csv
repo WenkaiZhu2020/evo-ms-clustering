@@ -1,0 +1,7 @@
+stage,focal_cluster_id,rank,display_label,external_cluster_id,destination_cluster_count,external_class_count,aggregated_boundary_weight
+stage3_balance,C13,1,External C07,C07,1,25,531
+stage3_balance,C13,2,External C04,C04,1,18,282
+stage3_balance,C13,3,External C14,C14,1,34,219
+stage3_balance,C13,4,External C02,C02,1,10,133
+stage3_balance,C13,5,External C19,C19,1,14,123
+stage3_balance,C13,6,Other external clusters,OTHER,10,27,260

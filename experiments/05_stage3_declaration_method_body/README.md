@@ -18,11 +18,12 @@ not a fifth experiment stage. It deterministically synchronizes the frozen
 Stage 2 modularity-band operating profile into the saved Stage 3 preference
 analysis. Its generated CSVs are committed and reproducible byte-for-byte.
 
-The final reporting contract is regenerated with `analyze.py
---write-reporting` and verified with `analyze.py --check-reporting`. The loader
-accepts only the frozen Stage 2 5% modularity-band profile and final Stage 3
-Declaration + Method Body selected solutions; it fails on incomplete seed or
-class-universe alignment.
+`analyze.py --write-reporting` and `--check-reporting` preserve and verify the
+historical runtime MAX-Q report only. Current selector-dependent dissertation
+reporting is authoritative under
+`results/stage3/cross_subject/operating_preference_analysis/`, where `BALANCE`
+is the primary profile within the 5% proportional-loss band from current
+front-best `Q_best`. Runtime selected solutions remain provenance/reference.
 
 Reusable numerical behaviour is provided by `src/evo_ms`. No file in this
 directory imports a script or the Stage 2 experiment.

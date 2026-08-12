@@ -1,0 +1,92 @@
+{
+  "config_files": [
+    "configs/visualization/figures.yml",
+    "configs/visualization/style.yml"
+  ],
+  "config_sha256": {
+    "configs/visualization/figures.yml": "38fe6fdde98dd7d3cb969f77ce8a0f83438fe575c33377473fb0e5375128e29a",
+    "configs/visualization/style.yml": "8d6299487742073debcb21ac619cfe643fe4f5a09f9c14bc69f766da67a0b5e7"
+  },
+  "dot_sha256": "d52ba03c7e1336cbf65d444826e4e160aab4379c89f606929d6e4a5a2d1a0b0a",
+  "figure_id": "stage123_jpetstore_highest_lowest_clusters",
+  "generated_at": "2026-08-11T22:08:26Z",
+  "generated_outputs": [
+    "reports/figures/data/cross_stage/jpetstore_boundary_aggregation.csv",
+    "reports/figures/data/cross_stage/jpetstore_cluster_profiles.csv",
+    "reports/figures/data/cross_stage/jpetstore_highest_lowest_clusters.csv",
+    "reports/figures/data/cross_stage/jpetstore_highest_lowest_clusters.provenance.json",
+    "reports/figures/pdf/cross_stage/jpetstore_highest_lowest_clusters.pdf",
+    "reports/figures/preview/cross_stage/jpetstore_highest_lowest_clusters.svg",
+    "reports/figures/source/cross_stage/jpetstore_highest_lowest_clusters.dot"
+  ],
+  "generator": "src/evo_ms/visualization/figures/stage123_jpetstore_clusters.py",
+  "git_commit": "fbf396d6bcf403a703f86a6ff2a74387d0ed8887",
+  "git_dirty": true,
+  "graphviz_engine": "neato",
+  "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",
+  "input_files": [
+    "data/extracted/jpetstore/class_nodes.csv",
+    "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+    "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+    "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv",
+    "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
+    "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+    "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv"
+  ],
+  "input_sha256": {
+    "data/extracted/jpetstore/class_nodes.csv": "69b59fef4e0cf7feb7402d14beac895b1790db0906b2b6dc11c54743f431e7e0",
+    "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv": "7d48be144ba109eb9029441bc57fd5ab70917333ec9b61fc3063015f73f7b5d5",
+    "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv": "10327cabac7cc7bd0225b25e8cfd29163a9cc0ba67e11180e04bc88d59c36d80",
+    "results/stage1/subjects/jpetstore/leiden_baseline/raw_reference_leiden/metrics/stage1_metrics.csv": "12acf50e8b25a06edecdecda4bda30c55fdb237f0227762a50aa34641607c81d",
+    "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz": "3ac02924a7056da42fe624d928b72e52158f87da146455241eb31cdd6f621983",
+    "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv": "af4e1213f13acca3893a483758cfc9ecae5b55e0c4b82d6935e5e17306ab4a3e",
+    "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv": "e3c4eb7fd37a85ee9b4327ab1fa1043bfda7ab2290103ac56b204889ad1fd760"
+  },
+  "operating_profile_representatives": [
+    {
+      "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+      "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
+      "mean_ari_to_other_balance_partitions": null,
+      "partition_source": "results/stage2/subjects/jpetstore/nsga/robustness_final_30seeds/seed_01/pareto_labels.csv.xz",
+      "profile": "BALANCE",
+      "profile_id": "P1",
+      "representative_rule": "existing approved Stage 2 representative seed; solution resolved from authoritative BALANCE/P1",
+      "seed": 1,
+      "solution_id": "seed1_solution007",
+      "stage": "stage2",
+      "subject": "jpetstore"
+    },
+    {
+      "authoritative_source": "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
+      "authoritative_source_commit": "9109a67679ffe484583f569c0c63786914d64851",
+      "mean_ari_to_other_balance_partitions": 0.8707868565791642,
+      "partition_source": "results/stage3/subjects/jpetstore/declaration_method_body/formal/seed_04/partition_labels.csv",
+      "profile": "BALANCE",
+      "profile_id": "P1",
+      "representative_rule": "maximum mean ARI to the other 29 BALANCE/P1 partitions; ties by seed then solution_id",
+      "seed": 4,
+      "solution_id": "seed4_solution000",
+      "stage": "stage3",
+      "subject": "jpetstore"
+    }
+  ],
+  "render_command": [
+    [
+      "neato",
+      "-n2",
+      "-Tpdf",
+      "reports/figures/source/cross_stage/jpetstore_highest_lowest_clusters.dot",
+      "-o",
+      "reports/figures/pdf/cross_stage/jpetstore_highest_lowest_clusters.pdf"
+    ],
+    [
+      "neato",
+      "-n2",
+      "-Tsvg",
+      "reports/figures/source/cross_stage/jpetstore_highest_lowest_clusters.dot",
+      "-o",
+      "reports/figures/preview/cross_stage/jpetstore_highest_lowest_clusters.svg"
+    ]
+  ],
+  "stage": "stage3"
+}

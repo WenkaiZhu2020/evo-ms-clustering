@@ -1,0 +1,4 @@
+subject,ssa_mean,ssa_sd,seed_noise_mean,seed_noise_sd,raw_distinct_partitions,within_seed_variation,interpretation
+jpetstore,0.123407109323,2.82300642704e-17,0,0,1,,Seed-invariant raw baseline; noise-band comparison: N/A
+daytrader,0.108557089941,0.094073958,0.0655114201284,0.144487750955,4,true,SSA mean within observed seed-variation band
+xerces-j,0.282465152312,0.064170237019,0.215766577766,0.108874245607,28,true,SSA mean within observed seed-variation band

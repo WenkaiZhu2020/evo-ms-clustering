@@ -1,0 +1,10 @@
+subject,partition_a,partition_b,ari,nmi
+jpetstore,Stage 1,Stage 2,0.675761709868,0.752262925974
+jpetstore,Stage 2,Stage 3,0.675761709868,0.752262925974
+jpetstore,Stage 1,Stage 3,1,1
+daytrader,Stage 1,Stage 2,0.884456555917,0.897662157515
+daytrader,Stage 2,Stage 3,0.881808787043,0.89032898461
+daytrader,Stage 1,Stage 3,0.997117287489,0.993487315439
+xerces-j,Stage 1,Stage 2,0.95660987754,0.961058927594
+xerces-j,Stage 2,Stage 3,0.954275104012,0.959338645066
+xerces-j,Stage 1,Stage 3,0.997600561329,0.997630066191

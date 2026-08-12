@@ -1,0 +1,150 @@
+schema_version: 1
+
+subjects:
+  jpetstore: JPetStore
+  daytrader: DayTrader
+  xerces-j: Xerces-J
+
+fonts:
+  family: Helvetica
+  node_size: 10
+  edge_size: 8
+  title_size: 12
+
+node:
+  shape: box
+  style: rounded,filled
+  fillcolor: "#F7F7F7"
+  color: "#4D4D4D"
+  penwidth: 1.0
+
+edge:
+  color: "#666666"
+  style: solid
+  penwidth: 1.0
+
+changed_node:
+  color: "#D55E00"
+  style: bold
+  penwidth: 3.0
+
+edge_categories:
+  structural:
+    color: "#4D4D4D"
+    style: solid
+    penwidth: 0.9
+  ssa_only:
+    color: "#D55E00"
+    style: dashed
+  semantic_only:
+    color: "#0072B2"
+    style: dashed
+    penwidth: 0.9
+  structural_semantic_overlap:
+    color: "#CC79A7"
+    style: bold
+    penwidth: 1.8
+
+semantic_evidence_comparison:
+  canvas_width_pt: 480
+  panel_height_pt: 225
+  panel_offset_pt: 280
+  coordinate_margin_x_pt: 55
+  coordinate_margin_y_pt: 34
+  node_font_size: 7
+  node_height_in: 0.24
+  node_margin: "0.035,0.018"
+
+cluster_contribution_comparison:
+  canvas_width_pt: 500
+  canvas_height_pt: 460
+  focal_fill: "#DCEAF7"
+  focal_border: "#0072B2"
+  external_fill: "#F2F2F2"
+  external_border: "#888888"
+  internal_edge: "#4D4D4D"
+  boundary_edge: "#AAAAAA"
+  boundary_width_min: 0.65
+  boundary_width_max: 2.8
+  node_font_size: 7.2
+  title_font_size: 9.0
+  metric_font_size: 7.0
+  panel_width_pt: 236
+  panel_height_pt: 176
+
+transition_flow:
+  line_width_min: 0.8
+  line_width_max: 6.0
+  color: "#77777788"
+
+graph:
+  margin: 0.08
+  pad: 0.12
+  background: white
+
+workflow:
+  stage3_space:
+    fillcolor: "#DCEAF7"
+    color: "#0072B2"
+  operation:
+    fillcolor: "#F2F2F2"
+    color: "#666666"
+  common_space:
+    fillcolor: "#DFF0E8"
+    color: "#009E73"
+  comparison:
+    fillcolor: "#EDF4FA"
+    color: "#5B7FA3"
+
+page_profiles:
+  main_text:
+    width_in: 6.25
+    height_in: 7.8
+  appendix:
+    width_in: 7.0
+    height_in: 9.2
+
+graphviz:
+  default_engines:
+    hierarchical: dot
+    force_directed: neato
+    fixed_coordinates: neato
+    large_graph: sfdp
+  initial_layout_seed: 42
+
+layout_profiles:
+  hierarchical:
+    engine: dot
+    fixed_coordinates: false
+    seed: 42
+    page_profile: main_text
+  force_directed:
+    engine: neato
+    fixed_coordinates: false
+    seed: 42
+    page_profile: main_text
+  fixed_comparison:
+    engine: neato
+    fixed_coordinates: true
+    seed: 42
+    page_profile: main_text
+  large_graph:
+    engine: sfdp
+    fixed_coordinates: false
+    seed: 42
+    page_profile: appendix
+
+# This is a configurable reserve only. No colour is assigned to a formal
+# partition until a later stage-specific preparation step.
+cluster_palette:
+  - "#0072B2"
+  - "#E69F00"
+  - "#009E73"
+  - "#CC79A7"
+  - "#56B4E9"
+  - "#D55E00"
+  - "#F0E442"
+  - "#999999"
+  - "#882255"
+  - "#44AA99"
+  - "#AA4499"
