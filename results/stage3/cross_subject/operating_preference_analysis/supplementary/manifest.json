@@ -1,7 +1,7 @@
 {
   "analysis": "supplementary_stage2_stage3_operating_preference_validation",
   "analysis_script": "experiments/05_stage3_declaration_method_body/build_supplementary_operating_preference_analysis.py",
-  "analysis_script_sha256": "c28817f77b4c99c880c2859b0a9d60b131e69013c5531f4f96549f2017db693e",
+  "analysis_script_sha256": "69e98ad5e0a6197f55c9adac40f7779a58ffc39844eafaf576f5af5e6c1bc0b7",
   "analysis_version": "supplementary-operating-preference-analysis-v1",
   "class_counts": {
     "easymock": 105,
@@ -803,7 +803,7 @@
     }
   ],
   "source_branch": "codex/stage3-supplementary-preference",
-  "source_head": "6222ebf463c0e0460f5b08996ef46f01abc5c8cb",
+  "source_head": "a3becdf3815c6aec57e3f1ffc8cd9c326a85b540",
   "stage_seeds": {
     "stage2": [
       0,

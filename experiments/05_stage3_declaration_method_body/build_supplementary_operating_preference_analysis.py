@@ -405,7 +405,24 @@ def _write(outputs: Mapping[Path, bytes]) -> None:
 
 
 def _check(outputs: Mapping[Path, bytes]) -> None:
-    stale = [path.as_posix() for path, content in outputs.items() if not (ROOT / path).is_file() or (ROOT / path).read_bytes() != content]
+    stale: list[str] = []
+    for path, content in outputs.items():
+        retained = ROOT / path
+        if not retained.is_file():
+            stale.append(path.as_posix())
+            continue
+        retained_content = retained.read_bytes()
+        if path.name == "manifest.json":
+            retained_manifest = json.loads(retained_content)
+            generated_manifest = json.loads(content)
+            for manifest in (retained_manifest, generated_manifest):
+                manifest.pop("source_branch", None)
+                manifest.pop("source_head", None)
+            matches = retained_manifest == generated_manifest
+        else:
+            matches = retained_content == content
+        if not matches:
+            stale.append(path.as_posix())
     if stale:
         raise ValueError("supplementary bundle is stale: " + ", ".join(stale))
 
