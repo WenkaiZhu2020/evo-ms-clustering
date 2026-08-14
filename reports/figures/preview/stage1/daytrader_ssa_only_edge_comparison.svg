@@ -1454,14 +1454,14 @@
 <!-- title -->
 <g id="node33" class="node">
 <title>title</title>
-<text xml:space="preserve" text-anchor="middle" x="225" y="-492.12" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#111111">DayTrader local evidence: G_raw with 8 SSA&#45;only class pairs</text>
+<text xml:space="preserve" text-anchor="middle" x="225" y="-492.12" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#111111">DayTrader local evidence: raw structural edges and 8 SSA&#45;only class pairs</text>
 </g>
 <!-- legend_1_l -->
 <!-- legend_1_r -->
 <!-- legend_1_label -->
 <g id="node36" class="node">
 <title>legend_1_label</title>
-<text xml:space="preserve" text-anchor="middle" x="103" y="-21.48" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#111111">G_raw pair</text>
+<text xml:space="preserve" text-anchor="middle" x="103" y="-21.48" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#111111">raw structural edge</text>
 </g>
 <!-- legend_2_l -->
 <!-- legend_2_r -->

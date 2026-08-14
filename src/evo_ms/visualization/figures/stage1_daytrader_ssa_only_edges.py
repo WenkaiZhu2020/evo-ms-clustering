@@ -581,14 +581,14 @@ def overlay_dot(config: VisualizationConfig, variant: VariantData, ssa_edges: tu
         f"  {dot_quote('title')} " + stable_attributes({
             "color": "transparent", "fillcolor": "transparent", "fontcolor": "#111111",
             "fontname": font, "fontsize": 10.0,
-            "label": "DayTrader local evidence: G_raw with 8 SSA-only class pairs", "pin": True,
+            "label": "DayTrader local evidence: raw structural edges and 8 SSA-only class pairs", "pin": True,
             "pos": f"{format_number(canvas_width / 2)},{format_number(canvas_height - 24)}!",
             "shape": "plain", "style": "",
         }) + ";"
     )
     legend_y = 24.0
     for index, (x, color, edge_style, width, label) in enumerate((
-        (42.0, "#888888", "solid", 0.8, "G_raw pair"),
+        (42.0, "#888888", "solid", 0.8, "raw structural edge"),
         (168.0, ssa_style["color"], ssa_style["style"], 2.1, "SSA-only pair"),
     ), start=1):
         for suffix, dx in (("l", 0.0), ("r", 20.0)):
@@ -728,7 +728,7 @@ def build_figure(
                     },
                     "sha256": hashes,
                     "stage": STAGE_DIRECTORY,
-                    "title": "DayTrader local G_raw and G_ssa comparison for eight SSA-only class pairs",
+                    "title": "DayTrader local evidence: raw structural edges and 8 SSA-only class pairs",
                 }
             },
         }
