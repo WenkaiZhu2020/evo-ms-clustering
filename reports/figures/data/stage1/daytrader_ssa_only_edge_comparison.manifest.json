@@ -1,0 +1,60 @@
+{
+  "figures": {
+    "stage1_daytrader_ssa_only_edge_comparison": {
+      "destination": "main_text",
+      "formats": [
+        "dot",
+        "svg",
+        "pdf"
+      ],
+      "generated_at": "2026-08-13T00:00:00Z",
+      "generator": "evo_ms.visualization.figures.stage1_daytrader_ssa_only_edges",
+      "inputs": [
+        "data/extracted/daytrader/class_nodes.csv",
+        "data/extracted/daytrader/structural_dependencies.csv",
+        "data/extracted/daytrader/ssa_flow_edges.csv",
+        "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+        "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+        "results/stage1/subjects/daytrader/seed_robustness/robustness_metadata.yml"
+      ],
+      "metadata": {
+        "lambda": 0.25,
+        "overlap_pairs": 53,
+        "raw_pairs": 161,
+        "recommended_variant": "reduced single-panel overlay",
+        "reduced_rule": "V_new plus hop-1 context adjacent to at least two V_new classes",
+        "ssa_only_pairs": 8,
+        "ssa_supported_pairs": 61,
+        "subject": "daytrader"
+      },
+      "outputs": {
+        "dot": "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison.dot",
+        "full_dot": "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison_full.dot",
+        "full_pdf": "reports/figures/pdf/stage1/daytrader_ssa_only_edge_comparison_full.pdf",
+        "full_svg": "reports/figures/preview/stage1/daytrader_ssa_only_edge_comparison_full.svg",
+        "manifest_fragment": "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison.manifest.json",
+        "nodes": "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison_nodes.csv",
+        "pdf": "reports/figures/pdf/stage1/daytrader_ssa_only_edge_comparison.pdf",
+        "provenance": "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison.provenance.json",
+        "raw_edges": "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison_raw_edges.csv",
+        "ssa_only_edges": "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison_ssa_only_edges.csv",
+        "svg": "reports/figures/preview/stage1/daytrader_ssa_only_edge_comparison.svg"
+      },
+      "sha256": {
+        "dot": "10f6f2f983c70d1d40560eb1c9bc99cd9304cc1d375b60f104a05d19eb742d9b",
+        "full_dot": "592433d9a4044141b75d068bf11b728bd63f4117c49a51e4186a422e1b817cda",
+        "full_pdf": "d752615c8ab3a233a0830d3a37987cb859c8eafeeae93e47e0c061828bc4e1d1",
+        "full_svg": "7cbe53e037a320afcdb0f8c1bc79b7ff895ec1b95c097bbb84181ae6febbac2d",
+        "nodes": "0b19608f1643648be6342022a64cebb55e0c45f5dfe40d1cf1959fc237f38b8b",
+        "pdf": "03bc7a66403ea25fc755ccfe47ad8574e10a3ed9731e081a3ec9162868f4d65e",
+        "provenance": "6a60607d91eaabd5e4b961984cea2a392b8438e485e314057d94677db574fc4a",
+        "raw_edges": "da2bb6c0330294419ea6cd451402e8ef787abd2c6d2ad3689891d80f894a43ba",
+        "ssa_only_edges": "28d914fe9dba931144d39515162f696a4d51626f9e4f15667fb7752ce5dd1d73",
+        "svg": "9899e0f46735c2603980acaa854a02e6a9ce5cb4fccd6cc5ba0086e06cc1feeb"
+      },
+      "stage": "stage1",
+      "title": "DayTrader local G_raw and G_ssa comparison for eight SSA-only class pairs"
+    }
+  },
+  "schema_version": 1
+}

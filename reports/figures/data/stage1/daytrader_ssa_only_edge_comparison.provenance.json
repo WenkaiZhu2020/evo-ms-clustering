@@ -1,0 +1,79 @@
+{
+  "config_files": [
+    "configs/visualization/style.yml"
+  ],
+  "config_sha256": {
+    "configs/visualization/style.yml": "8d6299487742073debcb21ac619cfe643fe4f5a09f9c14bc69f766da67a0b5e7"
+  },
+  "dot_sha256": "10f6f2f983c70d1d40560eb1c9bc99cd9304cc1d375b60f104a05d19eb742d9b",
+  "figure_id": "stage1_daytrader_ssa_only_edge_comparison",
+  "generated_at": "2026-08-13T00:00:00Z",
+  "generated_outputs": [
+    "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison.provenance.json",
+    "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison_nodes.csv",
+    "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison_raw_edges.csv",
+    "reports/figures/data/stage1/daytrader_ssa_only_edge_comparison_ssa_only_edges.csv",
+    "reports/figures/pdf/stage1/daytrader_ssa_only_edge_comparison.pdf",
+    "reports/figures/pdf/stage1/daytrader_ssa_only_edge_comparison_full.pdf",
+    "reports/figures/preview/stage1/daytrader_ssa_only_edge_comparison.svg",
+    "reports/figures/preview/stage1/daytrader_ssa_only_edge_comparison_full.svg",
+    "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison.dot",
+    "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison_full.dot"
+  ],
+  "generator": "src/evo_ms/visualization/figures/stage1_daytrader_ssa_only_edges.py",
+  "git_commit": "c625513f325983cc1b8ed9f7b5e834f8be1c1f5c",
+  "git_dirty": true,
+  "graphviz_engine": "neato",
+  "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",
+  "input_files": [
+    "data/extracted/daytrader/class_nodes.csv",
+    "data/extracted/daytrader/ssa_flow_edges.csv",
+    "data/extracted/daytrader/structural_dependencies.csv",
+    "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv",
+    "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv",
+    "results/stage1/subjects/daytrader/seed_robustness/robustness_metadata.yml"
+  ],
+  "input_sha256": {
+    "data/extracted/daytrader/class_nodes.csv": "52539293e994a4fadfcb8874a04fbf176dc86a7ef71439d885f5a025d44ad2fd",
+    "data/extracted/daytrader/ssa_flow_edges.csv": "d36e22b81da0e7b1c8a14fd42ef85e96f5d7705e487923065713535c337f1a95",
+    "data/extracted/daytrader/structural_dependencies.csv": "95309d9ae0c21574768ad56eee0710e60f5ffcf66b1a9ddf466095bad0e8b2a0",
+    "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/clustering/stage1_clusters.csv": "90a727ad67cdb6f3c02b278d77b405b0acd65bb52019939dd3afd822c9132cd6",
+    "results/stage1/subjects/daytrader/leiden_baseline/raw_reference_leiden/graph/stage1_edges.csv": "7a93a133db3dc573532ec90a68674d8b8b939c8adc106c64fbd5449db697faef",
+    "results/stage1/subjects/daytrader/seed_robustness/robustness_metadata.yml": "7f6953206ecc704e77ed7980c326d1cec79db39d498888539a4a82995291d4ed"
+  },
+  "render_command": [
+    [
+      "neato",
+      "-n2",
+      "-Tpdf",
+      "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison.dot",
+      "-o",
+      "reports/figures/pdf/stage1/daytrader_ssa_only_edge_comparison.pdf"
+    ],
+    [
+      "neato",
+      "-n2",
+      "-Tpdf",
+      "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison_full.dot",
+      "-o",
+      "reports/figures/pdf/stage1/daytrader_ssa_only_edge_comparison_full.pdf"
+    ],
+    [
+      "neato",
+      "-n2",
+      "-Tsvg",
+      "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison.dot",
+      "-o",
+      "reports/figures/preview/stage1/daytrader_ssa_only_edge_comparison.svg"
+    ],
+    [
+      "neato",
+      "-n2",
+      "-Tsvg",
+      "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison_full.dot",
+      "-o",
+      "reports/figures/preview/stage1/daytrader_ssa_only_edge_comparison_full.svg"
+    ]
+  ],
+  "stage": "stage1"
+}
