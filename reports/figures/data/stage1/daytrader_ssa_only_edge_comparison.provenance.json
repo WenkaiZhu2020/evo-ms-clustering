@@ -5,7 +5,7 @@
   "config_sha256": {
     "configs/visualization/style.yml": "8d6299487742073debcb21ac619cfe643fe4f5a09f9c14bc69f766da67a0b5e7"
   },
-  "dot_sha256": "10f6f2f983c70d1d40560eb1c9bc99cd9304cc1d375b60f104a05d19eb742d9b",
+  "dot_sha256": "c3767de2aabdb67e9b4e5f73c4d2577590304d1e7ed11196570a3169f5205989",
   "figure_id": "stage1_daytrader_ssa_only_edge_comparison",
   "generated_at": "2026-08-13T00:00:00Z",
   "generated_outputs": [
@@ -21,7 +21,7 @@
     "reports/figures/source/stage1/daytrader_ssa_only_edge_comparison_full.dot"
   ],
   "generator": "src/evo_ms/visualization/figures/stage1_daytrader_ssa_only_edges.py",
-  "git_commit": "c625513f325983cc1b8ed9f7b5e834f8be1c1f5c",
+  "git_commit": "12723c09e7e28112399aa78ce4e5448455feb1e7",
   "git_dirty": true,
   "graphviz_engine": "neato",
   "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",

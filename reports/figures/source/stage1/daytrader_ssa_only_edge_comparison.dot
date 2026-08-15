@@ -174,11 +174,11 @@ graph "DayTrader local structural and SSA-only evidence" {
   "n15" -- "n25" [color="#D55E00", penwidth=2.1, style="dashed", tooltip="com.ibm.websphere.samples.daytrader.entities.OrderDataBean -- com.ibm.websphere.samples.daytrader.web.jsf.OrderData: SSA-only"];
   "n16" -- "n23" [color="#D55E00", penwidth=2.1, style="dashed", tooltip="com.ibm.websphere.samples.daytrader.entities.QuoteDataBean -- com.ibm.websphere.samples.daytrader.web.jsf.HoldingData: SSA-only"];
   "n16" -- "n28" [color="#D55E00", penwidth=2.1, style="dashed", tooltip="com.ibm.websphere.samples.daytrader.entities.QuoteDataBean -- com.ibm.websphere.samples.daytrader.web.jsf.QuoteData: SSA-only"];
-  "title" [color="transparent", fillcolor="transparent", fontcolor="#111111", fontname="Helvetica", fontsize=10, label="DayTrader local evidence: G_raw with 8 SSA-only class pairs", pin=true, pos="225,496!", shape="plain", style=""];
+  "title" [color="transparent", fillcolor="transparent", fontcolor="#111111", fontname="Helvetica", fontsize=10, label="DayTrader local evidence: raw structural edges and 8 SSA-only class pairs", pin=true, pos="225,496!", shape="plain", style=""];
   "legend_1_l" [height=0.01, label="", pin=true, pos="42,24!", shape="point", style="invis", width=0.01];
   "legend_1_r" [height=0.01, label="", pin=true, pos="62,24!", shape="point", style="invis", width=0.01];
   "legend_1_l" -- "legend_1_r" [color="#888888", penwidth=0.8, style="solid"];
-  "legend_1_label" [color="transparent", fillcolor="transparent", fontcolor="#111111", fontname="Helvetica", fontsize=7, label="G_raw pair", pin=true, pos="103,24!", shape="plain", style=""];
+  "legend_1_label" [color="transparent", fillcolor="transparent", fontcolor="#111111", fontname="Helvetica", fontsize=7, label="raw structural edge", pin=true, pos="103,24!", shape="plain", style=""];
   "legend_2_l" [height=0.01, label="", pin=true, pos="168,24!", shape="point", style="invis", width=0.01];
   "legend_2_r" [height=0.01, label="", pin=true, pos="188,24!", shape="point", style="invis", width=0.01];
   "legend_2_l" -- "legend_2_r" [color="#D55E00", penwidth=2.1, style="dashed"];
