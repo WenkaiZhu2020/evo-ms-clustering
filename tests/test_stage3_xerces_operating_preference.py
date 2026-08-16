@@ -36,10 +36,10 @@ def test_plot_uses_four_actual_metric_panels_and_common_profile_labels() -> None
         assert [axis.get_title(loc="left") for axis in figure.axes] == [
             "(a) Imbalance",
             "(b) Cohesion",
-            r"(c) $f_{semantic}$",
+            r"(c) $f_{\mathrm{sem}}$",
             "(d) Relative modularity loss",
         ]
-        expected = ["MAX-Q", "BALANCE", "COUPLING", "COHESION", "SEMANTIC"]
+        expected = ["Max\nmodularity", "Balance", "Coupling", "Cohesion", "Semantic"]
         assert all([tick.get_text() for tick in axis.get_xticklabels()] == expected for axis in figure.axes)
     finally:
         plt.close(figure)

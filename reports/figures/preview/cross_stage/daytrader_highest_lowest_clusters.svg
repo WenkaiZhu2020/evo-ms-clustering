@@ -128,7 +128,7 @@
 <!-- hg1_metric -->
 <g id="node4" class="node">
 <title>hg1_metric</title>
-<text xml:space="preserve" text-anchor="middle" x="118" y="-320.98" font-family="Helvetica,sans-Serif" font-size="7.00">n = 13 &#160;&#160;q_c = 0.08948 &#160;&#160;W_in = 530 &#160;&#160;W_boundary = 647</text>
+<text xml:space="preserve" text-anchor="middle" x="118" y="-320.98" font-family="Helvetica,sans-Serif" font-size="7.00">n = 13 &#160;&#160;q_c = 0.089 &#160;&#160;W_in = 530 &#160;&#160;W_boundary = 647</text>
 </g>
 <!-- hg1_f001 -->
 <g id="node5" class="node">
@@ -284,7 +284,7 @@
 <!-- lg1_metric -->
 <g id="node22" class="node">
 <title>lg1_metric</title>
-<text xml:space="preserve" text-anchor="middle" x="368" y="-318.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 1 &#160;&#160;q_c = 0.00000 &#160;&#160;W_in = 0 &#160;&#160;W_boundary = 0</text>
+<text xml:space="preserve" text-anchor="middle" x="368" y="-318.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 1 &#160;&#160;q_c = 0.000 &#160;&#160;W_in = 0 &#160;&#160;W_boundary = 0</text>
 </g>
 <!-- lg1_f001 -->
 <g id="node23" class="node">
@@ -316,7 +316,7 @@
 <!-- lg2_metric -->
 <g id="node27" class="node">
 <title>lg2_metric</title>
-<text xml:space="preserve" text-anchor="middle" x="368" y="-126.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 3 &#160;&#160;q_c = &#45;0.00008 &#160;&#160;W_in = 0 &#160;&#160;W_boundary = 39</text>
+<text xml:space="preserve" text-anchor="middle" x="368" y="-126.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 3 &#160;&#160;q_c = &#45;8.09e&#45;5 &#160;&#160;W_in = 0 &#160;&#160;W_boundary = 39</text>
 </g>
 <!-- lg2_f001 -->
 <g id="node28" class="node">
@@ -362,7 +362,7 @@
 <!-- comparison_note -->
 <g id="node32" class="node">
 <title>comparison_note</title>
-<text xml:space="preserve" text-anchor="middle" x="243" y="-387.48" font-family="Helvetica,sans-Serif" font-size="6.60">Stage 2 and Stage 3 representatives use the authoritative BALANCE profile. Repeated focal structures are drawn once.</text>
+<text xml:space="preserve" text-anchor="middle" x="243" y="-387.48" font-family="Helvetica,sans-Serif" font-size="6.60">Stage 2 and Stage 3 representatives use the primary Balance preference. Repeated focal structures are drawn once.</text>
 </g>
 </g>
 </svg>

@@ -5,7 +5,7 @@ graph "Highest- and lowest-contributing JPetStore clusters across the three stag
   "highest_column_title" [color="transparent", fillcolor="transparent", fontname="Helvetica Bold", fontsize=11, label="Highest-contributing cluster", pos="125.0,444!", shape="plain", style=""];
   "hg1_panel" [color="#B8B8B8", fixedsize=true, height=2.44444444444, label="", penwidth=0.8, pos="125.0,302.0!", shape="box", style="solid", width=3.27777777778];
   "hg1_title" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=9, label="Stages 1 and 3 - identical focal structure\nCluster C01", pos="125.0,372.0!", shape="plain", style=""];
-  "hg1_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=7, label="n = 7   q_c = 0.17496   W_in = 154   W_boundary = 59", pos="125.0,345.0!", shape="plain", style=""];
+  "hg1_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=7, label="n = 7   q_c = 0.175   W_in = 154   W_boundary = 59", pos="125.0,345.0!", shape="plain", style=""];
   "hg1_f001" [color="#0072B2", fillcolor="#DCEAF7", label="Account", penwidth=1.1, pos="41.0,331.5!", tooltip="org.mybatis.jpetstore.domain.Account"];
   "hg1_f002" [color="#0072B2", fillcolor="#DCEAF7", label="Order", penwidth=1.1, pos="95.0,331.5!", tooltip="org.mybatis.jpetstore.domain.Order"];
   "hg1_f003" [color="#0072B2", fillcolor="#DCEAF7", label="AccountMapper", penwidth=1.1, pos="41.0,306.5!", tooltip="org.mybatis.jpetstore.mapper.AccountMapper"];
@@ -27,7 +27,7 @@ graph "Highest- and lowest-contributing JPetStore clusters across the three stag
   "hg1_boundary" [color="#888888", fillcolor="#F2F2F2", fontsize=6.6, label="Boundary context\n8 external classes\n10 edges", penwidth=0.8, pos="197.0,295.0!", shape="box", style="rounded,dashed,filled", tooltip="org.mybatis.jpetstore.domain.Cart; org.mybatis.jpetstore.domain.CartItem; org.mybatis.jpetstore.domain.LineItem; org.mybatis.jpetstore.mapper.OrderMapper; org.mybatis.jpetstore.service.CatalogService; org.mybatis.jpetstore.service.OrderService; org.mybatis.jpetstore.web.actions.CartActionBean; org.mybatis.jpetstore.web.actions.CatalogActionBean"];
   "hg2_panel" [color="#B8B8B8", fixedsize=true, height=2.41666666667, label="", penwidth=0.8, pos="125.0,111.0!", shape="box", style="solid", width=3.27777777778];
   "hg2_title" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=9, label="Stage 2\nCluster C01", pos="125.0,180.0!", shape="plain", style=""];
-  "hg2_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=7, label="n = 6   q_c = 0.16475   W_in = 136   W_boundary = 63", pos="125.0,153.0!", shape="plain", style=""];
+  "hg2_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=7, label="n = 6   q_c = 0.165   W_in = 136   W_boundary = 63", pos="125.0,153.0!", shape="plain", style=""];
   "hg2_f001" [color="#0072B2", fillcolor="#DCEAF7", label="Account", penwidth=1.1, pos="41.0,128.0!", tooltip="org.mybatis.jpetstore.domain.Account"];
   "hg2_f002" [color="#0072B2", fillcolor="#DCEAF7", label="Order", penwidth=1.1, pos="95.0,128.0!", tooltip="org.mybatis.jpetstore.domain.Order"];
   "hg2_f003" [color="#0072B2", fillcolor="#DCEAF7", label="AccountMapper", penwidth=1.1, pos="41.0,103.0!", tooltip="org.mybatis.jpetstore.mapper.AccountMapper"];
@@ -47,7 +47,7 @@ graph "Highest- and lowest-contributing JPetStore clusters across the three stag
   "lowest_column_title" [color="transparent", fillcolor="transparent", fontname="Helvetica Bold", fontsize=11, label="Lowest-contributing cluster", pos="375.0,444!", shape="plain", style=""];
   "lg1_panel" [color="#B8B8B8", fixedsize=true, height=2.44444444444, label="", penwidth=0.8, pos="375.0,302.0!", shape="box", style="solid", width=3.27777777778];
   "lg1_title" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=9, label="Stages 1 and 3 - identical focal structure\nCluster C04", pos="375.0,372.0!", shape="plain", style=""];
-  "lg1_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=7, label="n = 6   q_c = 0.08577   W_in = 49   W_boundary = 54", pos="375.0,345.0!", shape="plain", style=""];
+  "lg1_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=7, label="n = 6   q_c = 0.086   W_in = 49   W_boundary = 54", pos="375.0,345.0!", shape="plain", style=""];
   "lg1_f001" [color="#0072B2", fillcolor="#DCEAF7", label="LineItem", penwidth=1.1, pos="291.0,319.0!", tooltip="org.mybatis.jpetstore.domain.LineItem"];
   "lg1_f002" [color="#0072B2", fillcolor="#DCEAF7", label="Sequence", penwidth=1.1, pos="345.0,319.0!", tooltip="org.mybatis.jpetstore.domain.Sequence"];
   "lg1_f003" [color="#0072B2", fillcolor="#DCEAF7", label="LineItem\nMapper", penwidth=1.1, pos="291.0,294.0!", tooltip="org.mybatis.jpetstore.mapper.LineItemMapper"];
@@ -64,7 +64,7 @@ graph "Highest- and lowest-contributing JPetStore clusters across the three stag
   "lg1_boundary" [color="#888888", fillcolor="#F2F2F2", fontsize=6.6, label="Boundary context\n5 external classes\n8 edges", penwidth=0.8, pos="447.0,295.0!", shape="box", style="rounded,dashed,filled", tooltip="org.mybatis.jpetstore.domain.CartItem; org.mybatis.jpetstore.domain.Item; org.mybatis.jpetstore.domain.Order; org.mybatis.jpetstore.mapper.ItemMapper; org.mybatis.jpetstore.web.actions.OrderActionBean"];
   "lg2_panel" [color="#B8B8B8", fixedsize=true, height=2.41666666667, label="", penwidth=0.8, pos="375.0,111.0!", shape="box", style="solid", width=3.27777777778];
   "lg2_title" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=9, label="Stage 2\nCluster C03", pos="375.0,180.0!", shape="plain", style=""];
-  "lg2_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=7, label="n = 6   q_c = 0.07292   W_in = 37   W_boundary = 36", pos="375.0,153.0!", shape="plain", style=""];
+  "lg2_metric" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=7, label="n = 6   q_c = 0.073   W_in = 37   W_boundary = 36", pos="375.0,153.0!", shape="plain", style=""];
   "lg2_f001" [color="#0072B2", fillcolor="#DCEAF7", label="Category", penwidth=1.1, pos="291.0,128.0!", tooltip="org.mybatis.jpetstore.domain.Category"];
   "lg2_f002" [color="#0072B2", fillcolor="#DCEAF7", label="Product", penwidth=1.1, pos="345.0,128.0!", tooltip="org.mybatis.jpetstore.domain.Product"];
   "lg2_f003" [color="#0072B2", fillcolor="#DCEAF7", label="Category\nMapper", penwidth=1.1, pos="291.0,103.0!", tooltip="org.mybatis.jpetstore.mapper.CategoryMapper"];
@@ -81,5 +81,5 @@ graph "Highest- and lowest-contributing JPetStore clusters across the three stag
   "lg2_f004" -- "lg2_f005" [color="#4D4D4D", penwidth=0.7, style="solid"];
   "lg2_f005" -- "lg2_f006" [color="#4D4D4D", penwidth=0.7, style="solid"];
   "lg2_boundary" [color="#888888", fillcolor="#F2F2F2", fontsize=6.6, label="Boundary context\n5 external classes\n7 edges", penwidth=0.8, pos="447.0,104.0!", shape="box", style="rounded,dashed,filled", tooltip="org.mybatis.jpetstore.domain.Item; org.mybatis.jpetstore.mapper.ItemMapper; org.mybatis.jpetstore.web.actions.AbstractActionBean; org.mybatis.jpetstore.web.actions.AccountActionBean; org.mybatis.jpetstore.web.actions.CartActionBean"];
-  "comparison_note" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=6.6, label="Stage 2 and Stage 3 representatives use the authoritative BALANCE profile. Repeated focal structures are drawn once.", pos="250,414!", shape="plain", style=""];
+  "comparison_note" [color="transparent", fillcolor="transparent", fontname="Helvetica", fontsize=6.6, label="Stage 2 and Stage 3 representatives use the primary Balance preference. Repeated focal structures are drawn once.", pos="250,414!", shape="plain", style=""];
 }

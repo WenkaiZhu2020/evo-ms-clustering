@@ -208,7 +208,7 @@
 <!-- hg1_metric -->
 <g id="node4" class="node">
 <title>hg1_metric</title>
-<text xml:space="preserve" text-anchor="middle" x="118" y="-318.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 7 &#160;&#160;q_c = 0.17496 &#160;&#160;W_in = 154 &#160;&#160;W_boundary = 59</text>
+<text xml:space="preserve" text-anchor="middle" x="118" y="-318.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 7 &#160;&#160;q_c = 0.175 &#160;&#160;W_in = 154 &#160;&#160;W_boundary = 59</text>
 </g>
 <!-- hg1_f001 -->
 <g id="node5" class="node">
@@ -302,7 +302,7 @@
 <!-- hg2_metric -->
 <g id="node15" class="node">
 <title>hg2_metric</title>
-<text xml:space="preserve" text-anchor="middle" x="118" y="-126.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 6 &#160;&#160;q_c = 0.16475 &#160;&#160;W_in = 136 &#160;&#160;W_boundary = 63</text>
+<text xml:space="preserve" text-anchor="middle" x="118" y="-126.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 6 &#160;&#160;q_c = 0.165 &#160;&#160;W_in = 136 &#160;&#160;W_boundary = 63</text>
 </g>
 <!-- hg2_f001 -->
 <g id="node16" class="node">
@@ -391,7 +391,7 @@
 <!-- lg1_metric -->
 <g id="node26" class="node">
 <title>lg1_metric</title>
-<text xml:space="preserve" text-anchor="middle" x="368" y="-318.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 6 &#160;&#160;q_c = 0.08577 &#160;&#160;W_in = 49 &#160;&#160;W_boundary = 54</text>
+<text xml:space="preserve" text-anchor="middle" x="368" y="-318.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 6 &#160;&#160;q_c = 0.086 &#160;&#160;W_in = 49 &#160;&#160;W_boundary = 54</text>
 </g>
 <!-- lg1_f001 -->
 <g id="node27" class="node">
@@ -474,7 +474,7 @@
 <!-- lg2_metric -->
 <g id="node36" class="node">
 <title>lg2_metric</title>
-<text xml:space="preserve" text-anchor="middle" x="368" y="-126.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 6 &#160;&#160;q_c = 0.07292 &#160;&#160;W_in = 37 &#160;&#160;W_boundary = 36</text>
+<text xml:space="preserve" text-anchor="middle" x="368" y="-126.48" font-family="Helvetica,sans-Serif" font-size="7.00">n = 6 &#160;&#160;q_c = 0.073 &#160;&#160;W_in = 37 &#160;&#160;W_boundary = 36</text>
 </g>
 <!-- lg2_f001 -->
 <g id="node37" class="node">
@@ -547,7 +547,7 @@
 <!-- comparison_note -->
 <g id="node44" class="node">
 <title>comparison_note</title>
-<text xml:space="preserve" text-anchor="middle" x="243" y="-387.48" font-family="Helvetica,sans-Serif" font-size="6.60">Stage 2 and Stage 3 representatives use the authoritative BALANCE profile. Repeated focal structures are drawn once.</text>
+<text xml:space="preserve" text-anchor="middle" x="243" y="-387.48" font-family="Helvetica,sans-Serif" font-size="6.60">Stage 2 and Stage 3 representatives use the primary Balance preference. Repeated focal structures are drawn once.</text>
 </g>
 </g>
 </svg>

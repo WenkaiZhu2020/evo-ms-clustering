@@ -1,0 +1,219 @@
+# Stage 0 — Validation Subject Source Lock
+#
+# Single source of truth for (1) the three authoritative dissertation
+# pipeline branches/SHAs and (2) the exact external source versions for
+# the two active additional validation subjects (JFreeChart, EasyMock).
+# ArgoUML and Weka were prior large candidates; both are preserved below as
+# rejected-candidate provenance records (see rejected_validation_candidates).
+#
+# Location note: the repository's established configuration convention is
+# `configs/` (plural) with `configs/subjects/*.yml` per-project configs and
+# `configs/reproducibility/` for environment/reproducibility metadata
+# (see configs/reproducibility/environments.json). This file follows that
+# convention rather than the literal `config/validation_subjects.lock.yaml`
+# path, since a top-level singular `config/` directory does not exist in
+# this repository.
+#
+# Generated: 2026-08-07 (Stage 0 task, read-only w.r.t. experimental code).
+# Updated: 2026-08-07 (Stage 0F task) — active large subject replaced
+# ArgoUML 0.34 -> Weka 3.8.6 after ArgoUML failed the Stage 1A build smoke
+# test (legacy build-file incompatibilities, not a methodology/size issue).
+# Updated: 2026-08-07 (Stage 0G / Stage 1A-DUAL task) — active large subject
+# replaced Weka 3.8.6 -> JFreeChart 1.0.19. Weka was technically valid and
+# successfully extracted (3427 retained classes) but was ~4.2x the size of
+# the Xerces-J reference (814 retained classes), which does not serve the
+# teacher's matched-scale validation question. JFreeChart (635 retained
+# classes) and Apache Ant 1.9.3 (1199 retained classes) were both fetched,
+# built, boundary-established, and Soot/Shimple-extracted using the
+# unmodified Stage 1 pipeline; JFreeChart was selected for having the
+# smaller absolute retained-class distance from Xerces-J (179 vs. 385).
+
+pipeline:
+  stage1:
+    branch: stage1-baseline
+    commit_sha: 0f2591e84db4861af5461e0eeb7e67bc038c2468
+
+  stage2:
+    branch: stage2-nsga
+    commit_sha: ec7de9560c0543978372c0e7ac094b89f1617ffa
+
+  stage3:
+    branch: stage3-Declaration+Method-Body
+    commit_sha: df04395e2c6a0555eaf6651efd25698fb7eaa280
+
+  current_final_branch: stage3-Declaration+Method-Body
+
+validation_subjects:
+  large:
+    system: JFreeChart
+    role: additional_large_validation
+    canonical_repository: https://github.com/jfree/jfreechart.git
+    selected_release: "1.0.19"
+    selected_tag: v1.0.19
+    commit_sha: b3f5f21ba0fe32a8f7eccb6760a79df30628be3e
+    commit_date: "2014-07-31T12:32:18+00:00"
+    commit_subject: "Exclude demo files from Maven build."
+    checkout_state: detached HEAD at tag v1.0.19
+    local_source_path: ../validation-subjects/jfreechart
+    build_system: "Maven (single module, pom.xml; sourceDirectory=source, testSourceDirectory=tests; project.source.level/project.target.level=1.6 overridable via -D)"
+    retained_application_classes: 635
+    scale_distance_from_xerces_j: 179
+    selection_reason: >-
+      Weka 3.8.6 (the prior large candidate) was technically valid and
+      successfully extracted (3427 retained classes) but was rejected as
+      the matched-scale subject because it was ~4.2x the size of the
+      Xerces-J reference (814 retained classes; see
+      rejected_validation_candidates.large). The teacher's validation goal
+      requires a subject of approximately the same scale as Xerces-J, not
+      merely a technically-valid large subject. Two scale-matched
+      candidates were fetched, built, boundary-established, and
+      Soot/Shimple-extracted using the unmodified Stage 1 pipeline:
+      JFreeChart 1.0.19 (635 retained classes, distance 179 from 814) and
+      Apache Ant 1.9.3 (1199 retained classes, distance 385 from 814).
+      Both built cleanly using command-line compiler-property overrides
+      only (no source/build-file modification, the same pattern already
+      used for Xerces-J's own prepare script), and both extracted with
+      zero hard failures and non-degenerate graphs. JFreeChart was
+      selected because it has the smaller absolute retained-class
+      distance from Xerces-J's 814, per the matched-scale selection rule.
+      github.com/jfree/jfreechart is the JFree-organization-owned
+      canonical repository (not a fork or mirror).
+
+  small:
+    system: EasyMock
+    role: additional_small_validation
+    canonical_repository: https://github.com/easymock/easymock.git
+    selected_release: "5.6.0"
+    selected_tag: easymock-5.6.0
+    commit_sha: 20948ef80f4b2f364fdc990578706986ec5d08db
+    commit_date: "2025-05-17T23:58:43-04:00"
+    commit_subject: "Move to version 5.6.0"
+    checkout_state: detached HEAD at tag easymock-5.6.0
+    local_source_path: ../validation-subjects/easymock
+    build_system: "Maven (multi-module, reactor pom.xml); java.version=1.8"
+    retained_application_classes: 105
+    selection_reason: >-
+      No specific EasyMock version could be reliably traced to established
+      clustering/remodularization literature. Per the version-selection
+      priority order, the latest clearly tagged stable release was chosen
+      as a defensible, reproducible experimental identity rather than an
+      unpinned branch. This is a substantially newer codebase than the
+      small (~2001-era) EasyMock versions sometimes referenced informally
+      in older literature; see report section 3 for the explicit caveat.
+
+rejected_validation_candidates:
+  large:
+    - system: ArgoUML
+      release: "0.34"
+      tag: VERSION_0_34
+      commit_sha: 20de5bdccc18e361010cb22aea5d79d1b047b1a8
+      canonical_repository: https://github.com/argouml-tigris-org/argouml.git
+      rejection_stage: stage1a_build_smoke_test
+      reason: >-
+        Legacy build configuration requires compatibility intervention
+        before compilation; the candidate was replaced to avoid
+        validation-scope expansion.
+      external_source_checkout: null
+      external_source_checkout_preserved: false
+      external_source_checkout_note: >-
+        Removed on request after this rejection was recorded; source
+        identity remains fully reproducible from the tag/SHA above.
+
+    - system: Weka
+      release: "3.8.6"
+      tag: weka-stable-3.8.6
+      commit_sha: bf21f98b274f4a30236e18cfb0ea79011f155d25
+      canonical_repository: https://git.cms.waikato.ac.nz/weka/weka.git
+      rejection_stage: matched_scale_subject_selection
+      retained_application_classes: 3427
+      scale_distance_from_xerces_j: 2613
+      reason: >-
+        Technically valid and successfully extracted (build clean, boundary
+        defensible, extraction gate PASS, non-degenerate graph), but
+        rejected as the matched large validation subject because 3427
+        retained classes are substantially larger (~4.2x) than Xerces-J's
+        814, which does not serve the matched-scale validation purpose.
+      external_source_checkout: null
+      external_source_checkout_preserved: false
+      external_source_checkout_note: >-
+        Removed per explicit instruction after this rejection was recorded;
+        source identity remains fully reproducible from the tag/SHA above.
+
+    - system: Apache Ant
+      release: "1.9.3"
+      tag: rel/1.9.3
+      commit_sha: 281db9e2196dad6dc4e5c70bb9ebb846d815e0c3
+      canonical_repository: https://github.com/apache/ant.git
+      rejection_stage: matched_scale_subject_selection
+      retained_application_classes: 1199
+      scale_distance_from_xerces_j: 385
+      reason: >-
+        Technically valid and successfully extracted (build clean via
+        command-line source/target overrides, boundary defensible after
+        correcting app_packages to include Ant-owned org.apache.tools.{zip,
+        tar,bzip2,mail} utility packages, extraction gate PASS,
+        non-degenerate graph), but not selected: JFreeChart's absolute
+        retained-class distance from Xerces-J (179) is smaller than Apache
+        Ant's (385).
+      external_source_checkout: null
+      external_source_checkout_preserved: false
+      external_source_checkout_note: >-
+        Removed per explicit instruction after this rejection was recorded;
+        source identity remains fully reproducible from the tag/SHA above.
+
+run_policy:
+  primary_subjects:
+    - JPetStore
+    - DayTrader
+    - Xerces-J
+
+  primary_subject_runs:
+    stage2: 30
+    stage3: 30
+
+  additional_validation_subjects:
+    - EasyMock
+    - JFreeChart
+
+  additional_validation_subject_runs:
+    stage2: 10
+    stage3: 10
+
+  primary_subject_seed_layout:
+    # Resolved 2026-08-08 by direct filesystem audit. The Stage 3 primary
+    # sample is 30 observations per subject, seeds 0-29, physically split
+    # across two directory layers by run.py's output_dir() routing rule
+    # (layer = "validation" if seed == 0 else "formal"). Seed 0 is a full
+    # production run: completion_status=completed, validation_pass=true, and
+    # byte-identical config_sha256 / g_sem_graph_hash to formal seed_01.
+    # analyze.py reads seeds 0-29 through run.py's contract, so seed 0 is
+    # and always was part of the reported statistics.
+    stage2: "robustness_final_30seeds/seed_00..seed_29 (n=30)"
+    stage3: "validation/seed_00 + formal/seed_01..seed_29 (n=30)"
+    do_not_reduce_to_29: >-
+      Published primary results of the form 30/30 are correct. The 2026-08-07
+      handoff statement implying n=29 described only the formal/ directory
+      layer and was incorrect as a sample size. run_robustness.py's
+      FORMAL_SEEDS = range(1, 30) is a wrapper-level constant that was not the
+      analysis path for the primary subjects.
+
+lock_policy:
+  - These exact external commits are the only versions permitted for the
+    dissertation validation experiments unless the lock is explicitly
+    revised.
+  - All later tasks must read and verify this lock file before building,
+    extracting, or running experiments.
+  - No automatic pull, branch update, tag change, or source replacement is
+    allowed.
+  - No later task may infer or substitute a different JFreeChart or
+    EasyMock version from memory.
+  - If a subject version must change, stop and report the reason before
+    modifying this lock.
+  - "The three authoritative dissertation stage branches are exactly:
+    stage1-baseline, stage2-nsga, stage3-Declaration+Method-Body."
+  - No backup, diagnostic, migration, visualisation, main, or superseded
+    semantic branch may be treated as authoritative.
+  - Experimental class counts must come from our own Soot/preprocessing
+    pipeline, not literature-reported counts.
+  - Stage 1, Stage 2, and Stage 3 methods and parameters are frozen for the
+    additional validation subjects unless explicitly instructed otherwise.

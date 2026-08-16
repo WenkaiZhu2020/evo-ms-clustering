@@ -54,7 +54,7 @@ figures:
 
   stage13_xerces_balance_highest_lowest_clusters:
     stage: stage3
-    title: "Xerces-J cluster contribution: Stage 3 BALANCE profile with Stage 1 context"
+    title: "Xerces-J cluster contribution: Stage 3 primary Balance preference with Stage 1 context"
     destination: appendix
     inputs:
       - data/extracted/xerces-j/class_nodes.csv
@@ -77,7 +77,7 @@ figures:
 
   stage2_xerces_highest_lowest_clusters:
     stage: stage2
-    title: "Xerces-J cluster contribution: Stage 2 BALANCE profile"
+    title: "Xerces-J cluster contribution: Stage 2 primary Balance preference"
     destination: appendix
     inputs:
       - data/extracted/xerces-j/class_nodes.csv
@@ -162,7 +162,7 @@ figures:
 
   stage3_xerces_operating_preference_sensitivity:
     stage: stage3
-    title: Xerces-J Stage 3 operating-profile sensitivity
+    title: Xerces-J Stage 3 operating-preference sensitivity
     destination: main_text
     inputs:
       - results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv

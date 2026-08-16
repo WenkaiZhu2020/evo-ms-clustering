@@ -172,7 +172,7 @@ def test_boundary_width_is_deterministic_monotonic_and_singletons_are_annotated(
     dot = figure_dot(config, data)
     assert dot.count("Isolated singleton") == 1
     assert '"lg1_isolated"' in dot and '"lg2_isolated"' not in dot
-    assert "Stage 2 and Stage 3 representatives use the authoritative BALANCE profile." in dot
+    assert "Stage 2 and Stage 3 representatives use the primary Balance preference." in dot
     assert "Repeated focal structures are drawn once." in dot
 
 

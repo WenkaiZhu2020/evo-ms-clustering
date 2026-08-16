@@ -49,9 +49,9 @@ def _partitions(root: Path):
     stage2 = fixed_balance_selection(root, "jpetstore", "stage2", STAGE2_SEED)
     stage3 = balance_partition_medoid(root, "jpetstore", "stage3")
     if stage2.solution_id != STAGE2_SOLUTION:
-        raise ValueError("authoritative JPetStore Stage 2 BALANCE representative changed")
+        raise ValueError("expected JPetStore Stage 2 primary Balance-preference representative changed")
     if (stage3.seed, stage3.solution_id) != (STAGE3_SEED, STAGE3_SOLUTION):
-        raise ValueError("authoritative JPetStore Stage 3 BALANCE medoid changed")
+        raise ValueError("expected JPetStore Stage 3 primary Balance-preference medoid changed")
     return ((1, 42, "stage1_seed42", stage1_path, stage1, q1),
             (2, stage2.seed, stage2.solution_id, stage2.partition_source, stage2.partition, stage2.weighted_modularity),
             (3, stage3.seed, stage3.solution_id, stage3.partition_source, stage3.partition, stage3.weighted_modularity))
@@ -125,7 +125,7 @@ def build_figure(config: VisualizationConfig, *, output_root: str|Path|None=None
     with tempfile.TemporaryDirectory(prefix=f".{FIGURE_ID}.",dir=staging_parent) as temporary:
         stage=Path(temporary); staged={name:stage/f"figure.{name}" for name in targets}; staged["provenance"]=stage/"figure.provenance.json"
         staged["profiles"].write_text(profiles_csv(data),encoding="utf-8",newline="\n"); staged["selected"].write_text(selected_csv(data),encoding="utf-8",newline="\n"); staged["aggregation"].write_text(boundary_aggregation_csv(data),encoding="utf-8",newline="\n")
-        write_dot(staged["dot"],figure_dot(config,data,figure_id=FIGURE_ID,comparison_note="Stage 2 and Stage 3 representatives use the authoritative BALANCE profile."))
+        write_dot(staged["dot"],figure_dot(config,data,figure_id=FIGURE_ID,comparison_note="Stage 2 and Stage 3 representatives use the primary Balance preference."))
         renders=[renderer(GraphvizRenderRequest(staged["dot"],staged[fmt],fmt,"neato",fixed_coordinates=True)) for fmt in ("svg","pdf")]
         for name in ("profiles","selected","aggregation","dot","svg","pdf"):
             if not staged[name].is_file() or not staged[name].stat().st_size: raise ValueError(f"missing staged {name}")
