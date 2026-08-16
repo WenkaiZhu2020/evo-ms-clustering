@@ -4,12 +4,12 @@
     "configs/visualization/style.yml"
   ],
   "config_sha256": {
-    "configs/visualization/figures.yml": "38fe6fdde98dd7d3cb969f77ce8a0f83438fe575c33377473fb0e5375128e29a",
+    "configs/visualization/figures.yml": "d9f3688af94a1358e8d65470148d4730d159246d349dcbb1baaa86718badfc54",
     "configs/visualization/style.yml": "8d6299487742073debcb21ac619cfe643fe4f5a09f9c14bc69f766da67a0b5e7"
   },
-  "dot_sha256": "3daf94d476a4d549459c41b38b16a59bb2ba8def3cc869e26c79ddc763edf56d",
+  "dot_sha256": "f03ea834a6ecff8170361071b65605b13d4adb92413abcc71c2ee9422e55b8c4",
   "figure_id": "stage123_daytrader_highest_lowest_clusters",
-  "generated_at": "2026-08-11T22:08:24Z",
+  "generated_at": "2026-08-16T10:15:32Z",
   "generated_outputs": [
     "reports/figures/data/cross_stage/daytrader_boundary_aggregation.csv",
     "reports/figures/data/cross_stage/daytrader_cluster_profiles.csv",
@@ -20,7 +20,7 @@
     "reports/figures/source/cross_stage/daytrader_highest_lowest_clusters.dot"
   ],
   "generator": "src/evo_ms/visualization/figures/stage123_daytrader_clusters.py",
-  "git_commit": "fbf396d6bcf403a703f86a6ff2a74387d0ed8887",
+  "git_commit": "953895c820cff41c4f8ff071783c6389ec8d1bf1",
   "git_dirty": true,
   "graphviz_engine": "neato",
   "graphviz_version": "neato - graphviz version 14.0.4 (20251115.1723)",

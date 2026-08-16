@@ -7,7 +7,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-11T22:08:24Z",
+      "generated_at": "2026-08-16T10:15:32Z",
       "generator": "evo_ms.visualization.figures.stage123_daytrader_clusters",
       "inputs": [
         "data/extracted/daytrader/class_nodes.csv",
@@ -42,12 +42,12 @@
       },
       "sha256": {
         "aggregation": "f4a825d0495ef66c3e43d6ede1ebe63afe2733d5fe9707f1aecc49bacb3be827",
-        "dot": "3daf94d476a4d549459c41b38b16a59bb2ba8def3cc869e26c79ddc763edf56d",
-        "pdf": "73ca9db823e7ab13a298c0343785707edf48b5a43cbe3e965fc7790d00758462",
+        "dot": "f03ea834a6ecff8170361071b65605b13d4adb92413abcc71c2ee9422e55b8c4",
+        "pdf": "d9cfac3d5369e5d1dd5295b7475678505ffd3ea4d8711c72dd782c66435ee04d",
         "profiles": "dc04e0ad9b02eb962ca107f5df6724fc2b42282c62913459b12c5d7a19afe35e",
-        "provenance": "c0a0d18e16654142f5f1cc2ea9dff23b57345d53045033a36d60658eb2afe5f4",
+        "provenance": "de41fb28f376a6f7fd3d5904b4ad4d7310a2ea1f45b6e883e1d90b5f8606db4b",
         "selected": "9d65c171808777d595c823d642a7193b2040adcbc7b1a933ab9fb4c9242d67cd",
-        "svg": "3747c45c664178ca8acb9c5b176c473c11fd5c4a65f313aa17ee2220cd789695"
+        "svg": "76f78f9615764687c3853e41d5716baa95782d4d8309edcfc7a98cea3ae8ca75"
       },
       "stage": "stage3",
       "title": "Highest- and lowest-contributing DayTrader clusters across the three stages"
@@ -59,7 +59,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-11T22:08:26Z",
+      "generated_at": "2026-08-16T10:15:30Z",
       "generator": "evo_ms.visualization.figures.stage123_jpetstore_clusters",
       "inputs": [
         "data/extracted/jpetstore/class_nodes.csv",
@@ -94,12 +94,12 @@
       },
       "sha256": {
         "aggregation": "ab2eaf45a83571fc7ea56d772ee0481cd74e53dc34f7dfe653658118b8b5af72",
-        "dot": "d52ba03c7e1336cbf65d444826e4e160aab4379c89f606929d6e4a5a2d1a0b0a",
-        "pdf": "6d7a283e83bdb5f1b28a07566d07854e1e54402375d84dedd28e4bf26e7fbceb",
+        "dot": "ae37bf4088e11a7ee44b91c0335509e4e6836c364f16c497ec9240920e8080f5",
+        "pdf": "a01bbeb276b28b854b29c41de6071f02099e03f7506cd94f08539c703f065ecc",
         "profiles": "1cb549c3af314d409d136b4a990e239d4b692640a9c4cb1f90473c49c931440e",
-        "provenance": "8eb8ee50343d7b6340dbb6d334a3e3659493a350fd4ed1a8a8811c0e10883435",
+        "provenance": "91f9002984234178cc8b995cecdd213a5ce00f0602e570a59e41455bd2cceee2",
         "selected": "ca836d056a36efe664192901cc6d04e833bff162c4a5d8c02f36e6054c8c1c29",
-        "svg": "6a52de6b1c308035003dd72aa9136efabba8c374386afa5f5d7f609355b50794"
+        "svg": "26a6700e96a1184ae82a77a387d6b31fd33ea5a4d10b00df3a16e0d34923337d"
       },
       "stage": "stage3",
       "title": "Highest- and lowest-contributing JPetStore clusters across the three stages"
@@ -110,7 +110,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-12T14:53:49Z",
+      "generated_at": "2026-08-16T10:15:39Z",
       "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
       "inputs": [
         "data/extracted/xerces-j/class_nodes.csv",
@@ -152,16 +152,16 @@
         "membership": "2d4435b18c0621cd5dd0a299bde77537e04d3fc314311fdece0babd2dbce7f58",
         "package_profiles": "cf51f654a2d7d24101f38508ff42168018d43a67a594f38b2ebb8cff1c39a2ed",
         "package_relations": "a2470a30195c426dd5d9e451b40637bce8faa55a87e0e30f6828b624e8546031",
-        "pdf": "6cb340654a9aa6cfaa25ef95d872cfac8e0565f4c79c6144d8d9c152e1028272",
+        "pdf": "b51e204473c089996be31cc888907fd949f190a19cbd27293943063b292ebb93",
         "profiles": "eedfc9dc47941c341adaf321c5ba82b497c5adb3bae0c964cb532b3decb67f1f",
-        "provenance": "7d0a6044d0cf7531c17c82fd1e571da22196980f67d7e561d234ced6ff2cfbb4",
+        "provenance": "373c03d0cf41d651673e62eb0219df496009317ef4fad7d740a764310f4bbf1d",
         "selected": "81492829df4a33045a36514735eb430e9ab0910874afc80d58c6e6ae14e9eb65",
-        "svg": "bdc8506d9c69856ea02eaff325939358b17ed9dfe8e93986aad0237ec1046f8e",
+        "svg": "5214530bb5c0471f4f26917e2d3257014afeffa55c83bc561e34a696a5f11cfc",
         "top_boundary_destinations": "e4d33b12e622ffa7d49e2ad926ad6a2e296805e70d5bcefd59bde864ad13fcd5",
         "top_internal_relations": "284e10835e8dec914a4fac296c80aea6e2a5b0be2fc650f876ab65fc1c818686"
       },
       "stage": "stage3",
-      "title": "Xerces-J cluster contribution: Stage 3 BALANCE profile with Stage 1 context"
+      "title": "Xerces-J cluster contribution: Stage 3 primary Balance preference with Stage 1 context"
     },
     "stage1_ssa_seed_robustness": {
       "destination": "main_text",
@@ -257,7 +257,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-12T14:53:43Z",
+      "generated_at": "2026-08-15T01:05:14Z",
       "generator": "evo_ms.visualization.figures.stage123_xerces_clusters",
       "inputs": [
         "data/extracted/xerces-j/class_nodes.csv",
@@ -297,11 +297,11 @@
         "membership": "6849b68c42a785c96d1afa2a85ec4adc7b79d7fbf25d5128c861f6a0598db396",
         "package_profiles": "50b2eb56bfdc635da14fe6f7a5ab77820dc8d9e1cb39132ee9fafd8099ed5157",
         "package_relations": "ecf70d615e5c2f1e6edfb8ab28322a833c38b09a9f2a47fda981e54afe4cc0e5",
-        "pdf": "71413f34d194f711de0d3c2d377bb7e520222f409779fa68e9675a230db24dac",
+        "pdf": "d8f0c8bf2843f21f72e92ea2731def48f36c5a4c3f2adc227a12db5d91e93d70",
         "profiles": "9854d2ffbd3b8e1eacbe90dfefff322de70c0c1f207f3899e27f13f10d217e8b",
-        "provenance": "caed42ddf21a64f2f9ffaf6788c2a6e9fad84458cf7f4b6b2ec001f1d8112d76",
+        "provenance": "1d0765aa60573f5348062f4dec6211dc38701435f13992c6c72b4ef787071039",
         "selected": "75a6f26981456f85b560e98936273d06487805d75efb33f6fb84d0797a7fffae",
-        "svg": "e826dc4d61c2f0a3690dd00d50bd299e7736a44dc569073cf99d662dd1b916f9",
+        "svg": "c701b1216e1471056912baa4ca309f45d0c764b7fed432f89a8475013986604e",
         "top_boundary_destinations": "adaf602ca7b7b1b2316ef138972dfba614177ccdcdf51d764ec5368a0789ff53",
         "top_internal_relations": "7e8fb3493c093263188b29ed8818eff533a2b3c07950d7815f3e2acf207c5cfc"
       },
@@ -378,7 +378,7 @@
         "svg",
         "pdf"
       ],
-      "generated_at": "2026-08-11T22:08:27Z",
+      "generated_at": "2026-08-16T10:15:45Z",
       "generator": "evo_ms.visualization.figures.stage3_xerces_operating_preference",
       "inputs": [
         "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
@@ -401,13 +401,13 @@
         "svg": "reports/figures/preview/stage3/xerces_operating_preference_sensitivity.svg"
       },
       "sha256": {
-        "data": "c7d1567e7e7f78a5172fce681238a16d62b69f60dc3cd92332b701cd29be1477",
-        "pdf": "85b68cb2668374f944dfee67b42d1df872b66ce89a09d5178f1c3844f871b4d1",
-        "provenance": "b8fdba6f13c2dcd913d990f34d2125219ed014329184654c452fe90a5a0251fe",
-        "svg": "6d5617b132381cb7428b9797f50a682b73a009637a5103e79f8c1071b908a7f9"
+        "data": "a12871c2e55ca35bab026880b1c3f848dbba709d81dbeb1827452ade34f4cacf",
+        "pdf": "dc16fc5e3dd46b2fb3396019bd528a4d035e0e0bdd8866a64b89d652a1302168",
+        "provenance": "e4ef89f1682ab5a2b203fc4f7b9c623dc37edc088ec794a6ac32f97865914dd4",
+        "svg": "ab975ae5399d8e25398ccf10b16da4ee72fb18fffcda07798266a7fc97a22c01"
       },
       "stage": "stage3",
-      "title": "Xerces-J Stage 3 operating-profile sensitivity"
+      "title": "Xerces-J Stage 3 operating-preference sensitivity"
     }
   },
   "schema_version": 1

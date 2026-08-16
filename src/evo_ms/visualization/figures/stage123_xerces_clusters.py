@@ -30,6 +30,7 @@ from evo_ms.visualization.figures.stage123_daytrader_clusters import (
     ClusterProfile,
     FigureData,
     _canonical_partition,
+    _format_metric,
     _relative,
     profiles_csv,
     selected_csv,
@@ -121,7 +122,7 @@ def _partitions(root: Path, stages: tuple[int, ...]):
         stage2 = fixed_balance_selection(root, "xerces", "stage2", 21)
         if stage2.solution_id != "seed21_solution022":
             raise ValueError(
-                "authoritative Xerces-J Stage 2 BALANCE representative changed"
+                "expected Xerces-J Stage 2 primary Balance-preference representative changed"
             )
         partitions.append((
             2,
@@ -134,7 +135,7 @@ def _partitions(root: Path, stages: tuple[int, ...]):
     if 3 in stages:
         stage3 = balance_partition_medoid(root, "xerces", "stage3")
         if (stage3.seed, stage3.solution_id) != (5, "seed5_solution019"):
-            raise ValueError("authoritative Xerces-J Stage 3 BALANCE medoid changed")
+            raise ValueError("expected Xerces-J Stage 3 primary Balance-preference medoid changed")
         partitions.append((
             3,
             stage3.seed,
@@ -878,7 +879,7 @@ def _draw_header(axis, composite: CompositeData) -> None:
         0.38,
         (
             f"{len(high.members)} classes in {len(composite.packages)} packages     "
-            f"q_c = {high.contribution:.6f}     W_in = {high.internal_weight:.0f}     "
+            f"q_c = {_format_metric(high.contribution)}     W_in = {high.internal_weight:.0f}     "
             f"W_boundary = {high.boundary_weight:.0f}"
         ),
         transform=axis.transAxes,
@@ -890,7 +891,7 @@ def _draw_header(axis, composite: CompositeData) -> None:
         axis.text(
             0.98,
             0.72,
-            "Stage 3 BALANCE medoid (seed 5)",
+            "Stage 3 medoid under the primary Balance preference (seed 5)",
             transform=axis.transAxes,
             fontsize=9.5,
             fontweight="bold",
@@ -964,7 +965,7 @@ def _draw_structural_summary(axis, composite: CompositeData) -> None:
         pad=7,
     )
     metrics = (
-        ("Local modularity contribution", f"{composite.high.contribution:.6f}"),
+        ("Local modularity contribution", _format_metric(composite.high.contribution)),
         ("Internal structural weight", f"{composite.high.internal_weight:.0f}"),
         ("Boundary structural weight", f"{composite.high.boundary_weight:.0f}"),
     )
@@ -1084,7 +1085,7 @@ def _draw_lowest(axis, composite: CompositeData) -> None:
         0.43 if composite.page == "stage13" else 0.5,
         (
             f"{len(low.members)} {'class' if len(low.members) == 1 else 'classes'}   "
-            f"q_c = {low.contribution:.6f}\n"
+            f"q_c = {_format_metric(low.contribution)}\n"
             f"W_in = {low.internal_weight:.0f}   "
             f"W_boundary = {low.boundary_weight:.0f}"
         ),

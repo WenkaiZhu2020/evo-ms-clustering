@@ -1,0 +1,66 @@
+# Validation-subject execution environment snapshot.
+#
+# Captured for the additional validation subjects (EasyMock, JFreeChart)
+# during the Stage 0-series subject-selection and Stage 1A smoke-test
+# tasks. This is a factual snapshot of the environment actually used to
+# build/extract these subjects, not a pinned/required environment spec.
+# See configs/reproducibility/environments.json for the general
+# stage1/2/3 Python pipeline environment record.
+
+environment_snapshot:
+  captured_at: "2026-08-07T15:00:00Z"
+
+  os:
+    name: macOS
+    version: "26.5"
+    architecture: arm64
+
+  git:
+    version: "2.50.1 (Apple Git-155)"
+
+  java:
+    runtime_version: "17.0.19"
+    compiler_version: "17.0.19"
+    vendor: "Homebrew (OpenJDK 17.0.19)"
+
+  maven:
+    version: "3.9.11"
+
+  python:
+    version: "3.13.7"
+
+  python_packages:
+    numpy: "2.4.4"
+    pandas: "2.2.3"
+    scipy: "1.16.3"
+    igraph: "1.0.0"
+    leidenalg: "0.12.0"
+    pymoo: "0.6.2"
+    torch: "2.13.0"
+    sentence_transformers: "5.6.0"
+    transformers: "5.14.1"
+
+subject_builds:
+  easymock:
+    release: "5.6.0"
+    commit_sha: 20948ef80f4b2f364fdc990578706986ec5d08db
+    java_runtime: "17.0.19"
+    maven: "3.9.11"
+    build_command: "mvn -f core/pom.xml -DskipTests clean package"
+    source_target_override: null
+
+  jfreechart:
+    release: "1.0.19"
+    commit_sha: b3f5f21ba0fe32a8f7eccb6760a79df30628be3e
+    java_runtime: "17.0.19"
+    maven: "3.9.11"
+    build_command: "mvn -Dproject.source.level=8 -Dproject.target.level=8 -DskipTests clean package"
+    source_target_override: "project.source.level=8, project.target.level=8 (pom default is 1.6; overridden via -D, no source/build-file modification)"
+
+extractor:
+  stage1_commit_sha: 0f2591e84db4861af5461e0eeb7e67bc038c2468
+  java_runtime: "17.0.19"
+  note: >-
+    tools/soot_extractor/pom.xml requires a JDK 17 toolchain
+    (jdkToolchain version=17); the same Temurin 17.0.19 runtime used for
+    both subject builds was used for extraction.

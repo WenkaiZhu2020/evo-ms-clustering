@@ -5,7 +5,7 @@
     "configs/visualization/style.yml"
   ],
   "figure_id": "stage3_xerces_operating_preference_sensitivity",
-  "generated_at": "2026-08-11T22:08:27Z",
+  "generated_at": "2026-08-16T10:15:45Z",
   "generated_outputs": [
     "reports/figures/data/stage3/xerces_operating_preference_sensitivity.csv",
     "reports/figures/data/stage3/xerces_operating_preference_sensitivity.provenance.json",
@@ -13,7 +13,7 @@
     "reports/figures/preview/stage3/xerces_operating_preference_sensitivity.svg"
   ],
   "generator": "src/evo_ms/visualization/figures/stage3_xerces_operating_preference.py",
-  "git_commit": "fbf396d6bcf403a703f86a6ff2a74387d0ed8887",
+  "git_commit": "953895c820cff41c4f8ff071783c6389ec8d1bf1",
   "git_dirty": true,
   "input_files": [
     "results/stage3/cross_subject/operating_preference_analysis/04_selected_profiles_per_seed.csv",
@@ -43,9 +43,9 @@
     "P4": 30
   },
   "sha256": {
-    "data": "c7d1567e7e7f78a5172fce681238a16d62b69f60dc3cd92332b701cd29be1477",
-    "pdf": "85b68cb2668374f944dfee67b42d1df872b66ce89a09d5178f1c3844f871b4d1",
-    "svg": "6d5617b132381cb7428b9797f50a682b73a009637a5103e79f8c1071b908a7f9"
+    "data": "a12871c2e55ca35bab026880b1c3f848dbba709d81dbeb1827452ade34f4cacf",
+    "pdf": "dc16fc5e3dd46b2fb3396019bd528a4d035e0e0bdd8866a64b89d652a1302168",
+    "svg": "ab975ae5399d8e25398ccf10b16da4ee72fb18fffcda07798266a7fc97a22c01"
   },
   "stage": "stage3",
   "stage_filter": "stage3",

@@ -1,131 +1,240 @@
-# LLM-Guided Multi-Objective Microservice Decomposition
+# Transmission of Additional Evidence across the Candidate Microservice Decomposition Pipeline
 
-Class-level decomposition of Java monoliths using structural dependencies,
-SSA-derived data-flow evidence, LLM-derived semantic relations, Leiden
-community detection, and NSGA-II multi-objective search.
+This repository contains the prototype and retained evidence for Wenkai Zhu's
+MSc dissertation, *Transmission of Additional Evidence across the Candidate
+Microservice Decomposition Pipeline*.
 
-## Overview
+Identifying candidate microservices from a Java monolith is difficult because
+different evidence sources can support different service boundaries, and new
+input evidence does not necessarily remain influential throughout a
+decomposition pipeline. The prototype therefore examines both whether
+additional evidence supplies new class-level relations and whether its effect
+remains visible at the objective, candidate, and final-selection levels.
 
-This repository implements and preserves a three-stage experimental pipeline
-for identifying candidate microservice partitions. It compares a graph
-community-detection baseline with structure-only and semantic-guided
-multi-objective search while retaining the configurations, accepted run
-artefacts, derived analyses, and provenance used for dissertation reporting.
+The repository implements a three-stage candidate microservice decomposition
+study. Stage 1 is a graph community-detection comparison; Stages 2 and 3 use
+multi-objective evolutionary search. It does not claim that all three stages
+use evolutionary search.
 
 ## Research pipeline
 
-1. **Stage 1 — Leiden baseline.** Class-level type and call dependencies form
-   the raw structural graph. SSA-derived return-value and argument-passing
-   relations provide additional data-flow evidence for the enriched graph.
-   Leiden supplies the frozen baseline partitions and robustness evidence.
-2. **Stage 2 — structure-only NSGA-II.** Search optimises coupling, cohesion,
-   and cluster-size imbalance over the structural graph. The retained Pareto
-   fronts preserve alternative feasible decompositions rather than only one
-   partition.
-3. **Stage 3 — semantic-guided NSGA-II.** Declaration and bounded method-body
-   evidence is embedded with `nomic-ai/nomic-embed-code` and converted into a
-   semantic graph. The semantic cut objective extends Stage 2 to four
-   objectives. For structural comparison, each retained four-dimensional
-   Stage 3 front is projected to the original three structural objectives,
-   deduplicated, and filtered for three-dimensional non-dominance.
+1. **Stage 1 — structural and SSA evidence with Leiden.** Type dependencies and
+   method calls form the raw structural graph. SSA-derived return-value and
+   argument-passing relations provide an enriched evidence graph. Leiden is
+   applied to the raw and SSA-enriched graphs for comparison and seed-robustness
+   analysis.
+2. **Stage 2 — structure-only NSGA-II.** The raw structural graph is fixed.
+   NSGA-II searches for candidate decompositions using coupling, cohesion, and
+   cluster-size imbalance objectives. Retained Pareto candidate sets preserve
+   the available structural trade-offs. **Balance** is the primary operating
+   preference used to select a representative candidate from the retained
+   front.
+3. **Stage 3 — semantic extension.** Stage 3 keeps the same structural search
+   design and adds a separate graph derived from LLM-based semantic evidence.
+   Semantic loss, `f_sem`, is the fourth objective. For Stage 2–Stage 3
+   comparison, each retained four-objective Stage 3 front is projected into the
+   three structural objectives, deduplicated, and filtered to form the projected
+   structural front.
 
-## Experimental subjects
+The dissertation finds that SSA-derived and semantic evidence add class-level
+relations not already present in the raw structural graph, but that their later
+effect is weaker and can change across the objective, candidate, and selection
+levels. The retained artefacts in this repository support inspection of those
+pipeline stages without requiring the submitted stochastic experiments to be
+rerun.
 
-The primary experiments use JPetStore, DayTrader, and Xerces-J, with 30
-accepted observations per subject where required by the formal protocol.
-EasyMock and JFreeChart are supplementary subjects used only for descriptive
-validation. They are not members of the primary inferential families; their
-frozen evidence is retained on the corresponding validation branches and tags.
+## Research subjects
+
+Primary subjects:
+
+| Subject | Retained classes |
+| --- | ---: |
+| JPetStore | 24 |
+| DayTrader | 53 |
+| Xerces-J | 814 |
+
+Supplementary descriptive-validation subjects:
+
+| Subject | Retained classes |
+| --- | ---: |
+| EasyMock | 105 |
+| JFreeChart | 635 |
+
+The supplementary subjects provide descriptive validation and are not members
+of the primary inferential families. Their frozen evidence is preserved on the
+`stage1-validation-frozen`, `stage2-validation-frozen`, and
+`stage3-validation-frozen` tags. The dissertation submission package combines
+that tagged evidence with the final primary-subject working tree.
+
+## Main experimental scale
+
+- Stage 1 robustness: 30 seeds per primary subject for both the raw and
+  SSA-enriched graphs.
+- Stage 2: 30 retained runs per primary subject.
+- Stage 3: 30 retained runs per primary subject.
+- Supplementary validation: 10 retained Stage 2 runs and 10 retained Stage 3
+  runs per supplementary subject.
 
 ## Repository structure
 
-| Path | Role |
+| Path | Final repository role |
 | --- | --- |
 | `src/` | Reusable extraction, graph, clustering, optimisation, semantic, evaluation, analysis, and visualisation code. |
-| `experiments/` | Stage-specific Python entry points and deterministic post-processing. |
-| `data/` | Extracted class-level inputs and frozen semantic text, embeddings, and graphs. |
-| `results/` | Accepted subject runs, cross-subject analyses, statistics, and provenance manifests. |
-| `configs/` | Subject, experiment, reproducibility, and visualisation contracts. |
-| `reports/` | Current figure catalogue, source data, render sources, previews, and PDFs. |
+| `experiments/` | Stage-specific Python experiment and deterministic post-processing entry points. |
+| `configs/` | Subject scopes, experiment definitions, reproducibility records, and visualisation configuration. |
+| `data/` | Retained extracted inputs plus semantic text, embeddings, semantic graphs, and reference evidence. |
+| `results/` | Frozen Stage 1–3 runs, fronts, selected candidates, cross-subject analyses, statistics, and provenance. |
+| `reports/` | Derived reporting artefacts, figure data, render sources, PDF/SVG outputs, provenance, and the figure manifest. |
 | `tests/` | Unit, integration, architecture, provenance, reporting, and reproducibility checks. |
-| `docs/` | Stage documentation, findings, and reproducibility guidance. |
-| `scripts/` | Thin experiment, extraction, validation, and visualisation launchers. |
+| `scripts/` | User-facing extraction, experiment, verification, and visualisation launchers. |
+| `tools/` | The Java 17 Soot/Shimple extractor used to produce structural and SSA evidence. |
+| `docs/` | Method, findings, and reproducibility documentation. |
 | `provenance/` | Repository-level lineage and integrity records. |
 
-The primary experiment entry points are
+The main experiment implementations are under
 `experiments/01_stage1_leiden_baseline/`,
 `experiments/02_stage2_nsga_structure_only/`, and
 `experiments/05_stage3_declaration_method_body/`.
 
-## Reproducibility and provenance
+## Experimental evidence and frozen outputs
 
-The supported Python environment is specified by `pyproject.toml` and
-`uv.lock`. Subject and experiment YAML files record fixed configurations and
-seeds. Accepted experimental outputs are frozen; manifests, source hashes,
-configuration snapshots, validation tests, and figure provenance record how
-the reporting artefacts relate to those outputs. The Stage 3 embedding runtime
-is additionally documented in `results/stage3/provenance/` and
-`docs/stage3/reproducibility.md`.
+`data/` contains retained input and evidence artefacts. `results/` contains the
+frozen experimental outputs, candidate/front data, selected-solution evidence,
+statistics, and cross-stage analyses used by the dissertation. `reports/`
+contains derived reporting artefacts, dissertation-ready figures, their source
+data, provenance records, and `reports/figures/manifest.json`.
 
-These records support validation and deterministic post-processing of the
-retained artefacts. Regenerating embeddings or optimisation runs can depend on
-the recorded model/runtime environment and is not part of routine reporting
-validation.
+The submitted repository retains the experimental outputs used for the
+dissertation. Formal optimisation outputs are evidence, not disposable build
+products. Routine reporting and figure regeneration should read these retained
+outputs rather than silently replacing them with newly rerun stochastic
+experiments. Where supported, later reporting can be rebuilt deterministically
+from the frozen outputs without rerunning Stage 1, Stage 2, or Stage 3.
 
-## Current operating-preference reporting
+The current selector-dependent reporting bundle is
+`results/stage3/cross_subject/operating_preference_analysis/`. Balance is the
+primary dissertation operating preference. Modularity-anchor, coupling,
+cohesion, and semantic preferences are retained for descriptive sensitivity
+analysis.
 
-`BALANCE` is the primary dissertation operating preference. Candidates are
-admitted when their proportional weighted-modularity loss from the current
-front-best value is at most 5%; `BALANCE` then selects minimum imbalance, with
-deterministic structural tie-breaking. `MODULARITY_ANCHOR` (MAX-Q) is retained
-as a reference profile. `COUPLING`, `COHESION`, and `SEMANTIC` are descriptive
-sensitivity profiles. Modularity loss relative to Leiden is a separate
-descriptive comparison and is not the 5% admission denominator.
+## Retained environment
 
-The authoritative selector-dependent reporting bundle is
-`results/stage3/cross_subject/operating_preference_analysis/`.
+The final supported environment and the hardware recorded in the dissertation
+are:
 
-## Visualisation and reporting outputs
+- macOS 26.5, arm64;
+- Apple M5 Pro, 18-core CPU and 20-core integrated GPU;
+- 48 GB unified memory;
+- Python 3.13.7;
+- pymoo 0.6.2;
+- NumPy 2.4.4;
+- PyTorch 2.13.0;
+- sentence-transformers 5.6.0;
+- transformers 5.14.1;
+- `nomic-ai/nomic-embed-code`, revision
+  `9a0457648f060c4279d4a3982d2d27a4df6fac59`.
 
-The current figure registry is `reports/figures/manifest.json`, with figure
-configuration in `configs/visualization/figures.yml`. Registered outputs are
-stored under `reports/figures/pdf/`; their source data, render sources,
-previews, and provenance records are kept in the adjacent `data/`, `source/`,
-and `preview/` directories. Human-readable Stage 3 reporting notes are under
-`docs/stage3/findings/`.
-
-## Running and validation
-
-With the repository environment already created, validate the current
-operating-preference bundle without rewriting it:
-
-```bash
-.venv/bin/python experiments/05_stage3_declaration_method_body/build_operating_preference_analysis.py --check
-```
-
-Validate and list the current figure catalogue:
+`pyproject.toml`, `uv.lock`, and
+`configs/reproducibility/environments.json` define the supported final Python
+environment. With `uv` installed, create the locked environment and activate it
+with:
 
 ```bash
-.venv/bin/python scripts/visualization/build_figures.py --validate-config
-.venv/bin/python scripts/visualization/build_figures.py --list
+uv sync --frozen
+source .venv/bin/activate
 ```
 
-Run the reporting, provenance, and selector checks:
+The supported final environment records `igraph` 1.0.0 and `leidenalg` 0.12.0.
+The exact historical versions used when the original Stage 1 formal outputs
+were computed were not retained, so these supported versions must not be
+presented as retrospective Stage 1 runtime versions.
+
+The supplementary-subject source identities and run policy are recorded in
+`configs/reproducibility/validation_subjects.lock.yaml`; their captured build
+and extraction environment is recorded in
+`configs/reproducibility/validation_environment.snapshot.yaml`.
+
+## Execution and reproducibility
+
+### Read-only repository verification
+
+The normal integrity check does not run an experiment:
 
 ```bash
-.venv/bin/pytest \
-  tests/test_preference_analysis_audit.py \
-  tests/test_stage3_preference_analysis.py \
-  tests/test_stage3_reporting_contract.py \
-  tests/test_stage3_provenance.py \
-  tests/test_stage3_reproducibility.py
+PYTHONPATH=src python scripts/reproducibility/verify.py --stage all
 ```
 
-Read `docs/stage3/reproducibility.md` before any intentional regeneration of
-semantic or optimiser artefacts.
+Validate the retained Stage 3 operating-preference bundle without rewriting it:
 
-## Dissertation context
+```bash
+PYTHONPATH=src python experiments/05_stage3_declaration_method_body/build_operating_preference_analysis.py --check
+```
 
-This repository accompanies an MSc dissertation on class-level candidate
-microservice decomposition using structural, data-flow, and LLM-derived
-semantic evidence.
+Run the test suite:
+
+```bash
+PYTHONPATH=src pytest
+```
+
+### Deterministic reporting and figure generation
+
+Validate or list the figure catalogue:
+
+```bash
+PYTHONPATH=src python scripts/visualization/build_figures.py --validate-config
+PYTHONPATH=src python scripts/visualization/build_figures.py --list
+```
+
+Regenerate one registered figure from its retained inputs:
+
+```bash
+PYTHONPATH=src python scripts/visualization/build_figures.py --figure FIGURE_ID
+```
+
+Use `--output-dir` when a separate verification output is required. Figure IDs
+are obtained from `--list`. The figure registry and hashes are recorded in
+`reports/figures/manifest.json`.
+
+### Formal experiment entry points
+
+The commands below are execution entry points and may create new stochastic
+outputs. They are documented for reproducibility, but they are not required for
+normal inspection or reporting from the submitted frozen results.
+
+Extraction requires the relevant Java source checkout under
+`data/raw_projects/<subject>/`. Subject-specific preparation and extraction
+wrappers are provided, for example:
+
+```bash
+bash scripts/extraction/prepare_jpetstore.sh
+bash scripts/extraction/extract_soot_jpetstore.sh
+```
+
+Equivalent wrappers exist for DayTrader and Xerces-J. Formal Stage 1 wrappers
+are subject-specific:
+
+```bash
+PYTHONPATH=src python experiments/01_stage1_leiden_baseline/run.py --subject jpetstore
+PYTHONPATH=src python experiments/01_stage1_leiden_baseline/run.py --subject daytrader
+PYTHONPATH=src python experiments/01_stage1_leiden_baseline/run.py --subject xerces-j
+```
+
+Stage 2 and Stage 3 implementations expose their accepted arguments through:
+
+```bash
+PYTHONPATH=src python experiments/02_stage2_nsga_structure_only/run.py --help
+PYTHONPATH=src python experiments/02_stage2_nsga_structure_only/run_robustness.py --help
+PYTHONPATH=src python experiments/05_stage3_declaration_method_body/prepare_semantic.py --help
+PYTHONPATH=src python experiments/05_stage3_declaration_method_body/run.py --help
+PYTHONPATH=src python experiments/05_stage3_declaration_method_body/run_robustness.py --help
+```
+
+Accepted formal result directories are protected evidence. Any intentional
+rerun must use a separate output location and must not overwrite the retained
+results. Read `docs/stage3/reproducibility.md` before regenerating semantic or
+optimiser artefacts.
+
+## Repository
+
+Canonical GitHub repository:
+https://github.com/WenkaiZhu2020/evo-ms-clustering

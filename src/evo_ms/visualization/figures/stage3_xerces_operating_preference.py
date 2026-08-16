@@ -1,4 +1,4 @@
-"""Xerces-J Stage 3 operating-profile comparison."""
+"""Xerces-J Stage 3 operating-preference comparison."""
 
 from __future__ import annotations
 
@@ -28,17 +28,17 @@ FIGURE_ID = "stage3_xerces_operating_preference_sensitivity"
 BASENAME = "xerces_operating_preference_sensitivity"
 DIRECTORY = "stage3"
 PROFILES = (
-    ("P0", "MODULARITY_ANCHOR", "MAX-Q"),
-    ("P1", "BALANCE", "BALANCE"),
-    ("P2", "COUPLING", "COUPLING"),
-    ("P3", "COHESION", "COHESION"),
-    ("P4", "SEMANTIC", "SEMANTIC"),
+    ("P0", "MODULARITY_ANCHOR", "Max modularity"),
+    ("P1", "BALANCE", "Balance"),
+    ("P2", "COUPLING", "Coupling"),
+    ("P3", "COHESION", "Cohesion"),
+    ("P4", "SEMANTIC", "Semantic"),
 )
 METRICS = (
     ("imbalance", "Imbalance", "lower is preferred"),
     ("cohesion", "Cohesion", "higher is preferred"),
-    ("f_semantic", r"$f_{semantic}$", "lower is preferred"),
-    ("relative_modularity_loss", "Relative modularity loss", r"from $Q_{best}$; lower is preferred"),
+    ("f_semantic", r"$f_{\mathrm{sem}}$", "lower is preferred"),
+    ("relative_modularity_loss", "Relative modularity loss", r"from $q_{w,\max}$; lower is preferred"),
 )
 
 
@@ -129,6 +129,7 @@ def create_figure(summary: pd.DataFrame) -> Figure:
     ):
         figure, axes = plt.subplots(2, 2, figsize=(7.1, 5.15), facecolor="white")
         labels = [label for _profile_id, _profile, label in PROFILES]
+        tick_labels = ["Max\nmodularity" if label == "Max modularity" else label for label in labels]
         x = list(range(len(labels)))
         for panel_label, axis, (metric, title, direction) in zip(
             ("a", "b", "c", "d"), axes.flat, METRICS, strict=True
@@ -163,7 +164,7 @@ def create_figure(summary: pd.DataFrame) -> Figure:
                 fontsize=7.3,
                 color="#555555",
             )
-            axis.set_xticks(x, labels)
+            axis.set_xticks(x, tick_labels)
             axis.tick_params(axis="x", labelsize=7.1, pad=3)
             axis.tick_params(axis="y", labelsize=7.5)
             axis.grid(axis="y", color="#E2E5E8", linewidth=0.6)
@@ -171,7 +172,7 @@ def create_figure(summary: pd.DataFrame) -> Figure:
             axis.spines[["top", "right"]].set_visible(False)
             axis.margins(x=0.09, y=0.20)
             if metric == "relative_modularity_loss":
-                axis.yaxis.set_major_formatter(PercentFormatter(xmax=1.0, decimals=1))
+                axis.yaxis.set_major_formatter(PercentFormatter(xmax=1.0, decimals=2))
                 value_labels = [f"{value * 100:.2f}%" for value in medians]
             else:
                 value_labels = [f"{value:.3f}" for value in medians]
@@ -192,7 +193,7 @@ def create_figure(summary: pd.DataFrame) -> Figure:
             upper = max(float(q3.max()), float(medians.max()))
             axis.set_ylim(lower - 0.11 * span, upper + 0.30 * span)
         figure.suptitle(
-            "Xerces-J Stage 3: operating-profile sensitivity",
+            "Xerces-J Stage 3: operating-preference sensitivity",
             x=0.08,
             y=0.99,
             ha="left",

@@ -35,6 +35,14 @@ STAGE3_SEED = 25
 STAGE3_SOLUTION = "seed25_solution026"
 
 
+def _format_metric(value: float) -> str:
+    """Format figure metrics without hiding meaningful small non-zero values."""
+
+    if value != 0.0 and abs(value) < 0.0005:
+        return f"{value:.2e}".replace("e-0", "e-").replace("e+0", "e+")
+    return f"{value:.3f}"
+
+
 @dataclass(frozen=True)
 class ClusterProfile:
     stage: int
@@ -122,9 +130,9 @@ def _partitions(root: Path) -> tuple[tuple[int, int, str, str, pd.DataFrame, flo
     stage2 = fixed_balance_selection(root, "daytrader", "stage2", STAGE2_SEED)
     stage3 = balance_partition_medoid(root, "daytrader", "stage3")
     if stage2.solution_id != STAGE2_SOLUTION:
-        raise ValueError("authoritative DayTrader Stage 2 BALANCE representative changed")
+        raise ValueError("expected DayTrader Stage 2 primary Balance-preference representative changed")
     if (stage3.seed, stage3.solution_id) != (STAGE3_SEED, STAGE3_SOLUTION):
-        raise ValueError("authoritative DayTrader Stage 3 BALANCE medoid changed")
+        raise ValueError("expected DayTrader Stage 3 primary Balance-preference medoid changed")
     return ((1, 42, "stage1_seed42", stage1_path, stage1, q1),
             (2, stage2.seed, stage2.solution_id, stage2.partition_source, stage2.partition, stage2.weighted_modularity),
             (3, stage3.seed, stage3.solution_id, stage3.partition_source, stage3.partition, stage3.weighted_modularity))
@@ -389,7 +397,7 @@ def figure_dot(
     data: FigureData,
     *,
     figure_id: str = FIGURE_ID,
-    comparison_note: str | None = "Stage 2 and Stage 3 representatives use the authoritative BALANCE profile.",
+    comparison_note: str | None = "Stage 2 and Stage 3 representatives use the primary Balance preference.",
 ) -> str:
     spec = config.figures[figure_id]
     style = config.style["cluster_contribution_comparison"]
@@ -472,7 +480,7 @@ def figure_dot(
             shared = " - identical focal structure" if len(panel.stages) > 1 else ""
             title = f"{stages}{shared}\nCluster {profile.cluster_id}"
             metric = (
-                f"n = {len(profile.members)}   q_c = {profile.contribution:.5f}   "
+                f"n = {len(profile.members)}   q_c = {_format_metric(profile.contribution)}   "
                 f"W_in = {profile.internal_weight:.0f}   W_boundary = {profile.boundary_weight:.0f}"
             )
             top = cy + panel_height / 2
